@@ -1,0 +1,45 @@
+[
+
+    {
+
+        "file": "C:/Users/a.ernoul-delaprovote/OneDrive - CONSORT NT/Bureau/Appel_offre/AO PMU - EB Data Analyst-Scientist.pdf",
+
+        "data": {
+
+            "id": "PMU",
+
+            "Poste": "Data Analyst / Data Scientist",
+
+            "Contexte": [
+                "Le Data Office a pour mission de consolider, manager et valoriser le patrimoine de données, qui est un capital stratégique pour le PMU, via le développement de produits et services data transverses à l’entreprise et au service du business.", 
+                "Au sein du Data Office, l’équipe Data Science & Insights est chargée de la réalisation d’études statistiques, d’analyses du comportement client et de modèles de data science pour toutes les entités de l’entreprise (marketing, digital, conformité…)."
+            ],
+
+            "Description": [
+                "Dans le cadre de son activité, l’équipe Data Science & Insights de PMU recherche un(e) Data Analyst / Data Scientist qui sera amené(e) à réaliser des études et modèles sur notre base de clients (profils clients, performance des offres, optimisation des campagnes, suivi réglementaire, scores d’appétence, segmentations…) et apporter des préconisations business aux interlocuteurs métiers.",
+                
+                "Recueillir les besoins métiers et formaliser les briefs",  
+                "Définir le périmètre pertinent et réaliser le nettoyage des données et la création des analyses ou features pertinents",  "Collaborer étroitement avec le reste de l’équipe afin d’adopter la démarche la plus efficace pour répondre aux demandes d’études", 
+                "Collaborer étroitement avec les développeurs BI afin d’identifier les éléments et dashboards qui pourraient servir pour éclairer ou enrichir les analyses", 
+                "Assurer le traitement des sujets dans le respect des priorités et échéances", 
+                "Restituer les conclusions de la manière la plus adaptée aux interlocuteurs métiers", 
+                "Automatiser les traitements pour un run régulier quand nécessaire", 
+                "Documenter les travaux et leur avancement (code, résultats, documents de présentation…)" 
+            ],
+
+            "Profil": [
+                "Ce poste nécessite des compétences en data analyse et data science avec un minimum de 3 années d’expérience dans un contexte de grande volumétrie de données, idéalement dans le secteur retail / e-commerce, et la capacité à collaborer avec de nombreux interlocuteurs simultanément.",
+                
+                "Excellente connaissance des techniques de datamining et de data science", 
+                "Expérience avancée avec l’outil Dataiku et la programmation SQL / Python", 
+                "Ownership des projets confiés", 
+                "Excellent esprit d’équipe", 
+                "Approche pragmatique et orienté résultats", 
+                "Forte rigueur dans la démarche au quotidien (documentation, traçabilité)", 
+                "Forte sensibilité aux objectifs business et opérationnels", 
+                "Aisance à vulgariser son travail aux différents interlocuteurs" 
+            ]
+            
+        }
+    }
+]
