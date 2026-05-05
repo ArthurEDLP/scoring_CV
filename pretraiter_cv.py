@@ -55,8 +55,8 @@ import requests
 # ─────────────────────────────────────────────────────────────────────
 
 OLLAMA_URL    = "http://localhost:11434/api/generate"
-OLLAMA_MODEL  = "qwen2.5:7b-instruct"
-TIMEOUT_SEC   = 180        # un CV peut être plus long qu'une AO
+OLLAMA_MODEL = "qwen2.5:3b-instruct"
+TIMEOUT_SEC   = 240        # un CV peut être plus long qu'une AO
 MAX_RETRIES   = 2
 
 
