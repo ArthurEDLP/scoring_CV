@@ -1,12 +1,12 @@
 {
   "id": "RMA",
-  "hash": "2892f4618a13cefa88c4879c064e2ffe",
+  "hash": "87ab03c0084e20c90c0413c4dd135ca1",
   "vecteurs": {
     "experiences": [
       {
         "ordre": 0,
         "poste": "Commercial",
-        "annees": 7.179,
+        "annees": 7.181,
         "entreprise": "DIOR, Paris",
         "embedding": {
           "shape": [
@@ -3910,6 +3910,6 @@
         }
       }
     ],
-    "seniorite_totale": 11.34
+    "seniorite_totale": 11.35
   }
 }

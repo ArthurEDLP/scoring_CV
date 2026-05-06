@@ -1,51 +1,22 @@
 """
 Pré-traitement des CVs bruts vers le format propre attendu par le pipeline.
 
-Utilise Ollama en local avec qwen2.5:7b-instruct.
+Utilise Ollama en local avec phi3.5 + un SCHÉMA JSON STRICT.
 
-Format d'entrée (CV brut, tel que sorti d'un extracteur PDF) :
-    {
-      "id": "JL",
-      "competences_techniques": ["Langages & Scripting : Python |SQL |", ...],
-      "savoir_faire/savoir_etre": [...],
-      "experiences": [{"poste": "...", "date": "...", ...}],
-      "formations": [...],
-      "langues": [...]
-    }
-
-Format de sortie (CV nettoyé) :
-    {
-      "id": "JL",
-      "competences_techniques": ["Python", "SQL", ...],   # éclatées + dédup
-      "savoir_faire/savoir_etre": [...],                  # conservé
-      "experiences": [
-        {
-          "poste": "Data Scientist",
-          "entreprise": "TOTAL",
-          "date": "01/2023 - 12/2025",       # MM/YYYY normalisé
-          "details": "..."
-        }
-      ],
-      "formations": [...],                                # conservé
-      "langues": [...]                                    # conservé
-    }
+Le schéma force le modèle à produire un JSON conforme au niveau du
+décodeur de tokens : pas de champ manquant possible, pas de format cassé.
 
 Usage CLI :
     python pretraiter_cv.py CV_JSON_brutes/JL.json
     python pretraiter_cv.py CV_JSON_brutes/JL.json --output CV_JSON/
     python pretraiter_cv.py CV_JSON_brutes/JL.json --force
-
-Pré-requis :
-    - Ollama lancé (auto sur Windows)
-    - qwen2.5:7b-instruct téléchargé
-    - pip install requests
 """
 
 import argparse
 import json
 import sys
 from pathlib import Path
-from typing import Dict, Optional, List
+from typing import Dict, Optional
 
 import requests
 
@@ -55,9 +26,60 @@ import requests
 # ─────────────────────────────────────────────────────────────────────
 
 OLLAMA_URL    = "http://localhost:11434/api/generate"
-OLLAMA_MODEL = "qwen2.5:3b-instruct"
-TIMEOUT_SEC   = 240        # un CV peut être plus long qu'une AO
+OLLAMA_MODEL  = "phi3.5"        # Microsoft Phi-3.5 mini, réputé en JSON
+TIMEOUT_SEC   = 600
 MAX_RETRIES   = 2
+
+TAILLE_MAX_CV = 12000
+
+
+# ─────────────────────────────────────────────────────────────────────
+# Schéma JSON imposé au modèle
+# ─────────────────────────────────────────────────────────────────────
+# Le paramètre `format` d'Ollama accepte un schéma JSON Schema.
+# Le modèle est CONTRAINT au niveau du décodeur de respecter ce schéma.
+
+JSON_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "competences_techniques": {
+            "type": "array",
+            "items": {"type": "string"},
+        },
+        "savoir_faire/savoir_etre": {
+            "type": "array",
+            "items": {"type": "string"},
+        },
+        "experiences": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "poste":      {"type": "string"},
+                    "entreprise": {"type": "string"},
+                    "date":       {"type": "string"},
+                    "details":    {"type": "string"},
+                },
+                "required": ["poste", "entreprise", "date", "details"],
+            },
+        },
+        "formations": {
+            "type": "array",
+            "items": {"type": "object"},
+        },
+        "langues": {
+            "type": "array",
+            "items": {"type": "object"},
+        },
+    },
+    "required": [
+        "competences_techniques",
+        "savoir_faire/savoir_etre",
+        "experiences",
+        "formations",
+        "langues",
+    ],
+}
 
 
 # ─────────────────────────────────────────────────────────────────────
@@ -66,57 +88,45 @@ MAX_RETRIES   = 2
 
 SYSTEM_PROMPT = """Tu es un assistant spécialisé dans le nettoyage et la structuration de \
 CVs. Le CV en entrée a été extrait d'un PDF et peut contenir des artefacts d'extraction \
-(séparateurs |, retours à la ligne dans des champs uniques, préfixes catégoriels collés \
-aux technos, etc.). Tu réponds UNIQUEMENT avec du JSON valide, sans texte avant ou après, \
-sans bloc markdown.
+(séparateurs |, retours à la ligne, préfixes catégoriels collés aux technos).
 
-Tu dois produire un JSON avec ces champs :
-  - "competences_techniques" : liste de strings, UNE techno par entrée, sans préfixe
-  - "savoir_faire/savoir_etre" : liste de strings (conserver le contenu existant, \
-nettoyer les artefacts d'extraction)
-  - "experiences" : liste d'objets avec {poste, entreprise, date, details}
-  - "formations" : liste (conserver telle quelle si propre)
-  - "langues" : liste (conserver telle quelle si propre)
+Tu dois produire un JSON avec ces champs (TOUS obligatoires, même vides) :
+  - competences_techniques : liste de strings, UNE techno par entrée
+  - savoir_faire/savoir_etre : liste de strings
+  - experiences : liste d'objets {poste, entreprise, date, details}
+  - formations : liste (vide [] si absentes)
+  - langues : liste (vide [] si absentes)
 
 RÈGLES STRICTES :
 
-1. TECHNOS — la règle la plus importante :
-   - Si une entrée contient PLUSIEURS technos séparées par |, ;, , ou /, ÉCLATER en \
-plusieurs entrées séparées.
-   - Si une entrée a un préfixe catégoriel ("Langages & Scripting :", "Cloud :", "BDD :", \
-"Outils :", etc.), RETIRER le préfixe et ne garder QUE la techno.
-   - GARDER L'ORTHOGRAPHE EXACTE de la techno telle qu'écrite dans le CV (ne pas changer \
-la casse, ne pas reformater).
-   - Dédupliquer : si la même techno apparaît plusieurs fois, ne la mettre qu'une seule fois.
-   - N'ajouter AUCUNE techno qui n'est pas dans le CV.
-   - Une techno doit être un nom propre (Python, SQL, AWS, Dataiku) — pas un soft skill.
+1. TECHNOS — règle critique :
+   - Si une entrée contient PLUSIEURS technos séparées par |, ;, , ou /, ÉCLATER.
+   - Retirer les préfixes catégoriels ("Langages :", "Cloud :", "BDD :", etc.).
+   - GARDER L'ORTHOGRAPHE du CV (ne pas changer la casse).
+   - Dédupliquer.
+   - N'ajouter AUCUNE techno absente du CV.
+   - Pas de soft skill dans les technos (autonomie, rigueur, etc.).
 
 2. EXPÉRIENCES :
-   - Format de date attendu : "MM/YYYY - MM/YYYY" ou "MM/YYYY - Aujourd'hui"
-   - Si une seule date est présente (ex: "01/2015"), la garder telle quelle
-   - Si la date est en format "Mars 2019", convertir en "03/2019"
-   - "Aujourd'hui", "présent", "now" → "Aujourd'hui"
-   - Conserver les champs poste, entreprise, details existants
+   - Format de date : "MM/YYYY - MM/YYYY" ou "MM/YYYY - Aujourd'hui"
+   - "Mars 2019" → "03/2019"
+   - "présent", "now", "current" → "Aujourd'hui"
+   - Si un sous-champ est absent du CV, mettre une string vide ""
 
 3. NE PAS INVENTER :
-   - Si un champ est absent du CV, le mettre à [] (liste vide) ou "" (string vide)
-   - Ne pas générer de contenu plausible mais absent du CV
+   - Champ absent → liste vide [] (jamais null)
+   - Pas de contenu plausible mais absent du CV
 """
 
-EXEMPLE_FEW_SHOT = """EXEMPLE COMPLET :
+EXEMPLE_FEW_SHOT = """EXEMPLE :
 
 Input :
 {
-  "id": "EXEMPLE_CANDIDAT",
   "competences_techniques": [
     "Langages & Scripting : Python |SQL | Java",
-    "Cloud : AWS |GCP",
-    "BDD : PostgreSQL"
+    "Cloud : AWS"
   ],
-  "savoir_faire/savoir_etre": [
-    "Esprit d'équipe",
-    "Autonomie"
-  ],
+  "savoir_faire/savoir_etre": ["Esprit d'équipe"],
   "experiences": [
     {
       "poste": "Data Engineer",
@@ -130,12 +140,27 @@ Input :
 }
 
 Output :
-{"competences_techniques":["Python","SQL","Java","AWS","GCP","PostgreSQL"],"savoir_faire/savoir_etre":["Esprit d'équipe","Autonomie"],"experiences":[{"poste":"Data Engineer","entreprise":"TotalEnergies","date":"03/2020 - Aujourd'hui","details":"Pipeline ETL"}],"formations":[],"langues":[]}
+{"competences_techniques":["Python","SQL","Java","AWS"],"savoir_faire/savoir_etre":["Esprit d'équipe"],"experiences":[{"poste":"Data Engineer","entreprise":"TotalEnergies","date":"03/2020 - Aujourd'hui","details":"Pipeline ETL"}],"formations":[],"langues":[]}
 """
 
 
+def _tronquer_si_trop_long(payload: Dict) -> Dict:
+    """Coupe les `details` des expériences anciennes si CV trop volumineux."""
+    taille = len(json.dumps(payload, ensure_ascii=False))
+    if taille <= TAILLE_MAX_CV:
+        return payload
+
+    payload_t = json.loads(json.dumps(payload, ensure_ascii=False))
+    for exp in reversed(payload_t.get("experiences", [])):
+        if isinstance(exp, dict) and exp.get("details"):
+            exp["details"] = ""
+            taille = len(json.dumps(payload_t, ensure_ascii=False))
+            if taille <= TAILLE_MAX_CV:
+                break
+    return payload_t
+
+
 def _construire_prompt(cv_brut: Dict) -> str:
-    # On ne passe au LLM que les champs pertinents (id ignoré, on le reprend après)
     payload = {
         k: v for k, v in cv_brut.items()
         if k in (
@@ -146,6 +171,7 @@ def _construire_prompt(cv_brut: Dict) -> str:
             "langues",
         )
     }
+    payload = _tronquer_si_trop_long(payload)
     return (
         f"{SYSTEM_PROMPT}\n\n"
         f"{EXEMPLE_FEW_SHOT}\n\n"
@@ -156,7 +182,7 @@ def _construire_prompt(cv_brut: Dict) -> str:
 
 
 # ─────────────────────────────────────────────────────────────────────
-# Appel Ollama
+# Appel Ollama avec schéma JSON
 # ─────────────────────────────────────────────────────────────────────
 
 def _appeler_ollama(prompt: str) -> str:
@@ -164,7 +190,7 @@ def _appeler_ollama(prompt: str) -> str:
         "model":   OLLAMA_MODEL,
         "prompt":  prompt,
         "stream":  False,
-        "format":  "json",
+        "format":  JSON_SCHEMA,        # ← schéma strict, pas juste "json"
         "options": {"temperature": 0.1},
     }
     try:
@@ -182,8 +208,6 @@ def _appeler_ollama(prompt: str) -> str:
 
 def _parser_reponse(reponse_brute: str) -> Dict:
     txt = reponse_brute.strip()
-
-    # Retire fences markdown si Qwen en a mis
     if txt.startswith("```"):
         lignes = txt.split("\n")
         if lignes[0].startswith("```"):
@@ -191,51 +215,25 @@ def _parser_reponse(reponse_brute: str) -> Dict:
         if lignes and lignes[-1].strip().startswith("```"):
             lignes = lignes[:-1]
         txt = "\n".join(lignes)
-
     return json.loads(txt)
 
 
 # ─────────────────────────────────────────────────────────────────────
-# Validation
+# Validation (le schéma garantit déjà le format, on vérifie le métier)
 # ─────────────────────────────────────────────────────────────────────
 
 def _valider_extraction(extrait: Dict) -> Optional[str]:
-    """
-    Vérifie que les champs sont présents et bien typés.
-    Retourne None si OK, sinon un message d'erreur.
-    """
-    champs_listes = [
-        "competences_techniques",
-        "savoir_faire/savoir_etre",
-        "experiences",
-        "formations",
-        "langues",
-    ]
-    for champ in champs_listes:
-        if champ not in extrait:
-            return f"champ manquant : '{champ}'"
-        if not isinstance(extrait[champ], list):
-            return f"champ '{champ}' n'est pas une liste"
-
-    # Toutes les technos doivent être des strings non vides et SANS séparateurs
-    # (vérification anti-régression : si Qwen oublie d'éclater, on retente)
     for i, t in enumerate(extrait["competences_techniques"]):
-        if not isinstance(t, str) or not t.strip():
-            return f"techno #{i} invalide : {t!r}"
-        # Si on voit encore des séparateurs, c'est que l'éclatement a foiré
+        if not t.strip():
+            return f"techno #{i} vide"
         if any(sep in t for sep in ["|", ";"]):
             return f"techno #{i} contient encore un séparateur : {t!r}"
 
-    # Chaque expérience doit avoir au moins poste et date
     for i, exp in enumerate(extrait["experiences"]):
-        if not isinstance(exp, dict):
-            return f"experience #{i} n'est pas un objet"
-        if "poste" not in exp or "date" not in exp:
-            return f"experience #{i} sans poste ou date"
-        # Garantir que les sous-champs sont des strings
-        for sous_champ in ("poste", "entreprise", "date", "details"):
-            if sous_champ in exp and not isinstance(exp[sous_champ], str):
-                exp[sous_champ] = str(exp[sous_champ])
+        if not exp.get("poste", "").strip():
+            return f"experience #{i} sans poste"
+        if not exp.get("date", "").strip():
+            return f"experience #{i} sans date"
 
     return None
 
@@ -244,29 +242,33 @@ def _valider_extraction(extrait: Dict) -> Optional[str]:
 # Fonction principale
 # ─────────────────────────────────────────────────────────────────────
 
-def structurer_cv(cv_brut: Dict) -> Dict:
-    """
-    Prend un CV brut et retourne sa version nettoyée.
-    L'id est conservé, et tout champ non listé reste tel quel.
-    """
+def structurer_cv(cv_brut: Dict, debug: bool = False) -> Dict:
     if "id" not in cv_brut:
         raise ValueError("Le CV doit avoir un champ 'id'")
 
     prompt = _construire_prompt(cv_brut)
     derniere_erreur = None
+    derniere_reponse = None
 
     for tentative in range(1, MAX_RETRIES + 2):
         try:
             reponse_brute = _appeler_ollama(prompt)
-            extrait       = _parser_reponse(reponse_brute)
-            erreur        = _valider_extraction(extrait)
+            derniere_reponse = reponse_brute
+
+            if debug:
+                print(f"\n--- Tentative {tentative} : réponse brute du LLM ---")
+                print(reponse_brute[:2000])
+                print("---\n")
+
+            extrait = _parser_reponse(reponse_brute)
+            erreur  = _valider_extraction(extrait)
 
             if erreur:
                 derniere_erreur = erreur
+                if debug:
+                    print(f"  → validation échouée : {erreur}\n")
                 continue
 
-            # Fusion : on part du CV brut (pour conserver id et tout champ extra),
-            # puis on ÉCRASE avec les champs nettoyés
             cv_propre = dict(cv_brut)
             cv_propre.update({
                 "competences_techniques":     extrait["competences_techniques"],
@@ -282,17 +284,18 @@ def structurer_cv(cv_brut: Dict) -> Dict:
         except Exception as e:
             derniere_erreur = str(e)
 
-    raise RuntimeError(
-        f"Échec après {MAX_RETRIES + 1} tentatives. "
-        f"Dernière erreur : {derniere_erreur}"
-    )
+    # Échec final : on remonte aussi la dernière réponse pour faciliter le debug
+    msg = f"Échec après {MAX_RETRIES + 1} tentatives. Dernière erreur : {derniere_erreur}"
+    if derniere_reponse and not debug:
+        msg += f"\n  Dernière réponse du LLM (200 premiers car.) : {derniere_reponse[:200]}..."
+    raise RuntimeError(msg)
 
 
 # ─────────────────────────────────────────────────────────────────────
 # Wrapper CLI
 # ─────────────────────────────────────────────────────────────────────
 
-def _traiter_fichier(chemin_in: Path, dossier_out: Path) -> bool:
+def _traiter_fichier(chemin_in: Path, dossier_out: Path, debug: bool = False) -> bool:
     try:
         with open(chemin_in, "r", encoding="utf-8") as f:
             data = json.load(f)
@@ -300,24 +303,19 @@ def _traiter_fichier(chemin_in: Path, dossier_out: Path) -> bool:
         print(f"  ✗ {chemin_in.name} : impossible de lire le JSON ({e})")
         return False
 
-    # Tolère le format [{"data": {...}}] vu dans CV_AO_Loader
     if isinstance(data, list):
         data = data[0]
     cv_brut = data.get("data", data)
-
-    # On préserve la structure d'enveloppe d'origine (data, file, etc.) si présente
     enveloppe = data if "data" in data else None
 
     print(f"  → {chemin_in.name} ... ", end="", flush=True)
     try:
-        cv_propre = structurer_cv(cv_brut)
+        cv_propre = structurer_cv(cv_brut, debug=debug)
     except Exception as e:
         print(f"✗ {e}")
         return False
 
-    # Reconstruction du fichier de sortie en respectant le format d'origine
     if enveloppe is not None:
-        # Format: {"data": {...}, "file": "..."}
         sortie = dict(enveloppe)
         sortie["data"] = cv_propre
     else:
@@ -335,24 +333,13 @@ def _traiter_fichier(chemin_in: Path, dossier_out: Path) -> bool:
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Structure des CVs bruts via Ollama (Qwen 2.5)."
+        description="Structure des CVs bruts via Ollama (schéma JSON strict)."
     )
-    parser.add_argument(
-        "fichiers",
-        nargs="+",
-        help="Fichier(s) CV à traiter (ex: CV_JSON_brutes/JL.json). "
-             "Wildcards non supportés en PowerShell : utiliser un foreach.",
-    )
-    parser.add_argument(
-        "--output", "-o",
-        default="./CV_JSON",
-        help="Dossier de sortie (créé si absent). Défaut : ./CV_JSON",
-    )
-    parser.add_argument(
-        "--force", "-f",
-        action="store_true",
-        help="Re-traite même si le fichier de sortie existe déjà",
-    )
+    parser.add_argument("fichiers", nargs="+", help="Fichier(s) CV à traiter")
+    parser.add_argument("--output", "-o", default="./CV_JSON")
+    parser.add_argument("--force", "-f", action="store_true")
+    parser.add_argument("--debug", "-d", action="store_true",
+                        help="Affiche la réponse brute du LLM à chaque tentative")
     args = parser.parse_args()
 
     dossier_out = Path(args.output)
@@ -361,16 +348,13 @@ def main():
     print(f"📂 Sortie : {dossier_out.resolve()}")
     print(f"🤖 Modèle : {OLLAMA_MODEL}\n")
 
-    # Test connexion Ollama
     try:
         requests.get("http://localhost:11434/api/tags", timeout=5).raise_for_status()
     except Exception:
-        print("❌ Ollama injoignable. Vérifie l'icône Ollama dans la barre des tâches.")
+        print("❌ Ollama injoignable.")
         sys.exit(1)
 
-    nb_ok = 0
-    nb_skip = 0
-    nb_ko = 0
+    nb_ok = nb_skip = nb_ko = 0
 
     for arg in args.fichiers:
         chemin = Path(arg)
@@ -385,7 +369,7 @@ def main():
             nb_skip += 1
             continue
 
-        if _traiter_fichier(chemin, dossier_out):
+        if _traiter_fichier(chemin, dossier_out, debug=args.debug):
             nb_ok += 1
         else:
             nb_ko += 1

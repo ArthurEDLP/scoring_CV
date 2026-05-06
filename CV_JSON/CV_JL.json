@@ -1,0 +1,73 @@
+{
+  "id": "JL",
+  "formations": [],
+  "savoir_faire_savoir_etre": [
+    "IA générative",
+    "MLOps",
+    "gestion de projet",
+    "OCR",
+    "industrialisation",
+    "marketing",
+    "reporting",
+    "responsabilité sociale des entreprises"
+  ],
+  "certifications": [],
+  "langues": [],
+  "competences_techniques": [
+    "Python",
+    "SQL",
+    "AWS",
+    "Microsoft Excel VBA",
+    "Google Cloud BigQuery",
+    "Microsoft Power BI",
+    "Dataiku",
+    "OCR",
+    "PySpark",
+    "Google Vertex AI"
+  ],
+  "experiences": [
+    {
+      "poste": "Data Scientist",
+      "entreprise": "Crédit Agricole",
+      "date": "01/2023 - 12/2025",
+      "details": "Au sein de la Direction Stratégie Marketing et Communication, développement des scores marketing (prospection, churn) avec Dataiku. Industrialisation d'un score NBO sous Vertex AI pour analyse RSE."
+    },
+    {
+      "poste": "Data Scientist",
+      "entreprise": "SAFRAN",
+      "date": "07/2022 - 12/2022",
+      "details": "Développement de modèles d'IA pour détection d’anomalies dans les systèmes PPS5000, avec Dataiku."
+    },
+    {
+      "poste": "Data Scientist & Data Analyst",
+      "entreprise": "Allianz",
+      "date": "09/2020 - 09/2021",
+      "details": "Création d'un Datamart SAS pour centraliser les données frais et déploiement de modèles ML, avec amélioration du suivi opérationnel."
+    },
+    {
+      "poste": "Data Scientist & Data Analyst",
+      "entreprise": "SFR - Direction de l’innovation",
+      "date": "03/2020 - 08/2020",
+      "details": "Refonte d'ETL SAS pour centraliser les données risques liées aux procédures collectives, avec amélioration des reportings juridiques."
+    },
+    {
+      "poste": "Data Scientist",
+      "entreprise": "SFR - Direction de l’innovation (2)",
+      "date": "09/2021 - 12/2025",
+      "details": ""
+    },
+    {
+      "poste": "Data Scientist & Data Analyst",
+      "entreprise": "SFR - Direction de l’innovation (3)",
+      "date": "09/2021 - 12/2025",
+      "details": ""
+    },
+    {
+      "poste": "Data Scientist & Data Analyst",
+      "entreprise": "SFR - Direction de l’innovation (4)",
+      "date": "09/2021 - 12/2025",
+      "details": ""
+    }
+  ],
+  "savoir_faire/savoir_etre": []
+}

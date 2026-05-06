@@ -4,20 +4,7 @@
     "id": "RMA",
     "formations": [],
     "certifications": [],
-    "langues": [
-      {
-        "nom_langue": "Français",
-        "maitrise": "Courant"
-      },
-      {
-        "nom_langue": "Anglais",
-        "maitrise": "Courant"
-      },
-      {
-        "nom_langue": "Espagnol",
-        "maitrise": "Notions"
-      }
-    ],
+    "langues": [],
     "competences_techniques": [
       "SQL",
       "Python"
