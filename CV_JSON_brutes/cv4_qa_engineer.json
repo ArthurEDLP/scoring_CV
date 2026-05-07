@@ -1,0 +1,110 @@
+{
+  "id": "EMA",
+  "formations": [
+    {
+      "diplome": "Master 2 Qualité Logicielle et Tests - Université de Bordeaux",
+      "date": "2017"
+    },
+    {
+      "diplome": "Licence Informatique - Université de Bordeaux",
+      "date": "2015"
+    }
+  ],
+  "certifications": [
+    "ISTQB Advanced Level - Test Manager (2023)",
+    "ISTQB Advanced Level - Test Automation Engineer (2021)",
+    "ISTQB Foundation Level (2018)",
+    "Selenium WebDriver Certified Professional (2020)",
+    "Certified Agile Tester (CAT) (2022)"
+  ],
+  "langues": [
+    {
+      "nom_langue": "Français",
+      "maitrise": "Langue maternelle"
+    },
+    {
+      "nom_langue": "Italien",
+      "maitrise": "Bilingue (origine familiale)"
+    },
+    {
+      "nom_langue": "Anglais",
+      "maitrise": "Courant (TOEIC 880)"
+    }
+  ],
+  "competences_techniques": [
+    "Automatisation : Selenium WebDriver | Cypress | Playwright | Appium | TestCafe | Robot Framework",
+    "Langages : Java | Python | JavaScript / TypeScript | Groovy",
+    "Frameworks de test : JUnit | TestNG | Pytest | Cucumber (BDD) | SpecFlow",
+    "Tests API : Postman | REST Assured | Karate | SoapUI",
+    "Tests de performance : JMeter | Gatling | k6 | LoadRunner",
+    "Mobile : Appium | XCUITest | Espresso | BrowserStack | Sauce Labs",
+    "Outils gestion : Jira | Xray | Zephyr | TestRail | qTest | HP ALM",
+    "CI/CD : Jenkins | GitLab CI | GitHub Actions | Azure DevOps",
+    "Tests de sécurité : OWASP ZAP | Burp Suite (notions) | Tests d'intrusion fonctionnels",
+    "Bases de données : SQL Server | Oracle | PostgreSQL | MongoDB"
+  ],
+  "savoir_faire/savoir_etre": [
+    "Stratégie de test et plans de test",
+    "Animation d'équipes QA (jusqu'à 5 testeurs)",
+    "Mise en place de la culture qualité dans des organisations agiles",
+    "Définition de KPIs qualité et reporting au management",
+    "Coaching de testeurs juniors et formation aux méthodes BDD",
+    "Esprit critique et minutie",
+    "Capacité à challenger les développeurs et les PO sans dégrader la relation",
+    "Documentation rigoureuse des cas de test et des bugs"
+  ],
+  "experiences": [
+    {
+      "poste": "QA Lead / Test Manager",
+      "date": "04/2022 - Aujourd'hui",
+      "entreprise": "AXA France, Nanterre",
+      "details": [
+        "Contexte : Programme de refonte du SI Assurance Auto (MyAXA Auto) - 4 squads, plus de 30 développeurs, mise en production trimestrielle.",
+        "Définition et déploiement de la stratégie de test transverse au programme (pyramide de tests, critères d'entrée/sortie, gestion des environnements).",
+        "Encadrement d'une équipe de 5 QA Engineers (3 internes, 2 prestataires).",
+        "Mise en place du framework d'automatisation E2E mutualisé (Playwright + TypeScript) couvrant plus de 400 scénarios critiques.",
+        "Industrialisation des tests d'API avec Karate intégrés dans la chaîne CI/CD GitLab (exécution sur chaque MR).",
+        "Animation des cérémonies qualité : revue de tests, bug bashes mensuels, post-mortems sur les incidents de production.",
+        "Définition et suivi des KPIs qualité (taux de couverture, taux de défauts en production, MTTR) - reporting mensuel auprès du Directeur de Programme.",
+        "Mise en place d'une démarche shift-left : intégration des QA dès le refinement, ateliers Example Mapping avec les PO."
+      ]
+    },
+    {
+      "poste": "Senior QA Engineer - Automation Lead",
+      "date": "06/2019 - 03/2022",
+      "entreprise": "Decathlon Digital, Villeneuve d'Ascq",
+      "details": [
+        "Contexte : Plateforme e-commerce decathlon.fr et applications mobiles - périmètre Customer Account et Checkout.",
+        "Conception et mise en place du framework d'automatisation web (Cypress + TypeScript) - migration depuis un framework legacy Selenium / Java.",
+        "Développement de plus de 250 tests automatisés E2E exécutés en parallèle sur la grille interne (gain de 70% de temps d'exécution).",
+        "Mise en place des tests de performance avec k6 sur les parcours critiques (panier, paiement) - identification de bottlenecks ayant permis +30% de capacité.",
+        "Animation d'une communauté de pratique QA (15 personnes) au niveau du département : meetups internes, partage de bonnes pratiques.",
+        "Coaching de 2 testeurs juniors sur les techniques d'automatisation et le BDD (Cucumber)."
+      ]
+    },
+    {
+      "poste": "QA Engineer",
+      "date": "09/2017 - 05/2019",
+      "entreprise": "Cdiscount, Bordeaux",
+      "details": [
+        "Contexte : Squad Marketplace - gestion des comptes vendeurs et du catalogue tiers.",
+        "Conception et exécution de plans de test manuels et automatisés (Selenium / Java).",
+        "Tests d'API REST avec Postman et automatisation avec REST Assured.",
+        "Création et maintenance de jeux de données de test représentatifs (plus de 50 vendeurs fictifs avec différents états).",
+        "Reporting des bugs sur Jira et suivi jusqu'à résolution avec les développeurs.",
+        "Participation aux astreintes de mise en production (rotation toutes les 4 semaines)."
+      ]
+    },
+    {
+      "poste": "Testeur logiciel - Stage de fin d'études",
+      "date": "03/2017 - 08/2017",
+      "entreprise": "Cap Gemini, Bordeaux",
+      "details": [
+        "Mission auprès d'un grand acteur bancaire régional.",
+        "Exécution de tests fonctionnels manuels sur une application de gestion de comptes professionnels.",
+        "Rédaction de cahiers de tests sous HP ALM.",
+        "Première expérience en automatisation Selenium (POC interne)."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "id": "SLE",
+  "formations": [],
+  "certifications": [
+    "Microsoft Certified : Azure Data Scientist Associate (2023)",
+    "Tableau Desktop Specialist (2021)",
+    "DataCamp Professional Data Scientist (2020)"
+  ],
+  "langues": [],
+  "competences_techniques": [
+    "Python",
+    "SQL avancé",
+    "R (tidyverse, caret)",
+    "Machine Learning : XGBoost",
+    "LightGBM",
+    "Random Forest",
+    "Deep Learning : TensorFlow",
+    "Keras"
+  ],
+  "savoir_faire/savoir_etre": [
+    "Vulgarisation auprès de directions métiers non techniques",
+    "Storytelling data et présentation à des comités de direction",
+    "Cadrage de besoins métiers et traduction en problématiques analytiques",
+    "Esprit de synthèse et rigueur",
+    "Gestion de projets analytiques en autonomie",
+    "Capacité d'adaptation à des secteurs variés (luxe, hôtellerie, retail)",
+    "Curiosité métier et appétence pour les sujets business"
+  ],
+  "experiences": [
+    {
+      "poste": "Lead Data Analyst - Pricing & Revenue Management",
+      "entreprise": "Accor",
+      "date": "06/2021 - Aujourd'hui",
+      "details": "Contexte : Pilotage analytique de la stratégie de pricing dynamique pour les marques économiques du groupe (ibis, ibis budget, ibis Styles) sur le périmètre Europe. Construction et maintenance d'un tableau de bord quotidiennement consulté par 200+ revenue managers. Analyses ad-hoc pour identifier les opportunités de revenu (élasticité prix, mix canaux). Co-pilotage avec des équipes data science sur un projet pilote d'intelligence artificielle basé sur le machine learning."
+    },
+    {
+      "poste": "Data Analyst Senior",
+      "entreprise": "Sephora (LVMH)",
+      "date": "09/2019 - 05/2021",
+      "details": "Contexte : CRM Europe pour optimiser les campagnes marketing et le programme de fidélité Beauty Insider. Segmentation comportementale RFM, clustering des clients avec K-means ou modèles gaussiens, mesures d'impact par tests A/B."
+    },
+    {
+      "poste": "Data Scientist",
+      "entreprise": "Carrefour",
+      "date": "10/2018 - 08/2019",
+      "details": "Direction Data du programme de fidélité. Modèles prédictifs CLV, recommandation produit collaborative filtering avec ALS sur Spark."
+    },
+    {
+      "poste": "Data Scientist Stagiaire",
+      "entreprise": "BNP Paribas - CIB, Londres",
+      "date": "04/2018 - 09/2018",
+      "details": "Stage de fin d'études au sein du département Quantitative Research. Construction et mise en production via Docker."
+    }
+  ],
+  "savoir_faire": [
+    "Vulgarisation auprès de directions métiers non techniques",
+    "Storytelling data et présentation à des comités de direction",
+    "Cadrage de besoins métiers et traduction en problématiques analytiques",
+    "Gestion de projets analytiques en autonomie",
+    "Curiosité métier et appétence pour les sujets business"
+  ],
+  "savoir_etre": [
+    "Esprit de synthèse",
+    "Rigueur",
+    "Capacité d'adaptation à des secteurs variés (luxe, hôtellerie, retail)",
+    "Curiosité métier"
+  ]
+}

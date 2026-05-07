@@ -1,0 +1,71 @@
+{
+  "id": "CEU",
+  "formations": [],
+  "certifications": [
+    "AWS Certified Solutions Architect - Professional (2023)",
+    "Google Cloud Professional Data Engineer (2022)",
+    "Databricks Certified Data Engineer Professional (2024)",
+    "Confluent Certified Developer for Apache Kafka (2021)"
+  ],
+  "langues": [],
+  "competences_techniques": [
+    "Python",
+    "Scala",
+    "Java",
+    "AWS",
+    "Apache Spark",
+    "Apache Kafka",
+    "Apache Airflow",
+    "Terraform",
+    "GitLab CI/CD"
+  ],
+  "savoir_faire/savoir_etre": [
+    "Architecture de plateformes data à grande échelle",
+    "Industrialisation de pipelines ETL/ELT",
+    "Mise en place de Data Mesh et Data Lakehouse",
+    "Gouvernance de la donnée et data lineage",
+    "Animation d'équipes techniques (jusqu'à 8 personnes)",
+    "Mentorat et formation de juniors",
+    "Veille technologique active",
+    "Communication transverse avec les métiers"
+  ],
+  "experiences": [
+    {
+      "poste": "Lead Data Engineer",
+      "entreprise": "TotalEnergies, Paris La Défense",
+      "date": "09/2022 - Aujourd'hui",
+      "details": "Contexte : Refonte complète de la plateforme data du département Trading & Shipping pour traiter plus de 15 To de données quotidiennes issues des capteurs IoT, plates-formes de trading et systèmes ERP. Conception d'une architecture Data Lakehouse sur AWS avec approche Medallion (Bronze/Silver/Gold). Développement de pipelines streaming temps réel pour le suivi des positions de trading."
+    },
+    {
+      "poste": "Senior Data Engineer",
+      "entreprise": "Bouygues Telecom, Issy-les-Moulineaux",
+      "date": "04/2019 - 08/2022",
+      "details": "Conception d'un pipeline CDC avec Debezium et Kafka pour synchroniser plus de 200 tables Oracle vers BigQuery en quasi temps réel. Mise en place du modèle Data Vault 2.0 sur le périmètre client (45 millions lignes mises à jour quotidiennement). Déploiement automatisé complet des pipelines avec GitLab, Terraform et Cloud Build."
+    },
+    {
+      "poste": "Data Engineer",
+      "entreprise": "Air France-KLM, Roissy",
+      "date": "10/2016 - 03/2019",
+      "details": "Mise en place de la plateforme Big Data pour le programme Flying Blue avec Spark (Scala) et Hadoop. Développement d'algorithmes de matching profils passagers via MLlib."
+    },
+    {
+      "poste": "Consultant Data / BI",
+      "entreprise": "Capgemini Invent, Paris",
+      "date": "09/2014 - 09/2016",
+      "details": "Missions de conseil en Big Data et Business Intelligence pour des clients du secteur bancaire et énergie. Développement d'ETL Talend, procédures stockées Oracle PL/SQL."
+    }
+  ],
+  "savoir_faire": [
+    "Architecture de plateformes data à grande échelle",
+    "Industrialisation de pipelines ETL/ELT",
+    "Mise en place du framework dbt Core avec tests automatisés couvrant plus de 95% des transformations.",
+    "Animation et formation d'une équipe technique (jusqu'à 6 personnes)",
+    "Veille technologique active"
+  ],
+  "savoir_etre": [
+    "Industrialisation",
+    "Mentorat de juniors en data engineering",
+    "Animation et formation d'une équipe technique (jusqu'à 6 personnes)",
+    "Veille technologique active"
+  ]
+}

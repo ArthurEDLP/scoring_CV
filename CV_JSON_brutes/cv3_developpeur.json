@@ -1,0 +1,105 @@
+{
+  "id": "KBE",
+  "formations": [
+    {
+      "diplome": "Diplôme d'Ingénieur en Informatique - EPITA, spécialité SCIA",
+      "date": "2019"
+    },
+    {
+      "diplome": "Classes Préparatoires Intégrées - EPITA",
+      "date": "2016"
+    }
+  ],
+  "certifications": [
+    "AWS Certified Developer - Associate (2024)",
+    "Certified Kubernetes Application Developer (CKAD) (2023)",
+    "MongoDB Certified Developer Associate (2022)"
+  ],
+  "langues": [
+    {
+      "nom_langue": "Français",
+      "maitrise": "Langue maternelle"
+    },
+    {
+      "nom_langue": "Arabe",
+      "maitrise": "Langue maternelle"
+    },
+    {
+      "nom_langue": "Anglais",
+      "maitrise": "Courant (TOEIC 920)"
+    },
+    {
+      "nom_langue": "Espagnol",
+      "maitrise": "Notions"
+    }
+  ],
+  "competences_techniques": [
+    "Frontend : React.js | Next.js | TypeScript | Vue.js | Redux | Tailwind CSS | Material UI | Storybook",
+    "Backend : Node.js (Express, NestJS) | Python (FastAPI, Django) | Go (notions)",
+    "Bases de données : PostgreSQL | MongoDB | Redis | MySQL | DynamoDB",
+    "API : REST | GraphQL (Apollo) | gRPC | WebSockets",
+    "DevOps : Docker | Kubernetes | AWS (ECS, EKS, Lambda, S3, CloudFront) | Terraform | GitHub Actions | GitLab CI",
+    "Tests : Jest | Cypress | Playwright | React Testing Library | Pytest",
+    "Outils : Git | Jira | Figma | Postman | DataDog | Sentry",
+    "Architecture : Microservices | Event-driven | Hexagonal | DDD"
+  ],
+  "savoir_faire/savoir_etre": [
+    "Développement full stack de bout en bout",
+    "Méthodologies Agile (Scrum, Kanban)",
+    "Code review et pair programming",
+    "Mentorat de développeurs juniors",
+    "Veille technologique active (contributeur open source)",
+    "Capacité à dialoguer avec le PO et les équipes design",
+    "Goût pour la qualité de code (clean code, SOLID)"
+  ],
+  "experiences": [
+    {
+      "poste": "Développeur Full Stack Senior",
+      "date": "01/2023 - Aujourd'hui",
+      "entreprise": "BlaBlaCar, Paris",
+      "details": [
+        "Contexte : Squad Booking Experience - refonte du tunnel de réservation web et mobile pour améliorer le taux de conversion (40 millions d'utilisateurs actifs).",
+        "Développement frontend en React/Next.js avec TypeScript - architecture micro-frontends sur Module Federation.",
+        "Conception et implémentation d'API GraphQL (Apollo Federation) consommées par les apps web et mobile.",
+        "Mise en place de l'A/B testing technique avec Optimizely - participation à plus de 30 expérimentations en 18 mois.",
+        "Refonte du système de paiement (intégration Stripe et Adyen) avec respect strict des contraintes PCI-DSS.",
+        "Pair programming systématique et code reviews sur une équipe de 6 développeurs.",
+        "Optimisations de performance : amélioration du Core Web Vitals (LCP passé de 3.8s à 1.6s)."
+      ]
+    },
+    {
+      "poste": "Développeur Full Stack",
+      "date": "03/2021 - 12/2022",
+      "entreprise": "Doctolib, Levallois-Perret",
+      "details": [
+        "Contexte : Tribu Patient - développement de fonctionnalités sur l'application patient (web + mobile React Native).",
+        "Développement de la fonctionnalité de téléconsultation vidéo (WebRTC, intégration avec un fournisseur tiers).",
+        "Migration progressive de modules legacy Ruby on Rails vers une architecture Node.js / NestJS.",
+        "Mise en place des tests E2E avec Cypress sur les parcours critiques.",
+        "Participation aux astreintes de production (rotation toutes les 6 semaines)."
+      ]
+    },
+    {
+      "poste": "Développeur Backend",
+      "date": "09/2019 - 02/2021",
+      "entreprise": "Veepee (vente-privee.com), La Plaine Saint-Denis",
+      "details": [
+        "Contexte : Équipe Catalog - gestion du catalogue produit pour les ventes flash (jusqu'à 10 000 produits par vente).",
+        "Développement d'une API REST en Node.js (Express) avec MongoDB pour la gestion du catalogue.",
+        "Mise en place d'un système d'événements Kafka pour synchroniser le catalogue avec les autres systèmes (ERP, front, recherche).",
+        "Optimisation des requêtes MongoDB sur des collections de plus de 50 millions de documents.",
+        "Migration de l'infrastructure de VMs vers Kubernetes (cluster on-premise OpenShift)."
+      ]
+    },
+    {
+      "poste": "Développeur Web - Stage de fin d'études",
+      "date": "04/2019 - 09/2019",
+      "entreprise": "Société Générale - Pôle Innovation, La Défense",
+      "details": [
+        "Développement d'un POC de portail interne d'API en React et Node.js.",
+        "Mise en place du pipeline CI/CD GitLab.",
+        "Rédaction de la documentation technique et de la roadmap pour la mise en production."
+      ]
+    }
+  ]
+}
