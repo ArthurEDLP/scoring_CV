@@ -27,8 +27,8 @@ import requests
 
 OLLAMA_URL    = "http://localhost:11434/api/generate"
 OLLAMA_MODEL  = "phi3.5"        # Microsoft Phi-3.5 mini, réputé en JSON
-TIMEOUT_SEC   = 600
-MAX_RETRIES   = 2
+TIMEOUT_SEC   = 300
+MAX_RETRIES   = 0
 
 TAILLE_MAX_CV = 12000
 
@@ -105,16 +105,29 @@ RÈGLES STRICTES :
    - GARDER L'ORTHOGRAPHE du CV (ne pas changer la casse).
    - Dédupliquer.
    - N'ajouter AUCUNE techno absente du CV.
-   - Pas de soft skill dans les technos (autonomie, rigueur, etc.).
+   - Pas de soft skill ou de savoir_faire dans les technos (autonomie, rigueur, Optimisation, etc.).
 
-2. EXPÉRIENCES :
+2. savoir_etre — règle critique :
+   - GARDER L'ORTHOGRAPHE du CV (ne pas changer la casse).
+   - Dédupliquer.
+   - N'ajouter AUCUN savoir être absent du CV.
+   - Pas de techno ou de savoir_faire dans les savoir_etre (SQL, Optimisation, etc.).
+
+3. savoir_faire — règle critique :
+   - GARDER L'ORTHOGRAPHE du CV (ne pas changer la casse).
+   - Dédupliquer.
+   - N'ajouter AUCUN savoir faire absent du CV.
+   - Pas de techno ou de soft_skill dans les savoir_faire (SQL, autonomie, etc.).
+
+4. EXPÉRIENCES :
    - Format de date : "MM/YYYY - MM/YYYY" ou "MM/YYYY - Aujourd'hui"
-   - "Mars 2019" → "03/2019"
-   - "présent", "now", "current" → "Aujourd'hui"
+   - "Mars 2019" -> "03/2019"
+   - "présent", "now", "current" -> "Aujourd'hui"
    - Si un sous-champ est absent du CV, mettre une string vide ""
+   - Une même expérience ne peut apparaître deux fois.
 
-3. NE PAS INVENTER :
-   - Champ absent → liste vide [] (jamais null)
+5. NE PAS INVENTER :
+   - Champ absent -> liste vide [] (jamais null)
    - Pas de contenu plausible mais absent du CV
 """
 
@@ -126,13 +139,14 @@ Input :
     "Langages & Scripting : Python |SQL | Java",
     "Cloud : AWS"
   ],
-  "savoir_faire/savoir_etre": ["Esprit d'équipe"],
+  "savoir_etre": ["Esprit d'équipe", "Rigueur"],
+  "savoir_faire": ["IA générative", "Optimisation du pré-processing"],
   "experiences": [
     {
       "poste": "Data Engineer",
       "date": "Mars 2020 - Aujourd hui",
       "entreprise": "TotalEnergies",
-      "details": "Pipeline ETL"
+      "details": ["Pipeline ETL", " "]
     }
   ],
   "formations": [],
@@ -140,7 +154,7 @@ Input :
 }
 
 Output :
-{"competences_techniques":["Python","SQL","Java","AWS"],"savoir_faire/savoir_etre":["Esprit d'équipe"],"experiences":[{"poste":"Data Engineer","entreprise":"TotalEnergies","date":"03/2020 - Aujourd'hui","details":"Pipeline ETL"}],"formations":[],"langues":[]}
+{"competences_techniques":["Python","SQL","Java","AWS"],"savoir_etre":["Esprit d'équipe"],"savoir_faire":["IA générative", "Optimisation du pré-processing"],"experiences":[{"poste":"Data Engineer","entreprise":"TotalEnergies","date":"03/2020 - Aujourd'hui","details":["Pipeline ETL"," "]}],"formations":[],"langues":[]}
 """
 
 
@@ -266,7 +280,7 @@ def structurer_cv(cv_brut: Dict, debug: bool = False) -> Dict:
             if erreur:
                 derniere_erreur = erreur
                 if debug:
-                    print(f"  → validation échouée : {erreur}\n")
+                    print(f"  -> validation échouée : {erreur}\n")
                 continue
 
             cv_propre = dict(cv_brut)
@@ -308,7 +322,7 @@ def _traiter_fichier(chemin_in: Path, dossier_out: Path, debug: bool = False) ->
     cv_brut = data.get("data", data)
     enveloppe = data if "data" in data else None
 
-    print(f"  → {chemin_in.name} ... ", end="", flush=True)
+    print(f"  -> {chemin_in.name} ... ", end="", flush=True)
     try:
         cv_propre = structurer_cv(cv_brut, debug=debug)
     except Exception as e:
