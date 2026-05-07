@@ -28,7 +28,7 @@ import requests
 OLLAMA_URL    = "http://localhost:11434/api/generate"
 OLLAMA_MODEL  = "phi3.5"        # Microsoft Phi-3.5 mini, réputé en JSON
 TIMEOUT_SEC   = 300
-MAX_RETRIES   = 0
+MAX_RETRIES   = 1
 
 TAILLE_MAX_CV = 12000
 
@@ -46,7 +46,11 @@ JSON_SCHEMA = {
             "type": "array",
             "items": {"type": "string"},
         },
-        "savoir_faire/savoir_etre": {
+        "savoir_faire": {
+            "type": "array",
+            "items": {"type": "string"},
+        },
+        "savoir_etre": {
             "type": "array",
             "items": {"type": "string"},
         },
@@ -74,7 +78,8 @@ JSON_SCHEMA = {
     },
     "required": [
         "competences_techniques",
-        "savoir_faire/savoir_etre",
+        "savoir_faire",
+        "savoir_etre",
         "experiences",
         "formations",
         "langues",
@@ -92,7 +97,8 @@ CVs. Le CV en entrée a été extrait d'un PDF et peut contenir des artefacts d'
 
 Tu dois produire un JSON avec ces champs (TOUS obligatoires, même vides) :
   - competences_techniques : liste de strings, UNE techno par entrée
-  - savoir_faire/savoir_etre : liste de strings
+  - savoir_faire : liste de strings
+  - savoir_etre : liste de strings
   - experiences : liste d'objets {poste, entreprise, date, details}
   - formations : liste (vide [] si absentes)
   - langues : liste (vide [] si absentes)
@@ -139,8 +145,7 @@ Input :
     "Langages & Scripting : Python |SQL | Java",
     "Cloud : AWS"
   ],
-  "savoir_etre": ["Esprit d'équipe", "Rigueur"],
-  "savoir_faire": ["IA générative", "Optimisation du pré-processing"],
+  "savoir_faire/savoir_etre": ["IA générative", "Optimisation du pré-processing", "Esprit d'équipe", "Rigueur"],
   "experiences": [
     {
       "poste": "Data Engineer",
@@ -154,7 +159,7 @@ Input :
 }
 
 Output :
-{"competences_techniques":["Python","SQL","Java","AWS"],"savoir_etre":["Esprit d'équipe"],"savoir_faire":["IA générative", "Optimisation du pré-processing"],"experiences":[{"poste":"Data Engineer","entreprise":"TotalEnergies","date":"03/2020 - Aujourd'hui","details":["Pipeline ETL"," "]}],"formations":[],"langues":[]}
+{"competences_techniques":["Python","SQL","Java","AWS"],"savoir_etre":["Esprit d'équipe", "Rigueur"],"savoir_faire":["IA générative", "Optimisation du pré-processing"],"experiences":[{"poste":"Data Engineer","entreprise":"TotalEnergies","date":"03/2020 - Aujourd'hui","details":["Pipeline ETL"," "]}],"formations":[],"langues":[]}
 """
 
 
@@ -286,7 +291,8 @@ def structurer_cv(cv_brut: Dict, debug: bool = False) -> Dict:
             cv_propre = dict(cv_brut)
             cv_propre.update({
                 "competences_techniques":     extrait["competences_techniques"],
-                "savoir_faire/savoir_etre":   extrait["savoir_faire/savoir_etre"],
+                "savoir_faire":               extrait["savoir_faire"],
+                "savoir_etre":                extrait["savoir_etre"],
                 "experiences":                extrait["experiences"],
                 "formations":                 extrait["formations"],
                 "langues":                    extrait["langues"],

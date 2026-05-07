@@ -1,0 +1,106 @@
+{
+  "id": "SLE",
+  "formations": [
+    {
+      "diplome": "MSc Data Science for Business - HEC Paris & École Polytechnique",
+      "date": "2018"
+    },
+    {
+      "diplome": "Master Économétrie & Statistiques Appliquées - Université Paris-Dauphine",
+      "date": "2017"
+    },
+    {
+      "diplome": "Licence Mathématiques Appliquées et Sciences Sociales - Université Paris 1 Panthéon-Sorbonne",
+      "date": "2015"
+    }
+  ],
+  "certifications": [
+    "Microsoft Certified : Azure Data Scientist Associate (2023)",
+    "Tableau Desktop Specialist (2021)",
+    "DataCamp Professional Data Scientist (2020)"
+  ],
+  "langues": [
+    {
+      "nom_langue": "Français",
+      "maitrise": "Langue maternelle"
+    },
+    {
+      "nom_langue": "Anglais",
+      "maitrise": "Bilingue (séjour de 2 ans à Londres)"
+    },
+    {
+      "nom_langue": "Italien",
+      "maitrise": "Intermédiaire (B2)"
+    }
+  ],
+  "competences_techniques": [
+    "Langages : Python (pandas, numpy, scikit-learn) | R (tidyverse, caret) | SQL avancé | SAS",
+    "Machine Learning : XGBoost | LightGBM | Random Forest | Régression logistique | Modèles de survie | Time series (Prophet, ARIMA)",
+    "Deep Learning : TensorFlow | Keras (notions, projets ponctuels)",
+    "NLP : spaCy | NLTK | Hugging Face Transformers (notions)",
+    "Visualisation : Tableau | Power BI | Looker Studio | matplotlib | seaborn | Plotly",
+    "Bases de données : PostgreSQL | Snowflake | BigQuery | Oracle",
+    "Cloud : AWS (SageMaker, S3) | GCP (BigQuery, Vertex AI - notions)",
+    "Outils : Git | Jupyter | DBT | Excel avancé (TCD, Power Query)"
+  ],
+  "savoir_faire/savoir_etre": [
+    "Vulgarisation auprès de directions métiers non techniques",
+    "Storytelling data et présentation à des comités de direction",
+    "Cadrage de besoins métiers et traduction en problématiques analytiques",
+    "Esprit de synthèse et rigueur",
+    "Gestion de projets analytiques en autonomie",
+    "Capacité d'adaptation à des secteurs variés (luxe, hôtellerie, retail)",
+    "Curiosité métier et appétence pour les sujets business"
+  ],
+  "experiences": [
+    {
+      "poste": "Lead Data Analyst - Pricing & Revenue Management",
+      "date": "06/2021 - Aujourd'hui",
+      "entreprise": "Accor, Issy-les-Moulineaux",
+      "details": [
+        "Contexte : Pilotage analytique de la stratégie de pricing dynamique pour les marques économiques du groupe (ibis, ibis budget, ibis Styles) sur le périmètre Europe (plus de 1800 hôtels).",
+        "Construction et maintenance du tableau de bord de suivi de performance pricing (Tableau) consulté quotidiennement par 200+ revenue managers.",
+        "Analyses ad-hoc pour identifier les opportunités de revenu (élasticité prix, mix canaux, cannibalisation entre marques).",
+        "Co-pilotage avec les équipes data science d'un projet de recommandation de prix basé sur du machine learning (gain estimé : +2,3% de RevPAR).",
+        "Animation d'un rituel hebdomadaire avec les directions opérationnelles pour partager les insights et prioriser les actions.",
+        "Encadrement de 2 data analysts juniors et d'un alternant.",
+        "Définition du data model commun (dbt) pour le domaine Revenue Management - plus de 60 modèles documentés."
+      ]
+    },
+    {
+      "poste": "Data Analyst Senior",
+      "date": "09/2019 - 05/2021",
+      "entreprise": "Sephora (LVMH), Neuilly-sur-Seine",
+      "details": [
+        "Contexte : Analytics au sein de l'équipe CRM Europe pour optimiser les campagnes marketing et le programme de fidélité Beauty Insider.",
+        "Segmentation comportementale RFM et clustering des clientes (K-means, modèles de mélanges gaussiens) pour personnaliser les campagnes.",
+        "Mesure d'impact des campagnes par tests A/B et modèles d'uplift (analyses post-campagne, calcul de l'incrémentalité).",
+        "Automatisation des reportings hebdomadaires via Python et Power BI (gain de 15h / semaine).",
+        "Construction d'un modèle de scoring de churn (XGBoost) avec un AUC de 0,84, intégré dans les workflows Salesforce Marketing Cloud."
+      ]
+    },
+    {
+      "poste": "Data Scientist",
+      "date": "10/2018 - 08/2019",
+      "entreprise": "Carrefour, Massy",
+      "details": [
+        "Contexte : Direction Data du programme de fidélité - travaux de modélisation autour de la connaissance client et du panier moyen.",
+        "Développement d'un modèle de prédiction de la valeur vie client (CLV) sur 24 mois - approche BG/NBD + Gamma-Gamma.",
+        "Implémentation d'un système de recommandation produit (collaborative filtering avec ALS sur Spark).",
+        "POC de détection de fraude sur les coupons digitaux (Isolation Forest, autoencoders).",
+        "Présentation des résultats devant le COMEX Marketing tous les 2 mois."
+      ]
+    },
+    {
+      "poste": "Data Scientist Stagiaire",
+      "date": "04/2018 - 09/2018",
+      "entreprise": "BNP Paribas - CIB, Londres",
+      "details": [
+        "Contexte : Stage de fin d'études au sein du département Quantitative Research.",
+        "Construction d'un modèle de classification des emails entrants des traders (NLP, Random Forest) - précision 91%.",
+        "Mise en production via Docker et intégration dans l'outil de routage interne.",
+        "Rédaction du mémoire de fin d'études (mention Très Bien)."
+      ]
+    }
+  ]
+}
