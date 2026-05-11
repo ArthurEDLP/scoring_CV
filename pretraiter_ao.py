@@ -1,6 +1,5 @@
 """
-Pré-traitement des AO brutes vers le format structuré attendu par
-le pipeline de scoring.
+Pré-traitement des AO brutes vers le format structuré attendu par le pipeline de scoring.
 
 Utilise Ollama en local avec le modèle qwen2.5:7b-instruct.
 
@@ -54,18 +53,13 @@ import requests   # pip install requests
 
 OLLAMA_URL    = "http://localhost:11434/api/generate"
 OLLAMA_MODEL  = "qwen2.5:7b-instruct"
-TIMEOUT_SEC   = 120         # extraction = quelques secondes en général
-MAX_RETRIES   = 2           # si Qwen sort du JSON cassé, on retente
+TIMEOUT_SEC   = 180         # extraction = quelques secondes en général
+MAX_RETRIES   = 1           # si Qwen sort du JSON cassé, on retente
 
 
 # ─────────────────────────────────────────────────────────────────────
 # Prompt
 # ─────────────────────────────────────────────────────────────────────
-# Un seul prompt, en français, avec :
-#   - rôle clair
-#   - format de sortie strict (JSON pur, pas de markdown)
-#   - règles explicites pour éviter les hallucinations
-#   - 1 exemple complet en few-shot pour ancrer le format
 
 SYSTEM_PROMPT = """Tu es un assistant spécialisé dans l'extraction d'informations \
 depuis des offres d'emploi (AO). Tu réponds UNIQUEMENT avec du JSON valide, \

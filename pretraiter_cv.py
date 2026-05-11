@@ -6,6 +6,10 @@ Utilise Ollama en local avec phi3.5 + un SCHÉMA JSON STRICT.
 Le schéma force le modèle à produire un JSON conforme au niveau du
 décodeur de tokens : pas de champ manquant possible, pas de format cassé.
 
+L'éclatement des technos (séparateurs + préfixes catégoriels) est fait
+côté Python pour garantir la fiabilité (les petits modèles suivent mal
+ce type de transformation).
+
 Usage CLI :
     python pretraiter_cv.py CV_JSON_brutes/JL.json
     python pretraiter_cv.py CV_JSON_brutes/JL.json --output CV_JSON/
@@ -14,9 +18,10 @@ Usage CLI :
 
 import argparse
 import json
+import re
 import sys
 from pathlib import Path
-from typing import Dict, Optional
+from typing import Dict, List, Optional
 
 import requests
 
@@ -27,10 +32,83 @@ import requests
 
 OLLAMA_URL    = "http://localhost:11434/api/generate"
 OLLAMA_MODEL  = "phi3.5"        # Microsoft Phi-3.5 mini, réputé en JSON
-TIMEOUT_SEC   = 300
+TIMEOUT_SEC   = 420
 MAX_RETRIES   = 1
 
 TAILLE_MAX_CV = 12000
+
+
+# ─────────────────────────────────────────────────────────────────────
+# Nettoyage des technos côté Python (déterministe, fiable)
+# ─────────────────────────────────────────────────────────────────────
+
+# Préfixe catégoriel : tout ce qui précède le premier ":" si < 40 caractères
+# (évite de matcher des phrases entières contenant un ":")
+_RE_PREFIXE = re.compile(r"^[^:]{1,40}:\s*")
+
+
+def _split_hors_parentheses(texte: str) -> List[str]:
+    """
+    Split sur |, ;, /, et virgule, mais SEULEMENT en dehors des parenthèses.
+    Ainsi 'Agile (Scrum, Kanban) | Lean' donne ['Agile (Scrum, Kanban)', 'Lean'].
+    """
+    morceaux = []
+    courant = []
+    niveau = 0   # profondeur de parenthèses
+
+    for c in texte:
+        if c == "(":
+            niveau += 1
+            courant.append(c)
+        elif c == ")":
+            niveau = max(0, niveau - 1)
+            courant.append(c)
+        elif niveau == 0 and c in "|;/,":
+            if courant:
+                morceaux.append("".join(courant))
+                courant = []
+        else:
+            courant.append(c)
+
+    if courant:
+        morceaux.append("".join(courant))
+
+    return morceaux
+
+
+def _eclater_technos(technos_brutes: List[str]) -> List[str]:
+    """
+    Prend une liste de strings 'sales' (avec préfixes et séparateurs) et
+    retourne une liste propre de technos individuelles.
+
+    Exemples :
+        'Méthodologies : Agile (Scrum, Kanban) | Lean Six Sigma'
+            → ['Agile (Scrum, Kanban)', 'Lean Six Sigma']
+        'Python | SQL'                      → ['Python', 'SQL']
+        'Python'                            → ['Python']
+        'Cloud : AWS'                       → ['AWS']
+
+    Dédup insensible à la casse, conserve l'orthographe de la 1ère occurrence.
+    """
+    resultat = []
+    vus = set()
+
+    for entree in technos_brutes:
+        if not isinstance(entree, str):
+            continue
+        # 1. Retirer le préfixe catégoriel "X : "
+        nettoye = _RE_PREFIXE.sub("", entree, count=1)
+        # 2. Éclater sur les séparateurs hors parenthèses
+        morceaux = _split_hors_parentheses(nettoye)
+        # 3. Trim, filtrer vides, dédupliquer
+        for m in morceaux:
+            m = m.strip()
+            # Filtre minimum : au moins 2 caractères, max 60 (sinon c'est du blabla)
+            if 2 <= len(m) <= 60 and m.lower() not in vus:
+                resultat.append(m)
+                vus.add(m.lower())
+
+    return resultat
 
 
 # ─────────────────────────────────────────────────────────────────────
@@ -92,11 +170,10 @@ JSON_SCHEMA = {
 # ─────────────────────────────────────────────────────────────────────
 
 SYSTEM_PROMPT = """Tu es un assistant spécialisé dans le nettoyage et la structuration de \
-CVs. Le CV en entrée a été extrait d'un PDF et peut contenir des artefacts d'extraction \
-(séparateurs |, retours à la ligne, préfixes catégoriels collés aux technos).
+CVs. Le CV en entrée a été extrait d'un PDF.
 
 Tu dois produire un JSON avec ces champs (TOUS obligatoires, même vides) :
-  - competences_techniques : liste de strings, UNE techno par entrée
+  - competences_techniques : liste de strings (recopier les entrées du CV telles quelles)
   - savoir_faire : liste de strings
   - savoir_etre : liste de strings
   - experiences : liste d'objets {poste, entreprise, date, details}
@@ -105,21 +182,19 @@ Tu dois produire un JSON avec ces champs (TOUS obligatoires, même vides) :
 
 RÈGLES STRICTES :
 
-1. TECHNOS — règle critique :
-   - Si une entrée contient PLUSIEURS technos séparées par |, ;, , ou /, ÉCLATER.
-   - Retirer les préfixes catégoriels ("Langages :", "Cloud :", "BDD :", etc.).
-   - GARDER L'ORTHOGRAPHE du CV (ne pas changer la casse).
-   - Dédupliquer.
+1. COMPÉTENCES TECHNIQUES :
+   - Recopier les entrées EXACTEMENT comme dans le CV (le nettoyage est fait après).
+   - Conserver l'ordre d'origine.
    - N'ajouter AUCUNE techno absente du CV.
    - Pas de soft skill ou de savoir_faire dans les technos (autonomie, rigueur, Optimisation, etc.).
 
-2. savoir_etre — règle critique :
+2. savoir_etre :
    - GARDER L'ORTHOGRAPHE du CV (ne pas changer la casse).
    - Dédupliquer.
    - N'ajouter AUCUN savoir être absent du CV.
    - Pas de techno ou de savoir_faire dans les savoir_etre (SQL, Optimisation, etc.).
 
-3. savoir_faire — règle critique :
+3. savoir_faire :
    - GARDER L'ORTHOGRAPHE du CV (ne pas changer la casse).
    - Dédupliquer.
    - N'ajouter AUCUN savoir faire absent du CV.
@@ -159,7 +234,7 @@ Input :
 }
 
 Output :
-{"competences_techniques":["Python","SQL","Java","AWS"],"savoir_etre":["Esprit d'équipe", "Rigueur"],"savoir_faire":["IA générative", "Optimisation du pré-processing"],"experiences":[{"poste":"Lead Data Analyst","entreprise":"TotalEnergies","date":"03/2020 - Aujourd'hui","details":["Pipeline ETL"," "]}],"formations":[],"langues":[]}
+{"competences_techniques":["Langages & Scripting : Python |SQL | Java","Cloud : AWS"],"savoir_etre":["Esprit d'équipe","Rigueur"],"savoir_faire":["IA générative","Optimisation du pré-processing"],"experiences":[{"poste":"Lead Data Analyst - Pricing & Revenue Management","entreprise":"TotalEnergies","date":"03/2020 - Aujourd'hui","details":"Pipeline ETL"}],"formations":[],"langues":[]}
 """
 
 
@@ -242,18 +317,16 @@ def _parser_reponse(reponse_brute: str) -> Dict:
 # ─────────────────────────────────────────────────────────────────────
 
 def _valider_extraction(extrait: Dict) -> Optional[str]:
-    for i, t in enumerate(extrait["competences_techniques"]):
-        if not t.strip():
-            return f"techno #{i} vide"
-        if any(sep in t for sep in ["|", ";"]):
-            return f"techno #{i} contient encore un séparateur : {t!r}"
-
+    """
+    Validation métier (le schéma garantit déjà le format).
+    On ne valide PLUS les séparateurs dans les technos : c'est le rôle
+    de _eclater_technos appliqué après.
+    """
     for i, exp in enumerate(extrait["experiences"]):
         if not exp.get("poste", "").strip():
             return f"experience #{i} sans poste"
         if not exp.get("date", "").strip():
             return f"experience #{i} sans date"
-
     return None
 
 
@@ -290,7 +363,10 @@ def structurer_cv(cv_brut: Dict, debug: bool = False) -> Dict:
 
             cv_propre = dict(cv_brut)
             cv_propre.update({
-                "competences_techniques":     extrait["competences_techniques"],
+                # Éclatement déterministe côté Python (séparateurs + préfixes)
+                "competences_techniques":     _eclater_technos(
+                    extrait["competences_techniques"]
+                ),
                 "savoir_faire":               extrait["savoir_faire"],
                 "savoir_etre":                extrait["savoir_etre"],
                 "experiences":                extrait["experiences"],
