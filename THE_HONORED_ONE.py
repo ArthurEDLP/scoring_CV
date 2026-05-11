@@ -286,7 +286,7 @@ def afficher_resultats(
         for nom, cl in principal.items():
             _afficher_groupe(nom, cl, top_k=top_k)
     else:
-        print(f"🏆 GROUPE PRINCIPAL  (aucun CV avec ce poste exact)\n")
+        print(f"🏆 GROUPE PRINCIPAL  (aucun CV avec ces qualifications exact)\n")
 
     if alternatifs:
         print(f"📂 PROFILS ALTERNATIFS\n")
