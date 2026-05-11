@@ -148,7 +148,7 @@ Input :
   "savoir_faire/savoir_etre": ["IA générative", "Optimisation du pré-processing", "Esprit d'équipe", "Rigueur"],
   "experiences": [
     {
-      "poste": "Data Engineer",
+      "poste": "Lead Data Analyst - Pricing & Revenue Management",
       "date": "Mars 2020 - Aujourd hui",
       "entreprise": "TotalEnergies",
       "details": ["Pipeline ETL", " "]
@@ -159,7 +159,7 @@ Input :
 }
 
 Output :
-{"competences_techniques":["Python","SQL","Java","AWS"],"savoir_etre":["Esprit d'équipe", "Rigueur"],"savoir_faire":["IA générative", "Optimisation du pré-processing"],"experiences":[{"poste":"Data Engineer","entreprise":"TotalEnergies","date":"03/2020 - Aujourd'hui","details":["Pipeline ETL"," "]}],"formations":[],"langues":[]}
+{"competences_techniques":["Python","SQL","Java","AWS"],"savoir_etre":["Esprit d'équipe", "Rigueur"],"savoir_faire":["IA générative", "Optimisation du pré-processing"],"experiences":[{"poste":"Lead Data Analyst","entreprise":"TotalEnergies","date":"03/2020 - Aujourd'hui","details":["Pipeline ETL"," "]}],"formations":[],"langues":[]}
 """
 
 

@@ -32,8 +32,8 @@ POIDS_AXES = {
 }
 
 # Seuil pour qu'une expérience soit considérée "du poste AO".
-# 0.90 strict mais tolère "Data Scientist Senior" / "Lead Data Scientist".
-SEUIL_CATEGORIE = 0.90
+# 0.85 strict mais tolère "Data Scientist Senior" / "Lead Data Scientist". ; 90 ne tolère pas "lead" ; 0.8 différencie pas "data ingé", "data analyst"
+SEUIL_CATEGORIE = 0.85
 
 # Plafond séniorité : au-delà de +20%, on ne récompense plus.
 PLAFOND_SENIORITE = 1.2
