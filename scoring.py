@@ -19,6 +19,7 @@ Logique :
 
 from typing import Dict, List, Optional, Tuple
 import numpy as np
+import math
 
 
 # ─────────────────────────────────────────────────────────────────────
@@ -34,9 +35,6 @@ POIDS_AXES = {
 # Seuil pour qu'une expérience soit considérée "du poste AO".
 # 0.85 strict mais tolère "Data Scientist Senior" / "Lead Data Scientist". ; 90 ne tolère pas "lead" ; 0.8 différencie pas "data ingé", "data analyst"
 SEUIL_CATEGORIE = 0.85
-
-# Plafond séniorité : au-delà de +20%, on ne récompense plus.
-PLAFOND_SENIORITE = 1.2
 
 VALEUR_BONUS_ENTREPRISE = 1.0
 
@@ -132,19 +130,25 @@ def score_technos(
 def score_seniorite(
     seniorite_totale: float,
     seniorite_min_annees: float,
+    tolerance_junior: float = 0.4,   # strict côté sous-qualifié
+    tolerance_senior: float = 0.8,   # tolérant côté sur-qualifié
 ) -> float:
     """
-    Score = seniorite_totale / annees_requises, plafonné à PLAFOND_SENIORITE.
-
-    seniorite_totale = somme de TOUTES les expériences du CV
-    (déjà précalculée dans embedding_cache).
+    Gaussienne asymétrique. Pénalise plus durement le manque d'expérience que le surplus.
     """
     if seniorite_min_annees is None or seniorite_min_annees <= 0:
         return 1.0
-    if seniorite_totale <= 0:
+    if seniorite_totale < 0:
         return 0.0
-    ratio = seniorite_totale / seniorite_min_annees
-    return float(min(ratio, PLAFOND_SENIORITE))
+
+    mu = seniorite_min_annees
+    ecart = seniorite_totale - mu
+
+    # Sigma différent selon qu'on est junior ou sénior
+    sigma = mu * (tolerance_junior if ecart < 0 else tolerance_senior)
+
+    score = math.exp(-(ecart ** 2) / (2 * sigma ** 2))
+    return float(score)
 
 
 # ─────────────────────────────────────────────────────────────────────
@@ -178,7 +182,7 @@ def agreger_scores(
 ) -> float:
     """
     Combinaison linéaire des 3 axes.
-    Score non borné : bonus + séniorité 1.2 peuvent dépasser 1.0.
+    Score non borné : bonus peuvent dépasser 1.0.
     """
     p = poids or POIDS_AXES
     return (
