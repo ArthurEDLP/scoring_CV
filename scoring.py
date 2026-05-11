@@ -92,7 +92,7 @@ def categoriser_cv(
 def score_technos(
     technos_ao: List[Dict],
     technos_cv: List[Dict],
-    seuil_match: float = 0.0,
+    seuil_match: float = 0.25, # par défaut 0.25, mais on peut choisir de mettre un autre minimun
 ) -> Tuple[float, Dict[str, float]]:
     """
     Pour chaque techno AO → meilleure sim avec une techno CV → moyenne.
