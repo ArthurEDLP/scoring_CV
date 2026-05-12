@@ -1,0 +1,45 @@
+{
+  "id": "Orange",
+  "Profil": [
+    "Bac+5 (école d'ingénieur ou Master universitaire) en informatique, big data ou équivalent.",
+    "Minimum 5 ans d'expérience en tant que Data Engineer dont au moins 2 ans sur un environnement Databricks en production.",
+    "Maîtrise impérative de la plateforme Databricks : Delta Lake, Unity Catalog, Workflows, Databricks SQL, Photon, gestion des clusters et des coûts (DBU).",
+    "Expertise en Apache Spark (PySpark et Spark SQL), optimisation des jobs (partitioning, broadcast, AQE) et tuning de performance sur de gros volumes.",
+    "Très bonne maîtrise de Python et SQL avancé.",
+    "Bonnes connaissances en PHP (versions 7.4 et 8.x) pour intervenir sur les briques applicatives legacy qui alimentent la plateforme data (API internes, scripts d'extraction, modules Symfony / Laravel).",
+    "Expérience confirmée sur l'architecture Medallion (Bronze / Silver / Gold) et la modélisation de données (Star Schema, Data Vault est un plus).",
+    "Maîtrise d'au moins un cloud provider, idéalement Azure (ADLS Gen2, Azure Data Factory, Event Hubs, Key Vault) — AWS ou GCP acceptés.",
+    "Pratique des outils DevOps : Git, Azure DevOps ou GitLab CI, Terraform, Docker.",
+    "Connaissance de dbt et / ou de Great Expectations appréciée pour les volets transformation et qualité de la donnée.",
+    "Expérience en orchestration (Airflow, Databricks Workflows, ADF).",
+    "Anglais professionnel courant requis : interactions régulières avec des équipes basées au Maroc, en Égypte et en Pologne.",
+    "Autonomie, esprit d'équipe, capacité à challenger les choix techniques et à documenter rigoureusement les développements.",
+    "Sensibilité aux enjeux de gouvernance et de RGPD (la plateforme manipule des données clients à caractère personnel).",
+    "Une expérience préalable dans le secteur des télécommunications ou sur des données de type CDR / probes réseau serait un plus très apprécié."
+  ],
+  "Description": [
+    "Au sein de la direction Data & IA d'Orange France, le consultant intégrera l'équipe « Plateforme Data Clients » composée d'une douzaine de personnes (Data Engineers, Tech Lead, Architecte, Product Owner).",
+    "Sa mission principale consistera à concevoir, développer et industrialiser des pipelines de données sur la plateforme Databricks Lakehouse du groupe, en lien avec les cas d'usage portés par les directions Marketing, CRM et Relation Client.",
+    "Activités attendues : conception et développement de pipelines d'ingestion batch et streaming (PySpark, Delta Live Tables, Auto Loader) à partir de sources hétérogènes (Kafka, API REST, bases Oracle, fichiers plats, exports PHP / MySQL des applications legacy du SI commercial).",
+    "Modélisation des couches Silver et Gold dans Unity Catalog, en respectant les standards du groupe (nommage, lineage, classification des données sensibles).",
+    "Maintenance et refactoring de scripts PHP existants qui alimentent encore une partie des flux (extraction depuis le SI commercial, génération de fichiers d'interface) ; objectif de migration progressive vers des pipelines natifs Databricks.",
+    "Optimisation des jobs Spark en production (réduction des temps de traitement et des coûts DBU), avec mise en place de tests de performance.",
+    "Mise en place et amélioration de la chaîne CI / CD (Azure DevOps, Terraform pour le provisioning des ressources Azure et Databricks Asset Bundles).",
+    "Implémentation de contrôles qualité automatisés (Great Expectations, expectations Delta Live Tables) et participation à la mise en place du data contract entre producteurs et consommateurs.",
+    "Participation aux rituels Agile de l'équipe (Scrum, sprints de 2 semaines) et aux revues d'architecture techniques bi-mensuelles.",
+    "Rédaction de la documentation technique (Confluence) et accompagnement des data analysts et data scientists consommateurs de la plateforme.",
+    "Astreintes ponctuelles pour le suivi de production (1 semaine par trimestre en rotation avec les autres membres de l'équipe).",
+    "Mission longue : démarrage prévu sous 4 à 6 semaines, durée initiale de 12 mois renouvelables.",
+    "Localisation : Châtillon (siège Orange, accessible métro Châtillon-Montrouge) avec 2 à 3 jours de télétravail par semaine.",
+    "TJM cible : entre 600 € et 750 € selon le profil et l'expérience."
+  ],
+  "Contexte": [
+    "Orange France a engagé depuis 2022 une transformation profonde de son patrimoine data avec la mise en place d'une plateforme Lakehouse unifiée sur Databricks (Azure), destinée à remplacer progressivement les datawarehouses historiques (Teradata, Oracle Exadata) et les multiples data marts répartis dans les différentes directions métier.",
+    "Cette plateforme, baptisée en interne « Data Customer Hub », vise à devenir la source unique de vérité pour toutes les données clients du groupe — environ 27 millions de clients particuliers et professionnels en France — et à accélérer la mise à disposition de cas d'usage analytiques et IA (segmentation, churn, NBA, lutte anti-fraude, personnalisation des offres).",
+    "Le contexte technique est particulièrement riche : la plateforme ingère aujourd'hui plus de 18 To de données par jour issues de plus de 80 sources différentes, dont une part significative provient encore d'applications legacy développées en PHP (portail vendeur, outils internes de la relation client, modules e-shop). La capacité à intervenir aussi bien sur la couche moderne Databricks que sur ces briques PHP existantes est un facteur clé de succès pour la mission.",
+    "L'équipe est en pleine montée en charge : 4 nouveaux recrutements internes sont prévus en 2026 et le consultant aura l'opportunité de contribuer à la définition des standards et bonnes pratiques qui seront déployés à l'échelle du groupe.",
+    "Le projet est sponsorisé au plus haut niveau (Chief Data Officer France) et bénéficie d'une grande visibilité interne. Plusieurs cas d'usage à fort impact business sont prévus pour 2026, notamment un moteur de recommandation temps réel pour les conseillers en boutique et la refonte complète du modèle de churn B2C.",
+    "Démarche RSE et souveraineté : Orange porte une attention particulière à la maîtrise des coûts cloud et à la sobriété numérique des traitements data (FinOps + GreenOps), thématiques sur lesquelles le consultant sera amené à contribuer.",
+    "Méthodologie de travail : organisation produit (squads pluridisciplinaires), framework SAFe à l'échelle du domaine Data, PI Plannings trimestriels."
+  ]
+}

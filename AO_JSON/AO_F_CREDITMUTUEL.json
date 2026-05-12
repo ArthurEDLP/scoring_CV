@@ -1,0 +1,61 @@
+{
+  "id": "Crédit Mutuel Arkéa",
+  "Profil": [
+    "Bac+5 minimum (école d'ingénieur, école de statistiques type ENSAE / ENSAI, ou Master 2 universitaire en statistiques, économétrie, data science ou équivalent).",
+    "Minimum 4 ans d'expérience opérationnelle en data science / data analyse appliquée, dont au moins 2 ans sur des problématiques de scoring (octroi de crédit, scoring comportemental, churn, appétence produit ou risque opérationnel).",
+    "Maîtrise approfondie des techniques de modélisation supervisée : régression logistique (incontournable dans un contexte bancaire pour son interprétabilité), Random Forest, Gradient Boosting (XGBoost, LightGBM, CatBoost), modèles de survie pour le risque de crédit.",
+    "Solide bagage statistique : tests d'hypothèses, intervalles de confiance, sélection de variables (WoE / IV, stepwise, Lasso), traitement du déséquilibre de classes (SMOTE, class weights, undersampling).",
+    "Excellente maîtrise des indicateurs de performance de scoring : AUC, Gini, KS, lift, courbes de calibration, matrice de coût, indices de stabilité (PSI, CSI).",
+    "Maîtrise de Python (pandas, numpy, scikit-learn, statsmodels, matplotlib / seaborn) et SQL avancé. La connaissance de PySpark est un plus.",
+    "Expérience pratique de SAS (notamment SAS Enterprise Guide et / ou SAS EM) très appréciée — une partie des modèles historiques de la banque est encore maintenue en SAS et le poste implique une migration progressive vers Python.",
+    "Connaissance de R appréciée mais non bloquante.",
+    "Compréhension des contraintes réglementaires du secteur bancaire : règles Bâle III / IV pour les modèles IRB, attentes du superviseur (ACPR, BCE) en matière de model risk management, normes IFRS 9 pour les modèles de provisionnement, principes du règlement européen sur l'IA (AI Act) appliqués aux modèles à fort impact.",
+    "Sensibilité aux problématiques d'IA responsable et de fairness : détection et atténuation des biais, explicabilité (SHAP, LIME, modèles de surrogate), documentation des choix de modélisation.",
+    "Expérience souhaitée sur un environnement MLOps : MLflow, versioning de modèles, mise en production via API (Flask / FastAPI), monitoring post-déploiement (data drift, model drift).",
+    "Très bonne capacité de communication écrite et orale : rédaction de notes de cadrage, de rapports méthodologiques destinés aux validateurs internes et au régulateur, présentation des résultats à des comités de direction et de risques.",
+    "Qualités personnelles attendues : rigueur, sens de la pédagogie, esprit critique, autonomie et capacité à dialoguer avec des interlocuteurs métiers variés (risk managers, équipes commerciales, contrôle interne, audit).",
+    "Une expérience préalable dans le secteur bancaire, l'assurance ou le crédit à la consommation est fortement valorisée."
+  ],
+  "Description": [
+    "Au sein de la direction des Risques de Crédit du Crédit Mutuel Arkéa, le consultant intégrera l'équipe « Modélisation & Scoring » composée de 9 personnes (1 manager, 6 data scientists / statisticiens, 2 data engineers) qui conçoit et maintient l'ensemble des modèles de scoring utilisés par les fédérations du groupe.",
+    "Mission principale : concevoir, développer, documenter et accompagner la mise en production de modèles de scoring sur le périmètre des particuliers et des professionnels.",
+    "Le consultant aura en charge la refonte d'un modèle de scoring d'octroi de crédit à la consommation actuellement en production (modèle SAS développé en 2019, performances qui se dégradent — PSI > 0,25 sur plusieurs variables clés).",
+    "Activités principales : cadrage méthodologique avec les équipes risque (définition de la cible, périmètre, profondeur d'historique, contraintes réglementaires applicables).",
+    "Extraction et préparation des données depuis le datalake du groupe (environnement Cloudera puis migration en cours vers Snowflake) — volumes typiques de quelques millions de dossiers de crédit sur 5 à 7 ans d'antériorité.",
+    "Analyse exploratoire approfondie, traitement des valeurs manquantes, des outliers, construction de variables (feature engineering) en lien étroit avec les experts métier.",
+    "Développement de modèles candidats en Python (régression logistique, Gradient Boosting), comparaison des performances, sélection du modèle final selon les critères performance / interprétabilité / stabilité.",
+    "Calibration du score, définition des grilles de décision et des seuils, simulation des impacts business (taux d'acceptation, coût du risque attendu).",
+    "Documentation complète selon les standards internes du groupe (note de cadrage, rapport méthodologique, fiche modèle) — ces livrables seront soumis à la validation indépendante interne puis au régulateur.",
+    "Préparation et participation aux comités de validation interne (présentation des choix méthodologiques, réponse aux remarques des validateurs).",
+    "Accompagnement de la mise en production avec l'équipe data engineering (industrialisation du pipeline d'inférence, intégration au moteur de décision).",
+    "Mise en place du suivi de performance post-déploiement (backtesting trimestriel, surveillance du PSI, alertes en cas de dérive).",
+    "En parallèle, le consultant contribuera ponctuellement à d'autres travaux de l'équipe : analyses ad-hoc pour le comité des risques, études d'opportunité sur de nouveaux cas d'usage (scoring de fraude, modèle de prépayement).",
+    "Une partie du temps (environ 20%) sera consacrée à la montée en compétence de l'équipe sur Python et les pratiques MLOps modernes, via des sessions de partage hebdomadaires et du pair programming.",
+    "Mission longue : démarrage souhaité en janvier 2026, durée initiale de 9 mois avec très forte probabilité de prolongation (le programme de refonte des modèles court jusqu'en 2028).",
+    "Localisation : siège du Crédit Mutuel Arkéa à Brest (Le Relecq-Kerhuon), avec présence sur site 2 jours par semaine obligatoires et possibilité de télétravail le reste du temps. Déplacements ponctuels à Paris (1 à 2 jours par mois) pour les comités de pilotage avec la direction des risques groupe.",
+    "TJM cible : entre 650 € et 850 € selon profil et expérience."
+  ],
+  "Contexte": [
+    "Le Crédit Mutuel Arkéa, banque coopérative et collaborative regroupant les fédérations du Crédit Mutuel de Bretagne, du Sud-Ouest et Massif Central ainsi qu'une trentaine de filiales spécialisées (Fortuneo, Suravenir, Arkéa Banque Entreprises et Institutionnels…), a engagé en 2024 un vaste programme pluriannuel de modernisation de l'ensemble de ses modèles de scoring de risque.",
+    "Ce programme, baptisé en interne « Score 2028 », vise trois objectifs majeurs : (1) remettre à niveau les modèles vieillissants dont les performances se sont dégradées ces dernières années, notamment dans le contexte post-Covid et inflationniste ; (2) se mettre en conformité avec les nouvelles attentes du superviseur en matière de model risk management et d'IA responsable ; (3) accélérer le time-to-market des futurs modèles en industrialisant la chaîne de développement (MLOps).",
+    "Le périmètre couvre l'ensemble des scorings utilisés par le groupe : octroi crédit habitat, octroi crédit conso, scoring comportemental retail, scoring TPE / PME, modèles IRB Bâle pour les sociétés d'assurance du groupe.",
+    "Stack technique en transition : l'environnement historique repose largement sur SAS (Enterprise Guide, EM, Viya pour certaines briques) et une infrastructure Cloudera on-premise. Le groupe est en cours de migration vers une plateforme moderne (Snowflake + Python + MLflow + déploiement Kubernetes) avec un objectif de bascule complète à horizon 2027. Le consultant interviendra donc dans un contexte hybride, ce qui constitue à la fois un défi technique et une opportunité de contribuer à la stratégie de migration.",
+    "Contexte réglementaire particulièrement exigeant : les modèles produits par l'équipe sont soumis à validation interne indépendante (équipe « Model Validation »), audit interne, et pour les modèles IRB à la revue de la BCE dans le cadre des inspections sur site et de la TRIM (Targeted Review of Internal Models). Plusieurs missions du superviseur sont prévues sur 2026 et 2027.",
+    "Le groupe a fait de l'IA responsable un axe stratégique fort : un cadre interne d'éthique de l'IA a été publié en 2024, avec des exigences renforcées en matière d'explicabilité, de surveillance des biais (notamment sur les variables sensibles ou pouvant être corrélées à des critères discriminatoires) et de gouvernance des modèles.",
+    "L'équipe de modélisation a une culture forte du travail bien fait et de la rigueur méthodologique : les revues de code et de modèle sont systématiques, et la documentation est considérée comme un livrable de premier plan, au même titre que le code.",
+    "Ambiance de travail : équipe à taille humaine, mix entre profils statisticiens « historiques » (forte expertise métier et réglementaire) et profils data scientists « plus jeunes » (orientés Python et MLOps). Le consultant jouera un rôle de passerelle entre ces deux cultures."
+  ],
+  "entreprise": "Crédit Mutuel Arkéa",
+  "poste": "Data Scientist",
+  "technos": [
+    "Python (pandas, numpy, scikit-learn, statsmodels, matplotlib / seaborn)",
+    "SQL avancé",
+    "SAS (notamment SAS Enterprise Guide et / ou SAS EM)",
+    "R",
+    "AWS (Snowflake)",
+    "MLflow",
+    "Flask / FastAPI",
+    "Kubernetes"
+  ],
+  "seniorite_min_annees": 4
+}

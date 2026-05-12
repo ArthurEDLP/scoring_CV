@@ -302,7 +302,7 @@ def afficher_resultats(
 if __name__ == "__main__":
     print("📂 Chargement des données...")
     cvs    = charger_cvs("./CV_JSON")
-    offres = charger_offres("./AO_JSON")
+    offres = charger_offres("./AO_JSON/AO_PMU.json")
     print(f"   {len(cvs)} CVs et {len(offres)} offres chargés.\n")
 
     if not cvs or not offres:
