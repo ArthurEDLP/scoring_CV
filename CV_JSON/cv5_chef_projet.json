@@ -1,0 +1,83 @@
+{
+  "id": "TVA",
+  "formations": [],
+  "certifications": [
+    "PMP - Project Management Professional (PMI) (2024, recertifié)",
+    "PRINCE2 Practitioner (2019)",
+    "Professional Scrum Master II - Scrum.org (2020)",
+    "SAFe 6 Program Consultant (SPC) (2023)",
+    "ITIL 4 Foundation (2017)"
+  ],
+  "langues": [],
+  "competences_techniques": [
+    "Agile (Scrum, Kanban, SAFe)",
+    "Cycle en V",
+    "Hybride",
+    "Lean Six Sigma (Green Belt)",
+    "Jira",
+    "Confluence",
+    "MS Project",
+    "Monday.com",
+    "Trello",
+    "Smartsheet",
+    "Tableau de bord (Power BI, Tableau)",
+    "Reporting COMEX",
+    "Suivi budgétaire (Excel avancé, SAP)",
+    "SQL (lecture / requêtes simples)",
+    "AWS",
+    "Microsoft 365",
+    "Google Workspace",
+    "Slack"
+  ],
+  "savoir_faire/savoir_etre": [
+    "Pilotage de programmes data complexes (jusqu'à 8 M€ de budget)",
+    "Management transverse (équipes mixtes internes / prestataires jusqu'à 25 personnes)",
+    "Communication et reporting auprès du COMEX et des sponsors C-Level",
+    "Cadrage de besoins et arbitrage entre les parties prenantes",
+    "Gestion des risques et plans de mitigation",
+    "Animation d'ateliers (design thinking, user stories mapping, événements SAFe)",
+    "Coaching agile d'équipes en transformation",
+    "Capacité de négociation avec les fournisseurs et éditeurs",
+    "Diplomatie et résolution de conflits"
+  ],
+  "experiences": [
+    {
+      "poste": "Program Manager - Programme Data & IA",
+      "entreprise": "L'Oréal, Clichy",
+      "date": "01/2022 - Aujourd'hui",
+      "details": "Contexte : Pilotage d'un programme stratégique de transformation data au sein de la Direction Marketing International. Coordination et gestion des 4 squads, négociation avec les prestataires externes, reporting trimestriel aux sponsors."
+    },
+    {
+      "poste": "Chef de Projet IT Senior - Data & Analytics",
+      "entreprise": "Société Générale - Banque de Détail France, La Défense",
+      "date": "06/2018 - 12/2021",
+      "details": "Pilotage d'un projet 'Vue Client 360', coordination interne et externe avec les prestataires pour la construction du référentiel client unifié, gestion des dépendances entre projets SI partenaires."
+    },
+    {
+      "poste": "Chef de Projet IT",
+      "entreprise": "ING Bank, Amsterdam (Pays-Bas)",
+      "date": "09/2014 - 05/2018",
+      "details": "Mission longue au sein du Tribe 'Daily Banking' pour la mise en place de projets IT avec les méthodes agiles, coordination d'équipes internationales et animation des squads Scrum."
+    },
+    {
+      "poste": "Consultant Junior - PMO",
+      "entreprise": "Sopra Steria Consulting, Paris",
+      "date": "10/2009 - 08/2014",
+      "details": "Missions de pilotage et gestion des projets SI pour les clients grands comptes dans le secteur bancaire avec une évolution progressive du rôle vers Chef de Projet."
+    }
+  ],
+  "savoir_faire": [
+    "Pilotage de programmes data complexes (jusqu'à 8 M€ de budget)",
+    "Management transverse (équipes mixtes internes / prestataires jusqu'à 25 personnes)",
+    "Communication et reporting auprès du COMEX et des sponsors C-Level",
+    "Cadrage de besoins et arbitrage entre les parties prenantes",
+    "Gestion des risques et plans de mitigation",
+    "Animation d'ateliers (design thinking, user stories mapping, événements SAFe)",
+    "Coaching agile d'équipes en transformation"
+  ],
+  "savoir_etre": [
+    "Pilotage de programmes data complexes",
+    "Management transverse des équipes mixtes internes et externes jusqu'à 25 personnes",
+    "Communication avec les sponsors C-Level pour le COMEX Marketing International"
+  ]
+}

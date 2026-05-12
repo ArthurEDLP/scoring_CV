@@ -1,0 +1,103 @@
+{
+  "id": "EMA",
+  "formations": [],
+  "certifications": [
+    "ISTQB Advanced Level - Test Manager (2023)",
+    "ISTQB Advanced Level - Test Automation Engineer (2021)",
+    "ISTQB Foundation Level (2018)",
+    "Selenium WebDriver Certified Professional (2020)",
+    "Certified Agile Tester (CAT) (2022)"
+  ],
+  "langues": [],
+  "competences_techniques": [
+    "Selenium WebDriver",
+    "Cypress",
+    "Playwright",
+    "Appium",
+    "TestCafe",
+    "Robot Framework",
+    "Java",
+    "Python",
+    "JavaScript",
+    "TypeScript",
+    "Groovy",
+    "JUnit",
+    "TestNG",
+    "Pytest",
+    "Cucumber (BDD)",
+    "Postman",
+    "REST Assured",
+    "Karate",
+    "SoapUI",
+    "JMeter",
+    "Gatling",
+    "k6",
+    "LoadRunner",
+    "XCUITest",
+    "Espresso",
+    "BrowserStack",
+    "Sauce Labs",
+    "Jira",
+    "Xray",
+    "Zephyr",
+    "TestRail",
+    "qTest",
+    "HP ALM",
+    "Jenkins",
+    "GitLab CI",
+    "GitHub Actions",
+    "Azure DevOps"
+  ],
+  "savoir_faire/savoir_etre": [
+    "Stratégie de test et plans de test",
+    "Animation d'équipes QA (jusqu'à 5 testeurs)",
+    "Mise en place de la culture qualité dans des organisations agiles",
+    "Définition de KPIs qualité et reporting au management",
+    "Coaching de testeurs juniors et formation aux méthodes BDD",
+    "Esprit critique et minutie",
+    "Capacité à challenger les développeurs et les PO sans dégrader la relation",
+    "Documentation rigoureuse des cas de test et des bugs"
+  ],
+  "experiences": [
+    {
+      "poste": "QA Lead / Test Manager",
+      "entreprise": "AXA France, Nanterre",
+      "date": "04/2022 - Aujourd'hui",
+      "details": "Contexte : Programme de refonte du SI Assurance Auto (MyAXA Auto) - 4 squads, plus de 30 développeurs, mise en production trimestrielle. Définition et déploiement de la stratégie de test transverse au programme (pyramide de tests, critères d'entrée/sortie), encadrement d'une équipe de QA Engineers avec l'animation des cérémonies qualité."
+    },
+    {
+      "poste": "Senior QA Engineer - Automation Lead",
+      "entreprise": "Decathlon Digital, Villeneuve d'Ascq",
+      "date": "06/2019 - 03/2022",
+      "details": "Conception et mise en place du framework d'automatisation web (Cypress + TypeScript) pour la plateforme e-commerce decathlon.fr, identification de bottlenecks grâce aux tests performance avec k6."
+    },
+    {
+      "poste": "QA Engineer",
+      "entreprise": "Cdiscount, Bordeaux",
+      "date": "09/2017 - 05/2019",
+      "details": "Conception et exécution de plans de test manuels et automatisés sur la gestion des comptes vendeurs et du catalogue tiers, création d'un jeu de données représentatif pour les tests."
+    },
+    {
+      "poste": "Testeur logiciel - Stage de fin d'études",
+      "entreprise": "Cap Gemini, Bordeaux",
+      "date": "03/2017 - 08/2017",
+      "details": "Exécution de tests fonctionnels manuels sur une application et rédaction de cahiers de tests sous HP ALM."
+    }
+  ],
+  "savoir_faire": [
+    "Stratégie de test et plans de test",
+    "Animation d'équipes QA (jusqu'à 5 testeurs)",
+    "Définition de KPIs qualité et reporting au management",
+    "Coaching de testeurs juniors et formation aux méthodes BDD",
+    "Esprit critique et minutie",
+    "Capacité à challenger les développeurs et les PO sans dégrader la relation",
+    "Documentation rigoureuse des cas de test et des bugs"
+  ],
+  "savoir_etre": [
+    "Esprit d'équipe",
+    "Rigueur",
+    "Capacité à challenger les développeurs et les PO sans dégrader la relation",
+    "Minutie",
+    "Stratégique"
+  ]
+}
