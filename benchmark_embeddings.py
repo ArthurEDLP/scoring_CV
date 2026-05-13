@@ -1,7 +1,8 @@
 """
 Benchmark de modèles d'embedding pour le matching CV/AO.
 
-Pour chaque CV face à une AO, calcule 8 scores de similarité cosinus :
+Pour chaque CV face à UNE AO précise (chemin fourni en argument), calcule
+8 scores de similarité cosinus :
 
   Granularité "par expérience" (1 score par exp du CV) :
     1. expérience vs Profil
@@ -15,7 +16,8 @@ Pour chaque CV face à une AO, calcule 8 scores de similarité cosinus :
     7. CV complet vs Contexte
     8. CV complet vs AO complète
 
-Produit un fichier JSON par modèle testé : benchmark_<nom_safe>.json
+Produit un fichier JSON nommé   benchmark_<modele>_<aoId>.json
+(le nom de l'AO est inclus pour ne pas écraser un benchmark précédent).
 
 Le texte d'une expérience est :   "<poste> chez <entreprise> : <details>"
 Le texte du CV complet est : tout le texte des expériences + technos + savoir-faire/être
@@ -23,15 +25,12 @@ Le texte d'une section AO est : la concaténation des phrases de cette section
 Le texte de l'AO complète est : Profil + Description + Contexte concaténés
 
 Usage :
-    python benchmark_embeddings.py paraphrase-multilingual-mpnet-base-v2
-    python benchmark_embeddings.py intfloat/multilingual-e5-large
-    python benchmark_embeddings.py sentence-transformers/all-MiniLM-L6-v2
+    python benchmark_embeddings.py <modele> <chemin_ao>
 
-    # AO et CV depuis dossiers custom :
-    python benchmark_embeddings.py <model> --ao AO_JSON --cv CV_JSON --output ./bench
-
-    # Tester une AO spécifique :
-    python benchmark_embeddings.py <model> --ao-id PMU
+Exemples :
+    python benchmark_embeddings.py paraphrase-multilingual-mpnet-base-v2 AO_JSON/PMU.json
+    python benchmark_embeddings.py intfloat/multilingual-e5-large AO_JSON/CANAL+.json
+    python benchmark_embeddings.py sentence-transformers/all-MiniLM-L6-v2 AO_JSON/SNCF.json --cv ./CV_JSON --output ./bench
 """
 
 import argparse
@@ -44,7 +43,7 @@ from typing import Dict, List, Optional, Tuple
 import numpy as np
 from sentence_transformers import SentenceTransformer
 
-from CV_AO_Loader import charger_cvs, charger_offres
+from CV_AO_Loader import charger_cvs
 
 
 # ─────────────────────────────────────────────────────────────────────
@@ -267,35 +266,39 @@ def _nom_sortie_safe(nom_modele: str) -> str:
 
 
 def lancer_benchmark(
-    nom_modele:  str,
-    dossier_ao:  str,
-    dossier_cv:  str,
-    dossier_out: str,
-    ao_id_cible: Optional[str] = None,
+    nom_modele:   str,
+    chemin_ao:    str,
+    dossier_cv:   str,
+    dossier_out:  str,
 ) -> Path:
     """
-    Lance le benchmark pour un modèle donné, écrit le JSON, retourne le chemin.
+    Lance le benchmark pour un modèle donné sur UNE AO précise (chemin).
+    Écrit le JSON, retourne le chemin du fichier produit.
     """
     print(f"📂 Chargement des données...")
-    cvs    = charger_cvs(dossier_cv)
-    offres = charger_offres(dossier_ao)
-    print(f"   {len(cvs)} CVs et {len(offres)} AO chargés.")
 
-    if not cvs or not offres:
-        raise RuntimeError("Aucune donnée à traiter.")
+    # CVs depuis le dossier
+    cvs = charger_cvs(dossier_cv)
+    if not cvs:
+        raise RuntimeError(f"Aucun CV trouvé dans : {dossier_cv}")
+    print(f"   {len(cvs)} CVs chargés depuis {dossier_cv}")
 
-    # Choix de l'AO à benchmarker
-    if ao_id_cible:
-        offres_filtrees = [o for o in offres if o["id"] == ao_id_cible]
-        if not offres_filtrees:
-            raise RuntimeError(
-                f"AO '{ao_id_cible}' introuvable. Disponibles : "
-                f"{[o['id'] for o in offres]}"
-            )
-        ao = offres_filtrees[0]
-    else:
-        ao = offres[0]
-        print(f"   AO utilisée (1ère du dossier) : {ao['id']}")
+    # AO : chargée directement depuis le chemin fourni
+    chemin_ao_path = Path(chemin_ao)
+    if not chemin_ao_path.exists():
+        raise RuntimeError(f"Fichier AO introuvable : {chemin_ao}")
+
+    with open(chemin_ao_path, "r", encoding="utf-8") as f:
+        data_ao = json.load(f)
+    # Tolère le format [{"data": {...}}] ou {"data": {...}} ou directement le data
+    if isinstance(data_ao, list):
+        data_ao = data_ao[0]
+    ao = {
+        "id":     data_ao.get("data", data_ao).get("id", chemin_ao_path.stem),
+        "source": str(chemin_ao_path),
+        "data":   data_ao.get("data", data_ao),
+    }
+    print(f"   AO utilisée : {ao['id']}  ({chemin_ao_path.name})")
 
     print(f"\n🤖 Chargement du modèle : {nom_modele}")
     print(f"   (téléchargement automatique au 1er usage)")
@@ -329,9 +332,12 @@ def lancer_benchmark(
         "resultats":  resultats,
     }
 
-    # Écriture
+    # Écriture : nom inclut modèle + AO (pas d'écrasement entre AO différentes)
     Path(dossier_out).mkdir(parents=True, exist_ok=True)
-    nom_fichier = f"benchmark_{_nom_sortie_safe(nom_modele)}.json"
+    nom_fichier = (
+        f"benchmark_{_nom_sortie_safe(nom_modele)}"
+        f"_{_nom_sortie_safe(ao['id'])}.json"
+    )
     chemin = Path(dossier_out) / nom_fichier
     with open(chemin, "w", encoding="utf-8") as f:
         json.dump(payload, f, ensure_ascii=False, indent=2)
@@ -354,23 +360,23 @@ def main():
              "'paraphrase-multilingual-mpnet-base-v2' ou "
              "'intfloat/multilingual-e5-large')",
     )
-    parser.add_argument("--ao", default="./AO_JSON",
-                        help="Dossier des AO (défaut: ./AO_JSON)")
+    parser.add_argument(
+        "ao",
+        help="Chemin vers le fichier JSON de l'AO à benchmarker "
+             "(ex: AO_JSON/PMU.json)",
+    )
     parser.add_argument("--cv", default="./CV_JSON",
                         help="Dossier des CV (défaut: ./CV_JSON)")
     parser.add_argument("--output", "-o", default="./benchmark",
                         help="Dossier de sortie (défaut: ./benchmark)")
-    parser.add_argument("--ao-id", default=None,
-                        help="ID d'une AO spécifique (sinon prend la 1ère)")
     args = parser.parse_args()
 
     try:
         lancer_benchmark(
             nom_modele  = args.modele,
-            dossier_ao  = args.ao,
+            chemin_ao   = args.ao,
             dossier_cv  = args.cv,
             dossier_out = args.output,
-            ao_id_cible = args.ao_id,
         )
     except Exception as e:
         print(f"\n❌ Erreur : {e}")
