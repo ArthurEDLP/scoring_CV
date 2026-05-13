@@ -1,0 +1,24 @@
+﻿# Environnements virtuels Python
+venv/
+.venv/
+env/
+
+# Cache Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Caches du projet
+cache_cv/
+cache_offre/
+
+# Modèles HuggingFace
+.cache/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+Thumbs.db
+.DS_Store
