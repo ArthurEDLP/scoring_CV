@@ -1,0 +1,797 @@
+{
+  "modele": "intfloat/multilingual-e5-large-instruct",
+  "dimension": 1024,
+  "ao": {
+    "id": "CANAL+",
+    "poste": "Consultant ETL & Data Platform"
+  },
+  "resultats": {
+    "CEU": {
+      "cv_id": "CEU",
+      "scores": {
+        "experiences_vs_sections": {
+          "vs_profil": [
+            {
+              "poste": "Lead Data Engineer",
+              "annees": 3.7,
+              "score": 0.876
+            },
+            {
+              "poste": "Senior Data Engineer",
+              "annees": 3.33,
+              "score": 0.8926
+            },
+            {
+              "poste": "Data Engineer",
+              "annees": 2.41,
+              "score": 0.8838
+            },
+            {
+              "poste": "Consultant Data / BI",
+              "annees": 2.0,
+              "score": 0.8737
+            }
+          ],
+          "vs_description": [
+            {
+              "poste": "Lead Data Engineer",
+              "annees": 3.7,
+              "score": 0.8841
+            },
+            {
+              "poste": "Senior Data Engineer",
+              "annees": 3.33,
+              "score": 0.8882
+            },
+            {
+              "poste": "Data Engineer",
+              "annees": 2.41,
+              "score": 0.8601
+            },
+            {
+              "poste": "Consultant Data / BI",
+              "annees": 2.0,
+              "score": 0.8628
+            }
+          ],
+          "vs_contexte": [
+            {
+              "poste": "Lead Data Engineer",
+              "annees": 3.7,
+              "score": 0.883
+            },
+            {
+              "poste": "Senior Data Engineer",
+              "annees": 3.33,
+              "score": 0.8935
+            },
+            {
+              "poste": "Data Engineer",
+              "annees": 2.41,
+              "score": 0.8756
+            },
+            {
+              "poste": "Consultant Data / BI",
+              "annees": 2.0,
+              "score": 0.8926
+            }
+          ],
+          "vs_ao_complete": [
+            {
+              "poste": "Lead Data Engineer",
+              "annees": 3.7,
+              "score": 0.8796
+            },
+            {
+              "poste": "Senior Data Engineer",
+              "annees": 3.33,
+              "score": 0.8845
+            },
+            {
+              "poste": "Data Engineer",
+              "annees": 2.41,
+              "score": 0.864
+            },
+            {
+              "poste": "Consultant Data / BI",
+              "annees": 2.0,
+              "score": 0.8797
+            }
+          ]
+        },
+        "cv_complet_vs_sections": {
+          "vs_profil": 0.8787,
+          "vs_description": 0.8953,
+          "vs_contexte": 0.9019,
+          "vs_ao_complete": 0.8965
+        }
+      }
+    },
+    "SLE": {
+      "cv_id": "SLE",
+      "scores": {
+        "experiences_vs_sections": {
+          "vs_profil": [
+            {
+              "poste": "Lead Data Analyst",
+              "annees": 4.95,
+              "score": 0.8573
+            },
+            {
+              "poste": "Data Analyst Senior",
+              "annees": 1.66,
+              "score": 0.8512
+            },
+            {
+              "poste": "Data Scientist",
+              "annees": 0.83,
+              "score": 0.8629
+            },
+            {
+              "poste": "Data Scientist Stagiaire",
+              "annees": 0.42,
+              "score": 0.8633
+            }
+          ],
+          "vs_description": [
+            {
+              "poste": "Lead Data Analyst",
+              "annees": 4.95,
+              "score": 0.8639
+            },
+            {
+              "poste": "Data Analyst Senior",
+              "annees": 1.66,
+              "score": 0.8294
+            },
+            {
+              "poste": "Data Scientist",
+              "annees": 0.83,
+              "score": 0.8371
+            },
+            {
+              "poste": "Data Scientist Stagiaire",
+              "annees": 0.42,
+              "score": 0.8426
+            }
+          ],
+          "vs_contexte": [
+            {
+              "poste": "Lead Data Analyst",
+              "annees": 4.95,
+              "score": 0.871
+            },
+            {
+              "poste": "Data Analyst Senior",
+              "annees": 1.66,
+              "score": 0.8467
+            },
+            {
+              "poste": "Data Scientist",
+              "annees": 0.83,
+              "score": 0.8661
+            },
+            {
+              "poste": "Data Scientist Stagiaire",
+              "annees": 0.42,
+              "score": 0.8548
+            }
+          ],
+          "vs_ao_complete": [
+            {
+              "poste": "Lead Data Analyst",
+              "annees": 4.95,
+              "score": 0.8658
+            },
+            {
+              "poste": "Data Analyst Senior",
+              "annees": 1.66,
+              "score": 0.8352
+            },
+            {
+              "poste": "Data Scientist",
+              "annees": 0.83,
+              "score": 0.8478
+            },
+            {
+              "poste": "Data Scientist Stagiaire",
+              "annees": 0.42,
+              "score": 0.8426
+            }
+          ]
+        },
+        "cv_complet_vs_sections": {
+          "vs_profil": 0.8717,
+          "vs_description": 0.8743,
+          "vs_contexte": 0.8888,
+          "vs_ao_complete": 0.8784
+        }
+      }
+    },
+    "KBE": {
+      "cv_id": "KBE",
+      "scores": {
+        "experiences_vs_sections": {
+          "vs_profil": [
+            {
+              "poste": "Développeur Full Stack Senior",
+              "annees": 3.36,
+              "score": 0.8677
+            },
+            {
+              "poste": "Développeur Full Stack",
+              "annees": 1.75,
+              "score": 0.8546
+            },
+            {
+              "poste": "Développeur Backend",
+              "annees": 1.42,
+              "score": 0.8552
+            },
+            {
+              "poste": "Développeur Web - Stage de fin d'études",
+              "annees": 0.42,
+              "score": 0.8716
+            }
+          ],
+          "vs_description": [
+            {
+              "poste": "Développeur Full Stack Senior",
+              "annees": 3.36,
+              "score": 0.8505
+            },
+            {
+              "poste": "Développeur Full Stack",
+              "annees": 1.75,
+              "score": 0.8255
+            },
+            {
+              "poste": "Développeur Backend",
+              "annees": 1.42,
+              "score": 0.8405
+            },
+            {
+              "poste": "Développeur Web - Stage de fin d'études",
+              "annees": 0.42,
+              "score": 0.8416
+            }
+          ],
+          "vs_contexte": [
+            {
+              "poste": "Développeur Full Stack Senior",
+              "annees": 3.36,
+              "score": 0.853
+            },
+            {
+              "poste": "Développeur Full Stack",
+              "annees": 1.75,
+              "score": 0.8402
+            },
+            {
+              "poste": "Développeur Backend",
+              "annees": 1.42,
+              "score": 0.8398
+            },
+            {
+              "poste": "Développeur Web - Stage de fin d'études",
+              "annees": 0.42,
+              "score": 0.8428
+            }
+          ],
+          "vs_ao_complete": [
+            {
+              "poste": "Développeur Full Stack Senior",
+              "annees": 3.36,
+              "score": 0.8533
+            },
+            {
+              "poste": "Développeur Full Stack",
+              "annees": 1.75,
+              "score": 0.8309
+            },
+            {
+              "poste": "Développeur Backend",
+              "annees": 1.42,
+              "score": 0.8353
+            },
+            {
+              "poste": "Développeur Web - Stage de fin d'études",
+              "annees": 0.42,
+              "score": 0.836
+            }
+          ]
+        },
+        "cv_complet_vs_sections": {
+          "vs_profil": 0.8685,
+          "vs_description": 0.8547,
+          "vs_contexte": 0.8549,
+          "vs_ao_complete": 0.8532
+        }
+      }
+    },
+    "EMA": {
+      "cv_id": "EMA",
+      "scores": {
+        "experiences_vs_sections": {
+          "vs_profil": [
+            {
+              "poste": "QA Lead / Test Manager",
+              "annees": 4.11,
+              "score": 0.8439
+            },
+            {
+              "poste": "Senior QA Engineer - Automation Lead",
+              "annees": 2.75,
+              "score": 0.8697
+            },
+            {
+              "poste": "QA Engineer",
+              "annees": 1.66,
+              "score": 0.8511
+            },
+            {
+              "poste": "Testeur logiciel - Stage de fin d'études",
+              "annees": 0.42,
+              "score": 0.8348
+            }
+          ],
+          "vs_description": [
+            {
+              "poste": "QA Lead / Test Manager",
+              "annees": 4.11,
+              "score": 0.8347
+            },
+            {
+              "poste": "Senior QA Engineer - Automation Lead",
+              "annees": 2.75,
+              "score": 0.8582
+            },
+            {
+              "poste": "QA Engineer",
+              "annees": 1.66,
+              "score": 0.8289
+            },
+            {
+              "poste": "Testeur logiciel - Stage de fin d'études",
+              "annees": 0.42,
+              "score": 0.8161
+            }
+          ],
+          "vs_contexte": [
+            {
+              "poste": "QA Lead / Test Manager",
+              "annees": 4.11,
+              "score": 0.8322
+            },
+            {
+              "poste": "Senior QA Engineer - Automation Lead",
+              "annees": 2.75,
+              "score": 0.8586
+            },
+            {
+              "poste": "QA Engineer",
+              "annees": 1.66,
+              "score": 0.8402
+            },
+            {
+              "poste": "Testeur logiciel - Stage de fin d'études",
+              "annees": 0.42,
+              "score": 0.817
+            }
+          ],
+          "vs_ao_complete": [
+            {
+              "poste": "QA Lead / Test Manager",
+              "annees": 4.11,
+              "score": 0.8299
+            },
+            {
+              "poste": "Senior QA Engineer - Automation Lead",
+              "annees": 2.75,
+              "score": 0.852
+            },
+            {
+              "poste": "QA Engineer",
+              "annees": 1.66,
+              "score": 0.8327
+            },
+            {
+              "poste": "Testeur logiciel - Stage de fin d'études",
+              "annees": 0.42,
+              "score": 0.814
+            }
+          ]
+        },
+        "cv_complet_vs_sections": {
+          "vs_profil": 0.8591,
+          "vs_description": 0.8557,
+          "vs_contexte": 0.8531,
+          "vs_ao_complete": 0.8511
+        }
+      }
+    },
+    "TVA": {
+      "cv_id": "TVA",
+      "scores": {
+        "experiences_vs_sections": {
+          "vs_profil": [
+            {
+              "poste": "Program Manager - Programme Data & IA",
+              "annees": 4.36,
+              "score": 0.8375
+            },
+            {
+              "poste": "Chef de Projet IT Senior - Data & Analytics",
+              "annees": 3.5,
+              "score": 0.8733
+            },
+            {
+              "poste": "Chef de Projet IT",
+              "annees": 3.66,
+              "score": 0.8581
+            },
+            {
+              "poste": "Consultant Junior - PMO",
+              "annees": 4.83,
+              "score": 0.8486
+            }
+          ],
+          "vs_description": [
+            {
+              "poste": "Program Manager - Programme Data & IA",
+              "annees": 4.36,
+              "score": 0.8444
+            },
+            {
+              "poste": "Chef de Projet IT Senior - Data & Analytics",
+              "annees": 3.5,
+              "score": 0.8578
+            },
+            {
+              "poste": "Chef de Projet IT",
+              "annees": 3.66,
+              "score": 0.8462
+            },
+            {
+              "poste": "Consultant Junior - PMO",
+              "annees": 4.83,
+              "score": 0.8318
+            }
+          ],
+          "vs_contexte": [
+            {
+              "poste": "Program Manager - Programme Data & IA",
+              "annees": 4.36,
+              "score": 0.8527
+            },
+            {
+              "poste": "Chef de Projet IT Senior - Data & Analytics",
+              "annees": 3.5,
+              "score": 0.8718
+            },
+            {
+              "poste": "Chef de Projet IT",
+              "annees": 3.66,
+              "score": 0.8403
+            },
+            {
+              "poste": "Consultant Junior - PMO",
+              "annees": 4.83,
+              "score": 0.8464
+            }
+          ],
+          "vs_ao_complete": [
+            {
+              "poste": "Program Manager - Programme Data & IA",
+              "annees": 4.36,
+              "score": 0.8452
+            },
+            {
+              "poste": "Chef de Projet IT Senior - Data & Analytics",
+              "annees": 3.5,
+              "score": 0.8637
+            },
+            {
+              "poste": "Chef de Projet IT",
+              "annees": 3.66,
+              "score": 0.8429
+            },
+            {
+              "poste": "Consultant Junior - PMO",
+              "annees": 4.83,
+              "score": 0.8438
+            }
+          ]
+        },
+        "cv_complet_vs_sections": {
+          "vs_profil": 0.8705,
+          "vs_description": 0.8872,
+          "vs_contexte": 0.8922,
+          "vs_ao_complete": 0.8915
+        }
+      }
+    },
+    "RMA": {
+      "cv_id": "RMA",
+      "scores": {
+        "experiences_vs_sections": {
+          "vs_profil": [
+            {
+              "poste": "Commercial",
+              "annees": 7.2,
+              "score": 0.8127
+            },
+            {
+              "poste": "Assistant Commercial Export",
+              "annees": 3.92,
+              "score": 0.8171
+            },
+            {
+              "poste": "Assistant Commercial Stagiaire",
+              "annees": 1.0,
+              "score": 0.8354
+            }
+          ],
+          "vs_description": [
+            {
+              "poste": "Commercial",
+              "annees": 7.2,
+              "score": 0.7921
+            },
+            {
+              "poste": "Assistant Commercial Export",
+              "annees": 3.92,
+              "score": 0.7959
+            },
+            {
+              "poste": "Assistant Commercial Stagiaire",
+              "annees": 1.0,
+              "score": 0.805
+            }
+          ],
+          "vs_contexte": [
+            {
+              "poste": "Commercial",
+              "annees": 7.2,
+              "score": 0.8045
+            },
+            {
+              "poste": "Assistant Commercial Export",
+              "annees": 3.92,
+              "score": 0.8083
+            },
+            {
+              "poste": "Assistant Commercial Stagiaire",
+              "annees": 1.0,
+              "score": 0.8134
+            }
+          ],
+          "vs_ao_complete": [
+            {
+              "poste": "Commercial",
+              "annees": 7.2,
+              "score": 0.8007
+            },
+            {
+              "poste": "Assistant Commercial Export",
+              "annees": 3.92,
+              "score": 0.8014
+            },
+            {
+              "poste": "Assistant Commercial Stagiaire",
+              "annees": 1.0,
+              "score": 0.8087
+            }
+          ]
+        },
+        "cv_complet_vs_sections": {
+          "vs_profil": 0.8477,
+          "vs_description": 0.8363,
+          "vs_contexte": 0.8547,
+          "vs_ao_complete": 0.8507
+        }
+      }
+    },
+    "JL": {
+      "cv_id": "JL",
+      "scores": {
+        "experiences_vs_sections": {
+          "vs_profil": [
+            {
+              "poste": "Data Scientist & Data Analyst",
+              "annees": 1.0,
+              "score": 0.8664
+            },
+            {
+              "poste": "Data Scientist",
+              "annees": 0.42,
+              "score": 0.8736
+            },
+            {
+              "poste": "Data Scientist & Data Analyst",
+              "annees": 1.0,
+              "score": 0.8726
+            },
+            {
+              "poste": "Data Scientist & Data Analyst",
+              "annees": 0.42,
+              "score": 0.8645
+            },
+            {
+              "poste": "Data Scientist & Data Analyst",
+              "annees": 0.42,
+              "score": 0.8798
+            },
+            {
+              "poste": "Data Scientist & Data Analyst",
+              "annees": 1.0,
+              "score": 0.8745
+            },
+            {
+              "poste": "Data Scientist & Data Analyst",
+              "annees": 1.0,
+              "score": 0.8721
+            },
+            {
+              "poste": "Data Scientist & Data Analyst",
+              "annees": 1.0,
+              "score": 0.8661
+            },
+            {
+              "poste": "Data Scientist & Data Analyst",
+              "annees": 0.42,
+              "score": 0.8814
+            }
+          ],
+          "vs_description": [
+            {
+              "poste": "Data Scientist & Data Analyst",
+              "annees": 1.0,
+              "score": 0.8461
+            },
+            {
+              "poste": "Data Scientist",
+              "annees": 0.42,
+              "score": 0.8436
+            },
+            {
+              "poste": "Data Scientist & Data Analyst",
+              "annees": 1.0,
+              "score": 0.8473
+            },
+            {
+              "poste": "Data Scientist & Data Analyst",
+              "annees": 0.42,
+              "score": 0.8358
+            },
+            {
+              "poste": "Data Scientist & Data Analyst",
+              "annees": 0.42,
+              "score": 0.8474
+            },
+            {
+              "poste": "Data Scientist & Data Analyst",
+              "annees": 1.0,
+              "score": 0.8451
+            },
+            {
+              "poste": "Data Scientist & Data Analyst",
+              "annees": 1.0,
+              "score": 0.8478
+            },
+            {
+              "poste": "Data Scientist & Data Analyst",
+              "annees": 1.0,
+              "score": 0.8447
+            },
+            {
+              "poste": "Data Scientist & Data Analyst",
+              "annees": 0.42,
+              "score": 0.8483
+            }
+          ],
+          "vs_contexte": [
+            {
+              "poste": "Data Scientist & Data Analyst",
+              "annees": 1.0,
+              "score": 0.8604
+            },
+            {
+              "poste": "Data Scientist",
+              "annees": 0.42,
+              "score": 0.8561
+            },
+            {
+              "poste": "Data Scientist & Data Analyst",
+              "annees": 1.0,
+              "score": 0.8645
+            },
+            {
+              "poste": "Data Scientist & Data Analyst",
+              "annees": 0.42,
+              "score": 0.8582
+            },
+            {
+              "poste": "Data Scientist & Data Analyst",
+              "annees": 0.42,
+              "score": 0.8671
+            },
+            {
+              "poste": "Data Scientist & Data Analyst",
+              "annees": 1.0,
+              "score": 0.8683
+            },
+            {
+              "poste": "Data Scientist & Data Analyst",
+              "annees": 1.0,
+              "score": 0.8618
+            },
+            {
+              "poste": "Data Scientist & Data Analyst",
+              "annees": 1.0,
+              "score": 0.8602
+            },
+            {
+              "poste": "Data Scientist & Data Analyst",
+              "annees": 0.42,
+              "score": 0.8735
+            }
+          ],
+          "vs_ao_complete": [
+            {
+              "poste": "Data Scientist & Data Analyst",
+              "annees": 1.0,
+              "score": 0.849
+            },
+            {
+              "poste": "Data Scientist",
+              "annees": 0.42,
+              "score": 0.8461
+            },
+            {
+              "poste": "Data Scientist & Data Analyst",
+              "annees": 1.0,
+              "score": 0.8499
+            },
+            {
+              "poste": "Data Scientist & Data Analyst",
+              "annees": 0.42,
+              "score": 0.8463
+            },
+            {
+              "poste": "Data Scientist & Data Analyst",
+              "annees": 0.42,
+              "score": 0.8562
+            },
+            {
+              "poste": "Data Scientist & Data Analyst",
+              "annees": 1.0,
+              "score": 0.8553
+            },
+            {
+              "poste": "Data Scientist & Data Analyst",
+              "annees": 1.0,
+              "score": 0.8509
+            },
+            {
+              "poste": "Data Scientist & Data Analyst",
+              "annees": 1.0,
+              "score": 0.8477
+            },
+            {
+              "poste": "Data Scientist & Data Analyst",
+              "annees": 0.42,
+              "score": 0.8631
+            }
+          ]
+        },
+        "cv_complet_vs_sections": {
+          "vs_profil": 0.8772,
+          "vs_description": 0.88,
+          "vs_contexte": 0.9007,
+          "vs_ao_complete": 0.8916
+        }
+      }
+    }
+  }
+}
