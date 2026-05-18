@@ -135,6 +135,68 @@ def _construire_tableau_experiences_max(
     return header, lignes
 
 
+def _construire_tableau_cv_vs_exp(
+    benchmarks_d_une_ao: List[Dict],
+    section: str,
+) -> Tuple[List[str], List[List]]:
+    """
+    Pour CHAQUE modèle, met côte à côte sur la même section :
+      - le score 'CV complet'
+      - le score 'meilleure expérience'
+      - l'écart (exp_max - cv_complet)
+
+    Permet de voir si prendre la meilleure expérience change significativement
+    le résultat par rapport au CV complet concaténé.
+
+    Header :
+      ["CV", "<m1>_cvComplet", "<m1>_expMax", "<m1>_ecart", "<m2>_cvComplet", ...]
+
+    L'écart est positif si la meilleure expérience score PLUS HAUT que le CV
+    complet (→ le CV complet "dilue" le signal du bon poste).
+    L'écart est négatif si le CV complet score plus haut (→ le contexte global
+    aide plus qu'une expérience isolée).
+    """
+    modeles = [b["modele"] for b in benchmarks_d_une_ao]
+
+    header = ["CV"]
+    for m in modeles:
+        header += [f"{m}|cv_complet", f"{m}|exp_max", f"{m}|ecart"]
+
+    # cv_id -> modele -> (cv_complet, exp_max)
+    donnees: Dict[str, Dict[str, Tuple[Optional[float], Optional[float]]]] = \
+        defaultdict(dict)
+
+    for b in benchmarks_d_une_ao:
+        for cv_id, contenu in b["resultats"].items():
+            scores = contenu.get("scores", {})
+
+            cv_complet = scores.get("cv_complet_vs_sections", {}).get(section)
+
+            exps = scores.get("experiences_vs_sections", {}).get(section, [])
+            scores_exp = [e["score"] for e in exps if e.get("score") is not None]
+            exp_max = max(scores_exp) if scores_exp else None
+
+            donnees[cv_id][b["modele"]] = (cv_complet, exp_max)
+
+    lignes = []
+    for cv_id in sorted(donnees.keys()):
+        ligne: List = [cv_id]
+        for m in modeles:
+            cv_c, exp_m = donnees[cv_id].get(m, (None, None))
+            ecart = (
+                round(exp_m - cv_c, 4)
+                if (cv_c is not None and exp_m is not None) else None
+            )
+            ligne += [
+                round(cv_c, 4) if cv_c is not None else None,
+                round(exp_m, 4) if exp_m is not None else None,
+                ecart,
+            ]
+        lignes.append(ligne)
+
+    return header, lignes
+
+
 # ─────────────────────────────────────────────────────────────────────
 # Écriture CSV + Markdown
 # ─────────────────────────────────────────────────────────────────────
@@ -220,6 +282,60 @@ def _resume_par_modele(benchmarks_d_une_ao: List[Dict]) -> str:
     return out
 
 
+def _resume_cv_vs_exp(benchmarks_d_une_ao: List[Dict]) -> str:
+    """
+    Pour chaque modèle et chaque section, calcule l'écart moyen
+    (exp_max - cv_complet) sur tous les CVs.
+
+    Interprétation :
+      - écart moyen POSITIF  → la meilleure expérience score plus haut que
+        le CV complet : prendre l'expérience est plus discriminant
+        (le CV complet "noie" le signal).
+      - écart moyen NÉGATIF  → le CV complet score plus haut : le contexte
+        global apporte plus qu'une expérience isolée.
+      - écart proche de 0    → peu importe la stratégie choisie.
+    """
+    out = "## CV complet vs Meilleure expérience\n\n"
+    out += "Écart moyen = moyenne(exp_max - cv_complet) sur tous les CVs.\n\n"
+    out += "- **Positif** : la meilleure expérience est plus discriminante "
+    out += "(le CV complet dilue le signal)\n"
+    out += "- **Négatif** : le CV complet est plus pertinent "
+    out += "(le contexte global aide)\n"
+    out += "- **~0** : les deux stratégies sont équivalentes\n\n"
+
+    out += "| Modèle | Section | Écart moyen | |exp_max| moy | |cv_complet| moy |\n"
+    out += "|---|---|---|---|---|\n"
+
+    for b in sorted(benchmarks_d_une_ao, key=lambda x: x["modele"]):
+        for section in SECTIONS:
+            ecarts = []
+            exp_vals = []
+            cv_vals = []
+            for cv_id, contenu in b["resultats"].items():
+                scores = contenu.get("scores", {})
+                cv_c = scores.get("cv_complet_vs_sections", {}).get(section)
+                exps = scores.get("experiences_vs_sections", {}).get(section, [])
+                se = [e["score"] for e in exps if e.get("score") is not None]
+                exp_m = max(se) if se else None
+                if cv_c is not None and exp_m is not None:
+                    ecarts.append(exp_m - cv_c)
+                    exp_vals.append(exp_m)
+                    cv_vals.append(cv_c)
+            if not ecarts:
+                continue
+            ecart_moy = sum(ecarts) / len(ecarts)
+            exp_moy   = sum(exp_vals) / len(exp_vals)
+            cv_moy    = sum(cv_vals) / len(cv_vals)
+            # Mise en gras du signe si l'écart est significatif (>0.05 en abs)
+            signe = f"{ecart_moy:+.4f}"
+            if abs(ecart_moy) > 0.05:
+                signe = f"**{signe}**"
+            out += (f"| {b['modele']} | {section.replace('vs_', '')} | "
+                    f"{signe} | {exp_moy:.4f} | {cv_moy:.4f} |\n")
+
+    return out
+
+
 # ─────────────────────────────────────────────────────────────────────
 # Pipeline
 # ─────────────────────────────────────────────────────────────────────
@@ -277,6 +393,16 @@ def comparer(
                 header, lignes
             )
 
+            # 3. CV complet vs meilleure expérience (côte à côte + écart)
+            header, lignes = _construire_tableau_cv_vs_exp(benchs, section)
+            base_nom = f"cv_vs_exp_{section}"
+            _ecrire_csv(dossier_ao / f"{base_nom}.csv", header, lignes)
+            _ecrire_markdown(
+                dossier_ao / f"{base_nom}.md",
+                f"{ao_id} — CV complet vs Meilleure expérience ({section})",
+                header, lignes
+            )
+
         # Résumé global pour cette AO
         with open(dossier_ao / "RESUME.md", "w", encoding="utf-8") as f:
             f.write(f"# Comparaison des modèles d'embedding — AO {ao_id}\n\n")
@@ -284,12 +410,17 @@ def comparer(
             if poste:
                 f.write(f"**Poste demandé** : {poste}\n\n")
             f.write(_resume_par_modele(benchs))
+            f.write("\n\n")
+            f.write(_resume_cv_vs_exp(benchs))
             f.write("\n\n## Fichiers détaillés\n\n")
             for section in SECTIONS:
+                sec = section.replace('vs_', '')
                 f.write(f"- `cv_complet_{section}.md` / `.csv` : score "
-                        f"du CV complet vs {section.replace('vs_', '')}\n")
+                        f"du CV complet vs {sec}\n")
                 f.write(f"- `experiences_max_{section}.md` / `.csv` : meilleur "
-                        f"score d'expérience vs {section.replace('vs_', '')}\n")
+                        f"score d'expérience vs {sec}\n")
+                f.write(f"- `cv_vs_exp_{section}.md` / `.csv` : comparaison "
+                        f"côte à côte CV complet / meilleure exp vs {sec}\n")
 
         print(f"     ✓ tableaux écrits dans {dossier_ao}\n")
 
