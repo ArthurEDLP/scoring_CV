@@ -160,7 +160,7 @@ def _construire_tableau_cv_vs_exp(
 
     header = ["CV"]
     for m in modeles:
-        header += [f"{m}|cv_complet", f"{m}|exp_max", f"{m}|ecart"]
+        header += [f"{m} · cv_complet", f"{m} · exp_max", f"{m} · ecart"]
 
     # cv_id -> modele -> (cv_complet, exp_max)
     donnees: Dict[str, Dict[str, Tuple[Optional[float], Optional[float]]]] = \
@@ -215,12 +215,19 @@ def _ecrire_csv(chemin: Path, header: List[str], lignes: List[List]):
 
 def _ecrire_markdown(chemin: Path, titre: str,
                      header: List[str], lignes: List[List]):
-    """Tableau Markdown avec largeur de colonnes auto."""
-    # Largeur de chaque colonne
-    rows = [header] + [
-        [("" if v is None else (f"{v:.4f}" if isinstance(v, float) else str(v)))
-         for v in ligne]
-        for ligne in lignes
+    """Tableau Markdown avec largeur de colonnes auto.
+
+    Les '|' présents dans les cellules sont échappés en '\\|' pour ne pas
+    casser la structure du tableau Markdown.
+    """
+    def _cell(v) -> str:
+        if v is None:
+            return ""
+        s = f"{v:.4f}" if isinstance(v, float) else str(v)
+        return s.replace("|", "\\|")
+
+    rows = [[_cell(c) for c in header]] + [
+        [_cell(v) for v in ligne] for ligne in lignes
     ]
     largeurs = [max(len(r[i]) for r in rows) for i in range(len(header))]
 
@@ -303,7 +310,7 @@ def _resume_cv_vs_exp(benchmarks_d_une_ao: List[Dict]) -> str:
     out += "(le contexte global aide)\n"
     out += "- **~0** : les deux stratégies sont équivalentes\n\n"
 
-    out += "| Modèle | Section | Écart moyen | |exp_max| moy | |cv_complet| moy |\n"
+    out += "| Modèle | Section | Écart moyen | exp_max (moy) | cv_complet (moy) |\n"
     out += "|---|---|---|---|---|\n"
 
     for b in sorted(benchmarks_d_une_ao, key=lambda x: x["modele"]):

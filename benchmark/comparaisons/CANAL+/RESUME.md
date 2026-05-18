@@ -22,7 +22,7 @@ Tri par écart-type décroissant : plus c'est haut, plus le modèle discrimine e
 - **Négatif** : le CV complet est plus pertinent (le contexte global aide)
 - **~0** : les deux stratégies sont équivalentes
 
-| Modèle | Section | Écart moyen | |exp_max| moy | |cv_complet| moy |
+| Modèle | Section | Écart moyen | exp_max (moy) | cv_complet (moy) |
 |---|---|---|---|---|
 | BAAI/bge-m3 | profil | -0.0098 | 0.5043 | 0.5142 |
 | BAAI/bge-m3 | description | +0.0106 | 0.5071 | 0.4965 |
