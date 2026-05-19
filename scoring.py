@@ -33,8 +33,7 @@ POIDS_AXES = {
 }
 
 # Seuil pour qu'une expérience soit considérée "du poste AO".
-# 0.85 strict mais tolère "Data Scientist Senior" / "Lead Data Scientist". ; 90 ne tolère pas "lead" ; 0.8 différencie pas "data ingé", "data analyst"
-SEUIL_CATEGORIE = 0.85
+SEUIL_CATEGORIE = 0.7
 
 VALEUR_BONUS_ENTREPRISE = 1.0
 
