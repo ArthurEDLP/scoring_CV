@@ -2,11 +2,17 @@
 Comparaison des fichiers de benchmark d'embedding.
 
 Prend un dossier contenant des fichiers benchmark_<modele>_<aoId>.json
-et produit des tableaux comparatifs lisibles (CSV + Markdown).
+(éventuellement avec suffixe _inst-<nom>) et produit des tableaux
+comparatifs lisibles (CSV + Markdown).
 
-Pour chaque AO trouvée dans les fichiers, génère 2 tableaux :
-  1. cv_complet_vs_<section>   : score CV complet par modèle
-  2. experiences_vs_<section>  : score MAX par expérience (le meilleur match)
+Si le benchmark a été lancé avec une instruction (instruction-awareness),
+elle apparaît distinctement comme "<modele> [inst:<nom>]" dans les
+tableaux, pour pouvoir comparer baseline vs avec instruction côte à côte.
+
+Pour chaque AO trouvée dans les fichiers, génère 3 tableaux par section :
+  1. cv_complet_vs_<section>   : score CV complet par condition
+  2. experiences_max_<section> : score MAX par expérience
+  3. cv_vs_exp_<section>       : comparaison côte à côte CV complet / exp max
 
 Usage :
     python comparer_benchmarks.py
@@ -28,6 +34,31 @@ from typing import Dict, List, Optional, Tuple
 
 
 # ─────────────────────────────────────────────────────────────────────
+# Identification d'une "condition" (modèle + instruction éventuelle)
+# ─────────────────────────────────────────────────────────────────────
+
+def _libelle_condition(b: Dict) -> str:
+    """
+    Construit un libellé court et unique pour la combinaison
+    modèle + instruction du benchmark.
+
+    Exemples :
+      "Qwen/Qwen3-Embedding-4B"                       (sans instruction)
+      "Qwen/Qwen3-Embedding-4B [inst:pertinence]"     (avec instruction nommée)
+      "Qwen/Qwen3-Embedding-4B [inst:?]"              (instruction sans nom court)
+    """
+    modele = b.get("modele", "?")
+    instruction     = b.get("instruction")
+    instruction_nom = b.get("instruction_nom")
+
+    if not instruction:
+        return modele
+    if instruction_nom:
+        return f"{modele} [inst:{instruction_nom}]"
+    return f"{modele} [inst:?]"
+
+
+# ─────────────────────────────────────────────────────────────────────
 # Chargement des fichiers de benchmark
 # ─────────────────────────────────────────────────────────────────────
 
@@ -46,12 +77,13 @@ def _charger_benchmarks(dossier_in: Path,
         try:
             with open(f, "r", encoding="utf-8") as fp:
                 data = json.load(fp)
-            # Validation rapide
             if not all(k in data for k in ("modele", "ao", "resultats")):
                 print(f"  ⚠️  {f.name} : structure invalide, ignoré")
                 continue
             if ao_filtre and data["ao"].get("id") != ao_filtre:
                 continue
+            # Pré-calcule le libellé pour ne plus jamais avoir à le refaire
+            data["_libelle"] = _libelle_condition(data)
             benchmarks.append({"fichier": f.name, **data})
         except Exception as e:
             print(f"  ⚠️  {f.name} : {e}")
@@ -70,30 +102,22 @@ def _construire_tableau_cv_complet(
     benchmarks_d_une_ao: List[Dict],
     section: str,
 ) -> Tuple[List[str], List[List]]:
-    """
-    Tableau : pour chaque CV, score 'CV complet vs section' par modèle.
+    """Tableau : pour chaque CV, score 'CV complet vs section' par condition."""
+    libelles = [b["_libelle"] for b in benchmarks_d_une_ao]
+    header = ["CV"] + libelles
 
-    Returns:
-      (header, lignes)
-      header : ["CV", "modele1", "modele2", ...]
-      lignes : [["CV_JL", 0.74, 0.78, ...], ...]
-    """
-    modeles = [b["modele"] for b in benchmarks_d_une_ao]
-    header = ["CV"] + modeles
-
-    # cv_id -> {modele -> score}
     par_cv: Dict[str, Dict[str, Optional[float]]] = defaultdict(dict)
     for b in benchmarks_d_une_ao:
         for cv_id, contenu in b["resultats"].items():
             scores = contenu.get("scores", {})
             cv_complet = scores.get("cv_complet_vs_sections", {})
-            par_cv[cv_id][b["modele"]] = cv_complet.get(section)
+            par_cv[cv_id][b["_libelle"]] = cv_complet.get(section)
 
     lignes = []
     for cv_id in sorted(par_cv.keys()):
         ligne = [cv_id]
-        for m in modeles:
-            v = par_cv[cv_id].get(m)
+        for lib in libelles:
+            v = par_cv[cv_id].get(lib)
             ligne.append(round(v, 4) if v is not None else None)
         lignes.append(ligne)
 
@@ -104,14 +128,9 @@ def _construire_tableau_experiences_max(
     benchmarks_d_une_ao: List[Dict],
     section: str,
 ) -> Tuple[List[str], List[List]]:
-    """
-    Tableau : pour chaque CV, score MAX parmi ses expériences vs section, par modèle.
-
-    Le max est plus parlant que la moyenne : il dit 'cette personne a au moins une
-    expérience pertinente'.
-    """
-    modeles = [b["modele"] for b in benchmarks_d_une_ao]
-    header = ["CV"] + modeles
+    """Tableau : pour chaque CV, score MAX parmi ses expériences vs section."""
+    libelles = [b["_libelle"] for b in benchmarks_d_une_ao]
+    header = ["CV"] + libelles
 
     par_cv: Dict[str, Dict[str, Optional[float]]] = defaultdict(dict)
     for b in benchmarks_d_une_ao:
@@ -120,15 +139,15 @@ def _construire_tableau_experiences_max(
             exps = scores.get("experiences_vs_sections", {}).get(section, [])
             if exps:
                 scores_exp = [e["score"] for e in exps if e.get("score") is not None]
-                par_cv[cv_id][b["modele"]] = max(scores_exp) if scores_exp else None
+                par_cv[cv_id][b["_libelle"]] = max(scores_exp) if scores_exp else None
             else:
-                par_cv[cv_id][b["modele"]] = None
+                par_cv[cv_id][b["_libelle"]] = None
 
     lignes = []
     for cv_id in sorted(par_cv.keys()):
         ligne = [cv_id]
-        for m in modeles:
-            v = par_cv[cv_id].get(m)
+        for lib in libelles:
+            v = par_cv[cv_id].get(lib)
             ligne.append(round(v, 4) if v is not None else None)
         lignes.append(ligne)
 
@@ -140,29 +159,15 @@ def _construire_tableau_cv_vs_exp(
     section: str,
 ) -> Tuple[List[str], List[List]]:
     """
-    Pour CHAQUE modèle, met côte à côte sur la même section :
-      - le score 'CV complet'
-      - le score 'meilleure expérience'
-      - l'écart (exp_max - cv_complet)
-
-    Permet de voir si prendre la meilleure expérience change significativement
-    le résultat par rapport au CV complet concaténé.
-
-    Header :
-      ["CV", "<m1>_cvComplet", "<m1>_expMax", "<m1>_ecart", "<m2>_cvComplet", ...]
-
-    L'écart est positif si la meilleure expérience score PLUS HAUT que le CV
-    complet (→ le CV complet "dilue" le signal du bon poste).
-    L'écart est négatif si le CV complet score plus haut (→ le contexte global
-    aide plus qu'une expérience isolée).
+    Pour CHAQUE condition, met côte à côte CV complet, exp max, écart.
+    L'écart est positif si la meilleure expérience score plus haut que le CV.
     """
-    modeles = [b["modele"] for b in benchmarks_d_une_ao]
+    libelles = [b["_libelle"] for b in benchmarks_d_une_ao]
 
     header = ["CV"]
-    for m in modeles:
-        header += [f"{m} · cv_complet", f"{m} · exp_max", f"{m} · ecart"]
+    for lib in libelles:
+        header += [f"{lib} · cv_complet", f"{lib} · exp_max", f"{lib} · ecart"]
 
-    # cv_id -> modele -> (cv_complet, exp_max)
     donnees: Dict[str, Dict[str, Tuple[Optional[float], Optional[float]]]] = \
         defaultdict(dict)
 
@@ -176,13 +181,13 @@ def _construire_tableau_cv_vs_exp(
             scores_exp = [e["score"] for e in exps if e.get("score") is not None]
             exp_max = max(scores_exp) if scores_exp else None
 
-            donnees[cv_id][b["modele"]] = (cv_complet, exp_max)
+            donnees[cv_id][b["_libelle"]] = (cv_complet, exp_max)
 
     lignes = []
     for cv_id in sorted(donnees.keys()):
         ligne: List = [cv_id]
-        for m in modeles:
-            cv_c, exp_m = donnees[cv_id].get(m, (None, None))
+        for lib in libelles:
+            cv_c, exp_m = donnees[cv_id].get(lib, (None, None))
             ecart = (
                 round(exp_m - cv_c, 4)
                 if (cv_c is not None and exp_m is not None) else None
@@ -248,10 +253,9 @@ def _ecrire_markdown(chemin: Path, titre: str,
 
 def _resume_par_modele(benchmarks_d_une_ao: List[Dict]) -> str:
     """
-    Calcule pour chaque modèle :
+    Calcule pour chaque CONDITION (modèle + instruction éventuelle) :
       - moyenne des scores 'CV complet vs AO complète'
-      - écart-type (mesure de discrimination : plus c'est haut, plus le modèle
-        sépare bien les bons des mauvais CVs)
+      - écart-type (mesure de discrimination)
     """
     lignes = []
     for b in benchmarks_d_une_ao:
@@ -266,42 +270,32 @@ def _resume_par_modele(benchmarks_d_une_ao: List[Dict]) -> str:
         var = sum((s - moyenne) ** 2 for s in scores) / len(scores)
         ecart_type = var ** 0.5
         lignes.append({
-            "modele": b["modele"],
-            "nb_cv": len(scores),
-            "moyenne": round(moyenne, 4),
+            "condition":  b["_libelle"],
+            "nb_cv":      len(scores),
+            "moyenne":    round(moyenne, 4),
             "ecart_type": round(ecart_type, 4),
-            "min": round(min(scores), 4),
-            "max": round(max(scores), 4),
+            "min":        round(min(scores), 4),
+            "max":        round(max(scores), 4),
         })
 
     # Tri par écart-type décroissant (plus discriminant en premier)
     lignes.sort(key=lambda d: -d["ecart_type"])
 
-    out = "## Résumé par modèle (sur 'CV complet vs AO complète')\n\n"
-    out += "Tri par écart-type décroissant : plus c'est haut, plus le modèle "
+    out = "## Résumé par condition (modèle + instruction)\n\n"
+    out += "Calculé sur 'CV complet vs AO complète'. "
+    out += "Tri par écart-type décroissant : plus c'est haut, plus la condition "
     out += "discrimine entre bons et mauvais CVs.\n\n"
-    out += "| Modèle | Nb CV | Moyenne | Écart-type | Min | Max |\n"
+    out += "| Condition | Nb CV | Moyenne | Écart-type | Min | Max |\n"
     out += "|---|---|---|---|---|---|\n"
     for l in lignes:
-        out += (f"| {l['modele']} | {l['nb_cv']} | "
+        out += (f"| {l['condition']} | {l['nb_cv']} | "
                 f"{l['moyenne']} | **{l['ecart_type']}** | "
                 f"{l['min']} | {l['max']} |\n")
     return out
 
 
 def _resume_cv_vs_exp(benchmarks_d_une_ao: List[Dict]) -> str:
-    """
-    Pour chaque modèle et chaque section, calcule l'écart moyen
-    (exp_max - cv_complet) sur tous les CVs.
-
-    Interprétation :
-      - écart moyen POSITIF  → la meilleure expérience score plus haut que
-        le CV complet : prendre l'expérience est plus discriminant
-        (le CV complet "noie" le signal).
-      - écart moyen NÉGATIF  → le CV complet score plus haut : le contexte
-        global apporte plus qu'une expérience isolée.
-      - écart proche de 0    → peu importe la stratégie choisie.
-    """
+    """Écart moyen exp_max - cv_complet par condition et par section."""
     out = "## CV complet vs Meilleure expérience\n\n"
     out += "Écart moyen = moyenne(exp_max - cv_complet) sur tous les CVs.\n\n"
     out += "- **Positif** : la meilleure expérience est plus discriminante "
@@ -310,10 +304,10 @@ def _resume_cv_vs_exp(benchmarks_d_une_ao: List[Dict]) -> str:
     out += "(le contexte global aide)\n"
     out += "- **~0** : les deux stratégies sont équivalentes\n\n"
 
-    out += "| Modèle | Section | Écart moyen | exp_max (moy) | cv_complet (moy) |\n"
+    out += "| Condition | Section | Écart moyen | exp_max (moy) | cv_complet (moy) |\n"
     out += "|---|---|---|---|---|\n"
 
-    for b in sorted(benchmarks_d_une_ao, key=lambda x: x["modele"]):
+    for b in sorted(benchmarks_d_une_ao, key=lambda x: x["_libelle"]):
         for section in SECTIONS:
             ecarts = []
             exp_vals = []
@@ -333,11 +327,10 @@ def _resume_cv_vs_exp(benchmarks_d_une_ao: List[Dict]) -> str:
             ecart_moy = sum(ecarts) / len(ecarts)
             exp_moy   = sum(exp_vals) / len(exp_vals)
             cv_moy    = sum(cv_vals) / len(cv_vals)
-            # Mise en gras du signe si l'écart est significatif (>0.05 en abs)
             signe = f"{ecart_moy:+.4f}"
             if abs(ecart_moy) > 0.05:
                 signe = f"**{signe}**"
-            out += (f"| {b['modele']} | {section.replace('vs_', '')} | "
+            out += (f"| {b['_libelle']} | {section.replace('vs_', '')} | "
                     f"{signe} | {exp_moy:.4f} | {cv_moy:.4f} |\n")
 
     return out
@@ -368,17 +361,15 @@ def comparer(
     dossier_out.mkdir(parents=True, exist_ok=True)
 
     for ao_id, benchs in par_ao.items():
-        # Tri stable des modèles par nom pour avoir un ordre cohérent
-        benchs.sort(key=lambda b: b["modele"])
-        print(f"🔍 AO : {ao_id}  ({len(benchs)} modèles)")
+        # Tri par libellé pour ordre cohérent dans les tableaux
+        benchs.sort(key=lambda b: b["_libelle"])
+        print(f"🔍 AO : {ao_id}  ({len(benchs)} conditions)")
         for b in benchs:
-            print(f"     - {b['modele']}")
+            print(f"     - {b['_libelle']}")
 
-        # Un sous-dossier par AO pour ne pas mélanger
         dossier_ao = dossier_out / ao_id.replace("/", "_").replace("\\", "_")
         dossier_ao.mkdir(parents=True, exist_ok=True)
 
-        # Tableaux par section et par granularité
         for section in SECTIONS:
             # 1. CV complet
             header, lignes = _construire_tableau_cv_complet(benchs, section)
