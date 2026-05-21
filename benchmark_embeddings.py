@@ -17,20 +17,31 @@ Pour chaque CV face à UNE AO précise (chemin fourni en argument), calcule
     8. CV complet vs AO complète
 
 Produit un fichier JSON nommé   benchmark_<modele>_<aoId>.json
-(le nom de l'AO est inclus pour ne pas écraser un benchmark précédent).
+ou si --instruction-nom est fourni : benchmark_<modele>_<aoId>_inst-<nom>.json
 
 Le texte d'une expérience est :   "<poste> chez <entreprise> : <details>"
 Le texte du CV complet est : tout le texte des expériences + technos + savoir-faire/être
 Le texte d'une section AO est : la concaténation des phrases de cette section
 Le texte de l'AO complète est : Profil + Description + Contexte concaténés
 
+INSTRUCTION-AWARENESS (Qwen3 / e5-instruct) :
+Si --instruction est fourni, les textes côté AO sont préfixés par
+"Instruct: <instruction>\\nQuery: " (format Qwen3). Le CV reste brut
+(asymétrie Qwen3 : seule la requête porte l'instruction).
+
 Usage :
     python benchmark_embeddings.py <modele> <chemin_ao>
 
+    # Avec une instruction (donne aussi un nom court pour le fichier de sortie)
+    python benchmark_embeddings.py <modele> <chemin_ao> \\
+        --instruction "Étant donné un poste IT, retrouver..." \\
+        --instruction-nom parcours
+
 Exemples :
-    python benchmark_embeddings.py paraphrase-multilingual-mpnet-base-v2 AO_JSON/PMU.json
-    python benchmark_embeddings.py intfloat/multilingual-e5-large AO_JSON/CANAL+.json
-    python benchmark_embeddings.py sentence-transformers/all-MiniLM-L6-v2 AO_JSON/SNCF.json --cv ./CV_JSON --output ./bench
+    python benchmark_embeddings.py Qwen/Qwen3-Embedding-4B AO_JSON/CANAL+.json
+    python benchmark_embeddings.py Qwen/Qwen3-Embedding-4B AO_JSON/CANAL+.json \\
+        --instruction "Évaluer la pertinence d'un CV face à une offre..." \\
+        --instruction-nom pertinence
 """
 
 import argparse
@@ -77,19 +88,16 @@ def _texte_cv_complet(cv_data: Dict) -> str:
     """
     morceaux: List[str] = []
 
-    # Expériences
     for exp in cv_data.get("experiences", []) or []:
         if isinstance(exp, dict):
             t = _texte_experience(exp)
             if t.strip():
                 morceaux.append(t)
 
-    # Compétences techniques
     for techno in cv_data.get("competences_techniques", []) or []:
         if isinstance(techno, str) and techno.strip():
             morceaux.append(techno.strip())
 
-    # Savoir-faire / savoir-être : on gère les 2 formats (séparés ou fusionnés)
     for cle in ("savoir_faire", "savoir_etre", "savoir_faire/savoir_etre"):
         for item in cv_data.get(cle, []) or []:
             if isinstance(item, str) and item.strip():
@@ -147,18 +155,32 @@ def _duree_annees(date_str: str) -> float:
         except ValueError:
             fin = datetime.now()
         return max(0.0, (fin - debut).days / 365.25)
-    # Une seule date + mention "en cours" → jusqu'à maintenant
     if re.search(r"aujourd['’]?hui|present|présent|current|ongoing|en cours|now",
                  date_str, re.IGNORECASE):
         return max(0.0, (datetime.now() - debut).days / 365.25)
-    return 0.25  # date unique sans mention → durée par défaut
+    return 0.25
 
 
-def _encode(model: SentenceTransformer, textes: List[str]) -> np.ndarray:
-    """Encode une liste de textes, retourne une matrice normalisée (N, dim)."""
+def _encode(model: SentenceTransformer, textes: List[str],
+            prompt: Optional[str] = None) -> np.ndarray:
+    """
+    Encode une liste de textes, retourne une matrice normalisée (N, dim).
+
+    Si `prompt` est fourni, il est préfixé à chaque texte (Qwen3 / e5-instruct).
+    """
     if not textes:
-        return np.zeros((0, model.get_sentence_embedding_dimension()), dtype="float32")
-    return model.encode(textes, normalize_embeddings=True).astype("float32")
+        return np.zeros((0, model.get_sentence_embedding_dimension()),
+                        dtype="float32")
+    if prompt:
+        return model.encode(
+            textes,
+            prompt=prompt,
+            normalize_embeddings=True,
+        ).astype("float32")
+    return model.encode(
+        textes,
+        normalize_embeddings=True,
+    ).astype("float32")
 
 
 def _cosinus(v1: np.ndarray, v2: np.ndarray) -> float:
@@ -172,25 +194,14 @@ def benchmark_cv_vs_ao(
     model: SentenceTransformer,
     cv: Dict,
     ao: Dict,
+    instruction: Optional[str] = None,
 ) -> Dict:
     """
     Calcule les 8 scores pour un (CV, AO) donné avec le modèle fourni.
 
-    Returns:
-      {
-        "experiences_vs_sections": {
-          "vs_profil":      [{"poste":..., "annees":..., "score":...}, ...],
-          "vs_description": [...],
-          "vs_contexte":    [...],
-          "vs_ao_complete": [...]
-        },
-        "cv_complet_vs_sections": {
-          "vs_profil":      <float>,
-          "vs_description": <float>,
-          "vs_contexte":    <float>,
-          "vs_ao_complete": <float>
-        }
-      }
+    Si `instruction` est fourni, les textes côté AO sont préfixés par
+    "Instruct: {instruction}\\nQuery: " (format Qwen3-Embedding).
+    Le CV reste encodé sans préfixe (asymétrie Qwen3).
     """
     cv_data = cv["data"]
     ao_data = ao["data"]
@@ -201,12 +212,13 @@ def benchmark_cv_vs_ao(
     txt_contexte    = _texte_section_ao(ao_data, "Contexte")
     txt_ao_complete = _texte_ao_complete(ao_data)
 
-    # ─── Embeddings côté AO ───
+    # ─── Embeddings côté AO (avec instruction si fournie) ───
+    prompt_ao = f"Instruct: {instruction}\nQuery: " if instruction else None
     ao_textes = [txt_profil, txt_description, txt_contexte, txt_ao_complete]
-    ao_embeds = _encode(model, ao_textes)
+    ao_embeds = _encode(model, ao_textes, prompt=prompt_ao)
     emb_profil, emb_desc, emb_ctx, emb_ao = ao_embeds
 
-    # ─── Côté CV ───
+    # ─── Côté CV (toujours sans instruction, asymétrie Qwen3) ───
     experiences = [e for e in (cv_data.get("experiences") or []) if isinstance(e, dict)]
     exp_textes  = [_texte_experience(e) for e in experiences]
     exp_embeds  = _encode(model, exp_textes)
@@ -217,7 +229,6 @@ def benchmark_cv_vs_ao(
     # ─── Scores par expérience ───
     def _scores_pour_section(emb_section: np.ndarray) -> List[Dict]:
         resultats = []
-        # Si la section AO est vide, scores = 0 partout
         if emb_section.size == 0:
             for exp in experiences:
                 resultats.append({
@@ -242,7 +253,6 @@ def benchmark_cv_vs_ao(
         "vs_ao_complete": _scores_pour_section(emb_ao),
     }
 
-    # ─── Scores CV complet vs sections AO ───
     cv_complet_vs_sections = {
         "vs_profil":      round(_cosinus(cv_embed, emb_profil), 4),
         "vs_description": round(_cosinus(cv_embed, emb_desc),   4),
@@ -260,37 +270,39 @@ def benchmark_cv_vs_ao(
 # Pipeline principal
 # ─────────────────────────────────────────────────────────────────────
 
-def _nom_sortie_safe(nom_modele: str) -> str:
-    """Transforme 'intfloat/multilingual-e5-large' → 'intfloat_multilingual-e5-large'."""
-    return re.sub(r"[^A-Za-z0-9._-]", "_", nom_modele)
+def _nom_sortie_safe(nom: str) -> str:
+    """Transforme un nom en version sûre pour le système de fichiers."""
+    return re.sub(r"[^A-Za-z0-9._-]", "_", nom)
 
 
 def lancer_benchmark(
-    nom_modele:   str,
-    chemin_ao:    str,
-    dossier_cv:   str,
-    dossier_out:  str,
+    nom_modele:        str,
+    chemin_ao:         str,
+    dossier_cv:        str,
+    dossier_out:       str,
+    instruction:       Optional[str] = None,
+    instruction_nom:   Optional[str] = None,
 ) -> Path:
     """
-    Lance le benchmark pour un modèle donné sur UNE AO précise (chemin).
+    Lance le benchmark pour un modèle donné sur UNE AO précise.
     Écrit le JSON, retourne le chemin du fichier produit.
+
+    Si `instruction` est fourni :
+      - Les textes AO sont encodés avec préfixe Qwen3
+      - Le nom de fichier de sortie inclut "_inst-<instruction_nom>"
     """
     print(f"📂 Chargement des données...")
-
-    # CVs depuis le dossier
     cvs = charger_cvs(dossier_cv)
     if not cvs:
         raise RuntimeError(f"Aucun CV trouvé dans : {dossier_cv}")
     print(f"   {len(cvs)} CVs chargés depuis {dossier_cv}")
 
-    # AO : chargée directement depuis le chemin fourni
     chemin_ao_path = Path(chemin_ao)
     if not chemin_ao_path.exists():
         raise RuntimeError(f"Fichier AO introuvable : {chemin_ao}")
 
     with open(chemin_ao_path, "r", encoding="utf-8") as f:
         data_ao = json.load(f)
-    # Tolère le format [{"data": {...}}] ou {"data": {...}} ou directement le data
     if isinstance(data_ao, list):
         data_ao = data_ao[0]
     ao = {
@@ -300,44 +312,56 @@ def lancer_benchmark(
     }
     print(f"   AO utilisée : {ao['id']}  ({chemin_ao_path.name})")
 
+    if instruction:
+        if not instruction_nom:
+            raise RuntimeError(
+                "Quand --instruction est fourni, --instruction-nom est obligatoire "
+                "(pour différencier les fichiers de sortie)."
+            )
+        print(f"\n🎯 Instruction : {instruction!r}")
+        print(f"   Nom court : {instruction_nom}")
+    else:
+        print(f"\n🎯 Pas d'instruction (baseline)")
+
     print(f"\n🤖 Chargement du modèle : {nom_modele}")
-    print(f"   (téléchargement automatique au 1er usage)")
     model = SentenceTransformer(nom_modele)
     dim = model.get_sentence_embedding_dimension()
     print(f"   ✓ modèle chargé (dim = {dim})\n")
 
-    # Boucle CVs
     resultats: Dict[str, Dict] = {}
     for i, cv in enumerate(cvs, 1):
         print(f"   [{i:>3}/{len(cvs)}] {cv['id']:<20} ... ", end="", flush=True)
         try:
-            scores = benchmark_cv_vs_ao(model, cv, ao)
-            resultats[cv["id"]] = {
-                "cv_id":  cv["id"],
-                "scores": scores,
-            }
+            scores = benchmark_cv_vs_ao(model, cv, ao, instruction=instruction)
+            resultats[cv["id"]] = {"cv_id": cv["id"], "scores": scores}
             print("✓")
         except Exception as e:
             print(f"✗ {e}")
             resultats[cv["id"]] = {"cv_id": cv["id"], "erreur": str(e)}
 
-    # Structure finale
     payload = {
-        "modele":     nom_modele,
-        "dimension":  dim,
+        "modele":           nom_modele,
+        "dimension":        dim,
+        "instruction":      instruction,
+        "instruction_nom":  instruction_nom,
         "ao": {
             "id":    ao["id"],
             "poste": ao["data"].get("poste", ""),
         },
-        "resultats":  resultats,
+        "resultats": resultats,
     }
 
-    # Écriture : nom inclut modèle + AO (pas d'écrasement entre AO différentes)
     Path(dossier_out).mkdir(parents=True, exist_ok=True)
-    nom_fichier = (
+    # Nom de fichier : avec ou sans suffixe d'instruction
+    nom_fichier_base = (
         f"benchmark_{_nom_sortie_safe(nom_modele)}"
-        f"_{_nom_sortie_safe(ao['id'])}.json"
+        f"_{_nom_sortie_safe(ao['id'])}"
     )
+    if instruction_nom:
+        nom_fichier = f"{nom_fichier_base}_inst-{_nom_sortie_safe(instruction_nom)}.json"
+    else:
+        nom_fichier = f"{nom_fichier_base}.json"
+
     chemin = Path(dossier_out) / nom_fichier
     with open(chemin, "w", encoding="utf-8") as f:
         json.dump(payload, f, ensure_ascii=False, indent=2)
@@ -357,26 +381,40 @@ def main():
     parser.add_argument(
         "modele",
         help="Nom du modèle sentence-transformers (ex: "
-             "'paraphrase-multilingual-mpnet-base-v2' ou "
-             "'intfloat/multilingual-e5-large')",
+             "'Qwen/Qwen3-Embedding-4B' ou "
+             "'intfloat/multilingual-e5-large-instruct')",
     )
     parser.add_argument(
         "ao",
         help="Chemin vers le fichier JSON de l'AO à benchmarker "
-             "(ex: AO_JSON/PMU.json)",
+             "(ex: AO_JSON/CANAL+.json)",
     )
     parser.add_argument("--cv", default="./CV_JSON",
                         help="Dossier des CV (défaut: ./CV_JSON)")
     parser.add_argument("--output", "-o", default="./benchmark",
                         help="Dossier de sortie (défaut: ./benchmark)")
+    parser.add_argument(
+        "--instruction",
+        default=None,
+        help="Instruction de tâche pour Qwen3/e5-instruct. Si fourni, l'AO "
+             "est encodée avec préfixe 'Instruct: ...\\nQuery: ', le CV reste brut."
+    )
+    parser.add_argument(
+        "--instruction-nom",
+        default=None,
+        help="Nom court pour identifier l'instruction dans le nom de fichier "
+             "(obligatoire si --instruction est utilisé). Ex: 'parcours', 'pertinence'."
+    )
     args = parser.parse_args()
 
     try:
         lancer_benchmark(
-            nom_modele  = args.modele,
-            chemin_ao   = args.ao,
-            dossier_cv  = args.cv,
-            dossier_out = args.output,
+            nom_modele      = args.modele,
+            chemin_ao       = args.ao,
+            dossier_cv      = args.cv,
+            dossier_out     = args.output,
+            instruction     = args.instruction,
+            instruction_nom = args.instruction_nom,
         )
     except Exception as e:
         print(f"\n❌ Erreur : {e}")
