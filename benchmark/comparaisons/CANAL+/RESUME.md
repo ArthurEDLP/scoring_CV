@@ -8,13 +8,13 @@ Calculé sur 'CV complet vs AO complète'. Tri par écart-type décroissant : pl
 
 | Condition | Nb CV | Moyenne | Écart-type | Min | Max |
 |---|---|---|---|---|---|
-| Qwen/Qwen3-Embedding-8B [inst:parcours] | 7 | 0.5597 | **0.106** | 0.3806 | 0.7587 |
-| Qwen/Qwen3-Embedding-4B [inst:parcours] | 7 | 0.5106 | **0.0956** | 0.3912 | 0.7079 |
-| Qwen/Qwen3-Embedding-8B | 7 | 0.6219 | **0.0921** | 0.4845 | 0.7901 |
-| Qwen/Qwen3-Embedding-4B | 7 | 0.6045 | **0.0823** | 0.505 | 0.7624 |
+| Qwen/Qwen3-Embedding-4B [inst:parcours] | 8 | 0.5394 | **0.1175** | 0.3912 | 0.741 |
+| Qwen/Qwen3-Embedding-4B | 8 | 0.6311 | **0.1044** | 0.505 | 0.8177 |
+| Qwen/Qwen3-Embedding-8B [inst:parcours] | 8 | 0.5698 | **0.1027** | 0.3806 | 0.7587 |
+| Qwen/Qwen3-Embedding-8B | 8 | 0.63 | **0.0888** | 0.4845 | 0.7901 |
 | BAAI/bge-m3 | 7 | 0.5588 | **0.0515** | 0.4763 | 0.6416 |
-| Qwen/Qwen3-Embedding-8B [inst:pertinence] | 7 | 0.5479 | **0.0475** | 0.4602 | 0.6149 |
-| Qwen/Qwen3-Embedding-4B [inst:pertinence] | 7 | 0.473 | **0.0348** | 0.417 | 0.5206 |
+| Qwen/Qwen3-Embedding-8B [inst:pertinence] | 8 | 0.5547 | **0.0479** | 0.4602 | 0.6149 |
+| Qwen/Qwen3-Embedding-4B [inst:pertinence] | 8 | 0.4778 | **0.035** | 0.417 | 0.5206 |
 | intfloat/multilingual-e5-large-instruct | 7 | 0.8733 | **0.0194** | 0.8507 | 0.8965 |
 
 
@@ -32,30 +32,30 @@ Calculé sur 'CV complet vs AO complète'. Tri par écart-type décroissant : pl
 | BAAI/bge-m3 | description | +0.0106 | 0.5071 | 0.4965 |
 | BAAI/bge-m3 | contexte | -0.0164 | 0.5476 | 0.5640 |
 | BAAI/bge-m3 | ao_complete | -0.0321 | 0.5267 | 0.5588 |
-| Qwen/Qwen3-Embedding-4B | profil | **-0.0523** | 0.5088 | 0.5611 |
-| Qwen/Qwen3-Embedding-4B | description | -0.0330 | 0.5313 | 0.5643 |
-| Qwen/Qwen3-Embedding-4B | contexte | -0.0355 | 0.5508 | 0.5863 |
-| Qwen/Qwen3-Embedding-4B | ao_complete | -0.0444 | 0.5601 | 0.6045 |
-| Qwen/Qwen3-Embedding-4B [inst:parcours] | profil | -0.0498 | 0.4723 | 0.5221 |
-| Qwen/Qwen3-Embedding-4B [inst:parcours] | description | -0.0359 | 0.4546 | 0.4905 |
-| Qwen/Qwen3-Embedding-4B [inst:parcours] | contexte | -0.0379 | 0.4218 | 0.4597 |
-| Qwen/Qwen3-Embedding-4B [inst:parcours] | ao_complete | -0.0464 | 0.4642 | 0.5106 |
-| Qwen/Qwen3-Embedding-4B [inst:pertinence] | profil | -0.0362 | 0.4196 | 0.4558 |
-| Qwen/Qwen3-Embedding-4B [inst:pertinence] | description | -0.0396 | 0.4339 | 0.4735 |
-| Qwen/Qwen3-Embedding-4B [inst:pertinence] | contexte | -0.0369 | 0.4383 | 0.4752 |
-| Qwen/Qwen3-Embedding-4B [inst:pertinence] | ao_complete | -0.0376 | 0.4354 | 0.4730 |
-| Qwen/Qwen3-Embedding-8B | profil | **-0.0708** | 0.4785 | 0.5493 |
-| Qwen/Qwen3-Embedding-8B | description | -0.0457 | 0.5166 | 0.5623 |
-| Qwen/Qwen3-Embedding-8B | contexte | -0.0255 | 0.4988 | 0.5243 |
-| Qwen/Qwen3-Embedding-8B | ao_complete | **-0.0540** | 0.5679 | 0.6219 |
-| Qwen/Qwen3-Embedding-8B [inst:parcours] | profil | **-0.0673** | 0.4724 | 0.5397 |
-| Qwen/Qwen3-Embedding-8B [inst:parcours] | description | **-0.0539** | 0.4435 | 0.4974 |
-| Qwen/Qwen3-Embedding-8B [inst:parcours] | contexte | -0.0435 | 0.4665 | 0.5100 |
-| Qwen/Qwen3-Embedding-8B [inst:parcours] | ao_complete | **-0.0563** | 0.5034 | 0.5597 |
-| Qwen/Qwen3-Embedding-8B [inst:pertinence] | profil | -0.0363 | 0.4221 | 0.4584 |
-| Qwen/Qwen3-Embedding-8B [inst:pertinence] | description | -0.0499 | 0.4518 | 0.5017 |
-| Qwen/Qwen3-Embedding-8B [inst:pertinence] | contexte | -0.0469 | 0.4699 | 0.5168 |
-| Qwen/Qwen3-Embedding-8B [inst:pertinence] | ao_complete | **-0.0543** | 0.4937 | 0.5479 |
+| Qwen/Qwen3-Embedding-4B | profil | **-0.0522** | 0.5313 | 0.5835 |
+| Qwen/Qwen3-Embedding-4B | description | -0.0241 | 0.5694 | 0.5935 |
+| Qwen/Qwen3-Embedding-4B | contexte | -0.0307 | 0.5775 | 0.6082 |
+| Qwen/Qwen3-Embedding-4B | ao_complete | -0.0401 | 0.5911 | 0.6311 |
+| Qwen/Qwen3-Embedding-4B [inst:parcours] | profil | **-0.0503** | 0.4932 | 0.5436 |
+| Qwen/Qwen3-Embedding-4B [inst:parcours] | description | -0.0250 | 0.4978 | 0.5228 |
+| Qwen/Qwen3-Embedding-4B [inst:parcours] | contexte | -0.0284 | 0.4606 | 0.4890 |
+| Qwen/Qwen3-Embedding-4B [inst:parcours] | ao_complete | -0.0392 | 0.5002 | 0.5394 |
+| Qwen/Qwen3-Embedding-4B [inst:pertinence] | profil | -0.0301 | 0.4264 | 0.4566 |
+| Qwen/Qwen3-Embedding-4B [inst:pertinence] | description | -0.0402 | 0.4404 | 0.4805 |
+| Qwen/Qwen3-Embedding-4B [inst:pertinence] | contexte | -0.0343 | 0.4447 | 0.4791 |
+| Qwen/Qwen3-Embedding-4B [inst:pertinence] | ao_complete | -0.0357 | 0.4421 | 0.4778 |
+| Qwen/Qwen3-Embedding-8B | profil | **-0.0563** | 0.5054 | 0.5617 |
+| Qwen/Qwen3-Embedding-8B | description | -0.0157 | 0.5566 | 0.5723 |
+| Qwen/Qwen3-Embedding-8B | contexte | -0.0080 | 0.5185 | 0.5266 |
+| Qwen/Qwen3-Embedding-8B | ao_complete | -0.0350 | 0.5950 | 0.6300 |
+| Qwen/Qwen3-Embedding-8B [inst:parcours] | profil | **-0.0590** | 0.4918 | 0.5508 |
+| Qwen/Qwen3-Embedding-8B [inst:parcours] | description | -0.0280 | 0.4822 | 0.5102 |
+| Qwen/Qwen3-Embedding-8B [inst:parcours] | contexte | -0.0258 | 0.4929 | 0.5187 |
+| Qwen/Qwen3-Embedding-8B [inst:parcours] | ao_complete | -0.0404 | 0.5295 | 0.5698 |
+| Qwen/Qwen3-Embedding-8B [inst:pertinence] | profil | -0.0269 | 0.4361 | 0.4630 |
+| Qwen/Qwen3-Embedding-8B [inst:pertinence] | description | -0.0437 | 0.4646 | 0.5083 |
+| Qwen/Qwen3-Embedding-8B [inst:pertinence] | contexte | -0.0392 | 0.4820 | 0.5213 |
+| Qwen/Qwen3-Embedding-8B [inst:pertinence] | ao_complete | -0.0466 | 0.5082 | 0.5547 |
 | intfloat/multilingual-e5-large-instruct | profil | +0.0020 | 0.8696 | 0.8676 |
 | intfloat/multilingual-e5-large-instruct | description | -0.0159 | 0.8531 | 0.8691 |
 | intfloat/multilingual-e5-large-instruct | contexte | -0.0159 | 0.8621 | 0.8780 |

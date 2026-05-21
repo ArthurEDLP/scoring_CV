@@ -1,0 +1,117 @@
+{
+  "id": "MFU",
+  "formations": [
+    {
+      "name": "a",
+      "value": 1
+    },
+    {
+      "name": "b",
+      "value": "hello"
+    }
+  ],
+  "certifications": [
+    "Informatica PowerCenter Developer - Specialist (2016)",
+    "AWS Certified Solutions Architect - Associate (2018)",
+    "Certificat de capacité pour l'entretien d'animaux d'espèces non domestiques - DRAAF Bourgogne-Franche-Comté (2020)",
+    "SST - Sauveteur Secouriste du Travail (2021, recyclé 2024)"
+  ],
+  "langues": [
+    {
+      "_id": "5f6d3497-820c-ec11-afee-000d3af380ae",
+      "name": "Python (programming language)",
+      "description": "A high level general purpose programming language. It's simple, easy to learn and use.",
+      "_score": 9576214,
+      "@context": null,
+      "created_at": null,
+      "updated_at": null
+    },
+    {
+      "name": "Java (programming language)",
+      ".formatioin": {
+        "description": "A general purpose programming langauge that is used for developing enterprise-scale applications. It's widely adopted in the industry and has a huge community of developers.",
+        "_score": 9576214
+      },
+      "@context": null,
+      "created_at": null,
+      "updated_at": null
+    }
+  ],
+  "competences_techniques": [
+    "Informatica PowerExchange",
+    "AWS (S3, Glue, EMR, Athena, IAM)",
+    "Apache Airflow",
+    "dbt",
+    "Apache Iceberg",
+    "Snowflake",
+    "Python",
+    "SQL avancé",
+    "Shell",
+    "Bash",
+    "PL",
+    "SQL",
+    "Oracle",
+    "PostgreSQL",
+    "Teradata",
+    "JIRA",
+    "Confluence",
+    "Git",
+    "méthodes Agile (Scrum, Kanban)",
+    "analyse d'incidents",
+    "MEP",
+    "support production",
+    "monitoring (Control-M, CloudWatch)"
+  ],
+  "savoir_faire/savoir_etre": [
+    "Développement de solutions d'intégration de données",
+    "Optimisation des performances et de la qualité des données",
+    "Documentation technique et fonctionnelle rigoureuse",
+    "Formation et assistance d'utilisateurs internes (data, dev, MOA)",
+    "Collaboration transverse (équipes Data, BI, Infrastructure)",
+    "Force de proposition sur les bonnes pratiques techniques",
+    "Autonomie et grande curiosité scientifique",
+    "Sens du contact, pédagogie et bon relationnel",
+    "Polyvalence et capacité d'adaptation à des univers très différents",
+    "Gestion d'activité indépendante (autonomie financière et organisationnelle)"
+  ],
+  "experiences": [
+    {
+      "poste": "Éleveur de furets - Gérant",
+      "entreprise": "Élevage \"Les Furets du Lomont\" (micro-entreprise agricole), Pont-de-Roide-Vermondans (Doubs)",
+      "date": "01/2020 - Aujourd'hui",
+      "details": "Conduite complète de l'élevage : reproduction, suivi sanitaire en lien avec un vétérinaire, sevrage, socialisation et placement d'environ 40 à 60 furetons par an. Gestion administrative et commerciale de la micro-entreprise : comptabilité, déclarations agricoles, relation clientèle, site vitrine et présence sur les réseaux sociaux."
+    },
+    {
+      "poste": "Intermittent du spectacle - Régisseur plateau & son",
+      "entreprise": "Activité indépendante - festivals et salles de la région Bourgogne-Franche-Comté",
+      "date": "06/2021 - Aujourd'hui",
+      "details": "Régie plateau et sonorisation pour des festivals régionaux (musiques actuelles, théâtre de rue) et des salles municipales. Montage / démontage de scènes, gestion du planning des balances, coordination avec les équipes techniques et artistiques."
+    },
+    {
+      "poste": "Data Engineer",
+      "entreprise": "MAIF, Niort",
+      "date": "09/2014 - 12/2019",
+      "details": "Administration, maintenance et optimisation de la plateforme Informatica PowerCenter : serveurs, repository, workflows, sessions, gestion des montées de version. Conception, développement et documentation de workflows data pour alimenter le data warehouse Teradata puis Snowflake."
+    },
+    {
+      "poste": "Ingénieur d'études Data - Stage de fin d'études",
+      "entreprise": "Crédit Agricole Technologies & Services, Saint-Quentin-en-Yvelines",
+      "date": "03/2dict['a'] = 1; dict['b'] += 'hello'; print(f",
+      "details": "{dict}"
+    }
+  ],
+  "savoir_faire": [
+    "Développement de solutions d'intégration de données",
+    "Optimisation des performances et de la qualité des données",
+    "Documentation technique et fonctionnelle rigoureuse",
+    "Formation et assistance d'utilisateurs internes (data, dev, MOA)",
+    "Collaboration transverse (équipes Data, BI, Infrastructure)"
+  ],
+  "savoir_etre": [
+    "Développement de solutions d'intégration de données",
+    "Optimisation des performances et de la qualité des données",
+    "Documentation technique et fonctionnelle rigoureuse",
+    "Formation et assistance d'utilisateurs internes (data, dev, MOA)",
+    "Collaboration transverse (équipes Data, BI, Infrastructure)"
+  ]
+}

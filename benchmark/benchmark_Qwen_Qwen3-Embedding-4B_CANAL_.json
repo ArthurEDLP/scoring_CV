@@ -594,6 +594,107 @@
         }
       }
     },
+    "MFU": {
+      "cv_id": "MFU",
+      "scores": {
+        "experiences_vs_sections": {
+          "vs_profil": [
+            {
+              "poste": "Éleveur de furets - Gérant",
+              "annees": 6.38,
+              "score": 0.2523
+            },
+            {
+              "poste": "Intermittent du spectacle - Régisseur plateau & son",
+              "annees": 4.97,
+              "score": 0.3319
+            },
+            {
+              "poste": "Data Engineer",
+              "annees": 5.25,
+              "score": 0.6891
+            },
+            {
+              "poste": "Ingénieur d'études Data - Stage de fin d'études",
+              "annees": 0.0,
+              "score": 0.504
+            }
+          ],
+          "vs_description": [
+            {
+              "poste": "Éleveur de furets - Gérant",
+              "annees": 6.38,
+              "score": 0.2808
+            },
+            {
+              "poste": "Intermittent du spectacle - Régisseur plateau & son",
+              "annees": 4.97,
+              "score": 0.4058
+            },
+            {
+              "poste": "Data Engineer",
+              "annees": 5.25,
+              "score": 0.8365
+            },
+            {
+              "poste": "Ingénieur d'études Data - Stage de fin d'études",
+              "annees": 0.0,
+              "score": 0.4974
+            }
+          ],
+          "vs_contexte": [
+            {
+              "poste": "Éleveur de furets - Gérant",
+              "annees": 6.38,
+              "score": 0.2519
+            },
+            {
+              "poste": "Intermittent du spectacle - Régisseur plateau & son",
+              "annees": 4.97,
+              "score": 0.342
+            },
+            {
+              "poste": "Data Engineer",
+              "annees": 5.25,
+              "score": 0.7646
+            },
+            {
+              "poste": "Ingénieur d'études Data - Stage de fin d'études",
+              "annees": 0.0,
+              "score": 0.5292
+            }
+          ],
+          "vs_ao_complete": [
+            {
+              "poste": "Éleveur de furets - Gérant",
+              "annees": 6.38,
+              "score": 0.2867
+            },
+            {
+              "poste": "Intermittent du spectacle - Régisseur plateau & son",
+              "annees": 4.97,
+              "score": 0.3862
+            },
+            {
+              "poste": "Data Engineer",
+              "annees": 5.25,
+              "score": 0.8082
+            },
+            {
+              "poste": "Ingénieur d'études Data - Stage de fin d'études",
+              "annees": 0.0,
+              "score": 0.559
+            }
+          ]
+        },
+        "cv_complet_vs_sections": {
+          "vs_profil": 0.7403,
+          "vs_description": 0.7981,
+          "vs_contexte": 0.7617,
+          "vs_ao_complete": 0.8177
+        }
+      }
+    },
     "JL": {
       "cv_id": "JL",
       "scores": {
