@@ -6,7 +6,7 @@
       {
         "ordre": 0,
         "poste": "Lead Data Analyst",
-        "annees": 4.942,
+        "annees": 4.964,
         "entreprise": "Accor",
         "embedding": {
           "shape": [
@@ -9366,6 +9366,6 @@
         }
       }
     ],
-    "seniorite_totale": 7.86
+    "seniorite_totale": 7.88
   }
 }

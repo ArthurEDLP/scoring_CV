@@ -24,23 +24,23 @@ from State import CVScoringState, state_initial
 import scoring
 
 
-# ════════════════════════════════════════════════════════════════════
-# SETUP
-# ════════════════════════════════════════════════════════════════════
+# ════════════════════════ SETUP ═════════════════════════════════════
 
-print("⚙️  Chargement du modèle d'embedding...")
+
+
+print("Chargement du modèle d'embedding...")
 MODEL = SentenceTransformer("paraphrase-multilingual-mpnet-base-v2")
 
-print("⚙️  Initialisation des caches...")
+print("Initialisation des caches...")
 CACHE_CV    = CacheEmbeddingsCV(MODEL,    "./cache_cv")
 CACHE_OFFRE = CacheEmbeddingsOffre(MODEL, "./cache_offre")
 
-print("✅ Setup terminé.\n")
+print("Setup terminé.\n")
 
 
-# ════════════════════════════════════════════════════════════════════
-# NOEUDS
-# ════════════════════════════════════════════════════════════════════
+# ═══════════════════════ NOEUDS ════════════════════════════════════
+
+
 
 def noeud_categoriser(state: CVScoringState) -> Dict:
     """Pour chaque CV, détermine sa catégorie unique."""
@@ -127,9 +127,9 @@ def noeud_bonus(state: CVScoringState) -> Dict:
     return {"bonus_entreprise": entries, "erreurs": erreurs}
 
 
-# ════════════════════════════════════════════════════════════════════
-# AGRÉGATION
-# ════════════════════════════════════════════════════════════════════
+# ═════════════════════════ AGRÉGATION ════════════════════════════════
+
+
 
 def noeud_agreger(state: CVScoringState) -> Dict:
     """
@@ -208,9 +208,9 @@ def noeud_agreger(state: CVScoringState) -> Dict:
     return {"resultats_par_categorie": dict(par_categorie)}
 
 
-# ════════════════════════════════════════════════════════════════════
-# CONSTRUCTION DU GRAPHE
-# ════════════════════════════════════════════════════════════════════
+# ═══════════════ CONSTRUCTION DU GRAPHE ════════════════════════
+
+
 
 def construire_graphe():
     workflow = StateGraph(CVScoringState)
@@ -228,9 +228,9 @@ def construire_graphe():
     return workflow.compile()
 
 
-# ════════════════════════════════════════════════════════════════════
-# AFFICHAGE
-# ════════════════════════════════════════════════════════════════════
+# ════════════════════════ AFFICHAGE ═══════════════════════════
+
+
 
 def _afficher_groupe(nom: str, classement: List[Dict], top_k: int = 10) -> None:
     print(f"  ▸ {nom}  ({len(classement)} CV{'s' if len(classement) > 1 else ''})")
@@ -297,25 +297,25 @@ def afficher_resultats(
 
 # ════════════════════════════════════════════════════════════════════
 # POINT D'ENTRÉE
-# ════════════════════════════════════════════════════════════════════
+
 
 if __name__ == "__main__":
-    print("📂 Chargement des données...")
+    print("Chargement des données...")
     cvs    = charger_cvs("./CV_JSON")
     offres = charger_offres("./AO_JSON")
     print(f"   {len(cvs)} CVs et {len(offres)} offres chargés.\n")
 
     if not cvs or not offres:
-        print("❌ Aucune donnée à traiter.")
+        print("❌Aucune donnée à traiter.")
         exit(1)
 
-    print("🧱 Construction du graphe LangGraph...")
+    print("Construction du graphe LangGraph...")
     graphe = construire_graphe()
-    print("✅ Graphe prêt.\n")
+    print("Graphe prêt.\n")
 
     offre_cible = offres[0]
     poste_ao    = offre_cible["data"].get("poste", "?")
-    print(f"🚀 Matching pour l'offre {offre_cible['id']} ({poste_ao})...")
+    print(f"Matching pour l'offre {offre_cible['id']} ({poste_ao})...")
 
     state_init  = state_initial(offre_cible, cvs)
     state_final = graphe.invoke(state_init)

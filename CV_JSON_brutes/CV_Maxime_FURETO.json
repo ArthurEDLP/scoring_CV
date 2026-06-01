@@ -1,0 +1,118 @@
+{
+  "id": "MFU",
+  "formations": [
+    {
+      "diplome": "Diplôme d'Ingénieur en Informatique, spécialité Data Engineering - ENSEIRB-MATMECA, Bordeaux",
+      "date": "2014"
+    },
+    {
+      "diplome": "Classes Préparatoires aux Grandes Écoles (MPSI/MP) - Lycée Victor Hugo, Besançon",
+      "date": "2011"
+    },
+    {
+      "diplome": "Brevet Professionnel Responsable d'Entreprise Agricole (BPREA) - CFPPA de Châteaufarine, Besançon",
+      "date": "2020"
+    },
+    {
+      "diplome": "Formation certifiante \"Intermittent du spectacle - régie et plateau\" - AFDAS",
+      "date": "2021"
+    }
+  ],
+  "certifications": [
+    "Informatica PowerCenter Developer - Specialist (2016)",
+    "AWS Certified Solutions Architect - Associate (2018)",
+    "Certificat de capacité pour l'entretien d'animaux d'espèces non domestiques - DRAAF Bourgogne-Franche-Comté (2020)",
+    "SST - Sauveteur Secouriste du Travail (2021, recyclé 2024)"
+  ],
+  "langues": [
+    {
+      "nom_langue": "Français",
+      "maitrise": "Langue maternelle"
+    },
+    {
+      "nom_langue": "Anglais",
+      "maitrise": "Courant (TOEIC 910)"
+    },
+    {
+      "nom_langue": "Allemand",
+      "maitrise": "Intermédiaire (B1) - frontalier suisse alémanique"
+    }
+  ],
+  "competences_techniques": [
+    "ETL / Intégration : Informatica PowerCenter (administration serveurs, repository, workflows, sessions) | Informatica PowerExchange",
+    "Lakehouse & Big Data : AWS (S3, Glue, EMR, Athena, IAM) | Apache Airflow | dbt | Apache Iceberg | Snowflake",
+    "Langages & Scripting : Python | SQL avancé | Shell / Bash | PL/SQL",
+    "Bases de données : Oracle | Snowflake | PostgreSQL | Teradata",
+    "Outils & Méthodes : JIRA | Confluence | Git | méthodes Agile (Scrum, Kanban)",
+    "Run & Production : analyse d'incidents | MEP | support production | monitoring (Control-M, CloudWatch)",
+    "Élevage & spectacle : conduite d'élevage de mustélidés | régie plateau | sonorisation événementielle | gestion d'une micro-entreprise agricole"
+  ],
+  "savoir_faire/savoir_etre": [
+    "Développement de solutions d'intégration de données",
+    "Optimisation des performances et de la qualité des données",
+    "Documentation technique et fonctionnelle rigoureuse",
+    "Formation et assistance d'utilisateurs internes (data, dev, MOA)",
+    "Collaboration transverse (équipes Data, BI, Infrastructure)",
+    "Force de proposition sur les bonnes pratiques techniques",
+    "Autonomie et grande curiosité scientifique",
+    "Sens du contact, pédagogie et bon relationnel",
+    "Polyvalence et capacité d'adaptation à des univers très différents",
+    "Gestion d'activité indépendante (autonomie financière et organisationnelle)"
+  ],
+  "experiences": [
+    {
+      "poste": "Éleveur de furets - Gérant",
+      "date": "07/2021 - Aujourd'hui",
+      "entreprise": "Élevage \"Les Furets du Lomont\" (micro-entreprise agricole), Pont-de-Roide-Vermondans (Doubs)",
+      "details": [
+        "Contexte : Création et exploitation d'un élevage familial de furets de compagnie certifié, dans le massif du Lomont (Doubs), proposant chiots furets, conseils et accessoires.",
+        "Conduite complète de l'élevage : reproduction, suivi sanitaire en lien avec un vétérinaire, sevrage, socialisation et placement d'environ 40 à 60 furetons par an.",
+        "Gestion administrative et commerciale de la micro-entreprise : comptabilité, déclarations agricoles, relation clientèle, site vitrine et présence sur les réseaux sociaux.",
+        "Mise en conformité réglementaire : obtention du certificat de capacité, déclaration d'élevage en préfecture, respect des normes de bien-être animal.",
+        "Animation d'ateliers pédagogiques de découverte du furet auprès d'écoles et de centres de loisirs du secteur de Montbéliard.",
+        "Maintien ponctuel d'une activité de conseil freelance en data engineering (2 à 3 missions courtes par an) pour conserver le lien avec le métier."
+      ]
+    },
+    {
+      "poste": "Intermittent du spectacle - Régisseur plateau & son",
+      "date": "01/2020 - 06/2021",
+      "entreprise": "Activité indépendante - festivals et salles de la région Bourgogne-Franche-Comté",
+      "details": [
+        "Contexte : Activité d'intermittent du spectacle exercée en parallèle de l'élevage, principalement sur la saison estivale (festivals) et lors d'événements ponctuels.",
+        "Régie plateau et sonorisation pour des festivals régionaux (musiques actuelles, théâtre de rue) et des salles municipales.",
+        "Montage / démontage de scènes, gestion du planning des balances, coordination avec les équipes techniques et artistiques.",
+        "Environ 50 à 70 cachets par an, respectant les conditions du régime des intermittents (annexe 8/10).",
+        "Mise à profit de la rigueur et de la culture du \"run\" acquises en environnement IT pour la gestion du stress et des imprévus en direct."
+      ]
+    },
+    {
+      "poste": "Data Engineer",
+      "date": "09/2014 - 12/2019",
+      "entreprise": "MAIF, Niort",
+      "details": [
+        "Contexte : Au sein de la Direction des Systèmes d'Information, intégration à l'équipe Data en charge de l'alimentation du data warehouse décisionnel et des systèmes applicatifs de l'assureur (environnement Informatica historique, plus de 1500 workflows en production).",
+        "Administration, maintenance et optimisation de la plateforme Informatica PowerCenter : serveurs, repository, workflows, sessions, gestion des montées de version.",
+        "Conception, développement et documentation de workflows data pour alimenter le data warehouse Teradata puis Snowflake, ainsi que les systèmes applicatifs aval.",
+        "Contribution active au programme de décommissionnement progressif d'Informatica via la mise en place d'un Lakehouse AWS : conception et développement de workflows avec AWS (S3, Glue), Apache Airflow, dbt, Apache Iceberg et Python.",
+        "Identification et résolution des problèmes de performance et de qualité des données (tuning de sessions Informatica, optimisation de requêtes SQL, mise en place de contrôles qualité).",
+        "Contribution au run de la plateforme : analyse des incidents (niveau 2/3), mises en production, support production et astreintes en rotation.",
+        "Collaboration étroite avec les équipes Data, BI et Infrastructure pour garantir la cohérence et la disponibilité des données.",
+        "Formation et assistance des utilisateurs internes : équipe data, développeurs, MOA - rédaction de guides et animation de sessions internes.",
+        "Force de proposition sur les bonnes pratiques d'utilisation de la plateforme (normes de nommage, templates de workflows, conventions de reprise sur erreur).",
+        "Environnement de travail Agile (Scrum) outillé avec JIRA et Confluence, anglais utilisé au quotidien avec l'éditeur et des prestataires offshore."
+      ]
+    },
+    {
+      "poste": "Ingénieur d'études Data - Stage de fin d'études",
+      "date": "03/2014 - 08/2014",
+      "entreprise": "Crédit Agricole Technologies & Services, Saint-Quentin-en-Yvelines",
+      "details": [
+        "Contexte : Stage de fin d'études d'ingénieur au sein du pôle Décisionnel.",
+        "Développement de workflows Informatica PowerCenter pour l'alimentation d'un data mart marketing.",
+        "Rédaction des spécifications techniques et de la documentation d'exploitation.",
+        "Première initiation au support de production et à l'analyse d'incidents.",
+        "Mémoire de fin d'études soutenu avec mention Bien."
+      ]
+    }
+  ]
+}

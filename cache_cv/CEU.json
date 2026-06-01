@@ -6,7 +6,7 @@
       {
         "ordre": 0,
         "poste": "Lead Data Engineer",
-        "annees": 3.691,
+        "annees": 3.713,
         "entreprise": "TotalEnergies, Paris La Défense",
         "embedding": {
           "shape": [
@@ -10145,6 +10145,6 @@
         }
       }
     ],
-    "seniorite_totale": 11.44
+    "seniorite_totale": 11.46
   }
 }
