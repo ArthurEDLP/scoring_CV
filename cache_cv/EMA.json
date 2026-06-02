@@ -1,6 +1,6 @@
 {
   "id": "EMA",
-  "hash": "6b270da9af5158edb1dc0f4a642d25f5",
+  "hash": "851df13d6f06447c32e10a49bc244325",
   "vecteurs": {
     "experiences": [
       {
@@ -1571,7 +1571,7 @@
         "ordre": 2,
         "poste": "QA Engineer",
         "annees": 6.664,
-        "entreprise": "Cdiscount, Bordeaux",
+        "entreprise": "CANAL+, Bordeaux",
         "embedding": {
           "shape": [
             768
