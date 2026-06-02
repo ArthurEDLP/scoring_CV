@@ -1,12 +1,12 @@
 {
   "id": "CEU",
-  "hash": "c2500eab3e9266ecadb30e6807340fe3",
+  "hash": "d00896077f16c69925be9b0de09930d7",
   "vecteurs": {
     "experiences": [
       {
         "ordre": 0,
         "poste": "Lead Data Engineer",
-        "annees": 3.713,
+        "annees": 2.333,
         "entreprise": "TotalEnergies, Paris La Défense",
         "embedding": {
           "shape": [
@@ -788,7 +788,7 @@
       {
         "ordre": 1,
         "poste": "Senior Data Engineer",
-        "annees": 3.335,
+        "annees": 1.752,
         "entreprise": "Bouygues Telecom, Issy-les-Moulineaux",
         "embedding": {
           "shape": [
@@ -1570,7 +1570,7 @@
       {
         "ordre": 2,
         "poste": "Data Engineer",
-        "annees": 2.412,
+        "annees": 3.414,
         "entreprise": "Air France-KLM, Roissy",
         "embedding": {
           "shape": [
@@ -2352,7 +2352,7 @@
       {
         "ordre": 3,
         "poste": "Consultant Data / BI",
-        "annees": 2.001,
+        "annees": 4.0,
         "entreprise": "Capgemini Invent, Paris",
         "embedding": {
           "shape": [
@@ -10145,6 +10145,6 @@
         }
       }
     ],
-    "seniorite_totale": 11.46
+    "seniorite_totale": 11.5
   }
 }

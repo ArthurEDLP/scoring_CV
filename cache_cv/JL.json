@@ -1,12 +1,12 @@
 {
   "id": "JL",
-  "hash": "171b03e6cf4ba6be93b15b64814ef462",
+  "hash": "4beca508fe5db1b452440185d3227b0f",
   "vecteurs": {
     "experiences": [
       {
         "ordre": 0,
         "poste": "Data Scientist & Data Analyst",
-        "annees": 0.999,
+        "annees": 0.0,
         "entreprise": "Allianz",
         "embedding": {
           "shape": [
@@ -788,7 +788,7 @@
       {
         "ordre": 1,
         "poste": "Data Scientist",
-        "annees": 0.419,
+        "annees": 1.421,
         "entreprise": "SAFRAN",
         "embedding": {
           "shape": [
@@ -1570,7 +1570,7 @@
       {
         "ordre": 2,
         "poste": "Data Scientist & Data Analyst",
-        "annees": 0.999,
+        "annees": 1.999,
         "entreprise": "Allianz",
         "embedding": {
           "shape": [
@@ -10160,6 +10160,6 @@
         }
       }
     ],
-    "seniorite_totale": 6.67
+    "seniorite_totale": 7.67
   }
 }

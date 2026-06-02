@@ -33,25 +33,25 @@
     {
       "poste": "Lead Data Engineer",
       "entreprise": "TotalEnergies, Paris La Défense",
-      "date": "09/2022 - Aujourd'hui",
+      "date": "02/2024 - Aujourd'hui",
       "details": "Contexte : Refonte complète de la plateforme data du département Trading & Shipping pour traiter plus de 15 To de données quotidiennes issues des capteurs IoT, plates-formes de trading et systèmes ERP. Conception d'une architecture Data Lakehouse sur AWS avec approche Medallion (Bronze/Silver/Gold). Développement de pipelines streaming temps réel pour le suivi des positions de trading."
     },
     {
       "poste": "Senior Data Engineer",
       "entreprise": "Bouygues Telecom, Issy-les-Moulineaux",
-      "date": "04/2019 - 08/2022",
+      "date": "04/2022 - 01/2024",
       "details": "Conception d'un pipeline CDC avec Debezium et Kafka pour synchroniser plus de 200 tables Oracle vers BigQuery en quasi temps réel. Mise en place du modèle Data Vault 2.0 sur le périmètre client (45 millions lignes mises à jour quotidiennement). Déploiement automatisé complet des pipelines avec GitLab, Terraform et Cloud Build."
     },
     {
       "poste": "Data Engineer",
       "entreprise": "Air France-KLM, Roissy",
-      "date": "10/2016 - 03/2019",
+      "date": "10/2018 - 03/2022",
       "details": "Mise en place de la plateforme Big Data pour le programme Flying Blue avec Spark (Scala) et Hadoop. Développement d'algorithmes de matching profils passagers via MLlib."
     },
     {
       "poste": "Consultant Data / BI",
       "entreprise": "Capgemini Invent, Paris",
-      "date": "09/2014 - 09/2016",
+      "date": "09/2014 - 09/2018",
       "details": "Missions de conseil en Big Data et Business Intelligence pour des clients du secteur bancaire et énergie. Développement d'ETL Talend, procédures stockées Oracle PL/SQL."
     }
   ],

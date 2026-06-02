@@ -1,12 +1,12 @@
 {
   "id": "EMA",
-  "hash": "c20310de133cbab093ea26fd4daaac4d",
+  "hash": "6b270da9af5158edb1dc0f4a642d25f5",
   "vecteurs": {
     "experiences": [
       {
         "ordre": 0,
         "poste": "QA Lead / Test Manager",
-        "annees": 4.131,
+        "annees": 0.17,
         "entreprise": "AXA France, Nanterre",
         "embedding": {
           "shape": [
@@ -788,7 +788,7 @@
       {
         "ordre": 1,
         "poste": "Senior QA Engineer - Automation Lead",
-        "annees": 2.749,
+        "annees": 1.747,
         "entreprise": "Decathlon Digital, Villeneuve d'Ascq",
         "embedding": {
           "shape": [
@@ -1570,7 +1570,7 @@
       {
         "ordre": 2,
         "poste": "QA Engineer",
-        "annees": 1.662,
+        "annees": 6.664,
         "entreprise": "Cdiscount, Bordeaux",
         "embedding": {
           "shape": [
@@ -31957,6 +31957,6 @@
         }
       }
     ],
-    "seniorite_totale": 8.96
+    "seniorite_totale": 9.0
   }
 }

@@ -1,12 +1,12 @@
 {
   "id": "TVA",
-  "hash": "5167b692c2c8c34a550b17c8b869e0d9",
+  "hash": "7b43544d73ceaf7e05fa738c06e110c6",
   "vecteurs": {
     "experiences": [
       {
         "ordre": 0,
         "poste": "Program Manager - Programme Data & IA",
-        "annees": 4.378,
+        "annees": 0.416,
         "entreprise": "L'Oréal, Clichy",
         "embedding": {
           "shape": [
@@ -788,7 +788,7 @@
       {
         "ordre": 1,
         "poste": "Chef de Projet IT Senior - Data & Analytics",
-        "annees": 3.502,
+        "annees": 7.502,
         "entreprise": "Société Générale - Banque de Détail France, La Défense",
         "embedding": {
           "shape": [
@@ -17156,6 +17156,6 @@
         }
       }
     ],
-    "seniorite_totale": 16.38
+    "seniorite_totale": 16.41
   }
 }

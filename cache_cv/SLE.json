@@ -1,12 +1,12 @@
 {
   "id": "SLE",
-  "hash": "a6f4be52d33e10e5cf3288173edfdb44",
+  "hash": "3367957ea95dc79586c1b9d292353586",
   "vecteurs": {
     "experiences": [
       {
         "ordre": 0,
         "poste": "Lead Data Analyst",
-        "annees": 4.964,
+        "annees": 1.002,
         "entreprise": "Accor",
         "embedding": {
           "shape": [
@@ -788,7 +788,7 @@
       {
         "ordre": 1,
         "poste": "Data Analyst Senior",
-        "annees": 1.665,
+        "annees": 3.663,
         "entreprise": "Sephora (LVMH)",
         "embedding": {
           "shape": [
@@ -1570,7 +1570,7 @@
       {
         "ordre": 2,
         "poste": "Data Scientist",
-        "annees": 0.832,
+        "annees": 2.834,
         "entreprise": "Carrefour",
         "embedding": {
           "shape": [
@@ -9366,6 +9366,6 @@
         }
       }
     ],
-    "seniorite_totale": 7.88
+    "seniorite_totale": 7.92
   }
 }
