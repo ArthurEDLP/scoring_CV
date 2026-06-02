@@ -220,16 +220,14 @@ def noeud_agreger(state: CVScoringState) -> Dict:
 def noeud_guards(state: CVScoringState) -> Dict:
     """
     Applique le filtre de récence sur le parcours :
-    pour chaque CV déjà classé, on regarde si au moins une expérience
-    "dans le domaine du poste AO" est récente (≤ fenêtre).
+    pour chaque CV déjà classé, on regarde si au moins une expérience "dans le domaine du poste AO" est récente (≤ fenêtre).
 
     Sortie :
       - resultats_acceptes_par_categorie : même structure que
         resultats_par_categorie, mais ne contient que les CV acceptés
       - cv_rejetes : liste des CV écartés avec leur motif
 
-    Note : les rejetés conservent leur score_final calculé par agreger
-    (à titre informatif), mais ils ne sont plus dans le classement principal.
+    Note : les rejetés conservent leur score_final calculé par agreger (à titre informatif), mais ils ne sont plus dans le classement principal.
     """
     offre = state["offre"]
     cvs_par_id = {cv["id"]: cv for cv in state["cvs"]}
