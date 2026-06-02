@@ -4,14 +4,19 @@ Pipeline complet de matching CV ↔ Offre via LangGraph.
 Architecture :
     START
       ├──> categoriser ─┐
-      ├──> technos     ─┤──> agreger ──> END
+      ├──> technos     ─┤──> agreger ──> guards ──> END
       └──> bonus       ─┘
 
 Chaque CV apparaît dans EXACTEMENT UNE catégorie :
   - groupe principal (poste de l'AO) si match ≥ 0.90 sur au moins 1 exp
   - sinon : groupe alternatif nommé comme son poste le plus récent
+
+Le nœud `guards` applique ensuite un filtre de récence sur le parcours :
+les CV dont l'expérience pertinente est trop ancienne sont écartés
+du classement et basculent dans une liste de rejetés (avec motif).
 """
 
+from datetime import date
 from typing import Dict, List
 from collections import defaultdict
 
@@ -22,10 +27,10 @@ from CV_AO_Loader import charger_cvs, charger_offres
 from embedding_cache import CacheEmbeddingsCV, CacheEmbeddingsOffre
 from State import CVScoringState, state_initial
 import scoring
+import guards
 
 
 # ════════════════════════ SETUP ═════════════════════════════════════
-
 
 
 print("Chargement du modèle d'embedding...")
@@ -38,8 +43,14 @@ CACHE_OFFRE = CacheEmbeddingsOffre(MODEL, "./cache_offre")
 print("Setup terminé.\n")
 
 
-# ═══════════════════════ NOEUDS ════════════════════════════════════
+# Paramètres des garde-fous.
+# DELTA : à recalibrer sur la distribution observée avec mpnet
+# (le 0.04 vient d'une calibration sur Qwen3-8B).
+GUARDS_DELTA = 0.04
+GUARDS_FENETRE_MOIS = None  # None = dérivé de seniorite_min_annees (24 mois min)
 
+
+# ═══════════════════════ NOEUDS ════════════════════════════════════
 
 
 def noeud_categoriser(state: CVScoringState) -> Dict:
@@ -130,7 +141,6 @@ def noeud_bonus(state: CVScoringState) -> Dict:
 # ═════════════════════════ AGRÉGATION ════════════════════════════════
 
 
-
 def noeud_agreger(state: CVScoringState) -> Dict:
     """
     Pour chaque CV (UNE catégorie maximum) :
@@ -142,7 +152,6 @@ def noeud_agreger(state: CVScoringState) -> Dict:
     offre = state["offre"]
     annees_requises = float(offre["data"].get("seniorite_min_annees") or 0)
 
-    # Indexation des contributions
     cat_par_cv:     Dict[str, Dict] = {}
     technos_par_cv: Dict[str, Dict] = {}
     bonus_par_cv:   Dict[str, Dict] = {}
@@ -154,8 +163,6 @@ def noeud_agreger(state: CVScoringState) -> Dict:
     for e in state["bonus_entreprise"]:
         bonus_par_cv[e["cv_id"]] = e
 
-    # Pour chaque CV, on a besoin de sa séniorité totale → relire le cache
-    # (rapide, c'est dans le JSON déjà sur disque)
     seniorite_par_cv: Dict[str, float] = {}
     for cv in state["cvs"]:
         try:
@@ -168,7 +175,7 @@ def noeud_agreger(state: CVScoringState) -> Dict:
 
     for cv_id, categorie in cat_par_cv.items():
         if categorie is None:
-            continue   # CV sans expérience exploitable
+            continue
 
         s_technos_obj = technos_par_cv.get(cv_id, {})
         s_technos     = s_technos_obj.get("score",   0.0)
@@ -201,15 +208,104 @@ def noeud_agreger(state: CVScoringState) -> Dict:
             "est_poste_ao":       categorie["est_poste_ao"],
         })
 
-    # Tri stable décroissant par groupe
     for cat in par_categorie:
         par_categorie[cat].sort(key=lambda r: r["score_final"], reverse=True)
 
     return {"resultats_par_categorie": dict(par_categorie)}
 
 
-# ═══════════════ CONSTRUCTION DU GRAPHE ════════════════════════
+# ═════════════════════════ GUARDS ════════════════════════════════════
 
+
+def noeud_guards(state: CVScoringState) -> Dict:
+    """
+    Applique le filtre de récence sur le parcours :
+    pour chaque CV déjà classé, on regarde si au moins une expérience
+    "dans le domaine du poste AO" est récente (≤ fenêtre).
+
+    Sortie :
+      - resultats_acceptes_par_categorie : même structure que
+        resultats_par_categorie, mais ne contient que les CV acceptés
+      - cv_rejetes : liste des CV écartés avec leur motif
+
+    Note : les rejetés conservent leur score_final calculé par agreger
+    (à titre informatif), mais ils ne sont plus dans le classement principal.
+    """
+    offre = state["offre"]
+    cvs_par_id = {cv["id"]: cv for cv in state["cvs"]}
+    annees_requises = offre["data"].get("seniorite_min_annees")
+    ref_date = date.today()
+
+    erreurs: List[str] = []
+
+    # Embedding du poste AO
+    try:
+        offre_emb = CACHE_OFFRE.obtenir(offre)
+        poste_obj = offre_emb.get("poste")
+        emb_poste_ao = poste_obj["embedding"] if poste_obj else None
+    except Exception as e:
+        erreurs.append(f"[guards] offre {offre['id']}: {e}")
+        emb_poste_ao = None
+
+    # Pour chaque CV : appliquer le filtre
+    statuts: Dict[str, guards.GuardResult] = {}
+    for cv in state["cvs"]:
+        try:
+            cv_emb = CACHE_CV.obtenir(cv)
+            result = guards.appliquer_filtre_recence(
+                profile_id=cv["id"],
+                cv_brut=cv,
+                cv_emb=cv_emb,
+                emb_poste_ao=emb_poste_ao,
+                ref_date=ref_date,
+                seniorite_min_annees=annees_requises,
+                delta=GUARDS_DELTA,
+                fenetre_mois=GUARDS_FENETRE_MOIS,
+            )
+            statuts[cv["id"]] = result
+        except Exception as e:
+            erreurs.append(f"[guards] CV {cv.get('id','?')}: {e}")
+
+    # Séparer les résultats agrégés en acceptés / rejetés
+    resultats_acceptes: Dict[str, List[Dict]] = defaultdict(list)
+    cv_rejetes: List[Dict] = []
+
+    for cat_nom, classement in (state["resultats_par_categorie"] or {}).items():
+        for entry in classement:
+            cv_id = entry["cv_id"]
+            result = statuts.get(cv_id)
+
+            if result is None or result.statut == guards.Statut.INDETERMINE:
+                # On ne peut pas statuer → on laisse passer mais on note
+                entry_enrichi = {**entry, "guards_statut": "INDETERMINE"}
+                resultats_acceptes[cat_nom].append(entry_enrichi)
+                continue
+
+            if result.accepte:
+                resultats_acceptes[cat_nom].append({
+                    **entry,
+                    "guards_statut": result.statut.value,
+                })
+            else:
+                cv_rejetes.append({
+                    **entry,
+                    "categorie": cat_nom,
+                    "guards_statut": result.statut.value,
+                    "guards_motif": result.motif,
+                    "guards_details": result.details,
+                })
+
+    # Tri stable des rejetés par score décroissant (au cas où on veut les voir)
+    cv_rejetes.sort(key=lambda r: r["score_final"], reverse=True)
+
+    return {
+        "resultats_acceptes_par_categorie": dict(resultats_acceptes),
+        "cv_rejetes": cv_rejetes,
+        "erreurs": erreurs,
+    }
+
+
+# ═══════════════ CONSTRUCTION DU GRAPHE ════════════════════════
 
 
 def construire_graphe():
@@ -219,17 +315,18 @@ def construire_graphe():
     workflow.add_node("technos",     noeud_technos)
     workflow.add_node("bonus",       noeud_bonus)
     workflow.add_node("agreger",     noeud_agreger)
+    workflow.add_node("guards",      noeud_guards)
 
     for n in ["categoriser", "technos", "bonus"]:
         workflow.add_edge(START, n)
         workflow.add_edge(n, "agreger")
 
-    workflow.add_edge("agreger", END)
+    workflow.add_edge("agreger", "guards")
+    workflow.add_edge("guards", END)
     return workflow.compile()
 
 
 # ════════════════════════ AFFICHAGE ═══════════════════════════
-
 
 
 def _afficher_groupe(nom: str, classement: List[Dict], top_k: int = 10) -> None:
@@ -237,13 +334,14 @@ def _afficher_groupe(nom: str, classement: List[Dict], top_k: int = 10) -> None:
     print("  " + "─" * 76)
     for i, r in enumerate(classement[:top_k], 1):
         flag = " 🏢" if r["entreprise_matchee"] else ""
+        marqueur_indet = " ❓" if r.get("guards_statut") == "INDETERMINE" else ""
         print(
             f"  {i:>2}. {r['cv_id']:<14} "
             f"score={r['score_final']:.3f}  "
             f"technos={r['score_technos']:.2f}  "
             f"séniorité={r['score_seniorite']:.2f} "
             f"({r['seniorite_totale']:.1f}/{r['annees_requises']:.0f} ans)"
-            f"{flag}"
+            f"{flag}{marqueur_indet}"
         )
         manquantes = [
             f"{t}={s:.2f}"
@@ -258,26 +356,43 @@ def _afficher_groupe(nom: str, classement: List[Dict], top_k: int = 10) -> None:
     print()
 
 
+def _afficher_rejetes(cv_rejetes: List[Dict]) -> None:
+    if not cv_rejetes:
+        return
+
+    print(f"🚫 CV ÉCARTÉS PAR LES GARDE-FOUS  ({len(cv_rejetes)})\n")
+    print("  " + "─" * 76)
+    for r in cv_rejetes:
+        print(f"  ✗ {r['cv_id']:<14} "
+              f"score_brut={r['score_final']:.3f}  "
+              f"[{r['categorie']}]")
+        print(f"      statut : {r['guards_statut']}")
+        print(f"      motif  : {r['guards_motif']}")
+        d = r.get("guards_details", {})
+        if "exp_pertinente" in d:
+            print(f"      exp pertinente : {d['exp_pertinente']} "
+                  f"(cosine={d['cosine_exp']:.3f}, "
+                  f"fin il y a {d['mois_depuis_fin']} mois)")
+        print()
+
+
 def afficher_resultats(
-    resultats_par_categorie: Dict[str, List[Dict]],
+    resultats_acceptes_par_categorie: Dict[str, List[Dict]],
+    cv_rejetes: List[Dict],
     offre_id: str,
     poste_ao: str,
     top_k: int = 10,
 ) -> None:
-    if not resultats_par_categorie:
-        print("Aucun résultat.")
-        return
-
     print(f"\n{'═' * 78}")
     print(f"  AO : {offre_id}  —  Poste demandé : {poste_ao}")
     print(f"{'═' * 78}\n")
 
     principal = {
-        nom: cl for nom, cl in resultats_par_categorie.items()
+        nom: cl for nom, cl in resultats_acceptes_par_categorie.items()
         if cl and cl[0]["est_poste_ao"]
     }
     alternatifs = {
-        nom: cl for nom, cl in resultats_par_categorie.items()
+        nom: cl for nom, cl in resultats_acceptes_par_categorie.items()
         if cl and not cl[0]["est_poste_ao"]
     }
 
@@ -286,13 +401,14 @@ def afficher_resultats(
         for nom, cl in principal.items():
             _afficher_groupe(nom, cl, top_k=top_k)
     else:
-        print(f"🏆 GROUPE PRINCIPAL  (aucun CV avec ces qualifications exact)\n")
+        print(f"🏆 GROUPE PRINCIPAL  (aucun CV avec ces qualifications)\n")
 
     if alternatifs:
         print(f"📂 PROFILS ALTERNATIFS\n")
-        # Tri : groupes les plus peuplés en premier
         for nom, cl in sorted(alternatifs.items(), key=lambda kv: -len(kv[1])):
             _afficher_groupe(nom, cl, top_k=top_k)
+
+    _afficher_rejetes(cv_rejetes)
 
 
 # ════════════════════════════════════════════════════════════════════
@@ -326,7 +442,8 @@ if __name__ == "__main__":
             print(f"   - {err}")
 
     afficher_resultats(
-        state_final["resultats_par_categorie"] or {},
+        resultats_acceptes_par_categorie = state_final.get("resultats_acceptes_par_categorie") or {},
+        cv_rejetes                       = state_final.get("cv_rejetes") or [],
         offre_id = offre_cible["id"],
         poste_ao = poste_ao,
     )
