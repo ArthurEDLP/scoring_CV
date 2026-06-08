@@ -21,8 +21,37 @@ from pathlib import Path
 from typing import List, Dict, Optional
 
 import numpy as np
-from sentence_transformers import SentenceTransformer
 
+import ollama
+
+
+MODEL = "qwen3-embedding:8b"
+
+# ─────────────────────────────────────────────────────────────────────
+# Normalisation des vecteurs d'embedding
+# ─────────────────────────────────────────────────────────────────────
+
+def _normaliser(vecteurs: np.ndarray) -> np.ndarray:
+    """Normalise L2 ligne par ligne. Accepte (n, d) ou (d,).
+    Remplace les normes nulles par 1.0 pour éviter NaN."""
+    arr = np.asarray(vecteurs, dtype="float32")
+    if arr.ndim == 1:
+        n = np.linalg.norm(arr)
+        return arr if n == 0 else arr / n
+    norms = np.linalg.norm(arr, axis=1, keepdims=True)
+    norms = np.where(norms == 0, 1.0, norms)
+    return arr / norms
+
+# ─────────────────────────────────────────────────────────────────────
+# Fonction d'embeding générique
+# ─────────────────────────────────────────────────────────────────────
+
+def embed(textes):
+    rep = ollama.embed(
+        model=MODEL,
+        input=textes
+    )
+    return np.array(rep["embeddings"], dtype=np.float32)
 
 # ─────────────────────────────────────────────────────────────────────
 # Templates d'enrichissement
@@ -145,7 +174,7 @@ class CacheEmbeddingsCV:
       - la séniorité totale (somme de toutes les durées)
     """
 
-    def __init__(self, model: SentenceTransformer, cache_dir: str):
+    def __init__(self, model: MODEL, cache_dir: str):
         self.model = model
         self.cache_dir = Path(cache_dir)
         self.cache_dir.mkdir(parents=True, exist_ok=True)
@@ -187,10 +216,8 @@ class CacheEmbeddingsCV:
             entreprise = exp.get("entreprise", "").strip()
             duree = _duree_experience_annees(exp.get("date", ""), poste)
 
-            emb = self.model.encode(
-                [_template_poste(poste)],
-                normalize_embeddings=True,
-            )[0].astype("float32")
+            emb_raw = embed([_template_poste(poste)])[0]
+            emb = _normaliser(emb_raw)
 
             experiences.append({
                 "ordre":      idx,                   # 0 = la plus récente
@@ -209,10 +236,9 @@ class CacheEmbeddingsCV:
 
         technos = []
         if technos_brutes:
-            embs = self.model.encode(
-                [_template_techno(t) for t in technos_brutes],
-                normalize_embeddings=True,
-            ).astype("float32")
+            embs_raw = embed([_template_techno(t) for t in technos_brutes])
+            embs = _normaliser(embs_raw)
+
             for label, emb in zip(technos_brutes, embs):
                 technos.append({
                     "label":     label,
@@ -289,7 +315,7 @@ class CacheEmbeddingsCV:
 class CacheEmbeddingsOffre:
     """Cache des embeddings AO : poste + technos."""
 
-    def __init__(self, model: SentenceTransformer, cache_dir: str):
+    def __init__(self, model: MODEL, cache_dir: str):
         self.model = model
         self.cache_dir = Path(cache_dir)
         self.cache_dir.mkdir(parents=True, exist_ok=True)
@@ -317,10 +343,9 @@ class CacheEmbeddingsOffre:
     def _calculer(self, offre_data: dict) -> dict:
         poste = (offre_data.get("poste") or "").strip()
         if poste:
-            emb_poste = self.model.encode(
-                [_template_poste(poste)],
-                normalize_embeddings=True,
-            )[0].astype("float32")
+            emb_raw = embed([_template_poste(poste)])[0]
+            emb_poste = _normaliser(emb_raw)
+
             poste_obj = {
                 "label":     poste,
                 "embedding": _ndarray_to_json(emb_poste),
@@ -333,10 +358,9 @@ class CacheEmbeddingsOffre:
 
         technos = []
         if technos_brutes:
-            embs = self.model.encode(
-                [_template_techno(t) for t in technos_brutes],
-                normalize_embeddings=True,
-            ).astype("float32")
+            embs_raw = embed([_template_techno(t) for t in technos_brutes])
+            embs = _normaliser(embs_raw)
+
             for label, emb in zip(technos_brutes, embs):
                 technos.append({
                     "label":     label,

@@ -21,7 +21,7 @@ from typing import Dict, List
 from collections import defaultdict
 
 from langgraph.graph import StateGraph, START, END
-from sentence_transformers import SentenceTransformer
+import ollama
 
 from CV_AO_Loader import charger_cvs, charger_offres
 from embedding_cache import CacheEmbeddingsCV, CacheEmbeddingsOffre
@@ -34,7 +34,7 @@ import guards
 
 
 print("Chargement du modèle d'embedding...")
-MODEL = SentenceTransformer("paraphrase-multilingual-mpnet-base-v2")
+MODEL = "qwen3-embedding:8b"
 
 print("Initialisation des caches...")
 CACHE_CV    = CacheEmbeddingsCV(MODEL,    "./cache_cv")
