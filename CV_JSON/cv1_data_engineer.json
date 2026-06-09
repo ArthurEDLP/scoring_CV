@@ -33,7 +33,7 @@
     {
       "poste": "Lead Data Engineer",
       "entreprise": "TotalEnergies, Paris La Défense",
-      "date": "02/2024 - Aujourd'hui",
+      "date": "02/2024 - 04/2026",
       "details": "Contexte : Refonte complète de la plateforme data du département Trading & Shipping pour traiter plus de 15 To de données quotidiennes issues des capteurs IoT, plates-formes de trading et systèmes ERP. Conception d'une architecture Data Lakehouse sur AWS avec approche Medallion (Bronze/Silver/Gold). Développement de pipelines streaming temps réel pour le suivi des positions de trading."
     },
     {

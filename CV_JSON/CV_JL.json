@@ -23,44 +23,20 @@
     {
       "poste": "Data Scientist & Data Analyst",
       "entreprise": "Allianz",
-      "date": "09/2025 - 09/2025",
+      "date": "01/2025 - 05/2026",
       "details": "Création d’un Datamart SAS pour centraliser et structurer les données fraude, fiabiliser les référentiels et produire l'ensemble des indicateurs nécessaires au pilotage. Mise en place de contrôles qualité et d'une documentation."
     },
     {
       "poste": "Data Scientist",
       "entreprise": "SAFRAN",
-      "date": "07/2023 - 12/2024",
+      "date": "01/2024 - 12/2024",
       "details": "Définition et déploiement de standards de qualité, formats et métadonnées pour améliorer la fiabilité des données entre équipes. Extraction automatique via OCR."
     },
     {
       "poste": "Data Scientist & Data Analyst",
-      "entreprise": "Allianz",
-      "date": "09/2020 - 09/2022",
-      "details": "Déploiement de modèles de machine learning pour détecter les comportements frauduleux. Feature engineering, entraînement et validation."
-    },
-    {
-      "poste": "Data Scientist & Data Analyst",
-      "entreprise": "SFR - Direction de l’innovation",
-      "date": "03/2020 - 08/2020",
-      "details": "Amélioration des reportings juridiques (Excel/VBA) et création de KPI pour faciliter le pilotage du risque juridique."
-    },
-    {
-      "poste": "Data Scientist & Data Analyst",
       "entreprise": "SAFRAN",
-      "date": "07/2022 - 12/2022",
+      "date": "07/2022 - 12/2023",
       "details": "Développement d'un pipeline complet (prétraitement, feature engineering et entraînement) appliqué aux systèmes PPS5000 avec data augmentation par GAN pour enrichir le dataset."
-    },
-    {
-      "poste": "Data Scientist & Data Analyst",
-      "entreprise": "Allianz",
-      "date": "09/2020 - 09/2021",
-      "details": "Conception d'un Datamart SAS pour centraliser et structurer les données sensibles."
-    },
-    {
-      "poste": "Data Scientist & Data Analyst",
-      "entreprise": "Allianz",
-      "date": "09/2020 - 09/2021",
-      "details": "Développement de dashboard avec KPI sous SAS et Excel pour suivre la performance des enquêteurs fraude."
     },
     {
       "poste": "Data Scientist & Data Analyst",
