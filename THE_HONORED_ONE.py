@@ -348,14 +348,44 @@ def _afficher_groupe(nom: str, classement: List[Dict], top_k: int = 10) -> None:
             f"{flag}{marqueur_indet}"
             f"dispo={r['disponibilite']}"
             )
+        # Compatibilité : details peut être {label: float} (ancien) ou {label: dict} (nouveau)
+        def _score(v):
+            return v["score"] if isinstance(v, dict) else v
+
+        ICONE_SOURCE = {"exact": "✅", "semantique": "〜", "absent": "❌"}
+
         manquantes = [
-            f"{t}={s:.2f}"
-            for t, s in r["technos_details"].items()
-            if s < 0.5
+            (t, d) for t, d in r["technos_details"].items()
+            if _score(d) < 0.5
         ]
+        presentes = [
+            (t, d) for t, d in r["technos_details"].items()
+            if _score(d) >= 0.5
+        ]
+
+        if presentes:
+            lignes = []
+            for t, d in presentes:
+                if isinstance(d, dict):
+                    icone = ICONE_SOURCE.get(d["source"], "?")
+                    match = f"→{d['matche_avec']}" if d.get("matche_avec") and d["matche_avec"] != t else ""
+                    lignes.append(f"{icone}{t}{match}={_score(d):.2f}")
+                else:
+                    lignes.append(f"✅{t}={d:.2f}")
+            print(f"      🔧 technos OK    : {', '.join(lignes[:8])}"
+                  + (" ..." if len(lignes) > 8 else ""))
+
         if manquantes:
-            print(f"      ⚠️  technos faibles : {', '.join(manquantes[:5])}"
-                  + (" ..." if len(manquantes) > 5 else ""))
+            lignes = []
+            for t, d in manquantes:
+                if isinstance(d, dict):
+                    icone = ICONE_SOURCE.get(d["source"], "?")
+                    match = f"→{d['matche_avec']}" if d.get("matche_avec") and d["matche_avec"] != t else ""
+                    lignes.append(f"{icone}{t}{match}={_score(d):.2f}")
+                else:
+                    lignes.append(f"❌{t}={d:.2f}")
+            print(f"      ⚠️  technos faibles : {', '.join(lignes[:5])}"
+                  + (" ..." if len(lignes) > 5 else ""))
     if len(classement) > top_k:
         print(f"      ... et {len(classement) - top_k} autres CV(s)")
     print()

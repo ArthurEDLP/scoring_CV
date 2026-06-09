@@ -83,40 +83,68 @@ def categoriser_cv(
 # ────────────────────── Score Technos ─────────────────────────────
 
 
+import re
+
+def _normaliser(label: str) -> str:
+    """lower + trim + espaces compactés. Gère AWS/aws, pas k8s/kubernetes."""
+    return re.sub(r"\s+", " ", label.strip().lower())
+
+
 def score_technos(
-    technos_ao: List[Dict],
-    technos_cv: List[Dict],
-    seuil_match: float = 0.25, # par défaut 0.25, mais on peut choisir de mettre un autre minimun
-) -> Tuple[float, Dict[str, float]]:
+    technos_ao,                       # List[{"label": str, "embedding": np.ndarray}]
+    technos_cv,                       # idem
+    seuil_semantique: float = 0.65,   # HAUT, à calibrer sur mpnet
+    discount: float = 0.85,           # un match sémantique vaut moins qu'un exact ; mets 1.0 si tu n'en veux pas
+) -> Tuple[float, Dict]:
     """
-    Pour chaque techno AO → meilleure sim avec une techno CV → moyenne.
-    Retourne (score, details: {techno_AO: meilleure_sim}).
+    Pour chaque techno AO :
+      1. Match exact (label normalisé) → score 1.0
+      2. Match sémantique (cosine ≥ seuil) → score = cosine * discount
+      3. Absent → score 0.0
+    Retourne (score_moyen, details: {techno_AO: {"score", "source", "matche_avec", ...}}).
     """
     if not technos_ao:
         return 1.0, {}
 
-    if not technos_cv:
-        return 0.0, {t["label"]: 0.0 for t in technos_ao}
+    # Index exact : label normalisé -> label original du CV (pour l'affichage)
+    cv_par_norme = {}
+    for t in technos_cv:
+        cv_par_norme.setdefault(_normaliser(t["label"]), t["label"])
 
-    mat_ao = np.stack([t["embedding"] for t in technos_ao])
-    mat_cv = np.stack([t["embedding"] for t in technos_cv])
+    mat_cv    = np.stack([t["embedding"] for t in technos_cv]) if technos_cv else None
+    labels_cv = [t["label"] for t in technos_cv]
 
-    sims = mat_ao @ mat_cv.T
-    max_par_techno_ao = np.clip(sims.max(axis=1), 0.0, 1.0)
+    details, scores = {}, []
+    for t in technos_ao:
+        norme = _normaliser(t["label"])
 
-    if seuil_match > 0:
-        max_par_techno_ao = np.where(
-            max_par_techno_ao >= seuil_match,
-            max_par_techno_ao,
-            0.0,
-        )
+        # 1. Exact
+        if norme in cv_par_norme:
+            details[t["label"]] = {"score": 1.0, "source": "exact",
+                                   "matche_avec": cv_par_norme[norme]}
+            scores.append(1.0)
+            continue
 
-    score = float(max_par_techno_ao.mean())
-    details = {
-        t["label"]: float(s)
-        for t, s in zip(technos_ao, max_par_techno_ao)
-    }
-    return score, details
+        # 2. Sémantique (seulement si rien trouvé en exact)
+        if mat_cv is not None and t.get("embedding") is not None:
+            sims = mat_cv @ t["embedding"]
+            idx  = int(np.argmax(sims))
+            cos  = float(np.clip(sims[idx], 0.0, 1.0))
+            if cos >= seuil_semantique:
+                details[t["label"]] = {
+                    "score":       round(cos * discount, 3),
+                    "source":      "semantique",
+                    "matche_avec": labels_cv[idx],
+                    "cosine":      round(cos, 3),
+                }
+                scores.append(cos * discount)
+                continue
+
+        # 3. Absent
+        details[t["label"]] = {"score": 0.0, "source": "absent", "matche_avec": None}
+        scores.append(0.0)
+
+    return float(np.mean(scores)), details
 
 
 # ─────────────────── Score Séniorité ─────────────────────────
