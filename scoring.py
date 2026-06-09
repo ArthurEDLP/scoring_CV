@@ -26,13 +26,13 @@ import math
 
 
 POIDS_AXES = {
-    "technos":   0.50,
-    "seniorite": 0.50,
-    "bonus":     0.10,    # additif, peut faire dépasser 1.0
+    "technos":   0.70,
+    "seniorite": 0.30,
+    "bonus":     0.10,    # additif, peut faire dépasser 1.0 (ne le fera pas)
 }
 
 # Seuil pour qu'une expérience soit considérée "du poste AO".
-SEUIL_CATEGORIE = 0.7
+SEUIL_CATEGORIE = 0.775
 
 VALEUR_BONUS_ENTREPRISE = 1.0
 

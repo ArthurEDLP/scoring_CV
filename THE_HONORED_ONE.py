@@ -28,6 +28,7 @@ from embedding_cache import CacheEmbeddingsCV, CacheEmbeddingsOffre
 from State import CVScoringState, state_initial
 import scoring
 import guards
+from guards import detecter_disponibilite
 
 
 # ════════════════════════ SETUP ═════════════════════════════════════
@@ -44,7 +45,7 @@ print("Setup terminé.\n")
 
 
 # Paramètres des garde-fous.
-# DELTA : à recalibrer sur la distribution observée avec mpnet
+# DELTA : à recalibrer sur la distribution observée
 # (le 0.04 vient d'une calibration sur Qwen3-8B).
 GUARDS_DELTA = 0.04
 GUARDS_FENETRE_MOIS = None  # None = dérivé de seniorite_min_annees (24 mois min)
@@ -193,6 +194,10 @@ def noeud_agreger(state: CVScoringState) -> Dict:
             s_seniorite = s_seniorite,
             s_bonus     = s_bonus,
         )
+        # Récupère le CV brut pour parser ses dates (le CV brut est dans state["cvs"])
+        cv_brut = next((c for c in cvs if c["id"] == cv_id), None)
+        exps_brutes = (cv_brut.get("data") or cv_brut).get("experiences", []) if cv_brut else []
+        dispo = detecter_disponibilite(exps_brutes, date.today())
 
         par_categorie[categorie["nom"]].append({
             "cv_id":              cv_id,
@@ -206,6 +211,7 @@ def noeud_agreger(state: CVScoringState) -> Dict:
             "entreprise_matchee": match_ent,
             "technos_details":    details_tech,
             "est_poste_ao":       categorie["est_poste_ao"],
+            "disponibilite": dispo.value,
         })
 
     for cat in par_categorie:
@@ -338,9 +344,10 @@ def _afficher_groupe(nom: str, classement: List[Dict], top_k: int = 10) -> None:
             f"score={r['score_final']:.3f}  "
             f"technos={r['score_technos']:.2f}  "
             f"séniorité={r['score_seniorite']:.2f} "
-            f"({r['seniorite_totale']:.1f}/{r['annees_requises']:.0f} ans)"
+            f"({r['seniorite_totale']:.1f}/{r['annees_requises']:.0f} ans)  "
             f"{flag}{marqueur_indet}"
-        )
+            f"dispo={r['disponibilite']}"
+            )
         manquantes = [
             f"{t}={s:.2f}"
             for t, s in r["technos_details"].items()

@@ -58,6 +58,88 @@ class Statut(str, Enum):
     REJETE_AUCUNE_EXP_PERTINENTE = "REJETE_AUCUNE_EXP_PERTINENTE"
     INDETERMINE = "INDETERMINE"  # données manquantes (ex: dates non parsables)
 
+class Disponibilite(str, Enum):
+    """État de disponibilité d'un candidat, basé sur la fin de sa
+    dernière expérience par rapport à la date du jour."""
+    DISPO      = "oui"          # dernière exp terminée (date passée)
+    EN_CONTRAT = "en contrat"   # dernière exp en cours ou fin future
+    INCONNUE   = "?"            # impossible à déterminer
+ 
+ 
+def detecter_disponibilite(
+    experiences_brutes: list[dict],
+    ref_date: date,
+) -> Disponibilite:
+    """
+    Détermine la disponibilité d'un candidat à partir de sa dernière
+    expérience.
+ 
+    Logique :
+      - Aucune expérience exploitable                       → INCONNUE
+      - Dernière exp avec 'Aujourd'hui'/'present'/etc       → EN_CONTRAT
+      - Dernière exp avec date_fin >= mois courant          → EN_CONTRAT
+      - Dernière exp avec date_fin < mois courant           → DISPO
+      - Date entièrement non parsable                       → INCONNUE
+ 
+    Args:
+        experiences_brutes: liste de dicts {date: "MM/YYYY - MM/YYYY", ...}
+        ref_date: date de référence (typiquement date.today())
+ 
+    Identification de la "dernière" expérience : on prend celle dont la
+    date de fin est la plus récente (None = aujourd'hui = la plus récente).
+    """
+    if not experiences_brutes:
+        return Disponibilite.INCONNUE
+ 
+    exps_parsees = []
+    for raw in experiences_brutes:
+        date_str = raw.get("date", "")
+        if not isinstance(date_str, str) or not date_str.strip():
+            continue
+ 
+        debut, fin = parse_periode(date_str)
+        en_cours = _est_en_cours(date_str)
+ 
+        # On garde l'exp si elle a au moins une info exploitable
+        if debut is None and fin is None and not en_cours:
+            continue
+ 
+        exps_parsees.append({
+            "debut":   debut,
+            "fin":     fin,
+            "en_cours": en_cours or (fin is None and debut is not None),
+        })
+ 
+    if not exps_parsees:
+        return Disponibilite.INCONNUE
+ 
+    # Trie : on prend l'expérience avec la date de fin la plus récente.
+    # 'fin = None' (en cours) → on traite comme la date de référence
+    # (donc la plus récente possible).
+    derniere = max(
+        exps_parsees,
+        key=lambda e: e["fin"] if e["fin"] is not None else ref_date,
+    )
+ 
+    if derniere["en_cours"]:
+        return Disponibilite.EN_CONTRAT
+ 
+    fin = derniere["fin"]
+    if fin is None:
+        return Disponibilite.INCONNUE  # cas pathologique
+ 
+    # Compare au mois près
+    if (fin.year, fin.month) >= (ref_date.year, ref_date.month):
+        return Disponibilite.EN_CONTRAT
+    return Disponibilite.DISPO
+ 
+ 
+def _est_en_cours(date_str: str) -> bool:
+    """Détecte les mentions de fin en cours."""
+    return bool(re.search(
+        r"aujourd['’]?hui|present|présent|current|ongoing|en cours|now",
+        date_str.lower(),
+    ))
 
 @dataclass
 class Experience:
