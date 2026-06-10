@@ -61,8 +61,8 @@ class Statut(str, Enum):
 class Disponibilite(str, Enum):
     """État de disponibilité d'un candidat, basé sur la fin de sa
     dernière expérience par rapport à la date du jour."""
-    DISPO      = "oui"          # dernière exp terminée (date passée)
-    EN_CONTRAT = "en contrat"   # dernière exp en cours ou fin future
+    DISPO      = " 🔹 oui"          # dernière exp terminée (date passée)
+    EN_CONTRAT = " 🔻 en contrat"   # dernière exp en cours ou fin future
     INCONNUE   = "?"            # impossible à déterminer
  
  

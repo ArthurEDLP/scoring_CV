@@ -17,6 +17,7 @@ Logique :
            + w_bonus × bonus_entreprise
 """
 
+from taxonomie import compatibles_technos
 from typing import Dict, List, Optional, Tuple
 import numpy as np
 import math
@@ -94,7 +95,7 @@ def _tokens(label: str) -> set:
 def score_technos(
     technos_ao,                       # List[{"label": str, "embedding": np.ndarray}]
     technos_cv,                       # idem
-    seuil_semantique: float = 0.75,   # a calibrer 
+    seuil_semantique: float = 0.70,   # a calibrer 
     discount: float = 1.0,            # 1.0 = comportement actuel ; <1 pour devaluer le semantique
 ):
     if not technos_ao:
@@ -148,6 +149,8 @@ def score_technos(
                 continue
             sims = mat_cv @ emb_ao
             for j, c in enumerate(cv_idx):
+                if not compatibles_technos(technos_ao[a]["label"], cv_label[c]):
+                    continue                     # familles incompatibles -> jamais candidat
                 couples.append((float(sims[j]), a, c))
 
         # du meilleur cosinus au pire ; chaque AO et chaque CV servis une fois

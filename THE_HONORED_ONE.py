@@ -352,7 +352,7 @@ def _afficher_groupe(nom: str, classement: List[Dict], top_k: int = 10) -> None:
         def _score(v):
             return v["score"] if isinstance(v, dict) else v
 
-        ICONE_SOURCE = {"exact": "🟢 ", "semantique": "🟠", "absent": "🔴 "}
+        ICONE_SOURCE = {"exact": "🟢 ", "semantique": "🟠 ", "absent": "🔴 "}
 
         manquantes = [
             (t, d) for t, d in r["technos_details"].items()
