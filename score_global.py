@@ -1,29 +1,26 @@
 """
-Axe de score "global" : similarité CV complet ↔ AO complète (Qwen3-Embedding).
+Axe "global" : similarité CV complet ↔ AO complète (Qwen3-Embedding-8B).
 
-Complète les axes fins (technos, séniorité…) par un signal sémantique de haut
-niveau : « ce CV, dans son ensemble, ressemble-t-il à cette offre dans son
-ensemble ? ». C'est l'axe qui place le profil idéal (type CEU) en tête, là où
-le matching techno par techno peut le rater faute de labels littéraux.
+Indicateur informatif (n'entre PAS dans le score_final) : cosinus brut + rang
+dans le pool. Place le profil idéal en tête là où le matching techno par techno
+peut le rater faute de labels littéraux.
 
-Modèle recommandé (établi sur le benchmark) : Qwen/Qwen3-Embedding-8B.
-  - 8B sans instruction       : CEU n°1, gap +0.10
-  - 8B [inst:parcours]        : CEU n°1, gap +0.12 (meilleure discrimination)
-  - 4B : ÉCHOUE (MFU passe devant CEU). e5 : trop tassé. -> ne pas utiliser.
-
-GÉNÉRALISATION : le cosinus brut dépend de l'AO (plancher variable). On ne code
-donc aucune borne en dur : on NORMALISE le cosinus par rapport au pool de
-candidats de l'AO courante, recalculé à chaque run. Changer d'AO ne demande
-aucun reparamétrage.
+Le cosinus est PRÉCALCULÉ par AO (script precalcul_global.py) pour éviter de
+faire tourner le 8B dans le pipeline. Ce module fournit :
+  - les constructeurs de texte (identiques au benchmark),
+  - embed_ollama / cosinus_brut (utilisés par le précalcul),
+  - indicateur_global (cosinus + rang, utilisé à l'affichage),
+  - chemin_cache_global (chemin partagé entre l'écriture et la lecture).
 """
 
 from __future__ import annotations
-from typing import Dict, List, Optional
+import re
+from pathlib import Path
+from typing import Dict, List
 import numpy as np
 
 
 # ─────────────────────── Construction des textes ──────────────────────────
-# (identiques au benchmark, pour que prod et benchmark mesurent la même chose)
 
 def texte_experience(exp: Dict) -> str:
     poste      = (exp.get("poste") or "").strip()
@@ -75,35 +72,29 @@ def texte_ao_complete(ao_data: Dict) -> str:
     ) if t)
 
 
-# ─────────────────────── Embedding & cosinus ──────────────────────────────
+# ─────────────────────── Embedding & cosinus (précalcul) ──────────────────
 
-def embedder(model, textes: List[str], instruction: Optional[str] = None) -> np.ndarray:
-    """
-    Encode des textes en vecteurs NORMALISÉS (donc dot == cosinus).
-    `instruction` ne s'applique qu'au côté AO (asymétrie Qwen3) :
-    préfixe "Instruct: <...>\\nQuery: ".
-    """
-    if not textes:
-        return np.zeros((0, model.get_sentence_embedding_dimension()), dtype="float32")
-    prompt = f"Instruct: {instruction}\nQuery: " if instruction else None
-    if prompt:
-        return model.encode(textes, prompt=prompt, normalize_embeddings=True).astype("float32")
-    return model.encode(textes, normalize_embeddings=True).astype("float32")
+def embed_ollama(model_name: str, texte: str) -> np.ndarray:
+    """Embedding via ollama, NORMALISÉ (donc dot == cosinus)."""
+    import ollama
+    rep = ollama.embeddings(model=model_name, prompt=texte)
+    v = np.asarray(rep["embedding"], dtype="float32")
+    n = np.linalg.norm(v)
+    return v / n if n > 0 else v
 
 
 def cosinus_brut(emb_cv: np.ndarray, emb_ao: np.ndarray) -> float:
-    """Cosinus entre CV complet et AO complète (vecteurs déjà normalisés)."""
     if emb_cv.size == 0 or emb_ao.size == 0:
         return 0.0
     return float(np.dot(emb_cv, emb_ao))
 
 
-# ─────────────────────── Indicateur du score global ───────────────────────────
+# ─────────────────────── Indicateur (affichage) ───────────────────────────
 
 def indicateur_global(cos_par_cv: Dict[str, float]) -> Dict[str, Dict]:
     """
-    Indicateur informatif (n'entre PAS dans le score_final).
-    Cosinus brut Qwen3-8B (CV complet ↔ AO complète) + rang dans le pool.
+    Indicateur informatif : cosinus brut + rang dans le pool.
+    N'entre PAS dans le score_final.
     """
     n = len(cos_par_cv)
     classement = sorted(cos_par_cv, key=cos_par_cv.get, reverse=True)
@@ -112,3 +103,12 @@ def indicateur_global(cos_par_cv: Dict[str, float]) -> Dict[str, Dict]:
         cv: {"cosine": round(cos_par_cv[cv], 4), "rang": rang[cv], "sur": n}
         for cv in cos_par_cv
     }
+
+
+# ─────────────────────── Chemin de cache (partagé) ────────────────────────
+
+def chemin_cache_global(ao_id: str, dossier: str = "./cache_global") -> Path:
+    """Chemin du JSON de cosinus précalculés pour une AO. Utilisé en écriture
+    (precalcul_global.py) ET en lecture (noeud_score_global)."""
+    safe = re.sub(r"[^A-Za-z0-9._-]", "_", ao_id)
+    return Path(dossier) / f"global_{safe}.json"

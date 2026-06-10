@@ -19,6 +19,7 @@ du classement et basculent dans une liste de rejetés (avec motif).
 from datetime import date
 from typing import Dict, List
 from collections import defaultdict
+import json
 
 from langgraph.graph import StateGraph, START, END
 import ollama
@@ -29,6 +30,7 @@ from State import CVScoringState, state_initial
 import scoring
 import guards
 from guards import detecter_disponibilite
+from score_global import indicateur_global, chemin_cache_global
 
 
 # ════════════════════════ SETUP ═════════════════════════════════════
@@ -112,6 +114,40 @@ def noeud_technos(state: CVScoringState) -> Dict:
 
     return {"scores_technos": entries, "erreurs": erreurs}
 
+DOSSIER_CACHE_GLOBAL = "./cache_global"   # cosinus précalculés par precalcul_global.py
+
+
+def noeud_score_global(state: CVScoringState) -> Dict:
+    """
+    Indicateur (HORS score_final) : cosinus CV complet ↔ AO complète (Qwen3-8B).
+    NE FAIT PAS tourner le 8B : il LIT le JSON précalculé par precalcul_global.py.
+    Si le cache est absent, l'indicateur est simplement ignoré (erreur loguée).
+    """
+    ao_id  = state["offre"]["id"]
+    chemin = chemin_cache_global(ao_id, DOSSIER_CACHE_GLOBAL)
+
+    if not chemin.exists():
+        return {"erreurs": [
+            f"[score_global] cache absent pour l'AO {ao_id} ({chemin}). "
+            f"Lance : python precalcul_global.py --only {ao_id}"
+        ]}
+
+    try:
+        cosines = json.loads(chemin.read_text(encoding="utf-8")).get("cosines", {})
+    except Exception as e:
+        return {"erreurs": [f"[score_global] lecture cache {ao_id}: {e}"]}
+
+    erreurs: List[str] = []
+    sorties: List[Dict] = []
+    for cv in state["cvs"]:
+        c = cosines.get(cv["id"])
+        if c is None:
+            erreurs.append(f"[score_global] CV {cv['id']} absent du cache {ao_id} "
+                           f"(relance precalcul_global.py)")
+            continue
+        sorties.append({"cv_id": cv["id"], "cosine_brut": float(c)})
+
+    return {"scores_globaux": sorties, "erreurs": erreurs}
 
 def noeud_bonus(state: CVScoringState) -> Dict:
     offre = state["offre"]
@@ -172,6 +208,10 @@ def noeud_agreger(state: CVScoringState) -> Dict:
         except Exception:
             seniorite_par_cv[cv["id"]] = 0.0
 
+    # Indicateur global (lecture seule, n'entre PAS dans score_final)
+    cos_par_cv = {e["cv_id"]: e["cosine_brut"] for e in state["scores_globaux"]}
+    indic = indicateur_global(cos_par_cv)
+
     par_categorie: Dict[str, List[Dict]] = defaultdict(list)
 
     for cv_id, categorie in cat_par_cv.items():
@@ -212,6 +252,7 @@ def noeud_agreger(state: CVScoringState) -> Dict:
             "technos_details":    details_tech,
             "est_poste_ao":       categorie["est_poste_ao"],
             "disponibilite": dispo.value,
+            "indicateur_global":  indic.get(cv_id),
         })
 
     for cat in par_categorie:
@@ -320,8 +361,9 @@ def construire_graphe():
     workflow.add_node("bonus",       noeud_bonus)
     workflow.add_node("agreger",     noeud_agreger)
     workflow.add_node("guards",      noeud_guards)
+    workflow.add_node("score_global", noeud_score_global)
 
-    for n in ["categoriser", "technos", "bonus"]:
+    for n in ["categoriser", "technos", "bonus", "score_global"]:
         workflow.add_edge(START, n)
         workflow.add_edge(n, "agreger")
 
@@ -348,6 +390,9 @@ def _afficher_groupe(nom: str, classement: List[Dict], top_k: int = 10) -> None:
             f"{flag}{marqueur_indet}"
             f"dispo={r['disponibilite']}"
             )
+        ig = r.get("indicateur_global")
+        if ig:
+            print(f"     🌐 affinité offre : cos {ig['cosine']:.4f}  ·  rang {ig['rang']}/{ig['sur']}")
         # Compatibilité : details peut être {label: float} (ancien) ou {label: dict} (nouveau)
         def _score(v):
             return v["score"] if isinstance(v, dict) else v

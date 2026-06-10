@@ -18,6 +18,10 @@ car elle dépend des années déjà filtrées par categoriser_cv.
 from typing import TypedDict, List, Annotated, Optional, Dict
 from operator import add
 
+class ScoreGlobalEntry(TypedDict):
+    cv_id: str
+    cosine_brut: float
+
 
 class CategorisationEntry(TypedDict):
     """
@@ -93,15 +97,9 @@ class CVScoringState(TypedDict):
     # Logs d'erreurs
     erreurs: Annotated[List[str], add]
 
-class ScoreGlobalEntry(TypedDict):
-    cv_id: str
-    cosine_brut: float
-
-# dans CVScoringState :
     scores_globaux: Annotated[List[ScoreGlobalEntry], add]
 
-# dans state_initial(), avec les autres listes :
-    scores_globaux = [],
+
 
 def state_initial(offre: Dict, cvs: List[Dict]) -> CVScoringState:
     return CVScoringState(
@@ -114,4 +112,5 @@ def state_initial(offre: Dict, cvs: List[Dict]) -> CVScoringState:
         resultats_acceptes_par_categorie = None,
         cv_rejetes                       = None,
         erreurs                          = [],
+        scores_globaux                   = [],
     )
