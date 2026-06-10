@@ -17,7 +17,8 @@
     "Apache Kafka",
     "Apache Airflow",
     "Terraform",
-    "GitLab CI/CD"
+    "GitLab CI/CD",
+    "SQL"
   ],
   "savoir_faire/savoir_etre": [
     "Architecture de plateformes data à grande échelle",
