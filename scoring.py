@@ -82,80 +82,96 @@ def categoriser_cv(
 
 # ────────────────────── Score Technos ─────────────────────────────
 
+
 def _normaliser(label: str) -> str:
-    """lower + trim + espaces compactés. Gère AWS/aws, pas k8s/kubernetes."""
     return re.sub(r"\s+", " ", label.strip().lower())
 
 def _tokens(label: str) -> set:
+    # decoupe sur la ponctuation, ignore les tokens d'une lettre (R, C...)
     return {t for t in re.split(r"[^a-z0-9]+", label.lower()) if len(t) >= 2}
+
 
 def score_technos(
     technos_ao,                       # List[{"label": str, "embedding": np.ndarray}]
     technos_cv,                       # idem
-    seuil_semantique: float = 0.65,   # HAUT, à calibrer sur mpnet
-    discount: float = 0.85,           # un match sémantique vaut moins qu'un exact ; mets 1.0 si tu n'en veux pas
-) -> Tuple[float, Dict]:
-    """
-    Pour chaque techno AO :
-      1. Match exact (label normalisé) → score 1.0
-      2. Match sémantique (cosine ≥ seuil) → score = cosine * discount
-      3. Absent → score 0.0
-    Retourne (score_moyen, details: {techno_AO: {"score", "source", "matche_avec", ...}}).
-    """
+    seuil_semantique: float = 0.65,   # a calibrer sur mpnet
+    discount: float = 1.0,            # 1.0 = comportement actuel ; <1 pour devaluer le semantique
+):
     if not technos_ao:
         return 1.0, {}
 
-    # Index CV : (norme, label_original, tokens) — sert exact ET inclusion
-    cv_index = [(_normaliser(t["label"]), t["label"], _tokens(t["label"]))
-                for t in technos_cv]
-    mat_cv    = np.stack([t["embedding"] for t in technos_cv]) if technos_cv else None
-    labels_cv = [t["label"] for t in technos_cv]
+    n_ao = len(technos_ao)
+    details = [None] * n_ao
+    scores  = [0.0]  * n_ao
 
-    details, scores = {}, []
-    for t in technos_ao:
-        norme = _normaliser(t["label"])
+    # Index CV : norme + tokens + label original
+    cv_norme  = [_normaliser(t["label"]) for t in technos_cv]
+    cv_tokens = [_tokens(t["label"])      for t in technos_cv]
+    cv_label  = [t["label"]               for t in technos_cv]
+    cv_dispo  = set(range(len(technos_cv)))   # technos CV pas encore consommees
+
+    # ── 1. EXACT (egalite stricte OU inclusion de tokens) ──────────────────
+    # Un match exact CONSOMME la techno CV (1-a-1 des le depart).
+    for a, t in enumerate(technos_ao):
+        norme_ao  = _normaliser(t["label"])
         tokens_ao = _tokens(t["label"])
 
-        # 1. Exact
-        label_match = None
-        for norme_cv, label_cv, _ in cv_index:           # égalité stricte
-            if norme_ao == norme_cv:
-                label_match = label_cv
+        # candidats parmi les CV encore disponibles
+        cand = None
+        for c in cv_dispo:
+            if norme_ao == cv_norme[c]:                       # egalite stricte
+                cand = c
                 break
+            if tokens_ao and tokens_ao <= cv_tokens[c]:       # AO ⊆ CV
+                # on prefere le superset le plus serre
+                if cand is None or len(cv_tokens[c]) < len(cv_tokens[cand]):
+                    cand = c
 
-        if label_match is None:                          # inclusion : AO ⊆ CV ex: "airflow" (AO) ⊆ "apache airflow" (CV)
-            candidats = [(len(tok_cv), label_cv)
-                         for _, label_cv, tok_cv in cv_index
-                         if tokens_ao and tokens_ao <= tok_cv]
-            if candidats:
-                label_match = min(candidats)[1]          # superset le plus serré
+        if cand is not None:
+            cv_dispo.discard(cand)
+            details[a] = {"score": 1.0, "source": "exact",
+                          "matche_avec": cv_label[cand]}
+            scores[a]  = 1.0
 
-        if label_match is not None:
-            details[t["label"]] = {"score": 1.0, "source": "exact",
-                                   "matche_avec": label_match}
-            scores.append(1.0)
-            continue
+    # ── 2. SEMANTIQUE, affectation gloutonne 1-a-1 sur le reste ────────────
+    ao_restantes = [a for a in range(n_ao) if details[a] is None]
 
-        # 2. Sémantique (seulement si rien trouvé en exact)
-        if mat_cv is not None and t.get("embedding") is not None:
-            sims = mat_cv @ t["embedding"]
-            idx  = int(np.argmax(sims))
-            cos  = float(np.clip(sims[idx], 0.0, 1.0))
-            if cos >= seuil_semantique:
-                details[t["label"]] = {
-                    "score":       round(cos * discount, 3),
-                    "source":      "semantique",
-                    "matche_avec": labels_cv[idx],
-                    "cosine":      round(cos, 3),
-                }
-                scores.append(cos * discount)
+    if ao_restantes and cv_dispo and technos_cv:
+        mat_cv = np.stack([technos_cv[c]["embedding"] for c in sorted(cv_dispo)])
+        cv_idx = sorted(cv_dispo)   # pour remapper ligne matrice -> index CV reel
+
+        # matrice cosinus [AO_restantes x CV_dispo]
+        couples = []
+        for a in ao_restantes:
+            emb_ao = technos_ao[a].get("embedding")
+            if emb_ao is None:
                 continue
+            sims = mat_cv @ emb_ao
+            for j, c in enumerate(cv_idx):
+                couples.append((float(sims[j]), a, c))
 
-        # 3. Absent
-        details[t["label"]] = {"score": 0.0, "source": "absent", "matche_avec": None}
-        scores.append(0.0)
+        # du meilleur cosinus au pire ; chaque AO et chaque CV servis une fois
+        couples.sort(reverse=True)
+        ao_pris, cv_pris = set(), set()
+        for cos, a, c in couples:
+            if cos < seuil_semantique:
+                break
+            if a in ao_pris or c in cv_pris:
+                continue
+            cos = float(np.clip(cos, 0.0, 1.0))
+            details[a] = {"score": round(cos * discount, 3), "source": "semantique",
+                          "matche_avec": cv_label[c], "cosine": round(cos, 3)}
+            scores[a]  = cos * discount
+            ao_pris.add(a); cv_pris.add(c)
 
-    return float(np.mean(scores)), details
+    # ── 3. ABSENT ──────────────────────────────────────────────────────────
+    for a, t in enumerate(technos_ao):
+        if details[a] is None:
+            details[a] = {"score": 0.0, "source": "absent", "matche_avec": None}
+            scores[a]  = 0.0
+
+    details_dict = {technos_ao[a]["label"]: details[a] for a in range(n_ao)}
+    return float(np.mean(scores)), details_dict
 
 
 # ─────────────────── Score Séniorité ─────────────────────────
