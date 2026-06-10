@@ -87,7 +87,7 @@ def _normaliser(label: str) -> str:
     return re.sub(r"\s+", " ", label.strip().lower())
 
 def _tokens(label: str) -> set:
-    return set(_normaliser(label).split())
+    return {t for t in re.split(r"[^a-z0-9]+", label.lower()) if len(t) >= 2}
 
 def score_technos(
     technos_ao,                       # List[{"label": str, "embedding": np.ndarray}]
@@ -105,11 +105,9 @@ def score_technos(
     if not technos_ao:
         return 1.0, {}
 
-    # Index exact : label normalisé -> label original du CV (pour l'affichage)
-    cv_par_norme = {}
-    for t in technos_cv:
-        cv_par_norme.setdefault(_normaliser(t["label"]), t["label"])
-
+    # Index CV : (norme, label_original, tokens) — sert exact ET inclusion
+    cv_index = [(_normaliser(t["label"]), t["label"], _tokens(t["label"]))
+                for t in technos_cv]
     mat_cv    = np.stack([t["embedding"] for t in technos_cv]) if technos_cv else None
     labels_cv = [t["label"] for t in technos_cv]
 
