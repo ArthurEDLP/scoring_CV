@@ -20,7 +20,7 @@ Logique :
 from typing import Dict, List, Optional, Tuple
 import numpy as np
 import math
-
+import re
 
 # ────────────────────── Constantes ───────────────────────────
 
@@ -82,13 +82,12 @@ def categoriser_cv(
 
 # ────────────────────── Score Technos ─────────────────────────────
 
-
-import re
-
 def _normaliser(label: str) -> str:
     """lower + trim + espaces compactés. Gère AWS/aws, pas k8s/kubernetes."""
     return re.sub(r"\s+", " ", label.strip().lower())
 
+def _tokens(label: str) -> set:
+    return set(_normaliser(label).split())
 
 def score_technos(
     technos_ao,                       # List[{"label": str, "embedding": np.ndarray}]
@@ -117,11 +116,25 @@ def score_technos(
     details, scores = {}, []
     for t in technos_ao:
         norme = _normaliser(t["label"])
+        tokens_ao = _tokens(t["label"])
 
         # 1. Exact
-        if norme in cv_par_norme:
+        label_match = None
+        for norme_cv, label_cv, _ in cv_index:           # égalité stricte
+            if norme_ao == norme_cv:
+                label_match = label_cv
+                break
+
+        if label_match is None:                          # inclusion : AO ⊆ CV ex: "airflow" (AO) ⊆ "apache airflow" (CV)
+            candidats = [(len(tok_cv), label_cv)
+                         for _, label_cv, tok_cv in cv_index
+                         if tokens_ao and tokens_ao <= tok_cv]
+            if candidats:
+                label_match = min(candidats)[1]          # superset le plus serré
+
+        if label_match is not None:
             details[t["label"]] = {"score": 1.0, "source": "exact",
-                                   "matche_avec": cv_par_norme[norme]}
+                                   "matche_avec": label_match}
             scores.append(1.0)
             continue
 

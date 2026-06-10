@@ -352,7 +352,7 @@ def _afficher_groupe(nom: str, classement: List[Dict], top_k: int = 10) -> None:
         def _score(v):
             return v["score"] if isinstance(v, dict) else v
 
-        ICONE_SOURCE = {"exact": "✅", "semantique": "〜", "absent": "❌"}
+        ICONE_SOURCE = {"exact": "✅", "semantique": "🔸", "absent": "❌"}
 
         manquantes = [
             (t, d) for t, d in r["technos_details"].items()
@@ -372,7 +372,7 @@ def _afficher_groupe(nom: str, classement: List[Dict], top_k: int = 10) -> None:
                     lignes.append(f"{icone}{t}{match}={_score(d):.2f}")
                 else:
                     lignes.append(f"✅{t}={d:.2f}")
-            print(f"      🔧 technos OK    : {', '.join(lignes[:8])}"
+            print(f"     technos OK    : {', '.join(lignes[:8])}"
                   + (" ..." if len(lignes) > 8 else ""))
 
         if manquantes:
