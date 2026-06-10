@@ -93,6 +93,15 @@ class CVScoringState(TypedDict):
     # Logs d'erreurs
     erreurs: Annotated[List[str], add]
 
+class ScoreGlobalEntry(TypedDict):
+    cv_id: str
+    cosine_brut: float
+
+# dans CVScoringState :
+    scores_globaux: Annotated[List[ScoreGlobalEntry], add]
+
+# dans state_initial(), avec les autres listes :
+    scores_globaux = [],
 
 def state_initial(offre: Dict, cvs: List[Dict]) -> CVScoringState:
     return CVScoringState(
