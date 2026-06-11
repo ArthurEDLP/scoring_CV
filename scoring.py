@@ -207,17 +207,35 @@ def score_seniorite(
 # ────────────────── Bonus Entreprise ───────────────────────────
 
 
+def _norm_entreprise(s: str) -> str:
+    """Minuscules, on garde le nom avant la 1re virgule (sans la ville), espaces compactés."""
+    s = (s or "").split(",")[0]
+    return re.sub(r"\s+", " ", s.strip().lower())
+
+def _tokens_entreprise(s: str) -> set:
+    return {t for t in re.split(r"[^a-z0-9]+", s) if len(t) >= 2}
+
+
 def score_bonus_entreprise(
     entreprise_ao: str,
     experiences_cv: List[Dict],
 ) -> Tuple[float, bool]:
-    """Match exact (lowercase + trim). Retourne (bonus, match_trouvé)."""
+    """Bonus si une expérience du CV est dans la même entreprise que l'AO.
+    Tolérant à la ville en suffixe ('CANAL+, Nanterre') et à la casse."""
     if not entreprise_ao or not experiences_cv:
         return 0.0, False
 
-    cible = entreprise_ao.strip().lower()
+    ao = _norm_entreprise(entreprise_ao)
+    ta = _tokens_entreprise(ao)
+    if not ao:
+        return 0.0, False
+
     for exp in experiences_cv:
-        if exp.get("entreprise", "").strip().lower() == cible:
+        cv = _norm_entreprise(exp.get("entreprise", ""))
+        if not cv:
+            continue
+        tc = _tokens_entreprise(cv)
+        if ao == cv or (ta and (ta <= tc or tc <= ta)):
             return VALEUR_BONUS_ENTREPRISE, True
     return 0.0, False
 
