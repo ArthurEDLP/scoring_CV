@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Matching CV / AO</title>
+<style>
+  :root{
+    --bg:#0f1115; --panel:#171a21; --panel2:#1d212b; --line:#2a2f3a;
+    --txt:#e6e9ef; --muted:#9aa3b2; --accent:#5b8cff; --accent2:#3a6ad4;
+    --ok:#37d67a; --warn:#f6a609; --bad:#ec5b5b; --radius:12px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);
+    font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+  header{padding:22px 28px;border-bottom:1px solid var(--line)}
+  header h1{margin:0;font-size:19px;font-weight:600}
+  header p{margin:4px 0 0;color:var(--muted);font-size:13px}
+  main{max-width:1080px;margin:0 auto;padding:24px 28px 80px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .card{background:var(--panel);border:1px solid var(--line);
+    border-radius:var(--radius);padding:18px}
+  .card h2{margin:0 0 12px;font-size:14px;font-weight:600;color:var(--muted);
+    text-transform:uppercase;letter-spacing:.04em}
+  .drop{border:1.5px dashed var(--line);border-radius:10px;padding:26px 14px;
+    text-align:center;color:var(--muted);cursor:pointer;transition:.15s}
+  .drop:hover,.drop.over{border-color:var(--accent);background:var(--panel2);color:var(--txt)}
+  .drop small{display:block;margin-top:6px;font-size:12px}
+  ul.lst{list-style:none;margin:12px 0 0;padding:0;max-height:230px;overflow:auto}
+  ul.lst li{display:flex;align-items:center;gap:10px;padding:7px 10px;
+    border:1px solid var(--line);border-radius:8px;margin-bottom:6px;background:var(--panel2)}
+  ul.lst li .id{font-weight:600}
+  ul.lst li .meta{color:var(--muted);font-size:12px;margin-left:auto}
+  .badge{font-size:11px;padding:2px 7px;border-radius:20px;border:1px solid var(--line)}
+  .badge.on{color:var(--ok);border-color:#1f5a38}
+  .badge.off{color:var(--warn);border-color:#5a4a1f}
+  .pending{color:var(--warn);font-size:12px;margin-top:8px}
+  input[type=radio]{accent-color:var(--accent)}
+  button{font:inherit;border:0;border-radius:9px;padding:11px 18px;cursor:pointer;
+    background:var(--accent);color:#fff;font-weight:600;transition:.15s}
+  button:hover{background:var(--accent2)} button:disabled{opacity:.45;cursor:not-allowed}
+  button.ghost{background:transparent;border:1px solid var(--line);color:var(--txt);
+    padding:5px 10px;font-weight:500;font-size:12px}
+  button.ghost:hover{border-color:var(--bad);color:var(--bad)}
+  .actions{display:flex;gap:12px;align-items:center;margin:20px 0}
+  .bar{height:8px;background:var(--panel2);border-radius:6px;overflow:hidden;margin-top:6px}
+  .bar>i{display:block;height:100%;width:0;background:var(--accent);transition:width .3s}
+  .status{font-size:13px;color:var(--muted);min-height:18px}
+  .err{color:var(--bad);white-space:pre-wrap;font-size:12px;
+    background:#23161a;border:1px solid #4a2329;border-radius:8px;padding:10px;margin-top:10px}
+  /* résultats */
+  .res h3{margin:26px 0 6px;font-size:15px}
+  .grp{margin:14px 0}
+  .grp .gtitle{font-weight:600;color:var(--accent);margin-bottom:8px}
+  .cv{border:1px solid var(--line);border-radius:10px;padding:12px 14px;
+    margin-bottom:8px;background:var(--panel)}
+  .cv .top{display:flex;flex-wrap:wrap;gap:12px;align-items:baseline}
+  .cv .rank{color:var(--muted);width:22px}
+  .cv .name{font-weight:700}
+  .cv .sc{font-variant-numeric:tabular-nums}
+  .cv .sc b{color:var(--accent)}
+  .cv .glob{color:var(--muted);font-size:12px;margin-top:6px}
+  .tk{display:inline-block;font-size:12px;padding:2px 8px;border-radius:20px;
+    margin:3px 4px 0 0;border:1px solid var(--line)}
+  .tk.exact{color:var(--ok)} .tk.semantique{color:var(--warn)} .tk.absent{color:var(--bad)}
+  .rej{border-left:3px solid var(--bad);padding:8px 12px;margin-bottom:6px;
+    background:var(--panel);border-radius:0 8px 8px 0}
+  .rej .motif{color:var(--muted);font-size:12px}
+  .hint{color:var(--muted);font-size:12px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Matching CV / AO</h1>
+  <p>Outil local · dépose tes CV et AO, prépare (embedding + score global), puis lance le matching.</p>
+</header>
+
+<main>
+  <div class="grid">
+    <!-- CV -->
+    <section class="card">
+      <h2>CV</h2>
+      <div class="drop" id="dropCV">Glisse des <b>.json</b> de CV ici<small>ou clique pour choisir</small>
+        <input type="file" id="fileCV" accept=".json" multiple hidden></div>
+      <div class="pending" id="pendCV"></div>
+      <ul class="lst" id="lstCV"></ul>
+    </section>
+
+    <!-- AO -->
+    <section class="card">
+      <h2>Appels d'offres</h2>
+      <div class="drop" id="dropAO">Glisse des <b>.json</b> d'AO ici<small>ou clique pour choisir</small>
+        <input type="file" id="fileAO" accept=".json" multiple hidden></div>
+      <div class="pending" id="pendAO"></div>
+      <ul class="lst" id="lstAO"></ul>
+      <p class="hint" id="hintAO">Sélectionne une AO ci-dessus pour le matching.</p>
+    </section>
+  </div>
+
+  <div class="actions">
+    <button id="btnPrep">① Préparer (embedding + score global)</button>
+    <button id="btnMatch" disabled>② Lancer le matching</button>
+  </div>
+
+  <div class="bar"><i id="prog"></i></div>
+  <div class="status" id="status"></div>
+  <div id="errbox"></div>
+
+  <div class="res" id="res"></div>
+</main>
+
+<script>
+const $ = s => document.querySelector(s);
+const api = (u,o)=>fetch(u,o).then(r=>r.ok?r.json():r.json().then(e=>{throw new Error(e.detail||r.statusText)}));
+let selectedAO = null;
+
+// ---------- état / listes ----------
+async function refresh(){
+  const s = await api('/api/state');
+  // CV
+  $('#pendCV').textContent = s.cv_brutes.length ? `${s.cv_brutes.length} fichier(s) à préparer : ${s.cv_brutes.join(', ')}` : '';
+  $('#lstCV').innerHTML = s.cvs_prets.map(id=>`<li><span class="id">${id}</span><span class="meta">prêt</span></li>`).join('')
+            || '<li class="meta">aucun CV prêt</li>';
+  // AO
+  $('#pendAO').textContent = s.ao_brutes.length ? `${s.ao_brutes.length} fichier(s) à préparer : ${s.ao_brutes.join(', ')}` : '';
+  $('#lstAO').innerHTML = s.aos_prets.map(a=>`
+    <li>
+      <input type="radio" name="ao" value="${a.id}" ${selectedAO===a.id?'checked':''}>
+      <span class="id">${a.id}</span>
+      <span class="badge ${a.score_global?'on':'off'}">${a.score_global?'score global ✓':'score global ✗'}</span>
+      <span class="meta"><button class="ghost" data-del="${a.id}">supprimer</button></span>
+    </li>`).join('') || '<li class="meta">aucune AO prête</li>';
+  // (ré)attache les events
+  document.querySelectorAll('input[name=ao]').forEach(r=>r.onchange=()=>{
+    selectedAO=r.value; $('#btnMatch').disabled=false;
+  });
+  document.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>delAO(b.dataset.del));
+  if(selectedAO && !s.aos_prets.find(a=>a.id===selectedAO)){selectedAO=null;$('#btnMatch').disabled=true;}
+}
+
+async function delAO(id){
+  if(!confirm(`Supprimer l'AO "${id}" (fichier + cache global) ? Action irréversible.`))return;
+  await api('/api/ao/'+encodeURIComponent(id),{method:'DELETE'});
+  if(selectedAO===id){selectedAO=null;$('#btnMatch').disabled=true;}
+  refresh();
+}
+
+// ---------- drag & drop / upload ----------
+function brancherDrop(zone, input, kind){
+  const z=$(zone), i=$(input);
+  z.onclick=()=>i.click();
+  i.onchange=()=>{if(i.files.length)upload(kind,i.files);i.value='';};
+  ['dragenter','dragover'].forEach(e=>z.addEventListener(e,ev=>{ev.preventDefault();z.classList.add('over');}));
+  ['dragleave','drop'].forEach(e=>z.addEventListener(e,ev=>{ev.preventDefault();z.classList.remove('over');}));
+  z.addEventListener('drop',ev=>{if(ev.dataTransfer.files.length)upload(kind,ev.dataTransfer.files);});
+}
+async function upload(kind, files){
+  const fd=new FormData();
+  [...files].forEach(f=>fd.append('fichiers',f));
+  setStatus(`Envoi de ${files.length} fichier(s)…`);
+  try{ await api('/api/upload/'+kind,{method:'POST',body:fd}); setStatus('Déposé. Clique sur « Préparer ».'); }
+  catch(e){ showErr(e.message); }
+  refresh();
+}
+
+// ---------- jobs (polling) ----------
+function setStatus(t){$('#status').textContent=t;}
+function setProg(p){$('#prog').style.width=Math.round((p||0)*100)+'%';}
+function showErr(m){$('#errbox').innerHTML=`<div class="err">${m}</div>`;}
+function clearErr(){$('#errbox').innerHTML='';}
+
+function suivre(jobId, onDone){
+  const t=setInterval(async()=>{
+    let j; try{ j=await api('/api/jobs/'+jobId);}catch(e){clearInterval(t);showErr(e.message);return;}
+    setProg(j.progression); setStatus(j.etape||'');
+    if(j.statut==='termine'){clearInterval(t);setStatus(j.message||'Terminé');onDone(j);}
+    if(j.statut==='erreur'){clearInterval(t);showErr((j.erreur||'')+'\n\n'+(j.message||''));unlock();}
+  },1200);
+}
+function lock(){$('#btnPrep').disabled=true;$('#btnMatch').disabled=true;}
+function unlock(){$('#btnPrep').disabled=false;$('#btnMatch').disabled=!selectedAO;}
+
+$('#btnPrep').onclick=async()=>{
+  clearErr();lock();setProg(0);setStatus('Préparation…');
+  try{ const {job_id}=await api('/api/prepare',{method:'POST'});
+    suivre(job_id,()=>{unlock();refresh();}); }
+  catch(e){showErr(e.message);unlock();}
+};
+
+$('#btnMatch').onclick=async()=>{
+  if(!selectedAO)return;
+  clearErr();lock();setProg(0);$('#res').innerHTML='';setStatus('Matching…');
+  try{ const {job_id}=await api('/api/match',{method:'POST',
+        headers:{'Content-Type':'application/json'},body:JSON.stringify({offre_id:selectedAO})});
+    suivre(job_id,j=>{unlock();rendre(j.resultat);}); }
+  catch(e){showErr(e.message);unlock();}
+};
+
+// ---------- rendu des résultats ----------
+function scoreOf(d){return (d&&typeof d==='object')?d.score:d;}
+function technosHTML(details){
+  if(!details)return '';
+  const ok=[],ko=[];
+  for(const[t,d]of Object.entries(details)){
+    const s=scoreOf(d), src=(d&&d.source)||'exact';
+    const ma=(d&&d.matche_avec&&d.matche_avec!==t)?'→'+d.matche_avec:'';
+    const cos=(src==='semantique'&&d.cosine!=null)?` ${d.cosine.toFixed(2)}`:'';
+    const chip=`<span class="tk ${src}">${t}${ma}${cos} (${(+s).toFixed(2)})</span>`;
+    (s>=0.5?ok:ko).push(chip);
+  }
+  let h='';
+  if(ok.length) h+=`<div>${ok.join('')}</div>`;
+  if(ko.length) h+=`<div>${ko.join('')}</div>`;
+  return h;
+}
+function cvHTML(r,i){
+  const flag=r.entreprise_matchee?' 🏢':'';
+  const ig=r.indicateur_global;
+  const glob=ig?`<div class="glob">🌐 affinité offre : cos ${ig.cosine.toFixed(4)} · rang ${ig.rang}/${ig.sur}</div>`:'';
+  return `<div class="cv">
+    <div class="top">
+      <span class="rank">${i}.</span>
+      <span class="name">${r.cv_id}${flag}</span>
+      <span class="sc">score=<b>${r.score_final.toFixed(3)}</b></span>
+      <span class="sc">technos=${r.score_technos.toFixed(2)}</span>
+      <span class="sc">séniorité=${r.score_seniorite.toFixed(2)} (${r.seniorite_totale.toFixed(1)}/${r.annees_requises.toFixed(0)} ans)</span>
+      <span class="sc">dispo=${r.disponibilite}</span>
+    </div>${glob}${technosHTML(r.technos_details)}</div>`;
+}
+function rendre(res){
+  if(!res){$('#res').innerHTML='';return;}
+  const cats=res.resultats_acceptes_par_categorie||{};
+  const principal=[],alt=[];
+  for(const[nom,cl]of Object.entries(cats)){
+    if(cl&&cl.length&&cl[0].est_poste_ao) principal.push([nom,cl]); else if(cl&&cl.length) alt.push([nom,cl]);
+  }
+  alt.sort((a,b)=>b[1].length-a[1].length);
+  let h=`<h3>AO : ${res.offre_id} — poste : ${res.poste_ao}</h3>`;
+  const bloc=(titre,arr)=>{
+    let s=`<div class="grp"><div class="gtitle">${titre}</div>`;
+    if(!arr.length) s+='<div class="hint">aucun CV</div>';
+    for(const[nom,cl]of arr){ s+=`<div class="hint">▸ ${nom} (${cl.length})</div>`;
+      cl.forEach((r,k)=>s+=cvHTML(r,k+1)); }
+    return s+'</div>';
+  };
+  h+=bloc('🏆 Groupe principal',principal);
+  if(alt.length) h+=bloc('📂 Profils alternatifs',alt);
+  const rej=res.cv_rejetes||[];
+  if(rej.length){
+    h+=`<h3>🚫 Écartés par les garde-fous (${rej.length})</h3>`;
+    rej.forEach(r=>{ h+=`<div class="rej"><b>${r.cv_id}</b> · score ${r.score_final.toFixed(3)} · [${r.categorie}]
+      <div class="motif">${r.guards_statut} — ${r.guards_motif}</div></div>`; });
+  }
+  if(res.erreurs&&res.erreurs.length)
+    h+=`<div class="err">${res.erreurs.length} erreur(s):\n- ${res.erreurs.join('\n- ')}</div>`;
+  $('#res').innerHTML=h;
+}
+
+// ---------- init ----------
+brancherDrop('#dropCV','#fileCV','cv');
+brancherDrop('#dropAO','#fileAO','ao');
+refresh();
+</script>
+</body>
+</html>

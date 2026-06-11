@@ -379,7 +379,7 @@ def _afficher_groupe(nom: str, classement: List[Dict], top_k: int = 10) -> None:
     print(f"  ▸ {nom}  ({len(classement)} CV{'s' if len(classement) > 1 else ''})")
     print("  " + "─" * 76)
     for i, r in enumerate(classement[:top_k], 1):
-        flag = " 🏢 Lore partagé " if r["entreprise_matchee"] else ""
+        flag = " 🏢" if r["entreprise_matchee"] else ""
         marqueur_indet = " ❓" if r.get("guards_statut") == "INDETERMINE" else ""
         print(
             f"  {i:>2}. {r['cv_id']:<14} "
@@ -388,7 +388,7 @@ def _afficher_groupe(nom: str, classement: List[Dict], top_k: int = 10) -> None:
             f"séniorité={r['score_seniorite']:.2f} "
             f"({r['seniorite_totale']:.1f}/{r['annees_requises']:.0f} ans)  "
             f"{flag}{marqueur_indet}"
-            f"  dispo={r['disponibilite']}"
+            f"dispo={r['disponibilite']}"
             )
         ig = r.get("indicateur_global")
         if ig:
@@ -489,6 +489,58 @@ def afficher_resultats(
             _afficher_groupe(nom, cl, top_k=top_k)
 
     _afficher_rejetes(cv_rejetes)
+
+
+# ════════════════════════════════════════════════════════════════════
+# POINTS D'ENTRÉE PROGRAMMATIQUES (pour le backend / front)
+# Emballent la logique du __main__ sans la modifier.
+
+
+_GRAPHE_CACHE = None
+
+def _graphe_compile():
+    """Compile le graphe une seule fois (réutilisé entre appels)."""
+    global _GRAPHE_CACHE
+    if _GRAPHE_CACHE is None:
+        _GRAPHE_CACHE = construire_graphe()
+    return _GRAPHE_CACHE
+
+
+def lister_offres(dossier: str = "./AO_JSON") -> List[Dict]:
+    """Offres prêtes (présentes dans AO_JSON), pour le sélecteur du front."""
+    out = []
+    for o in charger_offres(dossier):
+        out.append({"id": o["id"], "poste": o["data"].get("poste", "?")})
+    return out
+
+
+def lister_cvs(dossier: str = "./CV_JSON") -> List[Dict]:
+    """CV prêts (présents dans CV_JSON)."""
+    return [{"id": c["id"]} for c in charger_cvs(dossier)]
+
+
+def lancer_matching(offre_id: str) -> Dict:
+    """
+    Équivalent programmatique du __main__ pour UNE offre choisie.
+    Retourne un dict structuré (pas d'affichage console).
+    """
+    cvs    = charger_cvs("./CV_JSON")
+    offres = charger_offres("./AO_JSON")
+    offre  = next((o for o in offres if o["id"] == offre_id), None)
+    if offre is None:
+        raise ValueError(f"AO introuvable dans ./AO_JSON : {offre_id}")
+    if not cvs:
+        raise ValueError("Aucun CV dans ./CV_JSON")
+
+    state_final = _graphe_compile().invoke(state_initial(offre, cvs))
+    return {
+        "offre_id":  offre["id"],
+        "poste_ao":  offre["data"].get("poste", "?"),
+        "resultats_acceptes_par_categorie":
+            state_final.get("resultats_acceptes_par_categorie") or {},
+        "cv_rejetes": state_final.get("cv_rejetes") or [],
+        "erreurs":    state_final.get("erreurs") or [],
+    }
 
 
 # ════════════════════════════════════════════════════════════════════
