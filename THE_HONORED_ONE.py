@@ -379,7 +379,7 @@ def _afficher_groupe(nom: str, classement: List[Dict], top_k: int = 10) -> None:
     print(f"  ▸ {nom}  ({len(classement)} CV{'s' if len(classement) > 1 else ''})")
     print("  " + "─" * 76)
     for i, r in enumerate(classement[:top_k], 1):
-        flag = " 🏢" if r["entreprise_matchee"] else ""
+        flag = " 🏢 Lore partagé " if r["entreprise_matchee"] else ""
         marqueur_indet = " ❓" if r.get("guards_statut") == "INDETERMINE" else ""
         print(
             f"  {i:>2}. {r['cv_id']:<14} "
@@ -388,7 +388,7 @@ def _afficher_groupe(nom: str, classement: List[Dict], top_k: int = 10) -> None:
             f"séniorité={r['score_seniorite']:.2f} "
             f"({r['seniorite_totale']:.1f}/{r['annees_requises']:.0f} ans)  "
             f"{flag}{marqueur_indet}"
-            f"dispo={r['disponibilite']}"
+            f"  dispo={r['disponibilite']}"
             )
         ig = r.get("indicateur_global")
         if ig:
