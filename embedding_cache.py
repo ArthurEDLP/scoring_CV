@@ -24,6 +24,8 @@ import numpy as np
 
 import ollama
 
+from score_global import texte_experience
+
 
 MODEL = "qwen3-embedding:8b"
 
@@ -216,7 +218,9 @@ class CacheEmbeddingsCV:
             entreprise = exp.get("entreprise", "").strip()
             duree = _duree_experience_annees(exp.get("date", ""), poste)
 
-            emb_raw = embed([_template_poste(poste)])[0]
+            texte = texte_experience(exp)               # poste + entreprise + détails
+            emb_raw = embed([texte])[0]
+
             emb = _normaliser(emb_raw)
 
             experiences.append({

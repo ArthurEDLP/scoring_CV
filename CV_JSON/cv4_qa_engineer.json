@@ -42,11 +42,7 @@
     "Zephyr",
     "TestRail",
     "qTest",
-    "HP ALM",
-    "Jenkins",
-    "GitLab CI",
-    "GitHub Actions",
-    "Azure DevOps"
+    "HP ALM"
   ],
   "savoir_faire/savoir_etre": [
     "Stratégie de test et plans de test",
@@ -61,27 +57,27 @@
   "experiences": [
     {
       "poste": "QA Lead / Test Manager",
-      "entreprise": "CANAL+, Nanterre",
-      "date": "04/2026 - Aujourd'hui",
-      "details": "Contexte : Programme de refonte du SI Assurance Auto (MyAXA Auto) - 4 squads, plus de 30 développeurs, mise en production trimestrielle. Définition et déploiement de la stratégie de test transverse au programme (pyramide de tests, critères d'entrée/sortie), encadrement d'une équipe de QA Engineers avec l'animation des cérémonies qualité."
+      "entreprise": "AXA France, Nanterre",
+      "date": "04/2022 - Aujourd'hui",
+      "details": "Contexte : Programme de refonte du SI Assurance Auto (MyAXA Auto) - 4 squads, plus de 30 développeurs, mise en production trimestrielle. Définition et déploiement de la stratégie de test transverse au programme (pyramide de tests, critères d'entrée/sortie), gestion des environnements.\nIndustrialisation des tests d'API avec Karate intégrés dans la chaîne CI/CD GitLab (exécution sur chaque MR).\nAnimation des cérémonies qualité : revue de tests, bug bashes mensuels, post-mortems sur les incidents de production.\nDéfinition et suivi des KPIs qualité (taux de couverture, taux de défauts en production, MTTR) - reporting mensuel auprès du Directeur de Programme. \nMise en place d'une démarche shift-left : intégration des QA dès le refinement, ateliers Example Mapping avec les PO."
     },
     {
       "poste": "Senior QA Engineer - Automation Lead",
       "entreprise": "Decathlon Digital, Villeneuve d'Ascq",
-      "date": "06/2024 - 03/2026",
-      "details": "Conception et mise en place du framework d'automatisation web (Cypress + TypeScript) pour la plateforme e-commerce decathlon.fr, identification de bottlenecks grâce aux tests performance avec k6."
+      "date": "06/2019 - 03/2022",
+      "details": "Contexte : Plateforme e-commerce decathlon.fr et applications mobiles - périmètre Customer Account et Checkout.\nConception et mise en place du framework d'automatisation web (Cypress + TypeScript) - migration depuis un cadre legacy Selenium / Java.\nDéveloppement de plus de 250 tests automatisés E2E exécutés en parallèle sur la grille interne (gain de 70% de temps d'exécution).\nMise en place des tests de performance avec k6 sur les parcours critiques (panier, paiement) - identification de bottlenecks ayant permis +30% de capacité.\nAnimation d'une communauté de pratique QA (15 personnes) au niveau du département : meetups internes, partage de bonnes pratiques. Coaching de 2 testeurs juniors sur les techniques d'automatisation et le BDD (Cucumber)."
     },
     {
       "poste": "QA Engineer",
-      "entreprise": "CANAL+, Bordeaux",
-      "date": "09/2017 - 05/2024",
-      "details": "Conception et exécution de plans de test manuels et automatisés sur la gestion des comptes vendeurs et du catalogue tiers, création d'un jeu de données représentatif pour les tests."
+      "entreprise": "Cdiscount, Bordeaux",
+      "date": "09/2017 - 05/2019",
+      "details": "Mission auprès d'un grand acteur bancaire régional. Exécution de tests fonctionnels manuels et automatisés (Selenium / Java).\nTests d'API REST avec Postman et automatisation avec REST Assured.\nCréation et maintenance de jeux de données de test représentatifs (plus de 50 vendeurs fictifs avec différents états). Reporting des bugs sur Jira et suivi jusqu'à résolution avec les développeurs. Participation aux astreintes de mise en production (rotation toutes les 4 semaines)."
     },
     {
       "poste": "Testeur logiciel - Stage de fin d'études",
       "entreprise": "Cap Gemini, Bordeaux",
       "date": "03/2017 - 08/2017",
-      "details": "Exécution de tests fonctionnels manuels sur une application et rédaction de cahiers de tests sous HP ALM."
+      "details": "Mission auprès d'un grand acteur bancaire régional. Exécution de tests fonctionnels manuels sur une application de gestion de comptes professionnels.\nRédaction de cahiers de tests sous HP ALM. Première expérience en automatisation Selenium (POC interne)."
     }
   ],
   "savoir_faire": [
@@ -96,8 +92,6 @@
   "savoir_etre": [
     "Esprit d'équipe",
     "Rigueur",
-    "Capacité à challenger les développeurs et les PO sans dégrader la relation",
-    "Minutie",
-    "Stratégique"
+    "Capacité à challenger les développeurs et les PO sans dégrader la relation"
   ]
 }

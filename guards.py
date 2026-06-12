@@ -232,6 +232,13 @@ def filtre_2_recence(experiences: list[Experience],
     exps_triees = sorted(experiences,
                          key=lambda e: e.date_tri(ref_date),
                          reverse=True)
+    
+    infos = sorted(
+    [(round(exp_max - e.cosine, 4), e.poste[:30], e.date_fin) for e in experiences]
+    )
+    print(f"[{exps_triees[0].poste[:20]}] exp_max={exp_max:.3f}")
+    for ecart, poste, fin in infos:
+        print(f"     écart={ecart:.4f}  {poste:<30} fin={fin}")
 
     for exp in exps_triees:
         if exp.cosine < seuil:

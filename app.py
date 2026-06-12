@@ -21,6 +21,7 @@ encore prêt.
 
 from __future__ import annotations
 
+import os
 import json
 import sys
 import uuid
@@ -165,10 +166,17 @@ def etat_job(job_id: str):
 # ════════════════════════════ JOBS (tâche de fond) ════════════════════════
 
 def _run(cmd: List[str]) -> None:
-    """Lance un script en sous-processus, lève si code retour != 0."""
-    res = subprocess.run(cmd, cwd=str(RACINE), capture_output=True, text=True)
+    """Lance un script en sous-processus (UTF-8 forcé), lève si code != 0."""
+    env = {**os.environ, "PYTHONIOENCODING": "utf-8", "PYTHONUTF8": "1"}
+    res = subprocess.run(
+        cmd, cwd=str(RACINE), capture_output=True, text=True,
+        encoding="utf-8", errors="replace", env=env,
+    )
     if res.returncode != 0:
-        raise RuntimeError(f"{' '.join(cmd)}\n{res.stderr[-800:]}")
+        sortie = (res.stdout or "") + (res.stderr or "")
+        raise RuntimeError(
+            f"code {res.returncode} · {' '.join(cmd[:3])} …\n{sortie[-1500:]}"
+        )
 
 
 def _job_preparer(jid: str) -> None:
@@ -176,11 +184,17 @@ def _job_preparer(jid: str) -> None:
     try:
         py = sys.executable
 
+        # Liste les fichiers brutes à passer en arguments aux scripts
+        ao_files = [str(p) for p in AO_BRUTES.glob("*.json")]
+        cv_files = [str(p) for p in CV_BRUTES.glob("*.json")]
+
         _maj_job(jid, etape="Prétraitement des AO", progression=0.05)
-        _run([py, "pretraiter_ao.py"])
+        if ao_files:
+            _run([py, "pretraiter_ao.py", "--output", str(AO_TRAITES), "--force", *ao_files])
 
         _maj_job(jid, etape="Prétraitement des CV", progression=0.20)
-        _run([py, "pretraiter_cv.py"])
+        if cv_files:
+            _run([py, "pretraiter_cv.py", "--output", str(CV_TRAITES), "--force", *cv_files])
 
         # Imports lourds ici seulement
         _maj_job(jid, etape="Construction des caches d'embeddings", progression=0.35)

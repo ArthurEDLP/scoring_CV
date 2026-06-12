@@ -17,7 +17,7 @@
     "Documenter les travaux et leur avancement (code, résultats, documents de présentation…)"
   ],
   "Profil": [
-    "Ce poste nécessite des compétences en data analyse et data science avec un minimum de 6 années d’expérience dans un contexte de grande volumétrie de données, idéalement dans le secteur retail / e-commerce, et la capacité à collaborer avec de nombreux interlocuteurs simultanément.",
+    "Ce poste nécessite des compétences en data analyse et data science avec un minimum de 3 années d’expérience dans un contexte de grande volumétrie de données, idéalement dans le secteur retail / e-commerce, et la capacité à collaborer avec de nombreux interlocuteurs simultanément.",
     "Excellente connaissance des techniques de datamining et de data science",
     "Expérience avancée avec l’outil Dataiku et la programmation SQL / Python",
     "Ownership des projets confiés",
@@ -34,5 +34,5 @@
     "SQL",
     "Python"
   ],
-  "seniorite_min_annees": 6
+  "seniorite_min_annees": 3
 }

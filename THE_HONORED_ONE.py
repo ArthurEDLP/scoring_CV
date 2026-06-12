@@ -49,7 +49,7 @@ print("Setup terminé.\n")
 # Paramètres des garde-fous.
 # DELTA : à recalibrer sur la distribution observée
 # (le 0.04 vient d'une calibration sur Qwen3-8B).
-GUARDS_DELTA = 0.04
+GUARDS_DELTA = 0.10
 GUARDS_FENETRE_MOIS = None  # None = dérivé de seniorite_min_annees (24 mois min)
 
 
@@ -235,7 +235,7 @@ def noeud_agreger(state: CVScoringState) -> Dict:
             s_bonus     = s_bonus,
         )
         # Récupère le CV brut pour parser ses dates (le CV brut est dans state["cvs"])
-        cv_brut = next((c for c in cvs if c["id"] == cv_id), None)
+        cv_brut = next((c for c in state["cvs"] if c["id"] == cv_id), None)
         exps_brutes = (cv_brut.get("data") or cv_brut).get("experiences", []) if cv_brut else []
         dispo = detecter_disponibilite(exps_brutes, date.today())
 

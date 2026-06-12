@@ -33,7 +33,7 @@ POIDS_AXES = {
 }
 
 # Seuil pour qu'une expérience soit considérée "du poste AO".
-SEUIL_CATEGORIE = 0.775
+SEUIL_CATEGORIE = 0.65
 
 VALEUR_BONUS_ENTREPRISE = 1.0
 
@@ -91,6 +91,9 @@ def _tokens(label: str) -> set:
     # decoupe sur la ponctuation, ignore les tokens d'une lettre (R, C...)
     return {t for t in re.split(r"[^a-z0-9]+", label.lower()) if len(t) >= 2}
 
+def _coeur(label: str) -> str:
+    """Retire le contenu entre parenthèses : 'Python (pandas, numpy)' -> 'Python'."""
+    return re.sub(r"\([^)]*\)", " ", label)
 
 def score_technos(
     technos_ao,                       # List[{"label": str, "embedding": np.ndarray}]
@@ -114,8 +117,8 @@ def score_technos(
     # ── 1. EXACT (egalite stricte OU inclusion de tokens) ──────────────────
     # Un match exact CONSOMME la techno CV (1-a-1 des le depart).
     for a, t in enumerate(technos_ao):
-        norme_ao  = _normaliser(t["label"])
-        tokens_ao = _tokens(t["label"])
+        norme_ao  = _normaliser(_coeur(t["label"]))   # cœur : ignore la parenthèse
+        tokens_ao = _tokens(_coeur(t["label"]))
 
         # candidats parmi les CV encore disponibles
         cand = None

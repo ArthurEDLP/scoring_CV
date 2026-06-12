@@ -7,18 +7,51 @@
     "Databricks Certified Data Engineer Professional (2024)",
     "Confluent Certified Developer for Apache Kafka (2021)"
   ],
-  "langues": [],
+  "langues": [
+    {
+      "code": "fr",
+      "titre": "Français"
+    }
+  ],
   "competences_techniques": [
     "Python",
     "Scala",
+    "SQL",
     "Java",
-    "AWS",
+    "Bash",
+    "Go",
     "Apache Spark",
     "Apache Kafka",
     "Apache Airflow",
+    "Apache Flink",
+    "Hadoop",
+    "Hive",
+    "AWS (S3, EMR, Glue, Lambda, Redshift, Kinesis)",
+    "GCP (BigQuery, Dataflow, Pub/Sub, Composer)",
+    "Azure (Data Factory, Synapse)",
+    "PostgreSQL",
+    "MongoDB",
+    "Cassandra",
+    "Snowflake",
+    "Redis",
+    "Elasticsearch",
+    "Docker",
+    "Kubernetes",
     "Terraform",
-    "GitLab CI/CD",
-    "SQL"
+    "Jenkins",
+    "GitLab CI",
+    "CD",
+    "ArgoCD",
+    "Kimball",
+    "Data Vault 2.0",
+    "Star Schema",
+    "Medallion Architecture",
+    "Kafka Streams",
+    "Apache Beam",
+    "Spark Structured Streaming",
+    "Great Expectations",
+    "dbt",
+    "Soda Core"
   ],
   "savoir_faire/savoir_etre": [
     "Architecture de plateformes data à grande échelle",
@@ -34,39 +67,46 @@
     {
       "poste": "Lead Data Engineer",
       "entreprise": "TotalEnergies, Paris La Défense",
-      "date": "02/2024 - 04/2026",
-      "details": "Contexte : Refonte complète de la plateforme data du département Trading & Shipping pour traiter plus de 15 To de données quotidiennes issues des capteurs IoT, plates-formes de trading et systèmes ERP. Conception d'une architecture Data Lakehouse sur AWS avec approche Medallion (Bronze/Silver/Gold). Développement de pipelines streaming temps réel pour le suivi des positions de trading."
+      "date": "09/2022 - Aujourd'hui",
+      "details": "Contexte : Refonte complète de la plateforme data du département Trading & Shipping pour traiter plus de 15 To de données quotidiennes issues de capteurs IoT, plateformes de trading et systèmes ERP. Conception et mise en œuvre d'une architecture Data Lakehouse sur AWS (S3 + Databricks Unity Catalog) avec approche Medallion (Bronze/Silver/Gold). Développement de pipelines de streaming temps réel sur Apache Kafka et Spark Structured Streaming pour le suivi des positions de trading (latence < 2 secondes). Industrialisation de plus de 80 pipelines batch via Apache Airflow (orchestration de plus de 2000 tâches quotidiennes). Mise en place du framework dbt Core avec plus de 350 modèles et tests automatisés couvrant 95% des transformations. Animation d'une équipe de 6 data engineers (2 seniors, 3 confirmés, 1 junior) avec rituels Scrum et code reviews systématiques. Définition des standards d'architecture data du groupe et accompagnement des autres BU dans leur adoption."
     },
     {
       "poste": "Senior Data Engineer",
       "entreprise": "Bouygues Telecom, Issy-les-Moulineaux",
-      "date": "04/2022 - 01/2024",
-      "details": "Conception d'un pipeline CDC avec Debezium et Kafka pour synchroniser plus de 200 tables Oracle vers BigQuery en quasi temps réel. Mise en place du modèle Data Vault 2.0 sur le périmètre client (45 millions lignes mises à jour quotidiennement). Déploiement automatisé complet des pipelines avec GitLab, Terraform et Cloud Build."
+      "date": "04/2019 - 08/2022",
+      "details": "Contexte : Construction d'une plateforme analytique unifiée pour la connaissance client au sein de la direction Marketing Digital. Migration des traitements Hadoop on-premise vers Google Cloud Platform (BigQuery, Dataflow, Composer). Conception d'un pipeline d'ingestion CDC (Change Data Capture) avec Debezium et Kafka pour synchroniser plus de 200 tables Oracle vers BigQuery en quasi temps réel. Implémentation d'un modèle Data Vault 2.0 sur le périmètre client (45 millions de lignes mises à jour quotidiennement). Mise en place de la chaîne CI/CD complète (GitLab, Terraform, Cloud Build) avec déploiement automatisé sur 3 environnements. Développement de connecteurs custom Kafka Connect pour intégrer les sources non-standards (mainframes IMS, fichiers EBCDIC). Encadrement technique de 3 data engineers et formation interne sur Spark/Scala (sessions mensuelles). Contribution à la mise en place du Data Catalog d'entreprise (DataHub) couvrant plus de 1500 datasets."
     },
     {
       "poste": "Data Engineer",
       "entreprise": "Air France-KLM, Roissy",
-      "date": "10/2018 - 03/2022",
-      "details": "Mise en place de la plateforme Big Data pour le programme Flying Blue avec Spark (Scala) et Hadoop. Développement d'algorithmes de matching profils passagers via MLlib."
+      "date": "10/2016 - 03/2019",
+      "details": "Contexte : Mise en place de la plateforme Big Data du programme Flying Blue pour la personnalisation de l'expérience voyageur. Développement de jobs Spark (Scala) pour le calcul des segmentations clients sur un cluster Hortonworks (50 nœuds). Implémentation d'algorithmes de matching de profils passagers (entre PNR, fidélité et données digitales) avec Spark MLlib. Mise en place de l'orchestration via Oozie puis migration vers Airflow."
     },
     {
       "poste": "Consultant Data / BI",
       "entreprise": "Capgemini Invent, Paris",
-      "date": "09/2014 - 09/2018",
-      "details": "Missions de conseil en Big Data et Business Intelligence pour des clients du secteur bancaire et énergie. Développement d'ETL Talend, procédures stockées Oracle PL/SQL."
+      "date": "09/2014 - 09/2016",
+      "details": "Contexte : Missions de conseil en BI et Big Data pour des clients du secteur bancaire et énergie. Développement de tableaux de bord SAS et Tableau pour le contrôle de gestion chez Société Générale (12 mois). Mise en place d'un POC Hadoop (Cloudera) pour l'analyse des courbes de charge des compteurs Linky à EDF (10 mois), animation d'ateliers de cadrage et rédaction de spécifications fonctionnelles et techniques. Développement ETL Talend et procédures stockées Oracle PL/SQL."
     }
   ],
   "savoir_faire": [
     "Architecture de plateformes data à grande échelle",
     "Industrialisation de pipelines ETL/ELT",
-    "Mise en place du framework dbt Core avec tests automatisés couvrant plus de 95% des transformations.",
-    "Animation et formation d'une équipe technique (jusqu'à 6 personnes)",
-    "Veille technologique active"
+    "Mise en place de Data Mesh et Data Lakehouse",
+    "Gouvernance de la donnée et data lineage",
+    "Animation d'équipes techniques (jusqu'à 8 personnes)",
+    "Mentorat et formation de juniors",
+    "Veille technologique active",
+    "Communication transverse avec les métiers"
   ],
   "savoir_etre": [
-    "Industrialisation",
-    "Mentorat de juniors en data engineering",
-    "Animation et formation d'une équipe technique (jusqu'à 6 personnes)",
-    "Veille technologique active"
+    "Esprit d'équipe",
+    "Rigueur",
+    "Industrialisation des pipelines ETL/ELT",
+    "Gouvernance de la donnée et data lineage",
+    "Animation d'équipes techniques (jusqu'à 8 personnes)",
+    "Mentorat et formation de juniors",
+    "Veille technologique active",
+    "Communication transverse avec les métiers"
   ]
 }
