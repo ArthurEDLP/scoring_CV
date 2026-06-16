@@ -175,24 +175,33 @@ class GuardResult:
 
 # ═══════════════════ Parsing dates ═════════════════════════════════════
 
-
 def parse_date_str(date_str: str) -> Optional[date]:
     if not isinstance(date_str, str):
         return None
+
     s = date_str.strip().lower()
     if s in ("aujourd'hui", "aujourdhui", "present", "présent", "now", ""):
         return None
-    m = re.match(r"(\d{1,2})/(\d{4})", date_str.strip())
+
+    # MM/YYYY, MM-YYYY ou MM.YYYY
+    m = re.match(r"^(\d{1,2})[/.-](\d{4})$", s)
     if m:
         month, year = int(m.group(1)), int(m.group(2))
         if 1 <= month <= 12 and 1900 <= year <= 2100:
             return date(year, month, 1)
-    m = re.match(r"(\d{4})-(\d{1,2})", date_str.strip())
+
+    # YYYY/MM, YYYY-MM ou YYYY.MM
+    m = re.match(r"^(\d{4})[/.-](\d{1,2})$", s)
     if m:
-        return date(int(m.group(1)), int(m.group(2)), 1)
-    m = re.match(r"^(\d{4})$", date_str.strip())
+        year, month = int(m.group(1)), int(m.group(2))
+        if 1 <= month <= 12:
+            return date(year, month, 1)
+
+    # YYYY
+    m = re.match(r"^(\d{4})$", s)
     if m:
         return date(int(m.group(1)), 1, 1)
+
     return None
 
 

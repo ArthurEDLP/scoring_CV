@@ -201,7 +201,7 @@ RÈGLES STRICTES :
    - Pas de techno ou de soft_skill dans les savoir_faire (SQL, autonomie, etc.).
 
 4. EXPÉRIENCES :
-   - Format de date : "MM/YYYY - MM/YYYY" ou "MM/YYYY - Aujourd'hui"
+   - Format de date : "MM/YYYY - MM/YYYY" ou "MM/YYYY - Aujourd'hui" ou "MM.YYYY - MM.YYYY" ou "MM.YYYY - Aujourd'hui"
    - "Mars 2019" -> "03/2019"
    - "présent", "now", "current" -> "Aujourd'hui"
    - Si un sous-champ est absent du CV, mettre une string vide ""
