@@ -31,7 +31,7 @@ import requests
 # ─────────────────────────────────────────────────────────────────────
 
 OLLAMA_URL    = "http://localhost:11434/api/generate"
-OLLAMA_MODEL  = "phi3.5"        # Microsoft Phi-3.5 mini, réputé en JSON
+OLLAMA_MODEL  = "qwen2.5:7b-instruct"       # Microsoft Phi-3.5 mini, réputé en JSON
 TIMEOUT_SEC   = 420
 MAX_RETRIES   = 1
 
