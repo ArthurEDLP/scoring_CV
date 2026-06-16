@@ -6,33 +6,30 @@ Démarrage :
     uvicorn app:app --reload --port 8000
     puis ouvrir http://localhost:8000
 
-Il sert le front (index.html) et expose :
-    GET    /api/state                 -> contenu des dossiers (brutes + prêts)
-    POST   /api/upload/{kind}         -> dépose des .json dans *_brutes (kind=cv|ao)
-    DELETE /api/ao/{ao_id}            -> supprime une AO (brute + traité + cache global)
-    POST   /api/prepare               -> job: prétraitement + caches + score global
-    POST   /api/match                 -> job: lance THE_HONORED_ONE pour une AO
-    GET    /api/jobs/{job_id}         -> état/progression/résultat d'un job
-
-Les imports lourds (ollama, THE_HONORED_ONE, precalcul_global) sont faits DANS
-les jobs, pour que l'API démarre même si l'environnement d'embedding n'est pas
-encore prêt.
+Routes :
+    GET    /api/state            -> contenu des dossiers (brutes + prêts)
+    POST   /api/upload/{kind}    -> dépose des .json dans *_brutes (kind=cv|ao)
+    DELETE /api/ao/{ao_id}       -> supprime une AO (brute + traité + cache global)
+    POST   /api/prepare          -> job: prétraitement + caches + score global
+    POST   /api/match            -> job: lance THE_HONORED_ONE pour une AO
+    GET    /api/jobs/{job_id}     -> état/progression/résultat d'un job
+    GET    /logo.png             -> logo (si présent à la racine)
 """
 
 from __future__ import annotations
 
+import os
 import json
 import sys
 import uuid
-import shutil
 import subprocess
 import threading
 import traceback
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Dict, List
 
 from fastapi import FastAPI, UploadFile, File, HTTPException, BackgroundTasks
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse, FileResponse
 
 # ─────────────────────────── Dossiers ─────────────────────────────────────
 RACINE        = Path(__file__).parent
@@ -47,7 +44,6 @@ for d in (AO_BRUTES, CV_BRUTES, AO_TRAITES, CV_TRAITES, CACHE_GLOBAL):
 app = FastAPI(title="Matching CV/AO")
 
 # ─────────────────────── Registre de jobs (mémoire) ───────────────────────
-# job_id -> {statut, etape, progression(0..1), message, resultat, erreur}
 JOBS: Dict[str, Dict] = {}
 _LOCK = threading.Lock()
 
@@ -68,12 +64,10 @@ def _maj_job(jid: str, **kw) -> None:
 
 # ─────────────────────────── Helpers fichiers ─────────────────────────────
 def _ids_dans(dossier: Path) -> List[str]:
-    """Liste les ids = nom de fichier sans .json, triés."""
     return sorted(p.stem for p in dossier.glob("*.json"))
 
 
 def _lire_id_interne(chemin: Path) -> str:
-    """Tente de lire le champ 'id' du JSON, sinon retombe sur le nom de fichier."""
     try:
         data = json.loads(chemin.read_text(encoding="utf-8"))
         if isinstance(data, dict) and data.get("id"):
@@ -87,7 +81,6 @@ def _lire_id_interne(chemin: Path) -> str:
 
 @app.get("/api/state")
 def etat():
-    """Inventaire des dossiers pour rafraîchir le front."""
     aos_prets = []
     for p in sorted(AO_TRAITES.glob("*.json")):
         ao_id = _lire_id_interne(p)
@@ -112,7 +105,7 @@ async def upload(kind: str, fichiers: List[UploadFile] = File(...)):
             continue
         contenu = await f.read()
         try:
-            json.loads(contenu)            # validation : c'est bien du JSON
+            json.loads(contenu)
         except Exception:
             raise HTTPException(400, f"{f.filename} n'est pas un JSON valide")
         (cible / Path(f.filename).name).write_bytes(contenu)
@@ -122,13 +115,12 @@ async def upload(kind: str, fichiers: List[UploadFile] = File(...)):
 
 @app.delete("/api/ao/{ao_id}")
 def supprimer_ao(ao_id: str):
-    """Supprime l'AO en base : brute + traité + cache global associé."""
     cibles = [
         AO_BRUTES  / f"{ao_id}.json",
         AO_TRAITES / f"{ao_id}.json",
         CACHE_GLOBAL / f"global_{ao_id}.json",
     ]
-    supprimes = [str(c.name) for c in cibles if c.exists()]
+    supprimes = [c.name for c in cibles if c.exists()]
     for c in cibles:
         c.unlink(missing_ok=True)
     if not supprimes:
@@ -165,22 +157,32 @@ def etat_job(job_id: str):
 # ════════════════════════════ JOBS (tâche de fond) ════════════════════════
 
 def _run(cmd: List[str]) -> None:
-    """Lance un script en sous-processus, lève si code retour != 0."""
-    res = subprocess.run(cmd, cwd=str(RACINE), capture_output=True, text=True)
+    """Lance un script en sous-processus (sortie forcée UTF-8). Lève si code != 0,
+    en remontant stdout ET stderr (certains scripts écrivent l'erreur sur stdout)."""
+    env = {**os.environ, "PYTHONIOENCODING": "utf-8", "PYTHONUTF8": "1"}
+    res = subprocess.run(
+        cmd, cwd=str(RACINE), capture_output=True, text=True,
+        encoding="utf-8", errors="replace", env=env,
+    )
     if res.returncode != 0:
-        raise RuntimeError(f"{' '.join(cmd)}\n{res.stderr[-800:]}")
+        sortie = (res.stdout or "") + (res.stderr or "")
+        raise RuntimeError(f"code {res.returncode} · {' '.join(cmd[:3])} …\n{sortie[-1500:]}")
 
 
 def _job_preparer(jid: str) -> None:
     """3 étapes : prétraitement -> caches embeddings -> score global."""
     try:
         py = sys.executable
+        ao_files = [str(p) for p in AO_BRUTES.glob("*.json")]
+        cv_files = [str(p) for p in CV_BRUTES.glob("*.json")]
 
         _maj_job(jid, etape="Prétraitement des AO", progression=0.05)
-        _run([py, "pretraiter_ao.py"])
+        if ao_files:
+            _run([py, "pretraiter_ao.py", "--output", str(AO_TRAITES), "--force", *ao_files])
 
         _maj_job(jid, etape="Prétraitement des CV", progression=0.20)
-        _run([py, "pretraiter_cv.py"])
+        if cv_files:
+            _run([py, "pretraiter_cv.py", "--output", str(CV_TRAITES), "--force", *cv_files])
 
         # Imports lourds ici seulement
         _maj_job(jid, etape="Construction des caches d'embeddings", progression=0.35)
@@ -225,11 +227,9 @@ def _job_matcher(jid: str, offre_id: str) -> None:
 
 @app.get("/logo.png")
 def logo():
-    """Sert le logo s'il existe (sinon 404 -> le front affiche un placeholder)."""
     for nom in ("logo_consort.png", "logo.png"):
         p = RACINE / nom
         if p.exists():
-            from fastapi.responses import FileResponse
             return FileResponse(str(p))
     raise HTTPException(404, "logo absent")
 
