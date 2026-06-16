@@ -12,6 +12,7 @@
     "Python",
     "PHP",
     "Dataiku",
+    "BWelcome",
     "PySpark"
   ],
   "savoir_faire/savoir_etre": [
@@ -55,7 +56,7 @@
       "poste": "Consultant",
       "entreprise": "PMU",
       "date": "02/2022 - 09/2023",
-      "details": "Contexte : Réalisation de travaux analytiques et de modélisation. Développement de scripts de web scraping."
+      "details": "Contexte : Réalisation de travaux analytiques et de modélisation. Développement d'analyses ad hoc."
     },
     {
       "poste": "Consultant",
@@ -67,7 +68,7 @@
       "poste": "Consultant",
       "entreprise": "EDF",
       "date": "06/2017 - 05/2021",
-      "details": "Contexte : Missions d'analyses et de modélisation dans le secteur énergie. Enrichissement des bases données à l'aide du web scraping."
+      "details": "Contexte : Missions d'analyses et de modélisation dans le secteur énergie. Enrichissement des bases de données à l'aide du web scraping."
     }
   ],
   "savoir_faire": [
@@ -77,17 +78,12 @@
     "Animation d'ateliers",
     "Benchmarking",
     "Conduite d'entretiens d'évaluation",
-    "Conduite d'entretiens de recrutement",
-    "Animation d'entretiens individuels",
+    "Conduite d'entretien de recrutement",
+    "Animation d'entretien individuel",
     "Formation"
   ],
   "savoir_etre": [
     "Management",
-    "Marketing",
-    "Régression logistique",
-    "Stratégie de ciblage",
-    "SVM",
-    "Revenue Management",
-    "Statistiques bayésiennes"
+    "Marketing"
   ]
 }

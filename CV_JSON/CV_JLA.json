@@ -1,0 +1,72 @@
+{
+  "id": "JLA",
+  "formations": [
+    {
+      "date": "Mars 2023",
+      "titre_formation": "Master Data Science et Big data - Université Paris-Saclay, France (France)"
+    },
+    {
+      "date": "Juin 2021",
+      "titre_formation": "Data Engineering & Business Intelligence with Python and R"
+    }
+  ],
+  "certifications": [],
+  "langues": [
+    {
+      "français": true
+    }
+  ],
+  "competences_techniques": [
+    "Matériels Hadoop (HDFS, MapReduce, Zookeeper)",
+    "Systèmes GCP (Vertex AI, Workstation)",
+    "Matières de bases SQL",
+    "Langages Python"
+  ],
+  "savoir_faire/savoir_etre": [
+    "Force de proposition & esprit d’initiative",
+    "Autonomie & rigueur méthodologique",
+    "Leadership & pédagogie (encadrement de stagiaires)",
+    "Esprit d’équipe & communication transverse"
+  ],
+  "experiences": [
+    {
+      "poste": "Data Scientist",
+      "entreprise": "SFR",
+      "date": "Depuis le 10.2025",
+      "details": "Réalisations Nom du projet : Industrialisation de solutions d’IA sur des appels clients audio ; intentions d’appel, clustering, GenAI et MLOps; analyse temporelle avec une application GenAI."
+    },
+    {
+      "poste": "Data Scientist – Data Analyst",
+      "entreprise": "Crédit Agricole Leasing & Factoring - Direction Stratégie Marketing et Communication",
+      "date": "Du 01.2023 au 09.2025",
+      "details": "Réalisations Résumé de la mission : Score d’Attrition, score Next Best Offer automatisé avec Dataiku; monitoring des scores via Airflow et Collibra."
+    },
+    {
+      "poste": "Data Scientist",
+      "entreprise": "Safran Spacecraft Propulsion - Direction : Propulsion Électrique Spatiale",
+      "date": "07.2022 – 12.2022",
+      "details": "Réalisations Résumé de la mission 1: Data Governance, extraction des données non-structurées avec OCR/NLP; détection d’anomalies par GAN."
+    },
+    {
+      "poste": "Data Scientist / Data Analyst",
+      "entreprise": "Allianz - Direction : Lutte contre la Fraude et le Blanchiment d'Argent",
+      "date": "09.2020 – 09.2021",
+      "details": "Réalisations Résumé de la mission: Détection proactive des comportements suspects avec Random Forest, XGBoost; datamart centralisé sous SAS."
+    },
+    {
+      "poste": "Data Analyst",
+      "entreprise": "Euler Hermes (Allianz Trade) - Direction : Risques, Conformité et Statistiques",
+      "date": "03.2020 – 08.2020",
+      "details": "Réalisations Résumé de la mission: Migration ETL & Datamart; KPI juridique avec Excel/VBA."
+    }
+  ],
+  "savoir_faire": [
+    "Force de proposition & esprit d’initiative",
+    "Autonomie & rigueur méthodologique",
+    "Esprit d’équipe & communication transverse"
+  ],
+  "savoir_etre": [
+    "Leadership & pédagogie (encadrement de stagiaires)",
+    "Professionnel en Anglais"
+  ]
+}

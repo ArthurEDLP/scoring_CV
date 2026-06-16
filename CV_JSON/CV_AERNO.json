@@ -1,0 +1,76 @@
+{
+  "id": "AERNO",
+  "formations": [],
+  "certifications": [
+    "AWS Certified Solutions Architect – Associate (2022)",
+    "Microsoft Azure Data Engineer Associate – DP-203 (2021)",
+    "Google Professional Data Engineer (2020)",
+    "Databricks Certified Associate Developer for Apache Spark (2023)",
+    "Certified Scrum Master – CSM (2019)"
+  ],
+  "langues": [],
+  "competences_techniques": [
+    "Python (avancé)",
+    "SQL (avancé)",
+    "Scala (intermédiaire)",
+    "R (intermédiaire)",
+    "Bash",
+    "Apache Spark",
+    "Kafka",
+    "Airflow",
+    "dbt",
+    "Hadoop",
+    "AWS (S3, Glue, Redshift, Lambda, EMR)",
+    "Azure (Data Factory, Synapse, ADLS Gen2)",
+    "PostgreSQL",
+    "MySQL",
+    "MongoDB",
+    "Cassandra",
+    "Snowflake",
+    "Databricks Delta Lake",
+    "Power BI",
+    "Tableau",
+    "Grafana",
+    "Plotly",
+    "Streamlit",
+    "scikit-learn",
+    "XGBoost",
+    "MLflow",
+    "SageMaker",
+    "Vertex AI"
+  ],
+  "savoir_faire/savoir_etre": [
+    "Capacité à vulgariser des concepts techniques complexes auprès d'interlocuteurs métier non techniques",
+    "Esprit analytique rigoureux couplé à une forte appétence pour la résolution de problèmes ambigus",
+    "Leadership technique naturel : encadrement de juniors, pair-review systématique et montée en compétence de l'équipe",
+    "Autonomie et sens des responsabilités dans des environnements projet exigeants avec des délais contraints",
+    "Excellent communicant à l'écrit comme à l'oral, habitué aux présentations à des comités de direction",
+    "Curiosité intellectuelle et veille technologique active (participation régulière à des meetups Data & IA)"
+  ],
+  "experiences": [
+    {
+      "poste": "Lead Data Engineer",
+      "entreprise": "Lumeria Analytics — Paris (75009)",
+      "date": "Mars 2022 – Présent",
+      "details": "Conception et déploiement d'une architecture lakehouse sur AWS en remplacement de l'ancien entrepôt Oracle, réduisant les coûts d'infrastructure de 38 %. Mise en place de pipelines temps-réel avec Apache Kafka et Spark Structured Streaming pour l'alimentation de tableaux de bord opérationnels à latence inférieure à 2 secondes. Développement d'un framework dbt maison standardisant modèles SQL, automatisation des tests de qualité de données (taux de couverture 94 %). Implémentation CI/CD complète via GitLab CI avec déploiement blue/green sur Kubernetes."
+    },
+    {
+      "poste": "Data Engineer Senior",
+      "entreprise": "Veltyx Consulting — Lyon (69002)— Mission chez BNP Paribas Personal Finance",
+      "date": "Septembre 2019 – Février 2dict(String, String): [(",
+      "details": ""
+    }
+  ],
+  "savoir_faire": [
+    "Capacité à vulgariser des concepts techniques complexes auprès d'interlocuteurs métier non techniques",
+    "Esprit analytique rigoureux couplé à une forte appétence pour la résolution de problèmes ambigus",
+    "Leadership technique naturel : encadrement de juniors, pair-review systématique et montée en compétence de l'équipe",
+    "Autonomie et sens des responsabilités dans des environnements projet exigeants avec des délais contraints",
+    "Excellent communicant à l'écrit comme à l'oral, habitué aux présentations à des comités de direction"
+  ],
+  "savoir_etre": [
+    "Capacité à vulgariser des concepts techniques complexes auprès d'interlocuteurs métier non techniques",
+    "Esprit analytique rigoureux couplé à une forte appétence pour la résolution de problèmes ambigus",
+    "experiences"
+  ]
+}

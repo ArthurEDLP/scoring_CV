@@ -2,12 +2,11 @@
   "id": "TVA",
   "formations": [
     {
-      "diplome": "MBA Management des Systèmes d'Information - HEC Executive Education",
-      "date": "2018"
-    },
-    {
-      "diplome": "Diplôme d'Ingénieur Généraliste - École Centrale de Lille",
-      "date": "2009"
+      "id_formulation": {
+        "type": "string",
+        "value": "Formule1"
+      },
+      "name": "Fomrula1"
     }
   ],
   "certifications": [
@@ -17,20 +16,7 @@
     "SAFe 6 Program Consultant (SPC) (2023)",
     "ITIL 4 Foundation (2017)"
   ],
-  "langues": [
-    {
-      "nom_langue": "Français",
-      "maitrise": "Langue maternelle"
-    },
-    {
-      "nom_langue": "Anglais",
-      "maitrise": "Courant - environnement de travail (TOEIC 950)"
-    },
-    {
-      "nom_langue": "Néerlandais",
-      "maitrise": "Intermédiaire (B1) - 3 ans à Amsterdam"
-    }
-  ],
+  "langues": [],
   "competences_techniques": [
     "Agile (Scrum, Kanban, SAFe)",
     "Cycle en V",
@@ -47,9 +33,16 @@
     "Suivi budgétaire (Excel avancé, SAP)",
     "SQL (lecture / requêtes simples)",
     "AWS",
+    "Azure",
+    "GCP",
     "Microsoft 365",
     "Google Workspace",
-    "Slack"
+    "Slack",
+    "Miro",
+    "Lucidchart",
+    "RGPD",
+    "Référentiels qualité",
+    "Gestion des risques (ISO 31000)"
   ],
   "savoir_faire/savoir_etre": [
     "Pilotage de programmes data complexes (jusqu'à 8 M€ de budget)",
@@ -67,25 +60,19 @@
       "poste": "Program Manager - Programme Data & IA",
       "entreprise": "L'Oréal, Clichy",
       "date": "01/2022 - Aujourd'hui",
-      "details": "Contexte : Pilotage d'un programme stratégique de transformation data au sein de la Direction Marketing International. Budget total 6,5 M€ sur 3 ans."
+      "details": "Contexte : Pilotage d'un programme stratégique de transformation data au sein de la Direction Marketing International - construction d'une plateforme Customer Data Platform unifiée pour 35 marques sur 12 marchés. Budget total : 6,5 M€ sur 3 ans.\nCoordination de 4 squads (22 personnes : data engineers, data scientists, product owners, UX designers) en mode SAFe.\nPilotage de 3 prestataires externes (Capgemini, Accenture, et un éditeur SaaS) - négociation des SLA, suivi des engagements contractuels.\nReporting mensuel auprès du Chief Data Officer et trimestriel au COMEX Marketing International (slides, KPIs, démos).\nAnimation des PI Plannings trimestriels (sur 2 jours, 30+ participants) et les System Demos. Gestion du budget et reforecast trimestrial.\nMise en place de la gouvernance data : comité de pilotage mensuel, comité technique bi-mensual, instance d'arbitrage des priorités."
     },
     {
       "poste": "Chef de Projet IT Senior - Data & Analytics",
       "entreprise": "Société Générale - Banque de Détail France, La Défense",
       "date": "06/2018 - 12/2021",
-      "details": "Contexte : Pilotage de projets data du département Marketing & Connaissance Client. Projet 'Vue Client 360' (18 mois, 2,8 M€) avec une équipe mixte."
+      "details": "Pilotage de projets de la roadmap data du département Marketing & Connaissance Client.\nProjet 'Vue Client 360' (18 mois, 2,8 M€) : pilotage de la construction d'un référentiel client unifié sur Hadoop puis migration vers Snowflake. Coordination d'une équipe mixte de 14 personnes (5 internes, 9 prestataires - Atos, Sopra Steria).\nAnimation des comités de pilotage mensuels avec les sponsors métier.\nGestion des dépendances avec 6 SI partenaires. Mise en conformité RGPD du projet : ateliers avec le DPO, rédaction des analyses d'impact (PIA), définition des durées de conservation."
     },
     {
       "poste": "Chef de Projet IT",
       "entreprise": "ING Bank, Amsterdam (Pays-Bas)",
-      "date": "09/2014 - 05/2018",
-      "details": "Mission longue au siège d'ING dans le cadre de la transformation agile du groupe."
-    },
-    {
-      "poste": "Consultant Junior - PMO",
-      "entreprise": "Sopra Steria Consulting, Paris",
-      "date": "10/2009 - 08/2014",
-      "details": "Missions PMO chez plusieurs clients grands comptes des secteurs banque, assurance et énergie."
+      "date": "09/2dict['name'] = 'John'; dict[",
+      "details": "This is a test of the dictionary assignment and retrieval process."
     }
   ],
   "savoir_faire": [
@@ -95,11 +82,17 @@
     "Cadrage de besoins et arbitrage entre les parties prenantes",
     "Gestion des risques et plans de mitigation",
     "Animation d'ateliers (design thinking, user stories mapping, événements SAFe)",
-    "Coaching agile d'équipes en transformation"
+    "Coaching agile d'équipes en transformation",
+    "Capacité de négociation avec les fournisseurs et éditeurs"
   ],
   "savoir_etre": [
-    "Pilotage de programmes data complexes",
-    "Management transverse des équipes mixtes internes / prestataires jusqu'à 25 personnes",
-    "Communication et reporting auprès du COMEX et sponsors C-Level"
+    "Pilotage de programmes data complexes (jusqu'à 8 M€ de budget)",
+    "Management transverse (équipes mixtes internes / prestataires jusqu'à 25 personnes)",
+    "Communication et reporting auprès du COMEX et des sponsors C-Level",
+    "Cadrage de besoins et arbitrage entre les parties prenantes",
+    "Gestion des risques et plans de mitigation",
+    "Animation d'ateliers (design thinking, user stories mapping, événements SAFe)",
+    "Coaching agile d'équipes en transformation",
+    "Capacité de négociation avec les fournisseurs et éditeurs"
   ]
 }

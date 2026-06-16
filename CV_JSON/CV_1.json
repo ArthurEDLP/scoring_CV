@@ -27,13 +27,13 @@
       {
         "poste": "Assistant Commercial Export",
         "entreprise": "ORANGE, Paris",
-        "date": "01/2016 - 12/2 extrémité du temps actuel (en supposant que l'année la plus récente soit le dernier exercice financier connu)",
-        "details": "Assurer la mise à jour des coordonnées administrative relatives au compte client. Sens du contact. Traiter les demandes d’échantillon depuis la saisie jusqu’à l’expédition."
+        "date": "01/2016 - 12/2019",
+        "details": "Assurer la mise à jour des coordonnées administrative relatives au compte client. Sens du contact. Traiter les demandes d’échantillon depuis la saisie jusqu’à l’expédition. Communication. Assurer l'interface entreprise-client export pour tout service sollicité."
       },
       {
         "poste": "Assistant Commercial Stagiaire",
         "entreprise": "DANONE, Paris",
-        "date": "01/2015 - 01/2016 extrémité du temps actuel (en supposant que l'année la plus récente soit le dernier exercice financier connu)",
+        "date": "01/2015 - 01/2015",
         "details": "Etablir des documents nécessaires à l'expédition des commandes en fonction de son pays de destination, de l’incoterm ainsi que du mode de règlement convenu. Assurer l'accueil téléphonique des clients, fournisseurs et autres tiers."
       }
     ],
@@ -45,10 +45,6 @@
       "Assurer l'interface entreprise-client export pour tout service sollicité",
       "Assurer l'accueil téléphonique des clients, fournisseurs et autres tiers"
     ],
-    "savoir_etre": [
-      "Sens du contact",
-      "Traiter les demandes d’échantillon depuis la saisie jusqu’à l’expédition",
-      "Communication"
-    ]
+    "savoir_etre": []
   }
 }

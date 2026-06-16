@@ -2,7 +2,16 @@
   "id": "XXX",
   "formations": [],
   "certifications": [],
-  "langues": [],
+  "langues": [
+    {
+      "nom_langue": "Français",
+      "maitrise": "Langue maternelle"
+    },
+    {
+      "nom_langue": "Anglais",
+      "maitrise": "Avancé"
+    }
+  ],
   "competences_techniques": [
     "Python",
     "SQL",
@@ -17,15 +26,13 @@
     "XGBoost",
     "Deep Learning",
     "NLP",
+    "AWS",
+    "GCP",
     "Excel",
     "GitHub",
     "Docker",
     "MLflow",
-    "Snowflake",
-    "SAS",
-    "AWS",
-    "GCP",
-    "Agile Scrum"
+    "Snowflake"
   ],
   "savoir_faire/savoir_etre": [
     "Analyse de données",
@@ -44,19 +51,19 @@
       "poste": "Data Scientist",
       "entreprise": "ORANGE BANK",
       "date": "02/2023 - Aujourd'hui",
-      "details": "Contexte : Développement et optimisation des disposits de détection frauduleuse en temps réel. Analyse des flux transactionnels, suivi d'indicateurs clés de fraude avec les équipes métiers... Automatisation des workflows..."
+      "details": "Contexte : Développement et optimisation des dispositifs de détection de fraude en temps réel.Analyse des flux transactionnels et suivi des indicateurs clés de fraude en collaboration avec les équipes métiers.\nDévelopper modèles ML pour identifier les transactions à risque.\nMise en production via CI/CD sur AWS.\nAugmenter le nombre de fraudes détectées, réduire les pertes et optimiser la gouvernance des données."
     },
     {
       "poste": "Data Analyst",
       "entreprise": "SWATCH GROUP",
       "date": "06/2021 - 12/2022",
-      "details": "Pilotage de la performance commerciale pour Direction Commerciale. Préparation, transformation et fiabilisation des données provenant du CRM..."
+      "details": "Pilotage de performance commerciale pour Direction Commerciale.\nPréparation, transformation et fiabilisation des données CRM.Structuration d'un référentiel commun d'indicateurs."
     },
     {
       "poste": "Data Analyst",
       "entreprise": "ORANGE FRANCE",
-      "date": "09/2019 - 06/2021",
-      "details": "Analyse quantitative des campagnes de vente en magasin. Construction et suivi d'indicateurs..."
+      "date": "09/2septembre 2019 - 06/2021",
+      "details": "Analyse de la performance des campagnes commerciales en points de vente.\nConstruction et suivi d'indicateurs tels que le taux conversion, chiffre d'affaires."
     }
   ],
   "savoir_faire": [

@@ -1,36 +1,12 @@
 {
   "id": "HAH",
-  "formations": [
-    {
-      "date_debut": "2022",
-      "date_finition": "2025",
-      "nom_etablissement": "ESILV - École d’ingénieurs, Master en Ingénierie Data & IA"
-    },
-    {
-      "date_debut": "2024",
-      "date_finition": "2025",
-      "nom_etablissement": "Universiti Kuala Lumpur MIIT – Programme d’échange : Machine Learning, DevOps, AI"
-    }
-  ],
+  "formations": [],
   "certifications": [
     "Microsoft Azure (2025)",
     "TOEFL (2023)",
     "Dataiku"
   ],
-  "langues": [
-    {
-      "nom_langue": "Français",
-      "maitrise": "Bilingue"
-    },
-    {
-      "nom_langue": "Anglais",
-      "maitrise": "Courant"
-    },
-    {
-      "nomoptionneux langues": "Turc",
-      "maitrise": "Bilingue"
-    }
-  ],
+  "langues": [],
   "competences_techniques": [
     "Windows",
     "SQL Server",
@@ -90,13 +66,13 @@
       "poste": "Data Analyst",
       "entreprise": "Chanel",
       "date": "01/2025 - Aujourd'hui",
-      "details": "Contexte : Analyse et fiabilisation des flux métiers ainsi que migration de données dans un environnement hybride Legacy / Cloud. Analyse de données multi-sources (Excel, SQL Server, PostgreSQL, Microsoft Fabric) pour le suivi des flux métiers... Suivi du reporting avec les équipes opérationnelles."
+      "details": "Contexte : analyse et fiabilisation des flux métiers ainsi que migration de données dans un environnement hybride Legacy / Cloud. Analyse multi-sources (Excel, SQL Server, PostgreSQL, Microsoft Fabric) pour le suivi des flux métiers."
     },
     {
-      "poste": "Data Analyst / Data Scientist",
+      "poste": "Data Analyst/Data Scientist",
       "entreprise": "Orange",
       "date": "01/2024 - 09/2024",
-      "details": "Contexte : Exploitation des enquêtes de satisfaction client B2B afin d'améliorer les modèles prédictifs et le ciblage des campagnes. Analyse de données issues des enquêtes stockées sous SQL et BigQuery... Développement d'un modèle de classification permettant de prédire la probabilité de réponse à un sondage."
+      "details": "Contexte : Exploitation des enquêtes de satisfaction client B2B pour améliorer les modèles prédictifs et le ciblage. Développement d'un scoring basé sur l'enrichissement avec du NLP."
     }
   ],
   "savoir_faire": [
@@ -106,22 +82,14 @@
     "Communication et vulgarisation",
     "Storytelling Data",
     "Conception de KPIs",
-    "Suivi et automatisation du reporting",
-    "Analyse de corrélation et de tendance",
-    "Segmentation",
-    "Analyse de séries temporelles"
+    "Suivi et automatisation du reporting"
   ],
   "savoir_etre": [
-    "Esprit analytique",
-    "Capacité d'adaptation",
+    "Adaptabilité",
     "Curiosité",
     "Travail en équipe",
     "Communication et vulgarisation",
     "Storytelling Data",
-    "Conception de KPIs",
-    "Suivi et automatisation du reporting",
-    "Analyse de corrélation et de tendance",
-    "Segmentation",
-    "Analyse de séries temporelles"
+    "Conception de KPIs"
   ]
 }

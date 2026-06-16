@@ -2,12 +2,12 @@
   "id": "CEU",
   "formations": [
     {
-      "diplome": "Master of Science in Computer Engineering - University Paris Saclay",
-      "date": "2014"
+      "dateAdded": "Sun Sep  8 09:03:00 +0000 UTC",
+      "name": "Johnny"
     },
     {
-      "diplome": "Certificate for Data Engineers and Scientists from the Université de Strasbourg, France (CDES)",
-      "date": ""
+      "id": -1,
+      "name": ""
     }
   ],
   "certifications": [
@@ -18,12 +18,15 @@
   ],
   "langues": [
     {
-      "nom_langue": "Français",
-      "maitrise": "Langue maternelle"
-    },
-    {
-      "nom_langue": "Anglais",
-      "maitrise": "Proficient"
+      "code": "en",
+      "_links": {
+        "self": "https://api.twitter.com/2/users/show/4084?include_available_mobile=true&include_everything=true"
+      },
+      "created_at": "Thu Sep  7 16:39:51 +0000 UTC",
+      "@context": {},
+      "_id": {
+        "$oid": "2935"
+      }
     }
   ],
   "competences_techniques": [
@@ -81,13 +84,13 @@
       "poste": "Lead Data Engineer",
       "entreprise": "TotalEnergies, Paris La Défense",
       "date": "09/2022 - Aujourd'hui",
-      "details": "Contexte : Refonte complète de la plateforme data du département Trading & Shipping pour traiter plus de 15 To de données quotidiennes issues de capteurs IoT, plateformes de trading et systèmes ERP. Conception et mise en œuvre d'une architecture Data Lakehouse sur AWS (S3 + Databricks Unity Catalog) avec approche Medallion (Bronze/Silver/Gold). Développement de pipelines de streaming temps réel sur Apache Kafka et Spark Structured Streaming pour le suivi des positions de trading (latence < 2 secondes). Industrialisation de plus de 80 pipelines batch via Apache Airflow (orchestration de plus de 2000 tâches quotidiennes). Mise en place du framework dbt Core avec plus de 350 modèles et tests automatisés couvrant 95% des transformations. Animation d'une équipe de 6 data engineers (2 seniors, 3 confirmés, 1 junior) avec rituels Scrum et code reviews systématiques. Définition des standards d'architecture data du groupe et accompagnement des autres BU dans leur adoption."
+      "details": "Contexte : Refonte complète de la plateforme data du département Trading & Shipping pour traiter plus de 15 To de données quotidiennes issues de capteurs IoT, plateformes de trading et systèmes ERP. Conception et mise en œuvre d'une architecture Data Lakehouse sur AWS (S3 + Databricks Unity Catalog) avec approche Medallion (Bronze/Silver/Gold). Développement de pipelines de streaming temps réel sur Apache Kafka et Spark Structured Streaming pour le suivi des positions de trading (latence < 2 secondes). Industrialisation de plus de 80 pipelines batch via Apache Airflow (orchestration de plus de 2000 tâches quotidiennes). Mise en place du framework dbt Core avec plus de 350 modèles et tests automatisés couvrant 95% des transformations. Animation d'une équipe de 6 data engineers (2 seniors, 3 confirmés, 1 junior) avec rituels Scrum et code reviews systématiques. Définition des standards d'architecture data du groupe et accompagnement des autres BU dans leur adoption. Rapport coûts cloud réduction de 38% via optimisation des requêtes Spark et politique de cycle de vie S3."
     },
     {
       "poste": "Senior Data Engineer",
       "entreprise": "Bouygues Telecom, Issy-les-Moulineaux",
-      "date": "04/2dict{id: 1379568}],",
-      "details": ""
+      "date": "04/2dict{id: 179568}', 'name': u'Raymond'}, {'id': 32373,'name': u'Jerry'}], [{'id': -1, 'name': ''}, {'id': 179569, 'name': u'Sandra'}, {'id': 4084, 'name': u'Mary'}, {'id': 2934, 'name': u'James'}], [{'id': -1, 'name': ''}, {'id': 179570, 'name': u'Patricia'}, {'id': 684, 'name': u'Robert'}, {'id': 2935, 'name': u'James'}], [{'id': -1, 'name': ''}, {'id': 179571, 'name': u'Lisa'}, {'id': 10684, 'name': u'Michael'}, {'id': 2936, 'name': u'James'}], [{'id': -1, 'name': ''}, {'id': 179572, 'name': u'Jennifer'}, {'id': 1084, 'name': u'Johnny'}, {'id': 2937, 'name': u'James'}], [{'id': -1, 'name': ''}, {'id': 179573, 'name': u'Maria'}, {'id': 6084, 'name': u'Daniel'}, {'id': 2938, 'name': u'James'}]]}], [{'items_count': 5,'groupedByName': {u'Jerry': [{}, {}, {}], u'Lisa': [{}, {}, {}], u'Maria': [{}, {}, {}]} }}]];\n', {'id': -1, 'name': ''}, {'id': 32374, 'name': u'John'}, {'items_count': 5,'groupedByName': {u'James': [{'dateAdded': datetime.datetime(2016, 9, 8, 16, 3, tzinfo=<UTC>), 'id': -1}, {}, {}], u'Jerry': [{}, {}, {'name': u'Johnny', 'timezoneOffsetMinutes': -480}], u'Mary': [{'dateAdded': datetime.datetime(2016, 9, 7, 15, tzinfo=<UTC>), 'id': 32373}, {}, {}]}]]}]]})",
+      "details": "[{"
     }
   ],
   "savoir_faire": [

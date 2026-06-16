@@ -1,15 +1,6 @@
 {
   "id": "MFU",
-  "formations": [
-    {
-      "name": "Master of Science (M.Sc.)",
-      "field_of_study": "Biomedical Engineering"
-    },
-    {
-      "name": "PhD Programme",
-      "specialization": "Tissue engineering and regenerative medicine"
-    }
-  ],
+  "formations": [],
   "certifications": [
     "Informatica PowerCenter Developer - Specialist (2016)",
     "AWS Certified Solutions Architect - Associate (2018)",
@@ -18,16 +9,24 @@
   ],
   "langues": [
     {
-      "languageName": "English"
+      "français": true,
+      "anglais": true
+    },
+    {
+      "allemand": false,
+      "espagnol": false,
+      "italien": false,
+      "latin": false,
+      "portugais": false,
+      "néerlandais": false,
+      "anglais_correspondance": true
     }
   ],
   "competences_techniques": [
-    "Informatica PowerExchange",
     "AWS (S3, Glue, EMR, Athena, IAM)",
     "Apache Airflow",
     "dbt",
     "Apache Iceberg",
-    "Snowflake",
     "Python",
     "SQL avancé",
     "Shell",
@@ -35,6 +34,7 @@
     "PL",
     "SQL",
     "Oracle",
+    "Snowflake",
     "PostgreSQL",
     "Teradata",
     "JIRA",
@@ -42,9 +42,7 @@
     "Git",
     "méthodes Agile (Scrum, Kanban)",
     "analyse d'incidents",
-    "MEP",
-    "support production",
-    "monitoring (Control-M, CloudWatch)"
+    "support production et monitoring (Control-M, CloudWatch)"
   ],
   "savoir_faire/savoir_etre": [
     "Développement de solutions d'intégration de données",
@@ -63,39 +61,40 @@
       "poste": "Éleveur de furets - Gérant",
       "entreprise": "Élevage \"Les Furets du Lomont\" (micro-entreprise agricole), Pont-de-Roide-Vermondans (Doubs)",
       "date": "01/2020 - Aujourd'hui",
-      "details": "Conduite complète de l'élevage : reproduction, suivi sanitaire en lien avec un vétérinaire, sevrage, socialisation et placement d'environ 40 à 60 furetons par an. Gestion administrative et commerciale de la micro-entreprise : comptabilité, déclarations agricoles, relation clientèle, site vitrine et présence sur les réseaux sociaux."
+      "details": "Conduite complète de l'élevage : reproduction, suivi sanitaire en lien avec un vétérinaire, sevrage, socialisation et placement d'environ 40 à 60 furetons par an. Gestion administrative et commerciale de la micro-entreprise."
     },
     {
       "poste": "Intermittent du spectacle - Régisseur plateau & son",
       "entreprise": "Activité indépendante - festivals et salles de la région Bourgogne-Franche-Comté",
       "date": "06/2021 - Aujourd'hui",
-      "details": "Régie plateau et sonorisation pour des festivals régionaux (musiques actuelles, théâtre de rue) et des salles municipales. Montage / démontage de scènes, gestion du planning des balances, coordination avec les équipes techniques et artistiques."
+      "details": "Régie plateau, sonorisation pour des festivals regionaux (musiques actuelles, théâtre de rue) et salles municipales. Montage / démontage de scènes."
     },
     {
       "poste": "Data Engineer",
-      "entreprise": "MAIF, Niort",
+      "entreprise": "MAIF",
       "date": "09/2014 - 12/2019",
-      "details": "Administration, maintenance et optimisation de la plateforme Informatica PowerCenter : serveurs, repository, workflows, sessions. Contribution active au programme de décommissionnement progressif d'Informatica via la mise en place d'un Lakehouse AWS."
+      "details": "Administration, maintenance et optimisation d'une plateforme Informatica PowerCenter. Contribution active au programme de décommissionnement progressif."
     },
     {
       "poste": "Ingénieur d'études Data - Stage de fin d'études",
-      "entreprise": "Crédit Agricole Technologies & Services, Saint-Quentin-en-Yvelines",
-      "date": "03/2014 - 08/2 extrémité du bras. Leur objectif est de réduire les risques d'infection et le besoin en transfusion sanguine pour ces patients, ce qui peut être crucial dans des situations où l’accès aux ressources médicales limité ou inexistantes.",
-      "details": "."
+      "entreprise": "Crédit Agricole Technologies & Services",
+      "date": "03/2014 - 08/2014",
+      "details": "Développement de workflows Informatica PowerCenter pour l'alimentation d'un data mart marketing. Mémoire soutenue avec mention Bien."
     }
   ],
   "savoir_faire": [
     "Développement de solutions d'intégration de données",
-    "Optimisation des performances et de la qualité des données",
-    "Documentation technique et fonctionnelle rigoureuse",
-    "Formation et assistance d'utilisateurs internes (data, dev, MOA)",
-    "Collaboration transverse (équipes Data, BI, Infrastructure)"
+    "Optimisation des performances et qualité des données",
+    "Documentation technique rigoureuse",
+    "Formation et assistance aux utilisateurs internes (data, dev, MOA)",
+    "Collaboration transverse (équipes Data, BI, Infrastructure)",
+    "Force de proposition sur les bonnes pratiques techniques"
   ],
   "savoir_etre": [
     "Développement de solutions d'intégration de données",
-    "Optimisation des performances et de la qualité des données",
-    "Documentation technique et fonctionnelle rigoureuse",
-    "Formation et assistance d'utilisateurs internes (data, dev, MOA)",
+    "Optimisation des performances et qualité des données",
+    "Documentation technique rigoureuse",
+    "Formation et assistance aux utilisateurs internes (data, dev, MOA)",
     "Collaboration transverse (équipes Data, BI, Infrastructure)"
   ]
 }
