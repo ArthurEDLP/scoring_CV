@@ -1,0 +1,93 @@
+{
+  "id": "JK",
+  "formations": [],
+  "certifications": [
+    "2015 Ingénieur, Marketing Quantitatif et Revenue Management  – Ecole nationale de la Statistique et de l'Analyse de l'Information - PUTEAUX",
+    "2012 DUT, STID  – IUT de Vannes - PUTEAUX "
+  ],
+  "langues": [],
+  "competences_techniques": [
+    "MySQL",
+    "SQL",
+    "Python",
+    "PHP",
+    "Dataiku",
+    "PySpark"
+  ],
+  "savoir_faire/savoir_etre": [
+    "Analyse d'information",
+    "Analyse statistique",
+    "Machine Learning",
+    "Animation d'ateliers",
+    "Benchmarking",
+    "Conduite d'entretiens d'évaluation",
+    "Conduite d'entretiens de recrutement",
+    "Animation d'entretiens individuels",
+    "Formation",
+    "Management",
+    "Marketing",
+    "Régression logistique",
+    "Stratégie de ciblage",
+    "SVM",
+    "Revenue Management",
+    "Statistiques bayésiennes"
+  ],
+  "experiences": [
+    {
+      "poste": "Consultant",
+      "entreprise": "BNP",
+      "date": "08/2025 - Aujourd'hui",
+      "details": "Contexte : Mission de conseil autour de l'exploitation et du traitement des données. Utilisation de Dataiku pour les traitements analytiques."
+    },
+    {
+      "poste": "Consultant",
+      "entreprise": "La Banque Postale",
+      "date": "10/2023 - 07/2025",
+      "details": "Contexte : Mise en place d'outils de pilotage et amélioration de la qualité des données. Création de dashboards avec Qlik Sense."
+    },
+    {
+      "poste": "Consultant",
+      "entreprise": "Dekuple",
+      "date": "10/2023 - 10/2023",
+      "details": "Contexte : Accompagnement technique et montée en compétence des équipes. Animation d'une formation Python."
+    },
+    {
+      "poste": "Consultant",
+      "entreprise": "PMU",
+      "date": "02/2022 - 09/2023",
+      "details": "Contexte : Réalisation de travaux analytiques et de modélisation. Développement de scripts de web scraping."
+    },
+    {
+      "poste": "Consultant",
+      "entreprise": "AXA IARD",
+      "date": "06/2021 - 11/2021",
+      "details": "Contexte : Développement d'une solution de suivi opérationnel. Création d'une application R Shiny pour le suivi et la gestion des chantiers."
+    },
+    {
+      "poste": "Consultant",
+      "entreprise": "EDF",
+      "date": "06/2017 - 05/2021",
+      "details": "Contexte : Missions d'analyses et de modélisation dans le secteur énergie. Enrichissement des bases données à l'aide du web scraping."
+    }
+  ],
+  "savoir_faire": [
+    "Analyse d'information",
+    "Analyse statistique",
+    "Machine Learning",
+    "Animation d'ateliers",
+    "Benchmarking",
+    "Conduite d'entretiens d'évaluation",
+    "Conduite d'entretiens de recrutement",
+    "Animation d'entretiens individuels",
+    "Formation"
+  ],
+  "savoir_etre": [
+    "Management",
+    "Marketing",
+    "Régression logistique",
+    "Stratégie de ciblage",
+    "SVM",
+    "Revenue Management",
+    "Statistiques bayésiennes"
+  ]
+}

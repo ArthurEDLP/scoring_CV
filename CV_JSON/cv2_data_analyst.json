@@ -13,11 +13,7 @@
     },
     {
       "nom_langue": "Anglais",
-      "maitrise": "Bilingue (séjour de 2 ans à Londres)"
-    },
-    {
-      "nom_langue": "Italien",
-      "maitrise": "Intermédiaire (B2)"
+      "maitrise": "Bilingue (2 ans à Londres)"
     }
   ],
   "competences_techniques": [
@@ -28,7 +24,7 @@
     "Random Forest",
     "Régression logistique",
     "Modèles de survie",
-    "Time series (Prophet, ARIMA)",
+    "Time series",
     "TensorFlow",
     "Keras",
     "spaCy",
@@ -36,7 +32,6 @@
     "Hugging Face Transformers",
     "Tableau",
     "Power BI",
-    "Looker Studio",
     "matplotlib",
     "seaborn",
     "Plotly",
@@ -48,8 +43,7 @@
     "GCP (BigQuery, Vertex AI)",
     "Git",
     "Jupyter",
-    "DBT",
-    "Excel avancé"
+    "DBT"
   ],
   "savoir_faire/savoir_etre": [
     "Vulgarisation auprès de directions métiers non techniques",
@@ -63,39 +57,31 @@
   "experiences": [
     {
       "poste": "Lead Data Analyst - Pricing & Revenue Management",
-      "entreprise": "Accor",
+      "entreprise": "Accor, Issy-les-Moulineaux",
       "date": "06/2021 - Aujourd'hui",
-      "details": "Contexte : Pilotage analytique de la stratégie de pricing dynamique pour les marques économiques du groupe (ibis, ibis budget, ibis Styles) sur le périmètre Europe. Construction et maintenance d'un tableau de bord consulté quotidiennement par 200+ revenue managers."
-    },
-    {
-      "poste": "Data Analyst Senior",
-      "entreprise": "Sephora (LVMH)",
-      "date": "09/2019 - 05/2021",
-      "details": "Contexte : Analytics au sein de l'équipe CRM Europe pour optimiser les campagnes marketing et le programme de fidélité Beauty Insider. Segmentation comportementale RFM, mesures d'impact des campagnes par tests A/B."
+      "details": "Contexte : Pilotage analytique de la stratégie de pricing dynamique pour les marques économiques du groupe (ibis, ibis budget, ibis Styles) sur le périmètre Europe ; Construction et maintenance tableau BI consulté quotidiennement par 200+ revenue managers; Analyses ad-hoc identifiant opportunités de revenu."
     },
     {
       "poste": "Data Scientist",
-      "entreprise": "Carrefour",
+      "entreprise": "Carrefour, Massy",
       "date": "10/2018 - 08/2019",
-      "details": "Direction Data du programme de fidélité, modèles prédictifs CLV et système collaboratif filtering."
+      "details": "Direction Data du programme fidélité; Modèles prédictifs CLV et recommandation produit."
     },
     {
       "poste": "Data Scientist Stagiaire",
-      "entreprise": "BNP Paribas",
+      "entreprise": "BNP Paribas CIB, Londres",
       "date": "04/2018 - 09/2018",
-      "details": "Construction d'un modèle de classification des emails entrants, rédaction du mémoire."
+      "details": "Stage de fin d'études; Modèle classification emails entrants des traders."
     }
   ],
   "savoir_faire": [
     "Vulgarisation auprès de directions métiers non techniques",
     "Storytelling data et présentation à des comités de direction",
-    "Cadrage de besoins métiers et traduction en problématiques analytiques",
-    "Gestion de projets analytiques en autonomie",
-    "Curiosité métier et appétence pour les sujets business"
+    "Cadrage de besoubs mérites, les savoir-être sont : Esprit synthèse rigueur ; Curiosité métier appétence pour le business; Adaptation secteurs variés (luxe, hôtellerie, retail)",
+    "Gestion d'un projet analytiques en autonomie"
   ],
   "savoir_etre": [
-    "Esprit de synthèse et rigueur",
-    "Capacité d'adaptation à des secteurs variés (luxe, hôtellerie, retail)",
-    "Curiosité métier"
+    "Langues : Français - Langue maternelle",
+    "Anglais - Bilingue (2 ans à Londres)"
   ]
 }

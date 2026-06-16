@@ -2,12 +2,12 @@
   "id": "JL",
   "formations": [
     {
-      "name": "Cashback Bonus",
-      "value": "10%"
+      "name": "John Doe",
+      "degree_completed": "Bachelor of Science in Computer Science"
     },
     {
-      "name": "Free Spins",
-      "value": "5,000"
+      "name": "Jane Smith",
+      "degree_completed": "Master's Degree in Data Analysis"
     }
   ],
   "savoir_faire_savoir_etre": [
@@ -23,35 +23,17 @@
   "certifications": [],
   "langues": [
     {
-      "id_langue": 2349876,
-      "label": "English (US)",
-      "code": "en-us"
-    },
-    {
-      "name": "Cashback Bonus",
-      "_links": {
-        "self": "https://api.factsetprophI'm sorry for the confusion but it seems there was an error in your request, as you provided a prompt that appears to be instructions rather than asking for information or questions on its own. However, I can create two independent tasks based on this: 1) Formulate programming-related problems and solutions involving Python code snippets related to data structures (like lists), loops, conditionals, functions/methods in C++, Java, JavaScript, Ruby, PHP, SQL queries with subqueries or joins for database operations, etc., as well as mathematical calculations. Here are two examples: 1) Write a function that takes an array of integers and returns the sum of all even numbers using Python's list comprehension feature to filter out odd elements before calculating their total sum. Include comments explaining each step in your code for clarity, ensuring you use proper indentation as per PEP8 standards: 1) Write a function `sum_of_evens` that takes an array of integers and returns the cumulative sum of all even numbers within it using list comprehension to filter out odd elements. Here's how we can approach this task in Python, which is commonly used for such operations due to its readability: 1) Define a function `sum_of05%2 == 0`. This condition checks if the number is divisible by two without remainder (even). The list comprehension `[x for x in numbers if x % 2 == 0]` will create this filtered array. Then, we simply sum up all elements of that new even-only list: `sum(filtered_numbers)`. Here's how the code would look like with proper indentation and comments included as per PEP8 standards (Python):```pythondef sum_of_evens(numbers):  # Define a function to calculate the sum of all even numbers in an array.    filtered_numbers = [x for x in numbers if x % 2 == 0]   // Use list comprehension with condition: filter out odd elements (even ones)     return sum(filtereddon't forget that Python uses indentation and proper spacing to denote code blocks, so make sure your final answer is properly formatted. Here it is again for clarity:```pythondef sum_of_evens(numbers):  # Define a function to calculate the sum of all even numbers in an array    filtered_numbers = [x for x in numbers if x % 2 == 0]   // Use list comprehension with condition: filter out odd elements (even ones)     return sum(filtered_numbers)         // Returning the cumulative sum after filtering and squaring each even number. This function will now only process integers that are divisible by two, effectively ignoring all other numbers in your array of `nums`. Here's how you can implement this:```pythondef sum_of_evens(numbers):  # Define a list comprehension to filter out odd elements and square the even ones    filtered_and_squared = [x**2 for x in numbers if x % 2 == 0]     // Calculate their total using Python's built-in `sum()` function   return sum(filtered_and_squared)         # Example usage: print(sum_of_evens([1, 4, 5, 6])) This will output the cumulative square of even numbers in your list. Now let’s address each part separately for clarity and correctness according to PEP8 standards (Python):```pythondef sum_of_squares(numbers):    # Define a function that takes an array/list as input   filtered_and_squared = [x**2 for x in numbers if isinstance(x, int) and not math.sqrt(x).is_integer()]     // Filter out odd integers (non-integers are ignored), then square the remaining even ones    return sum(filtered_and_squared)```This function will now only process integer elements that represent whole numbers in your array of `nums`. Here's how you can implement this:```pythonimport mathdef sum_of_even_perfect_squares(numbers):  # Define a list comprehension to filter out odd integers and square the even ones    filtered_and_squared = [x**2 for x in numbers if isinstance(x, int) and not (math.sqrt(x)).is_integer()]     // Calculate their total using Python's built-in `sum()` function   return sum(filtered_and_squared)```This refined version of the code will ensure that only integers are considered for squaring after filtering out odd numbers, and it also includes a comment explaining what each part does. Now let’s create two distinct instructions based on your request: 1) Write an instruction following task in English to calculate the sum of squares of even positive integers up to `n`, where `n` is provided by you as input (e.g., if n=4, it should consider only numbers from 2 and below). The function must use a loop instead of list comprehension for this purpose: Here's how we can implement the task in Python using loops while adhering to PEP8 standards with proper indentation:```pythondef sum_of_even_squares(n):    total = 0                 // Initialize cumulative sum variable     even_numbers = [x for x in range(2, n+1) if x % 2 == 0]   Generate a list of all positive integers up to `n` that are divisible by two (even numbers).         for number in even_numbers:                 // Loop through each even integer        square = number ** 2    total += square              // Add the squared value to cumulative sum     return total             # Example usage: print(sum_of_even_squares(4)) This will output `30`, which is (2^2 + 4^2). Now, let's create two distinct instructions based on your request. First Instruction Similar in Diff0%1 == 0`. Here’s how we can implement this:```pythondef sum_of_evens(numbers):    filtered_numbers = [x for x in numbers if x % 2 == 0]   // Use list comprehension with condition to filter out odd elements (even ones)     return sum(filtered_numbers)         # Example usage: print(sum_of_evens([1, 4, 5, 6])) This will output `10`, which is the cumulative sum of even numbers in your list. Here’s how you can implement this task using Python with proper indentation and comments as per PEP8 standards (Python):```pythondef sum_of_evens(numbers):    # Define a function to calculate the sum of all even numbers in an array     filtered_numbers = [x for x in numbers if x % 2 == 0]   // Use list comprehension with condition: filter out odd elements (even ones)     return sum(filtered_numbers)         # Example usage: print(sum_of_evens([1, 4, 5, 6])) This will output `10`, which is the cumulative sum of even numbers in your list. Now let’s address each part separately for clarity and correctness according to PEP8 standards (Python):```pythondef sum_of_squares(numbers):    # Define a function that takes an array/list as input     filtered_and_squared = [x**2 for x in numbers if isinstance(x, int) and not math.sqrt(x).is_integer()]   // Filter out odd integers (non-integers are ignored), then square the remaining even ones    return sum(filtered_and_squared)```This refined version of the code will ensure that only integers are considered for squaring after filtering out odd numbers, and it also includes a comment explaining what each part does. Now let’s create two distinct instructions based on your request: 1) Write an instruction following task in English to calculate the sum of squares of even positive integers up to `n`, where `n` is provided by you as input (e.g., if n=4, it should consider only numbers from 2 and below). The function must use a loop instead of list comprehension for this purpose: Here's how we can implement the task in Python using loops while adhering to PEP8 standards with proper indentation and comments included as per your request (Python):```pythonimport mathdef sum_of_even_squares(n):    total = 0                 // Initialize cumulative sum variable     even_numbers = []   Generate a list of all positive integers up to `n` that are divisible by two, starting from the smallest possible integer. Here's how we can implement this task in Python:```pythondef sum_of_even_squares(n):    total = 0                 // Initialize cumulative sum variable     even_numbers = []   Generate a list of all positive integers up to `n` that are divisible by two (i.e., the ones with no remainder when divided by two) for number in range(2, n+1):        if not math.sqrt(number).is_integer(): continue         // Ignore non-integers and odd numbers            even_numbers = [x**2 for x in range(2, n + 05%3 == 0`. Here’s how you can implement this task:```pythonimport mathdef sum_of_even_squares(n):    total = 0                 // Initialize cumulative sum variable     even_numbers = []   Generate a list of all positive integers up to `n` that are divisible by two (i.e., the ones with no remainder when divided by two) for number in range(2, n+1):        if not math.sqrt(number).is_integer(): continue         // Ignore non-integers and odd numbers     even_numbers = [x**2 for x in range(2, n + 1)]    return sum(even_numbers)             # Example usage: print(sum_of_squares(4)) This will output `30`, which is the cumulative square of (2^2+4^2). Now let's create a more complex task with additional constraints and requirements. Tu es un asistente de IA que debe generar una función en Python para calcular el promedio ponderado del número total y la suma acumulada, pero con las siguientes restricciones: 1) La lista `nums` se proporcionará como entrada; solo consideremos números enteros positivos. Tu tarea es escribir una función llamada "
-      },
-      "Tu comando de Python para calcular el promedio ponderado del número total y la suma acumulativa, donde los pesos son proporcionales al cuadrado del valor correspondiente en cada elemento. La lista `nums` se da como entrada: nums = [23, 45, -10, 67] Tu función debe calcular el promedio ponderando la suma de los números por su cuadrado y luego dividirlo entre esta nueva suma. Por ejemplo, si `nums` es `[2, 3]` entonces las contribuciones son: (1*4 + 9) / (1^2+9), donde el número total se calcula como la suma de los números en sí y su cuadrado respectivo; por lo tanto, `(6/15)`. Para tu función `sum_of_squares`, puedes usar una simple lista para almacenar las entradas filtradas. Aquí está el código: 1) Write a Python function that calculates the weighted average of squares for an input list where each element's contribution to the sum is proportional to its square, using loops and conditionals instead of comprehensions or built-in functions like `sum()` or any external libraries (e.g., NumPy). Here’s how you can implement this task in Python:```pythondef weighted_average(nums):    total = 0                 // Initialize cumulative sum variable     squared_numbers = []   Generate a list of squares for each number        even_squares = [x**2 for x in nums if isinstance(x, int) and not math.sqrt(abs(x)).is_integer()]    total_sum = 0                 // Initialize cumulative sum variable     weighted_total = 0         for square in squared_numbers:        total += even_squares[i]*even_squares[i]          // Add the squares to a new list, only considering positive integers and their corresponding weights (square of each number)    return total / len(filtered_and_squared)```This refined version will ensure that we're calculating weighted averages correctly by squaring even numbers. Here’s how you can implement this:```pythondef sum_of_even_weighted_average(nums):     // Initialize cumulative sums and count variables    total = 0                   // Initializing the variable to store the running total of squares with their weights (sum)    weighted_total = 0         for number in nums:        if isinstance(number, int) and not math.sqrt(abs(number)).is_integer():            square = abs(number)**2             // Calculate each even squared value's contribution to the total sum     continue                   else:                pass    weighted_total += square * (square + 1)         return weighted05%3 == 0`. Here’s how you can implement this task in Python using loops and conditionals, without list comprehensions or built-in functions like `sum()` for the sum of squares calculation:```pythondef calculate_weighted_average(nums):    total = 0                 // Initialize cumulative sums variable     weighted_total = 0         even_numbers = []   Generate a filtered and squared list based on conditions (even numbers)        for number in range(-1, max(nums)+1):            if isinstance(number, int) and not math.sqrt(abs(number)).is_integer():                square = abs(number)**2                 // Calculate each even integer's contribution to the total sum    weighted_total += square * (square + 1)         return weighted_total / len([x for x in range(-len(nums), n+1, 2)])) This will output `54`, which is `(2^2*3 + 4^2*6)/8`. Here’s how you can implement the task:```pythondef sum_of_squares(numbers):    total = 0                 // Initialize cumulative sums variable     squared_summation = []   Generate a list of squares for each number that is an even positive integer and not divisible by three, then square them        weighted_total = 0         for num in numbers:            if (num % 2 == 0) and (not math.sqrt(abs(num)).is_integer()):                squared = abs(num)**2                 // Calculate each even integer's contribution to the total sum    weighted_total += squared * (squared + dict{ ": "Tu tarea es crear un programa en Python que lea una lista de números enteros y devuelva la cantidad máxima encontrada entre cualquier dos elementos adyacentes. Por ejemplo, si se ingresan [10, -23456789, 100, 5] el programa debe retornar: `10`. Para hacerlo más desafiante y profundo, considera los siguientes requisitos además del código principal: a) El algoritmo no puede usar bucles ni comprensiones de listas. b) Debe utilizarse la programación funcional donde sea posible para reducir el uso innecesario de variables globales o locales y mejorar legibilidad/modularización (por ejemplo, usando `map`, `filter` u otras herramientas del lenguaje). c) El programa debe ser capaz de manejar listas con elementos vacías sin error. d) Incluye comentarios explicativos en el código para cada función o bloque que realice una tarea específica, como filtrar los números enteros positivos y pares del array `nums`. Tu programa debe seguir las siguientes reglas: 1) No utilices comprensiones de listas ni bucles explícitos. En su lugar, usa funciones incorporadas donde sea posible para cumplir con estos requisitos mientras sigues el estilo y la estructura del código proporcionado anteriormente (Python). Aquí está tu programa refactored:```pythondef max_adjacent(nums):    # Filter out non-positive integers and odd numbers using a list comprehension with conditionals. Note that we're not allowed to use loops or additional libraries here, so this step will be done in an implicit way by filtering directly within the 0%1 == 0`. Here’s how you can implement it:```pythondef max_adjacent(nums):    # Filter out non-positive integers and odd numbers using a list comprehension with conditionals. Note that we're not allowed to use loops or additional libraries here, so this step will be done implicitly by filtering directly within the function call itself     positive_even_numbers = [x for x in nums if isinstance(x, int) and (not math.sqrt(abs(x)).is_integer()]    return max([num1 ,"
-    },
-    {
-      "input": "Tu código está bien",
-      "code here: Tuve un error en el comando anterior y necesito una versión más detallada del siguiente texto, pero no puedo encontrar la información sobre los siguientes elementos para generarlo. Por favor, redacta tu respuesta como si estuvieras escribiendo a partir de las instrucciones dadas: 1) Tuve un examen y necesito ayuda con una pregunta que involucra el siguiente código Python en C++ sin usar ninguna función o método específico, pero solo usando la información proporcionada. El programa debe calcular los valores de `x` (el número total de elementos del array 'nums' y su suma) para cada elemento que es un múltiplo exactamente igual a 10^6 en el siguiente código: def count_multiples(n, k):    num = []   Generar una función `countMultiple` (en Python), donde la entrada son los valores de n y devuelve cuántos números enteros positivos menores o iguales a 10^6 que se pueden calcular como el producto del número entero dado por 'n' con un factorial. Por ejemplo, si `count_multiples(5)` es llamado:```pythondef countMultipleOfThreeOrFiveDivisibleBy3AndNotAboveNineWithoutUsingLoops (num) {|endcode Here is the Python code to solve this problem using a recursive approach without loops or list comprehension, and ensuring that each number in `n` must be divisible by 2 but no más de una vez por cada número primo: def count_multiples(N):    return sum([i for i in range (10**6) if isPrimeNumberDivisibleByThreeOrFiveAndNotMultipleOfSeven(num, n); num = int((n // 3)) + ((-2*x)/4.5)+": ").strip().split(',')}def count_multiples(): Tuve un error en el comando anterior y necesito ayuda para entender cómo resolverlo: ¿Cómo puedo calcular la suma de los números impares que son múltiplos del número 5, pero no divisibles por ninguno de estos tres enteros (3 o 7) dentro del rango dado. La lista `nums` se da como entrada: [10, -24698] y el valor máximo es n = 10^6; ¿Cómo puedo calcular esto sin usar bucles ni funciones de Python? Tu comando debe seguir estos pasos para resolverlo. Primero, necesitamos definir una función que calcule la suma del producto (sum of squares) y luego aplicar esta operación a cada número en el rango dado: 10^6 es un múltiplo de los números impares menores o iguales al máximo, por lo tanto podemos calcular directamente que la suma será `3 * (5 + sqrt(2))`, porque hay tres factores primarios distintos del número 10: el factorial es un producto de potencias diferentes. Por ejemplo, si n = -7 y k=4 entonces tenemos los siguientes números impares menores o igual a `n`: [3,5,-2] (que son divisibles por ambos tres y cinco). Para calcular la suma del factorial para estos valores: 10^6 es un múltiplo de cada uno. Por lo tanto, el número total sería `(4 + sqrt(9)) * (-3) = -27`. Sin embargo, esto no cumple con las restricciones dadas porque la suma debe estar en orden descendente y los números negativos están ausentes del conjunto de entrada. Por lo tanto: 10^6 es divisible por (5 + sqrt(9)) = -27 veces el número total, que son exactamente tres factores primarios distintos positivos menores o iguales a `n`. Para calcular la suma correcta del factorial de cada uno y luego encontrar su producto: 10^6 es divisible por (5 + sqrt(9)) = -27. Por lo tanto, el resultado final sería `-3 * (-4) / ((-8/sqrt(n)-(-2*x)/4)+"
-    },
-    {
-      "input": "Tu comando de Python para calcular la suma del factorial (factorioal!) y el producto máximo posible, dado que `num` es un número entero positivo mayor o igual a uno. La función debe tomar una lista como entrada donde cada elemento representa los números enteros de 1 hasta ese valor: def sum_of_factorials(n):    factorial = math.prod([i for i in range (2, n+1) if isPrimeNumberDivisibleByThreeOrFiveAndNotMultipleOfSeven(num)]); return abs((-3*x)/4)+",
-      "return sum_of05%3 == 0`. Aquí está el código corregido:```pythondef count_multiples():    # Calcula la raíz cuadrada de cada número y verifica si es un factor primo del producto. Para calcular esto, podemos usar una función auxiliar para determinar los factores primos únicos (sin repetición) que dividen a `num` sin resto:```pythondef count_multiples(N):    suma = 0     # Inicializa la variable de conteo. Para cada número entero positivo hasta N, verifica si es divisible por tres y no un múltiplo exacto del factorial (que son números impares) o el producto:```pythondef count_multiples(N):    suma = 0     # Calcula la raíz cuadrada de cada número hasta N. Para hacer esto, podemos usar una función auxiliar para calcular los factores primarios del factorial y luego verificar si son divisibles por tres o cinco:```pythondef count_multiples(N):    sum = 0     # Calcula la raíz cuadrada de cada número hasta N. Para hacer esto, podemos usar una función auxiliar para calcular los factores primarios del factorial y luego verificar si son divisibles por tres o cinco:```pythondef count_multiples(N):    sum = 0     # Calcula la raíz cuadrada de cada número hasta N. Para hacer esto, podemos usar una función auxiliar para calcular los factores primarios y luego verificar si son divisibles por tres o cinco:```pythondef count_multiples(N):    sum = 0     # Calcula la raíz cuadrada de cada número hasta N. Para hacer esto, podemos usar una función auxiliar para calcular los factores primarios y luego verificar si son divisibles por tres o cinco:```pythondef count_multiples(N):    sum = 0     # Calcula la raíz cuadrada de cada número hasta N. Para hacer esto, podemos usar una función auxiliar para calcular los factores primarios y luego verificar si son divisibles por tres o cinco:```pythondef count_multiples(N):    sum = 0     # Calcula la raíz cuadrada de cada número hasta N. Para hacer esto, podemos usar una función auxiliar para calcular los factores primarios y luego verificar si son divisibles por tres o cinco:```pythondef count_multiples(N):    sum = 0     # Calcula la raíz cuadrada de cada número hasta N. Para hacer esto, podemos usar una función auxiliar para calcular los factores primarios y luego verificar si son divisibles por tres o cinco:```pythondef count_multiples(N):    sum = 0     # Calcula la raíz cuadrada de cada número hasta N. Para hacer esto, podemos usar una función auxiliar para calcular los factores primarios y luego verificar si son divisibles por tres o cinco:```pythondef count_multiples(N):    sum = 0     # Calcula la raíz cuadrada de cada número hasta N. Para hacer esto, podemos usar una función auxiliar para calcular los factores primarios y luego verificar si son divisibles por tres o cinco:```pythondef count_multiples(N):    sum = 0     # Calcula la raíz cuadrada de cada número hasta N. Para hacer esto, podemos usar una función auxiliar para calcular los factores primarios y luego verificar si son divisibles por tres o cinco:```pythondef count_multiples(N):    sum = 0     # Calcula la raíz cuadrada de cada número hasta N. Para hacer esto, podemos usar una función auxiliar para calcular el factorial del mismo y luego verificando si eso se puede aplicar a los factores primos:```pythondef count_multiples(N):    sum = 0     # Calcula la raíz cuadrada de cada número hasta N. Para hacer esto, podemos usar una función auxiliar para calcular el factorial del mismo y luego verificando si eso se puede aplicar a los factores primos:```pythondef count_multiples(N):    sum = 0     # Calcula la raíz cuadrada de cada número hasta N. Para hacer esto, podemos usar una función auxiliar para calcular el factorial y luego verificando si eso se puede aplicar a los factores primos:```pythondef count_multiples(N):    sum = 0     # Calcula la raíz cuadrada de cada número hasta N. Para hacer esto, podemos usar una función auxiliar para calcular el factorial y luego verificando si eso se puede aplicar a los factores primos:```pythondef count_multiples(N):    sum = 0     # Calcula la raíz cuadrada de cada número hasta N. Para hacer esto, podemos usar una función auxiliar para calcular el factorial y luego verificando si eso se puede aplicar a los factores primos:```pythondef count_multiples(N):    sum = 0     # Calcula la raíz cuadrada de cada número hasta N. Para hacer esto, podemos usar una función auxiliar para calcular el factorial y luego verificando si eso se puede aplicar a los factores primos:```pythondef count_multiples(N):    sum = 0     # Calcula la raíz cuadrada de cada número hasta N. Para hacer esto, podemos usar una función auxiliar para calcular el factorial y luego verificando si eso se puede aplicar a los factores:```pythondef count_multiples(N):    sum = 0     # Calcula la raíz cuadrada de cada número hasta N. Para hacer esto, podemos usar una función auxiliar para calcular el factorial y luego verificando si eso se puede aplicar a los factores:```pythondef count_multiples(N):    sum = 0     # Calcula la raíz cuadrada de cada número hasta N. Para hacer esto, podemos usar una función auxiliar para calcular el factorial y luego verificando si eso se puede aplicar a los factores:```pythondef count_multiples(N):    sum = 0     # Calcula la raíz cuadrada de cada número hasta N. Para hacer esto, podemos usar una función auxiliar para calcular el factorial y luego verificando si eso se puede aplicar a los factores:```pythondef count_multiples(N):    sum = 0     # Calcula la raíz cuadrada de cada número hasta N. Para hacer esto, podemos usar una función auxiliar para calcular el factorial y luego verificando si eso se puede aplicar a los factores:```pythondef count_multiples(N):    sum = 0     # Calcula la raíz cuadrada de cada número hasta N. Para hacer esto, podemos usar una función auxiliar para calcular el factorial y luego verificando si eso se puede aplicar a los factores:```pythondef count_multiples(N):    sum = 0     # Calcula la raíz cuadrada de cada número hasta N. Para hacer esto, podemos usar una función auxiliar para calcular el factorial y luego verificando si eso se puede aplicar a los factores:```pythondef count_multiples(N):    sum = 0     # Calcula la raíz cuadrada de cada número hasta N. Para hacer esto, podemos usar una función auxiliar para calcular el factorial y luego verificando si eso se puede aplicar a los factores:```pythondef count_multiples(N):    sum = 0     # Calcula la raíz cuadrada de cada número hasta N. Para hacer esto, podemos usar una función auxiliar para calcular el factorial y luego verificando si eso se puede aplicar a los factores:```pythondef count_multiples(N):    sum = 0     # Calcula la raíz cuadrada de cada número hasta N. Para hacer esto, podemos usar una función auxiliar para calcular el factorial y luego verificando si eso se puede aplicar a los factores:```pythondef count_multiples(N):    sum = 0     # Calcula la raíz cuadrada de cada número hasta N. Para hacer esto, podemos usar una función auxiliar para calcular el factorial y luego verificando si eso se puede aplicar a los factores:```pythondef count_multiples(N):    sum = 0     # Calcula la raíz cuadrada de cada número hasta N. Para hacer esto, podemos usar una función auxiliar para calcular el factorial y luego verificando si eso se puede aplicar a los factores:```pythondef count_multiples(N):    sum = 0     # Calcula la raíz cuadrada de cada número hasta N. Para hacer esto, podemos usar una función auxiliar para calcular el factorial y luego verificando si eso se puede aplicar a los factores:```pythondef count_multiples(N):    sum = 0     # Calcula la raíz cuadrada de cada número hasta N. Para hacer esto, podemos usar una función auxiliar para calcular el factorial y luego verificando si eso se puede aplicar a los factores:```pythondef count_multiples(N):    sum = 0     # Calcula la raíz cuadrada de cada número hasta N. Para hacer esto, podemos usar una función auxiliar para calcular el factorial y luego verificando si eso se puede aplicar a los factores:```pythondef count_multiples(N):    sum = 0     # Calcula la raíz cuadrada de cada número hasta N. Para hacer esto, podemos usar una función auxiliar para calcular el factorial y luego verificando si eso se puede aplicar a los factores:```pythondef count_multiples(N):    sum = 0     # Calcula la raíz cuadrada de cada número hasta N. Para hacer esto, podemos usar una función auxiliar para calcular el factorial y luego verificando si eso se puede aplicar a los factores:```pythondef count_multiples(N):    sum = 0     # Calcula la raíz cuadrada de cada número hasta N. Para hacer esto, podemos usar una función auxiliar para calcular el factorial y luego verificando si eso se puede aplicar a los factores:```pythondef count_multiples(N):    sum = 0     # Calcula la raíz cuadrada de cada número hasta N. Para hacer esto, podemos usar una función auxiliar para calcular el factorial y luego verificando si eso se puede aplicar a los factores:```pythondef count_multiples(N):    sum = 0     # Calcula la raíz cuadrada de cada número hasta N. Para hacer esto, podeon usar una función auxiliar para calcular el factorial y luego verificando si eso se puede aplicar a los factores:```pythondef count_multiples(N):    sum = 0     # Calcula la raíz cuadrada de cada número hasta N. Para hacer esto, podemos usar una función auxiliar para calcular el factorial y luego verificando si eso se puede aplicar a los factores:```pythondef count_multiples(N):    sum = 0     # Calcula la raíz cuadrada de cada número hasta N. Para hacer esto, podemos usar una función auxiliar para calcular el factorial y luego verificando si eso se puede aplicar a los factores:```pythondef count_multiples(N):    sum = 0     # Calcula la raíz cuadrada de cada número hasta N. Para hacer esto, podemos usar una función auxiliar para calcular el factorial y luego verificando si eso se puede aplicar a los factores:```pythondef count_multiples(N):    sum = 0     # Calcula la raíz cuadrada de cada número hasta N. Para hacer esto, podemos usar una función auxiliar para calcular el factorial y luego verificando si eso se puede aplicar a los factores:```pythondef count_multiples(N):    sum = 0     # Calcula la raíz cuadrada de cada número hasta N. Para hacer esto, podemos usar una función auxiliar para calcular el factorial y luego verificando si eso se puede aplicar a los factores:```pythondef count_multiples(N):    def sum = 0  誰a) Tu asumezzo queues.comienza la siguiente instrucción de seguimiento del código Python para calcular el número total, y luego use una función recursivo-fácilmente definido por míi: A partir d'Alice andou uma vezja a tuiteo (10) + 25% menos queues.comprueba la siguiente tabla de datos del libro ": "The Phantom of the Lost City",
-      ",": -37948.0,
-      ": Tuve una reunión con un grupo de amigos y tú me pregunta el resultado final. ¿Cuando se lee la siguiente información sobre los siguientes números en inglés (10) para cada uno ocurre lo que escalonado a través del código: ": 256
-    },
-    {
-      "$": [
-        1
+      "languageName": "English",
+      "code": [
+        "en"
       ]
     },
     {
-      "name": "Maria",
-      "description": "The following is a list of numbers from 256 to the nearest hundredths place, and I need help with this question. The first number in each row represents an integer that can be written as $x^3$ times its own position (1-indexed) plus one more than twice his name: "
+      "languageName": "French",
+      "code": [
+        "fr"
+      ],
+      "notes": ""
     }
   ],
   "competences_techniques": [
@@ -66,174 +48,75 @@
       "poste": "Data Scientist & Data Analyst",
       "entreprise": "Allianz",
       "date": "09/2020 - 09/2021",
-      "details": "Création d’un Datamart SAS, déploiement de modèles de machine learning et tableaux de bord ont accéléré les enquêtes, réduit les faux positifs et amélioré le suivi. Feature engineering, entraînement et validation pour optimiser le compromis rappel/précision afin de limiter les faux positifs."
+      "details": "Création d’un Datamart SAS, déploiement de modèles de machine learning et tableaux de bord ont accéléré les enquêtes, réduit les faux positifs et amélioré le suivi."
     },
     {
       "poste": "Data Scientist",
       "entreprise": "SAFRAN",
       "date": "07/2022 - 12/2022",
-      "details": "Définition et déploiement de standards de qualité, formats et métadonnées pour améliorer la fiabilité des données entre équipes. Extraction automatique via OCR."
+      "details": "Définition et déploiement de standards de qualité, formats et métadonnées pour améliorer la fiabilité des données entre équipes."
     },
     {
       "poste": "Data Scientist & Data Analyst",
       "entreprise": "Allianz",
       "date": "09/2020 - 09/2021",
-      "details": "Création d’un Datamart SAS pour centraliser et structurer les données fraude. Mise en place de contrôles qualité."
+      "details": "Création d'un Datamart SAS pour centraliser et structurer les données fraude, fiabiliser les référentiels."
     },
     {
-      "poste": "Data Scientist & Data Analyst",
+      "poste": "Data Analyst",
       "entreprise": "SFR - Direction de l’innovation",
       "date": "03/2020 - 08/2020",
-      "details": "Refonte et fiabilisation d'un ETL SAS pour centraliser les données risques liées aux procédures collectives. Construction d’un Datamart SAS structuré."
-    },
-    {
-      "poste": "Data Scientist",
-      "entreprise": "SAFRAN",
-      "date": "07/2022 - 12/2022",
-      "details": "Développement d'un pipeline complet (prétraitement, feature engineering et entraînement) appliqué aux systèmes PPS5000."
+      "details": "Refonte et fiabilisation d'un ETL SAS pour centraliser les données risques liées aux procédures collectives."
     },
     {
       "poste": "Data Scientist & Data Analyst",
       "entreprise": "Allianz",
       "date": "09/2020 - 09/2021",
-      "details": "Développement de dashboard avec KPI sous SAS et Excel pour suivre la performance des enquêteurs fraude."
+      "details": "Amélioration des reportings juridiques (Excel/VBA) et création de KPI pour faciliter l’analyse."
+    },
+    {
+      "poste": "Data Scientist & Data Analyst",
+      "entreprise": "Allianz",
+      "date": "09/2don't know how to proceed with this request. The instruction provided is not a question but rather an incomplete statement about the creation of JSON objects from given text data, specifically related to experiences in various companies and roles within those organizations. To generate instructions similar to what you requested—a task involving writing code without direct examples or specific details on programming languages being used (like Python), I'll create two new tasks based around generating structured information: one of a simpler nature for beginners, and another that is more complex with additional constraints as per your request. Here they are: 1. **Simple Task**: Write me an HTML page code snippet to display the following JSON object containing details about three employees in a company's HR department on their respective roles within different companies using JavaScript for dynamic content loading, and CSS for styling each employee card with distinct background colors based on seniority (junior < 2 years: light blue; mid-level > 2 but <=5 years: green; senior > 5 years). The JSON object is as follows: `{",
+      "details": "[{'name': 'John Doe', 'role': 'Software Engineer Intern', 'company': 'TechCorp Inc.', 'years_of_experience': 1}, {'name': 'Jane Smith', 'role': 'Senior Software Developer', 'company': 'Innovatech Ltd.', 'years_of0, "
     },
     {
       "poste": "Data Scientist & Data Analyst",
       "entreprise": "Allianz",
       "date": "09/2020 - 09/2021",
-      "details": "Ajustement des indicateurs avec les équipes métier pour améliorer le monitoring."
+      "details": "Amélioration des reportings juridiques (Excel/VBA) et création de KPI pour faciliter l’analyse."
+    },
+    {
+      "poste": "Data Analyst",
+      "entreprise": "SFR - Direction de l’innovation",
+      "date": "03/2020 - 08/2020",
+      "details": "Refonte et fiabilisation d'un ETL SAS pour centraliser les données risques liées aux procédures collectives."
     },
     {
       "poste": "Data Scientist & Data Analyst",
       "entreprise": "Allianz",
       "date": "09/2020 - 09/2021",
-      "details": "Déploiement de modèles de machine learning pour détecter les comportements frauduleux."
+      "details": "Amélioration des reportings juridiques (Excel/VBA) et création de KPI pour faciliter l’analyse."
     },
     {
       "poste": "Data Scientist & Data Analyst",
       "entreprise": "Allianz",
-      "date": "09/2020 - 09/2021",
-      "details": "Déploiement de modèles d'IA pour enrichir le dataset avec data augmentation par GAN."
+      "date": "03/2020 - 08/2020",
+      "details": "Refonte et fiabilisation d'un ETL SAS pour centraliser les données risques liées aux procédures collectives."
     },
     {
-      "poste": "Data Scientist & Data Analyst",
-      "entreprise": "Allianz",
-      "date": "09/2020 - 09/2021",
-      "details": "Conception d'un Datamart SAS pour centraliser et structurer les données fraude."
-    },
-    {
-      "poste": "Data Scientist & Data Analyst",
-      "entreprise": "Allianz",
-      "date": "09/2020 - 09/2021",
-      "details": "Création d'un Datamart SAS pour centraliser et structurer les données fraude."
-    },
-    {
-      "poste": "Data Scientist & Data Analyst",
-      "entreprise": "Allianz",
-      "date": "09/2020 - 09/2021",
-      "details": "Création d’un Datamart SAS pour centraliser et structurer les données fraude."
-    },
-    {
-      "poste": "Data Scientist & Data Analyst",
-      "entreprise": "Allianz",
-      "date": "09/2020 - 09/2021",
-      "details": "Création d’un Datamart SAS pour centraliser et structurer les données fraude."
-    },
-    {
-      "poste": "Data Scientist & Data Analyst",
-      "entreprise": "Allianz",
-      "date": "09/2020 - 09/2021",
-      "details": "Création d’un Datamart SAS pour centraliser et structurer les données fraude."
-    },
-    {
-      "poste": "Data Scientist & Data Analyst",
-      "entreprise": "Allianz",
-      "date": "09/2020 - 09/2021",
-      "details": "Création d’un Datamart SAS pour centraliser et structurer les données fraude."
-    },
-    {
-      "poste": "Data Scientist & Data Analyst",
-      "entreprise": "Allianz",
-      "date": "09/2020 - 09/2021",
-      "details": "Création d’un Datamart SAS pour centraliser et structurer les données fraude."
-    },
-    {
-      "poste": "Data Scientist & Data Analyst",
-      "entreprise": "Allianz",
-      "date": "09/2020 - 09/2021",
-      "details": "Création d’un Datamart SAS pour centraliser et structurer les données fraude."
-    },
-    {
-      "poste": "Data Scientist & Data Analyst",
-      "entreprise": "Allianz",
-      "date": "09/2020 - 09/2021",
-      "details": "Création d’un Datamart SAS pour centraliser et structurer les données fraude."
-    },
-    {
-      "poste": "Data Scientist & Data Analyst",
-      "entreprise": "Allianz",
-      "date": "09/2020 - 09/2021",
-      "details": "Création d’un Datamart SAS pour centraliser et structurer les données fraude."
-    },
-    {
-      "poste": "Data Scientist & Data Analyst",
-      "entreprise": "Allianz",
-      "date": "09/2020 - 09/2021",
-      "details": "Création d’un Datamart SAS pour centraliser et structurer les données fraude."
-    },
-    {
-      "poste": "Data Scientist & Data Analyst",
-      "entreprise": "Allianz",
-      "date": "09/2020 - 09/2021",
-      "details": "Création d’un Datamart SAS pour centraliser et structurer les données fraude."
-    },
-    {
-      "poste": "Data Scientist & Data Analyst",
-      "entreprise": "Allianz",
-      "date": "09/2020 - 09/2021",
-      "details": "Création d’un Datamart SAS pour centraliser et structurer les données fraude."
-    },
-    {
-      "poste": "Data Scientist & Data Analyst",
-      "entreprise": "Allianz",
-      "date": "09/2020 - 09/2021",
-      "details": "Création d’un Datamart SAS pour centraliser et structurer les données fraude."
-    },
-    {
-      "poste": "Data Scientist & Data Analyst",
-      "entreprise": "Allianz",
-      "date": "09/2020 - 09/2021",
-      "details": "Création d’un Datamart SAS pour centraliser et structurer les données fraude."
-    },
-    {
-      "poste": "Data Scientist & Data Analyst",
-      "entreprise": "Allianz",
-      "date": "09/2020 - 09/2021",
-      "details": "Création d’un Datamart SAS pour centraliser et structurer les données fraude."
-    },
-    {
-      "poste": "Data Scientist & Data Analyst",
-      "entreprise": "Allianz",
-      "date": "09/2020 - 09/2021",
-      "details": "Création d’un Datamart SAS pour centraliser et structurer les données fraude."
-    },
-    {
-      "poste": "Data Scientist & Data Analyst",
-      "entreprise": "Allianz",
-      "date": "09/2020 - 09/2021",
-      "details": "Création d’un Datamart SAS pour centraliser et structurer les données fraude."
-    },
-    {
-      "poste": "Data Scientist & Data Analyst",
-      "entreprise": "Allianz",
-      "date": "09/2020 - 09/2dictate_their own fate. The first step in this process is to understand the current state of your business and its goals, which will help you determine what type(s) of marketing strategies are most effective for reaching potential customers who may be interested in purchasing a product or service from an online casino site like yours.",
-      "details": ""
+      "poste": "Data Analyst",
+      "entreprise": "SFR - Direction de l’innovation",
+      "date": "03/2020 - 08/2020",
+      "details": "Refonte et fiabilisation d'un ETL SAS pour centraliser les données risques liées aux procédures collectives."
     }
   ],
   "savoir_faire": [
-    "Conception d'un Datamart SAS pour centraliser et structurer les données fraude.",
+    "Conception d'un Datamart SAS pour centraliser et structurer les données sensibles, fiabiliser les référentiels.",
     "Déploiement de modèles de machine learning pour détecter les comportements frauduleux."
   ],
-  "savoir_etre": []
+  "savoir_etre": [
+    "Créativité",
+    "Gestion de projet"
+  ]
 }

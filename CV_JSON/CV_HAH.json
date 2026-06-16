@@ -1,0 +1,127 @@
+{
+  "id": "HAH",
+  "formations": [
+    {
+      "date_debut": "2022",
+      "date_finition": "2025",
+      "nom_etablissement": "ESILV - École d’ingénieurs, Master en Ingénierie Data & IA"
+    },
+    {
+      "date_debut": "2024",
+      "date_finition": "2025",
+      "nom_etablissement": "Universiti Kuala Lumpur MIIT – Programme d’échange : Machine Learning, DevOps, AI"
+    }
+  ],
+  "certifications": [
+    "Microsoft Azure (2025)",
+    "TOEFL (2023)",
+    "Dataiku"
+  ],
+  "langues": [
+    {
+      "nom_langue": "Français",
+      "maitrise": "Bilingue"
+    },
+    {
+      "nom_langue": "Anglais",
+      "maitrise": "Courant"
+    },
+    {
+      "nomoptionneux langues": "Turc",
+      "maitrise": "Bilingue"
+    }
+  ],
+  "competences_techniques": [
+    "Windows",
+    "SQL Server",
+    "PostgreSQL",
+    "MySQL",
+    "MongoDB",
+    "ElasticSearch",
+    "BigQuery",
+    "Azure Synapse",
+    "Azure Data Lake",
+    "Python",
+    "SQL",
+    "JavaScript (bases)",
+    "Shell",
+    "YAML",
+    "Power BI",
+    "Tableau",
+    "Qlik",
+    "Seaborn",
+    "Matplotlib",
+    "Régression",
+    "Classification",
+    "Clustering",
+    "Séries temporelles",
+    "Préparation des données",
+    "Nettoyage",
+    "Fiabilisation",
+    "Intégration",
+    "Pandas",
+    "JupyterLab",
+    "Dataiku",
+    "dbt",
+    "Azure Data Factory",
+    "Microsoft Fabric",
+    "Airflow",
+    "Git",
+    "CI",
+    "CD",
+    "Docker",
+    "Scikit-learn"
+  ],
+  "savoir_faire/savoir_etre": [
+    "Esprit analytique",
+    "Capacité d'adaptation",
+    "Curiosité",
+    "Travail en équipe",
+    "Communication et vulgarisation",
+    "Storytelling Data",
+    "Conception de KPIs",
+    "Suivi et automatisation du reporting",
+    "Analyse de corrélation et de tendance",
+    "Segmentation de clients ou de produits",
+    "Analyse de séries temporelles"
+  ],
+  "experiences": [
+    {
+      "poste": "Data Analyst",
+      "entreprise": "Chanel",
+      "date": "01/2025 - Aujourd'hui",
+      "details": "Contexte : Analyse et fiabilisation des flux métiers ainsi que migration de données dans un environnement hybride Legacy / Cloud. Analyse de données multi-sources (Excel, SQL Server, PostgreSQL, Microsoft Fabric) pour le suivi des flux métiers... Suivi du reporting avec les équipes opérationnelles."
+    },
+    {
+      "poste": "Data Analyst / Data Scientist",
+      "entreprise": "Orange",
+      "date": "01/2024 - 09/2024",
+      "details": "Contexte : Exploitation des enquêtes de satisfaction client B2B afin d'améliorer les modèles prédictifs et le ciblage des campagnes. Analyse de données issues des enquêtes stockées sous SQL et BigQuery... Développement d'un modèle de classification permettant de prédire la probabilité de réponse à un sondage."
+    }
+  ],
+  "savoir_faire": [
+    "Esprit analytique",
+    "Curiosité",
+    "Travail en équipe",
+    "Communication et vulgarisation",
+    "Storytelling Data",
+    "Conception de KPIs",
+    "Suivi et automatisation du reporting",
+    "Analyse de corrélation et de tendance",
+    "Segmentation",
+    "Analyse de séries temporelles"
+  ],
+  "savoir_etre": [
+    "Esprit analytique",
+    "Capacité d'adaptation",
+    "Curiosité",
+    "Travail en équipe",
+    "Communication et vulgarisation",
+    "Storytelling Data",
+    "Conception de KPIs",
+    "Suivi et automatisation du reporting",
+    "Analyse de corrélation et de tendance",
+    "Segmentation",
+    "Analyse de séries temporelles"
+  ]
+}

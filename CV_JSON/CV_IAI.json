@@ -1,0 +1,75 @@
+{
+  "id": "XXX",
+  "formations": [],
+  "certifications": [],
+  "langues": [],
+  "competences_techniques": [
+    "Python",
+    "SQL",
+    "DAX",
+    "VBA",
+    "SPSS",
+    "Power BI",
+    "Tableau",
+    "Qlik Sense",
+    "Régression logistique",
+    "Arbres de décision",
+    "XGBoost",
+    "Deep Learning",
+    "NLP",
+    "Excel",
+    "GitHub",
+    "Docker",
+    "MLflow",
+    "Snowflake",
+    "SAS",
+    "AWS",
+    "GCP",
+    "Agile Scrum"
+  ],
+  "savoir_faire/savoir_etre": [
+    "Analyse de données",
+    "Machine Learning",
+    "Détection de fraude",
+    "Modélisation prédictive",
+    "Data Quality",
+    "Automatisation de reporting",
+    "Structuration de référentiels de données",
+    "Collaboration transverse",
+    "Documentation et support utilisateurs",
+    "Gouvernance des données"
+  ],
+  "experiences": [
+    {
+      "poste": "Data Scientist",
+      "entreprise": "ORANGE BANK",
+      "date": "02/2023 - Aujourd'hui",
+      "details": "Contexte : Développement et optimisation des disposits de détection frauduleuse en temps réel. Analyse des flux transactionnels, suivi d'indicateurs clés de fraude avec les équipes métiers... Automatisation des workflows..."
+    },
+    {
+      "poste": "Data Analyst",
+      "entreprise": "SWATCH GROUP",
+      "date": "06/2021 - 12/2022",
+      "details": "Pilotage de la performance commerciale pour Direction Commerciale. Préparation, transformation et fiabilisation des données provenant du CRM..."
+    },
+    {
+      "poste": "Data Analyst",
+      "entreprise": "ORANGE FRANCE",
+      "date": "09/2019 - 06/2021",
+      "details": "Analyse quantitative des campagnes de vente en magasin. Construction et suivi d'indicateurs..."
+    }
+  ],
+  "savoir_faire": [
+    "Analyse de données",
+    "Machine Learning",
+    "Détection de fraude",
+    "Modélisation prédictive",
+    "Data Quality",
+    "Automatisation de reporting",
+    "Structuration de référentiels de données",
+    "Collaboration transverse",
+    "Documentation et support utilisateurs",
+    "Gouvernance des données"
+  ],
+  "savoir_etre": []
+}

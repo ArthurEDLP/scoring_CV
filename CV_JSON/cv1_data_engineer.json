@@ -1,6 +1,15 @@
 {
   "id": "CEU",
-  "formations": [],
+  "formations": [
+    {
+      "diplome": "Master of Science in Computer Engineering - University Paris Saclay",
+      "date": "2014"
+    },
+    {
+      "diplome": "Certificate for Data Engineers and Scientists from the Université de Strasbourg, France (CDES)",
+      "date": ""
+    }
+  ],
   "certifications": [
     "AWS Certified Solutions Architect - Professional (2023)",
     "Google Cloud Professional Data Engineer (2022)",
@@ -9,8 +18,12 @@
   ],
   "langues": [
     {
-      "code": "fr",
-      "titre": "Français"
+      "nom_langue": "Français",
+      "maitrise": "Langue maternelle"
+    },
+    {
+      "nom_langue": "Anglais",
+      "maitrise": "Proficient"
     }
   ],
   "competences_techniques": [
@@ -73,20 +86,8 @@
     {
       "poste": "Senior Data Engineer",
       "entreprise": "Bouygues Telecom, Issy-les-Moulineaux",
-      "date": "04/2019 - 08/2022",
-      "details": "Contexte : Construction d'une plateforme analytique unifiée pour la connaissance client au sein de la direction Marketing Digital. Migration des traitements Hadoop on-premise vers Google Cloud Platform (BigQuery, Dataflow, Composer). Conception d'un pipeline d'ingestion CDC (Change Data Capture) avec Debezium et Kafka pour synchroniser plus de 200 tables Oracle vers BigQuery en quasi temps réel. Implémentation d'un modèle Data Vault 2.0 sur le périmètre client (45 millions de lignes mises à jour quotidiennement). Mise en place de la chaîne CI/CD complète (GitLab, Terraform, Cloud Build) avec déploiement automatisé sur 3 environnements. Développement de connecteurs custom Kafka Connect pour intégrer les sources non-standards (mainframes IMS, fichiers EBCDIC). Encadrement technique de 3 data engineers et formation interne sur Spark/Scala (sessions mensuelles). Contribution à la mise en place du Data Catalog d'entreprise (DataHub) couvrant plus de 1500 datasets."
-    },
-    {
-      "poste": "Data Engineer",
-      "entreprise": "Air France-KLM, Roissy",
-      "date": "10/2016 - 03/2019",
-      "details": "Contexte : Mise en place de la plateforme Big Data du programme Flying Blue pour la personnalisation de l'expérience voyageur. Développement de jobs Spark (Scala) pour le calcul des segmentations clients sur un cluster Hortonworks (50 nœuds). Implémentation d'algorithmes de matching de profils passagers (entre PNR, fidélité et données digitales) avec Spark MLlib. Mise en place de l'orchestration via Oozie puis migration vers Airflow."
-    },
-    {
-      "poste": "Consultant Data / BI",
-      "entreprise": "Capgemini Invent, Paris",
-      "date": "09/2014 - 09/2016",
-      "details": "Contexte : Missions de conseil en BI et Big Data pour des clients du secteur bancaire et énergie. Développement de tableaux de bord SAS et Tableau pour le contrôle de gestion chez Société Générale (12 mois). Mise en place d'un POC Hadoop (Cloudera) pour l'analyse des courbes de charge des compteurs Linky à EDF (10 mois), animation d'ateliers de cadrage et rédaction de spécifications fonctionnelles et techniques. Développement ETL Talend et procédures stockées Oracle PL/SQL."
+      "date": "04/2dict{id: 1379568}],",
+      "details": ""
     }
   ],
   "savoir_faire": [
@@ -105,8 +106,6 @@
     "Industrialisation des pipelines ETL/ELT",
     "Gouvernance de la donnée et data lineage",
     "Animation d'équipes techniques (jusqu'à 8 personnes)",
-    "Mentorat et formation de juniors",
-    "Veille technologique active",
-    "Communication transverse avec les métiers"
+    "Mentorat et formation de juniors"
   ]
 }
