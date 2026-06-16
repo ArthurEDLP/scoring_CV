@@ -1,0 +1,311 @@
+{
+
+  "id": "MM",
+
+  "formations": [
+
+    {
+
+      "diplome": "Master 2 Econométrie et Statistiques option Traitement de l'Information et Data Science en Entreprise – Université Paris 1 Panthéon Sorbonne - PARIS",
+
+      "date": "2021"
+
+    },
+
+    {
+
+      "diplome": "Master 1 Econométrie et Statistiques – Université Paris 1 Panthéon Sorbonne - PARIS",
+
+      "date": "2020"
+
+    },
+
+        {
+
+      "diplome": "Licence Economie – Université Paris 1 Panthéon Sorbonne - PARIS",
+
+      "date": "2019"
+
+    },
+
+        {
+
+      "diplome": "Programme d'échange ERASMUS+ – Universidad de Sevilla - PARIS",
+
+      "date": "2018"
+
+    },
+
+        {
+
+      "diplome": "Classe Préparatoire aux Grandes Ecoles (voie ECS) – Lycée Paul Valéry - PARIS",
+
+      "date": "2017"
+
+    },
+
+    {
+
+      "diplome": "Baccalauréat Scientifique – Lycée Buffon - PARIS",
+
+      "date": "2015"
+
+    }
+
+  ],
+
+  "certifications": [
+
+    "Dataiku ML Practitioner Certificate",
+
+    "Dataiku Advanced Designer Certificate",
+
+    "Dataiku Core Designer Certificate",
+
+    "SAS Certified Specialist",
+
+    "Base Programming Using SAS 9.4"
+
+  ],
+
+  "langues": [
+
+    {
+
+      "nom_langue": "Anglais",
+
+      "maitrise": "Langue Maternelle"
+
+    },
+
+    {
+
+      "nom_langue": "Espagnol",
+
+      "maitrise": "Courant"
+
+    }
+
+  ],
+
+  "competences_techniques": [
+
+    "Langages & Scripting : SQL |Python |",
+
+    "Bureautique : Microsoft Office |",
+
+    "Data/BI : Google Cloud BigQuery |Snowflake |Microsoft Power BI |Looker studio |"
+
+  ],
+
+  "savoir_faire/savoir_etre": [
+
+    "contrôle qualité",
+
+    "travail en équipe",
+
+    "segmentation client",
+
+    "systèmes de recommandation",
+
+    "moteurs de recherche",
+
+    "panier moyen",
+
+    "systèmes de classement",
+
+    "coordination",
+
+    "enrichissement des données",
+
+    "gestion de l'information",
+
+    "indicateurs de gestion",
+
+    "machine learning",
+
+    "marketing digital",
+
+    "mise en place d'indicateurs",
+
+    "reporting",
+
+    "tableaux de bord",
+
+    "IA générative",
+
+    "LLM",
+
+    "test A/B",
+
+    "classement numérique",
+
+    "grands magasins",
+
+    "statistiques",
+
+    "suivi des indicateurs"
+
+  ],
+
+  "experiences": [
+
+    {
+
+      "poste": "Consultant Analytics",
+
+      "date": "10/2023 - 04/2026",
+
+      "entreprise": "Printemps",
+
+      "details": [
+
+        "Contexte : Connaissance Client",
+
+        "Au sein d’une équipe de six personnes, ce projet mené pour Printemps et Citadium, respectivement leaders dans le secteur du Retail Luxe & Haut de Gamme et le StreetWear, dans un cadre de connaissance client, a pour objectif de renforcer la connaissance client et d’optimiser les actions marketing et commerciales.",
+
+        "Le projet repose sur l’analyse des indicateurs clés (encartage, panier moyen, fréquence de visite) et la conception de tableaux de bord dynamiques destinés aux équipes dirigeantes.",
+
+        "La mission inclut également la migration de programmes SAS vers un environnement moderne basé sur Snowflake et DBT, ainsi que la mise en place de modèles de segmentation client via des techniques de machine learning.",
+
+        "Des outils d’analyse de commentaires clients par IA et un moteur de recommandations personnalisées ont été développés afin d’améliorer l’expérience et la fidélisation des clients.",
+
+        "Enfin, un travail spécifique a été réalisé sur la qualité, la traçabilité et l’enrichissement des données pour avoir des données fiables et propres.",
+
+        "Missions :",
+
+        " Analyser les indicateurs clés de Citadium (encartage, panier moyen, fréquence de visites).",
+
+        " Concevoir des tableaux de bords dynamiques pour les équipes dirigeantes.",
+
+        " Migrer des programmes SAS vers les outils Snowflake et DBT.",
+
+        " Segmenter la base clientèle pour identifier la typologie des profils (machine learning).",
+
+        " Synthétiser les commentaires clients des magasins Printemps avec une IA.",
+
+        " Développer un outil personnalisé de recommandations de produits et marques.",
+
+        " Détecter la marque préférée des clients encartés pour les équipes CRM.",
+
+        " Implémenter une base de données météo via un accès API.",
+
+        " Assurer la qualité et la traçabilité des données.",
+
+        "Environnement Technique : analyse de données, Anglais, API REST, autonomie, base de données, conception de systèmes,",
+
+        "contrôle qualité, créativité, curiosité, Data build tool, data science, deep learning, enrichissement des données, Français, gestion",
+
+        "de l'information, Git, gouvernance des données, grands magasins, IA générative, indicateurs de gestion, intelligence artificielle,",
+
+        "LLM, machine learning, marketing digital, Microsoft Office, mise en place d'indicateurs, Mistral AI, ouverture d'esprit, panier",
+
+        "moyen, Python, reporting, SAS, Scikit-learn, segmentation client, Snowflake, SQL, Squirrel, Streamlit, systèmes de classement,",
+
+        "systèmes de recommandation, tableaux de bord, travail en équipe"
+
+      ]
+
+    },
+
+    {
+
+      "poste": "Consultant Analytics",
+
+      "date": "09/2022 - 10/2023",
+
+      "entreprise": "Solocal",
+
+      "details": [
+
+        "Contexte : Performance produits digitaux",
+
+        "Au sein d'une équipe de 4 personnes, la mission s'est déroulée chez Solocal, leader français du marketing digital.",
+
+        "Ce projet vise à mesurer et améliorer la performance des produits digitaux proposés aux clients.",
+
+        "Il comprend la mise en place d’indicateurs de suivi, le contrôle de la qualité des données et la détection automatisée d’anomalies afin de garantir la fiabilité des analyses.",
+
+        "Des tableaux de bord interactifs ont été développés sous Looker Studio et PowerBI pour permettre aux équipes métiers et produits de piloter leurs actions en temps réel.",
+
+        "En parallèle du projet principal, je réponds à d'autres besoin plus spécifique.",
+
+        "Un algorithme de détection de comportements atypiques et de génération d’alertes a été conçu, une analyse des commentaires clients sur les fiches professionnelles a également permis d’identifier des axes d’amélioration de l’expérience utilisateur.",
+
+        "Enfin, l’efficacité de la refonte du moteur de recherche a été évaluée à travers des tests A/B afin de mesurer son impact sur l’engagement et la conversion",
+
+        "Missions :",
+
+        "Evaluer la performance des produits digitaux.",
+
+        "Mise en place de contrôles de qualité des données avec génération d’alertes automatiques en cas d’anomalies",
+
+        "Elaborer des tableaux de bords pour les équipes métiers et produits via Looker Studio.",
+
+        "Programmer un algorithme d'alertes et de comportements atypiques (Google Big Query et Pycharm).",
+
+        "Examiner les commentaires clients sur les fiches des professionnels.",
+
+        "Tester l'efficacité de la refonte du moteur de recherche (A/B testing).",
+
+        "Environnement Technique : analyse de données, Anglais, autonomie, base de données, base de données hiérarchiques,",
+
+        "contrôle qualité, créativité, curiosité, data science, enrichissement des données, Français, Google Cloud BigQuery, Looker studio,",
+
+        "machine learning, marketing digital, Microsoft Office, Microsoft Power BI, mise en place d'indicateurs, moteurs de recherche,",
+
+        "ouverture d'esprit, PyCharm, Python, reporting, SAS, science des données en Python, SQL, suivi des indicateurs, tableaux de bord, test A/B"
+
+      ]
+
+    },
+
+    {
+
+      "poste": "Data Analyst et Gestionnaire de Base de Données",
+
+      "date": "07/2021 - 12/2022",
+
+      "entreprise": "Groupe Pro BTP",
+
+      "details": [
+
+        "Contexte : Data Analyst et Gestionnaire de Base de Données",
+
+        "En tant qu'unique Data Analyst et gestionnaire de base de données sous la direction du directeur de la plateforme de vente, ce projet a pour objectif de piloter et fiabiliser les données liées aux ventes de contrats.",
+
+        "Des tableaux de bord dynamiques ont été développés afin de suivre l’activité de la plateforme de vente et d’offrir une vision claire de la performance commerciale aux managers et téléconseillers.",
+
+        "Une analyse approfondie des résultats des télévendeurs a été menée en collaboration avec leurs managers, incluant la conception d’un système de classement permettant d’évaluer et de comparer les performances individuelles.",
+
+        "Des contrôles réguliers ont été réalisés pour détecter et corriger les incohérences dans les bases de données, garantissant ainsi la qualité et la fiabilité des indicateurs utilisés pour la prise de décision.",
+
+        "Missions :",
+
+        " Piloter les données et statistiques de vente des contrats.",
+
+        " Créer des tableaux de bords dynamiques pour suivre l'activité de la plateforme de vente.",
+
+        " Etudier la performance des télévendeurs en lien avec les managers directs.",
+
+        " Coder un système de classement pour les télévendeurs.",
+
+        " Inspecter les incohérences de données.",
+
+        "Environnement Technique : analyse de données, autonomie, base de données, classement numérique, conception de base de données,",
+
+        "conception de systèmes, contrôle qualité, curiosité, data science, enrichissement des données, Français, gouvernance des données,",
+
+        "indicateurs de gestion, machine learning, Microsoft Office, mise en place d'indicateurs, ouverture d'esprit, Python,",
+
+        "SAS, science des données en Python, SQL, Squirrel, suivi des indicateurs, systèmes de classement, tableaux de bord, TIBCO Spotfire"
+
+      ]
+
+    }
+
+  ]
+
+}
+
+ 
