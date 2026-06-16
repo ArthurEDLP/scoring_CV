@@ -156,17 +156,12 @@ def etat_job(job_id: str):
 
 # ════════════════════════════ JOBS (tâche de fond) ════════════════════════
 
-def _run(cmd: List[str]) -> None:
-    """Lance un script en sous-processus (sortie forcée UTF-8). Lève si code != 0,
-    en remontant stdout ET stderr (certains scripts écrivent l'erreur sur stdout)."""
+def _run_tolerant(cmd: List[str]) -> str:
+    """Comme _run mais ne lève PAS sur code != 0 : retourne la sortie pour log."""
     env = {**os.environ, "PYTHONIOENCODING": "utf-8", "PYTHONUTF8": "1"}
-    res = subprocess.run(
-        cmd, cwd=str(RACINE), capture_output=True, text=True,
-        encoding="utf-8", errors="replace", env=env,
-    )
-    if res.returncode != 0:
-        sortie = (res.stdout or "") + (res.stderr or "")
-        raise RuntimeError(f"code {res.returncode} · {' '.join(cmd[:3])} …\n{sortie[-1500:]}")
+    res = subprocess.run(cmd, cwd=str(RACINE), capture_output=True, text=True,
+                         encoding="utf-8", errors="replace", env=env)
+    return (res.stdout or "") + (res.stderr or "")
 
 
 def _job_preparer(jid: str) -> None:
