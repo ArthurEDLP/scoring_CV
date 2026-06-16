@@ -173,11 +173,11 @@ def _job_preparer(jid: str) -> None:
 
         _maj_job(jid, etape="Prétraitement des AO", progression=0.05)
         if ao_files:
-            _run([py, "pretraiter_ao.py", "--output", str(AO_TRAITES), "--force", *ao_files])
+            _run_tolerant([py, "pretraiter_ao.py", "--output", str(AO_TRAITES), "--force", *ao_files])
 
         _maj_job(jid, etape="Prétraitement des CV", progression=0.20)
         if cv_files:
-            _run([py, "pretraiter_cv.py", "--output", str(CV_TRAITES), "--force", *cv_files])
+            _run_tolerant([py, "pretraiter_cv.py", "--output", str(CV_TRAITES), "--force", *cv_files])
 
         # Imports lourds ici seulement
         _maj_job(jid, etape="Construction des caches d'embeddings", progression=0.35)
