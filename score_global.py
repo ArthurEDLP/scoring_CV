@@ -83,7 +83,7 @@ def texte_ao_complete(ao_data: Dict) -> str:
 def embed_ollama(model_name: str, texte: str) -> np.ndarray:
     """Embedding via ollama, NORMALISÉ (donc dot == cosinus)."""
     import ollama
-    rep = ollama.embeddings(model=model_name, prompt=texte)
+    rep = ollama.embeddings(model=model_name, prompt=texte, kep_alive=-1)
     v = np.asarray(rep["embedding"], dtype="float32")
     n = np.linalg.norm(v)
     return v / n if n > 0 else v

@@ -51,7 +51,8 @@ def _normaliser(vecteurs: np.ndarray) -> np.ndarray:
 def embed(textes):
     rep = ollama.embed(
         model=MODEL,
-        input=textes
+        input=textes,
+        keep_alive=-1
     )
     return np.array(rep["embeddings"], dtype=np.float32)
 
