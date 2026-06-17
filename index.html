@@ -6,10 +6,19 @@
 <title>Matching CV / AO</title>
 <style>
   :root{
-    --bg:#ffffff; --panel:#ffffff; --panel2:#f7f7f5; --line:#e3e3df;
-    --txt:#1a1a1a; --muted:#6b6b6b; --accent:#1a1a1a; --accent2:#000000;
-    --yellow:#ffd400; --yellow-d:#e6bf00;
-    --ok:#1c9c54; --warn:#b07a00; --bad:#cf2f2f; --radius:12px;
+    --bg:#ffffff;
+    --panel:#ffffff; --panel2:#f7f7f5;
+    --line:#e3e3df;
+    --txt:#1a1a1a;
+    --muted:#6b6b6b; --accent:#1a1a1a; --accent2:#000000;
+    --glob: #00d9ff;
+    --blue:#49656d; /*couleur des btns*/
+    --ok:#1c9c54;
+    --mid:#ffae00;
+    --bad:#cf2f2f;
+    --warn:#000000 /*Text en dessous de btn...*/;
+    --grp:#ffffff;
+    --radius:12px;
   }
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--txt);
@@ -28,8 +37,8 @@
     border-radius:var(--radius);padding:18px}
   .card h2{margin:0 0 12px;font-size:14px;font-weight:600;color:var(--muted);
     text-transform:uppercase;letter-spacing:.04em}
-  .drop{border:2px solid var(--yellow);background:var(--yellow);border-radius:10px;
-    padding:26px 14px;text-align:center;color:#1a1a1a;cursor:pointer;
+  .drop{border:2px solid var(--blue);background:var(--blue);border-radius:10px;
+    padding:26px 14px;text-align:center;color:#ffffff;cursor:pointer;
     font-weight:600;transition:.15s}
   .drop:hover,.drop.over{background:var(--accent2);border-color:var(--accent2);color:#fff}
   .drop small{display:block;margin-top:6px;font-size:12px;font-weight:500;opacity:.8}
@@ -43,24 +52,24 @@
   .badge.off{color:var(--warn);border-color:#5a4a1f}
   .pending{color:var(--warn);font-size:12px;margin-top:8px}
   input[type=radio]{accent-color:var(--accent)}
-  button{font:inherit;border:2px solid var(--yellow);border-radius:9px;padding:11px 18px;
-    cursor:pointer;background:var(--yellow);color:#1a1a1a;font-weight:700;transition:.15s}
-  button:hover{background:var(--accent2);border-color:var(--accent2);color:var(--yellow)}
-  button:disabled{opacity:.45;cursor:not-allowed;background:var(--yellow);
-    border-color:var(--yellow);color:#1a1a1a}
+  button{font:inherit;border:2px solid var(--blue);border-radius:9px;padding:11px 18px;
+    cursor:pointer;background:var(--blue);color:#ffffff;font-weight:700;transition:.15s}
+  button:hover{background:var(--accent2);border-color:var(--accent2);color:var(--blue)}
+  button:disabled{opacity:.45;cursor:not-allowed;background:var(--blue);
+    border-color:var(--blue);color:#ffffff}
   button.ghost{background:transparent;border:1px solid var(--line);color:var(--txt);
     padding:5px 10px;font-weight:600;font-size:12px}
-  button.ghost:hover{background:var(--accent2);border-color:var(--accent2);color:var(--yellow)}
+  button.ghost:hover{background:var(--accent2);border-color:var(--accent2);color:var(--blue)}
   .actions{display:flex;gap:12px;align-items:center;margin:20px 0}
   .bar{height:8px;background:var(--panel2);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:6px}
-  .bar>i{display:block;height:100%;width:0;background:var(--yellow);transition:width .3s}
+  .bar>i{display:block;height:100%;width:0;background:var(--blue);transition:width .3s}
   .status{font-size:13px;color:var(--muted);min-height:18px}
   .err{color:var(--bad);white-space:pre-wrap;font-size:12px;
     background:#fdeaea;border:1px solid #f3c2c2;border-radius:8px;padding:10px;margin-top:10px}
   /* résultats */
   .res h3{margin:26px 0 6px;font-size:15px}
   .grp{margin:14px 0}
-  .grp .gtitle{font-weight:700;color:var(--txt);background:var(--yellow);
+  .grp .gtitle{font-weight:700;color:var(--grp);background:var(--blue);
     display:inline-block;padding:3px 10px;border-radius:6px;margin-bottom:8px}
   .cv{border:1px solid var(--line);border-radius:10px;padding:12px 14px;
     margin-bottom:8px;background:var(--panel)}
@@ -68,11 +77,11 @@
   .cv .rank{color:var(--muted);width:22px}
   .cv .name{font-weight:700}
   .cv .sc{font-variant-numeric:tabular-nums}
-  .cv .sc b{color:#1a1a1a;background:var(--yellow);padding:0 5px;border-radius:4px}
-  .cv .glob{color:var(--muted);font-size:12px;margin-top:6px}
+  .cv .sc b{color:#ffffff;background:var(--blue);padding:0 5px;border-radius:4px}
+  .cv .glob{color:var(--glob);font-size:12px;margin-top:6px}
   .tk{display:inline-block;font-size:12px;padding:2px 8px;border-radius:20px;
     margin:3px 4px 0 0;border:1px solid var(--line)}
-  .tk.exact{color:var(--ok)} .tk.semantique{color:var(--warn)} .tk.absent{color:var(--bad)}
+  .tk.exact{color:var(--ok)} .tk.semantique{color:var(--mid)} .tk.absent{color:var(--bad)}
   .rej{border-left:3px solid var(--bad);padding:8px 12px;margin-bottom:6px;
     background:var(--panel);border-radius:0 8px 8px 0}
   .rej .motif{color:var(--muted);font-size:12px}
