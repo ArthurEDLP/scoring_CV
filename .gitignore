@@ -8,10 +8,6 @@ __pycache__/
 *.pyc
 *.pyo
 
-# Caches du projet
-cache_cv/
-cache_offre/
-
 # Modèles HuggingFace
 .cache/
 

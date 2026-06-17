@@ -1,0 +1,61 @@
+[
+
+    {
+
+        "file": "C:/Users/a.ernoul-delaprovote/OneDrive - CONSORT NT/Bureau/Appel_offre/AO_AWS ET Informatica_Data_Eng_Avril.2026.xlsx",
+
+        "data": {
+
+            "id": "CANAL+ (2)",
+
+            "Poste": "Consultant confirmé dataiku data viz",
+
+            "Contexte": [
+
+                "L'un des objectifs majeurs du plan de transformation DATA du groupe Canal+ est de développer les applications DATA qui permettent à nos métiers businness (pilotage, marketing, commerce, ...) d'être autonomes dans l'analyse des données et des KPI",
+
+                "Dans ce cadre, Canal+ a déployé les outils : AWS, Gitlab, Snowflake, Python, DATAIKU, POWERBI, .etc.",
+
+                "Architectures sophistiquées pour ingérer plus de 100To de données par jours: Datalake, event-driven, Streaming, etc. ",
+
+                "Recommandation des offres",
+                "AI pour recommandation des programmes .etc.",
+                "Feature store",
+                "AI Chatbot",
+                "Socle vidéo",
+                "Moderniser les flux financiers",
+                "Content Platform",
+                "Mise en place Kubernetes",
+                "Plateforme pour le traitement des données CRM et usage",
+                "Partager des informations sur les clients à nos partenaires (Netflix, Apple, M6, TF1, etc.)",
+                "Piloter plus efficacement l'activité des marchés profesionnels",
+                "Mettre à disposition des applications de data-selfservice"
+
+            ],
+
+            "Description": [
+                "Notre environnement de travail vise à allier rigueur, ambiance décontractée dans les équipes ET méthodes Agiles (Scrum et Kanban).",
+                "Votre mission principale, si vous l'acceptez, sera de travailler sur le centre d'expertise ANALYTICS à destiation des métiers : ",
+
+                "Participer à l'administration des solutions",
+                "Faire de la maintenance évolutive",
+                "Devenir ambassaseur des bonnes pratiques d'analytique, de reporting et de viz",
+                "Etre en lien avec les équipes Infrastructure dans un environnement cloud"
+            ],
+
+            "Profil": [
+
+                "Vous possédez de 2 à 5 années d'expérience dans une mission similaire centrée sur Dataiku et l'analytique",
+                "Vous maîtrisez SQL, Python et aimez relever des défis.",
+                "Vous avez déjà participé à réaliser des analyses visuelles ad hoc performantes avec une casquette it et à destination des métiers.",
+                "La connaissance dans le développement d'autres outils de dashboardings est un plus : Thoughtspot, ...",
+                "Vous parlez couramment l'anglais.",
+                "Vous connaissez les outils JIRA et les méthodes agiles.",
+                "Autonome, ouvert d'esprit, et doté d'excellentes compétences en communication, vous avez également une grande curiosité scientifique."
+
+            ]
+            
+        }
+    }
+]
+
