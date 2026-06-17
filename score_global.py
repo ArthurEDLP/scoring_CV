@@ -22,10 +22,16 @@ import numpy as np
 
 # ─────────────────────── Construction des textes ──────────────────────────
 
-def texte_experience(exp: Dict) -> str:
-    poste      = (exp.get("poste") or "").strip()
-    entreprise = (exp.get("entreprise") or "").strip()
-    details    = (exp.get("details") or "").strip()
+def _as_text(v) -> str:
+    """Accepte string ou liste (details parfois sous forme de liste dans le brut)."""
+    if isinstance(v, list):
+        return " ".join(_as_text(x) for x in v if x)
+    return (v or "").strip() if isinstance(v, str) else ""
+
+def texte_experience(exp: dict) -> str:
+    poste      = _as_text(exp.get("poste"))
+    entreprise = _as_text(exp.get("entreprise"))
+    details    = _as_text(exp.get("details"))
     if entreprise and details:
         return f"{poste} chez {entreprise} : {details}"
     if entreprise:
