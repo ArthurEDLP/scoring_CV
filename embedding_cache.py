@@ -49,11 +49,8 @@ def _normaliser(vecteurs: np.ndarray) -> np.ndarray:
 # ─────────────────────────────────────────────────────────────────────
 
 def embed(textes):
-    rep = ollama.embed(
-        model=MODEL,
-        input=textes,
-        keep_alive=-1
-    )
+    textes = [t[:8000] for t in textes]      # garde-fou longueur de contexte car j'ai des CVs très gros
+    rep = ollama.embed(model=MODEL, input=textes, keep_alive=-1)
     return np.array(rep["embeddings"], dtype=np.float32)
 
 # ─────────────────────────────────────────────────────────────────────
