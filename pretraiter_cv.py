@@ -97,12 +97,21 @@ def _eclater_technos(technos_brutes: List[str]) -> List[str]:
 # ─────────────────────────────────────────────────────────────────────
 
 def structurer_cv(cv_brut: Dict) -> Dict:
-    """Recopie le CV brut à l'identique et remplace competences_techniques
-    par sa version éclatée/dédupliquée. Aucun autre champ n'est modifié."""
     cv_propre = dict(cv_brut)
     cv_propre["competences_techniques"] = _eclater_technos(
         cv_brut.get("competences_techniques", []) or []
     )
+    # Homogénéise les expériences : details en string (le brut en met parfois en liste)
+    exps = []
+    for exp in cv_brut.get("experiences", []) or []:
+        if isinstance(exp, dict):
+            e = dict(exp)
+            d = e.get("details")
+            if isinstance(d, list):
+                e["details"] = " ".join(str(x).strip() for x in d if x)
+            exps.append(e)
+    if exps:
+        cv_propre["experiences"] = exps
     return cv_propre
 
 
