@@ -50,7 +50,7 @@
   "technos": [
     "Python (pandas, numpy, scikit-learn, statsmodels, matplotlib / seaborn)",
     "SQL avancé",
-    "SAS (notamment SAS Enterprise Guide et / ou SAS EM)",
+    "SAS (Enterprise Guide et / ou SAS EM)",
     "R",
     "AWS (Snowflake)",
     "MLflow",

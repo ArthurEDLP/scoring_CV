@@ -1,0 +1,73 @@
+{
+  "id": "JL",
+  "formations": [
+    {
+      "diplome": "Mastère Spécialisé® IA Expert Data & MLops (ex-Big Data) - – Télécom Paris, Institut Polytechnique de Paris - Palaiseau",
+      "date": "2022"
+    },
+    {
+      "diplome": "Master ISADS Ingéniérie Statistique, Actuariat et Data Science (ex-MIASHS) – UVSQ Université de Versailles Saint-Quentin-en-Yvelines - Versailles",
+      "date": "2021"
+    },
+    {
+      "diplome": "Licence MIASHS Mathématiques et Informatique Appliquées aux Sciences Humaines et Sociales – Université de Caen Normandie - Caen",
+      "date": "2019"
+    }
+  ],
+  "savoir_faire_savoir_etre": [
+    "IA générative",
+    "MLOps",
+    "gestion de projet",
+    "OCR",
+    "industrialisation",
+    "marketing",
+    "reporting",
+    "responsabilité sociale des entreprises"
+  ],
+  "certifications": [],
+  "langues": [
+    {
+      "nom_langue": "Anglais",
+      "maitrise": "Courant"
+    }
+  ],
+  "competences_techniques": [
+    "Python",
+    "SQL",
+    "Microsoft VBA",
+    "Google Cloud BigQuery",
+    "Microsoft Power BI"
+  ],
+  "experiences": [
+    {
+      "poste": "Data Scientist",
+      "date": "12/2025 - 03/2026",
+      "entreprise": "SFR",
+      "details": "Contexte : Industrialisation de solutions d’IA sur des appels clients audio : intentions d’appel, clustering, GenAI et MLOps Au sein de la Direction Support Relation Client de SFR, j’ai conduit une mission centrée sur l’exploitation de données vocales et de transcriptions afin de structurer les motifs de contact, regrouper les intentions d’appel via un clustering non supervisé enrichi par une approche RAG, et industrialiser une application GenAI (intégration dans la chaîne CI/CD et documentation sur GitLab). Missions : Réalisation d’une étude sur le churn et la typologie d’appels fonctionnel vs relationnel : consolidation du dataset (Excel), nettoyage et data quality, enrichissement par des données complémentaires (avec GCP BigQuery). Déploiement d'une approche non supervisée pour regrouper les intentions et révéler des clusters exploitables, puis enrichissement des regroupements avec une approche RAG. Contribution à l’industrialisation d’une application GenAI d’analyse temporelle des transcriptions, avec contrôles de qualité des données, intégration CI CD sécurisée et documentation GitLab. Environnement Technique : CICD, data science, DevOps, gestion de projet, GitLab, Google Cloud BigQuery, Google Cloud Platform, Google Speech to Text, Google Vertex AI, IA générative, industrialisation, intelligence artificielle, machine learning, MLOps, Python, RAG, SQL"
+    },
+    {
+      "poste": "Data Scientist",
+      "date": "01/2023 - 12/2025",
+      "entreprise": "Crédit Agricole",
+      "details": "Contexte : Scores marketing et risque, MLOps Dataiku, GenAI RAG sur GCP Au sein de la Direction Stratégie Marketing et Communication du Crédit Agricole Leasing & Factoring, j’ai développé plusieurs scores (prospection, churn, risque d’impayés) et industrialisé un score de NBO sous Dataiku. J’ai mené un projet sur GCP/Vertex AI (OCR, RAG) afin de produire des synthèses de la stratégie RSE des entreprises. Projet IA sur GCP : collecte automatisée de rapports financiers via API AMF, extraction par OCR, puis génération de synthèses RSE avec une approche RAG (chunking, embeddings, traçabilité des sources) sous Vertex AI.  Industrialisation de scores prédictifs (prospection, churn, NBO, risque d’impayés) : entraînement/validation, mise en production sous Dataiku, suivi des performances, et documentation technique dans Collibra. Optimisation du pré-processing : migration des traitements PySpark/VBA vers Oracle SQL, refonte des contrôles de qualité et des chaînes d’exécution pour fiabiliser les données d’entrée et stabiliser le scoring marketing. Environnement Technique : API, CICD, data science, Dataiku, deep learning, DevOps, ETL, gestion de projet, GitLab, Google Cloud BigQuery, Google Cloud Platform, Google Vertex AI, IA générative, industrialisation, intelligence artificielle, machine learning, marketing, Microsoft Power BI, MLOps, OCR, Oracle, PySpark, Python, RAG, reporting, responsabilité sociale des entreprises, SAS, Scikit-learn, SQL, web scraping"
+    },
+    {
+      "poste": "Data Scientist",
+      "date": "07/2022 - 12/2022",
+      "entreprise": "SAFRAN",
+      "details": "Contexte : Gata Governance industrielle, détection d’anomalies et adoption de Dataiku Dans le cadre de ma thèse professionnelle du Mastère Spécialisé® IA Expert Data & MLOps, menée au sein de la Direction Propulsion Électrique Spatiale de Safran Spacecraft Propulsion, ma mission consistait à structurer la gouvernance des donnéeset à développer, avec Dataiku, des modèles d’IA de détection d’anomalies appliqués aux systèmes de propulsion PPS5000, encollaboration étroite avec les équipes métiers. Gouvernance des données : définition et déploiement de standards de qualité, formats et métadonnées, afin d’améliorer la fiabilité, le partage et la traçabilité des données entre équipes métiers et techniques. Structuration automatique : extraction et structuration de données non structurées issues de rapports PDF, via OCR et techniques NLP, pour constituer des jeux de données exploitables etréduire les traitements manuels. Détection d’anomalies : conception sous Dataiku d’un pipeline complet (prétraitement, feature engineering, entraînement et évaluation) appliqué aux systèmes PPS5000, avec data augmentation par GAN pour enrichir le dataset. Environnement Technique : augmentation des données, cahier des charges architectural, classification des données, data science, Dataiku, deep learning, extraction de données, gestion de projet, intelligence artificielle, machine learning, Microsoft Visual Studio Code, OCR, Python, Scikit-learn, SQL"
+    },
+    {
+      "poste": "Data Scientist & Data Analyst",
+      "date": "09/2020 - 09/2021",
+      "entreprise": "Allianz",
+      "details": "Contexte : Datamart SAS antifraude, machine learning, dashboards et pilotage opérationnel Au sein du département Lutte contre la Fraude et le Blanchiment d’Allianz, ma mission visait à structurer la données sensibles et à renforcer la détection proactive. Création d’un Datamart SAS, déploiement de modèles de machine learning et tableaux de bord ont accéléré les enquêtes, réduit les faux positifs et amélioré le suivi, en lien avec les métiers. Conception d'un Datamart SAS pour centraliser et structurer les données fraude, fiabiliser les référentiels et produire l'ensemble des indicateurs nécessaires au pilotage. Mise en place de contrôles qualité et d'une documentation. Déploiement de modèles de machine learning pour détecter les comportements frauduleux. Feature engineering, entraînement et validation, pour optimiser le compromis rappel/précision afin de limiter les faux positifs. Développement de dahsboard avec KPI sous SAS et Excel pour suivre la performance des enquêteurs fraude (taux de résolution, productivité). Ajustement des indicateurs avec les équipes métier afin d'améliorer le monitoring. Environnement Technique : analyse, base de données, classification des données, créativité, data mart, data science, gestion de projet, logiciel de tableaux de bord, machine learning, Microsoft PowerPoint, programmation, Python, reporting, SAS, Scikit-learn, SQL"
+    },
+    {
+      "poste": "Data Analyst",
+      "date": "03/2020 - 08/2020",
+      "entreprise": "SFR - Direction de l’innovation",
+      "details": "Contexte : Risques juridiques, reportings Excel VBA, migration SAS, Datamart décisionnel Au sein de la Direction des Risques, Conformité et Statistiques d’Allianz Trade (ex-Euler Hermes), j’ai réalisé ma première expérience data dans un grand groupe d’assurance-crédit, au cœur du suivi des procédures collectives. L’objectif était de mieux piloter le risque juridique grâce à des reportings plus lisibles et à un Datamart SAS fiable. Refonte et fiabilisation d'un ETL SAS pour centraliser les données risques liées aux procédures collectives, améliorer l’accessibilité de l’information et garantir la cohérence des référentiels utilisés par les équipes juridiques. Construction d’un Datamart SAS structuré pour organiser les données, historiser les événements et produire les KPI nécessaires au pilotage du risque juridique, en amont de la mise à disposition d’un tableau de bord opérationnel. Amélioration des reportings juridiques (Excel/VBA) et création de KPI pour faciliter l’analyse des entreprises entrant en procédure collective, avec un focus sur la lisibilité et l’appropriation par les juristes et analystes. Environnement Technique : data mart, ETL, gestion de projet, Microsoft VBA, reporting, SAS, SQL"
+    }
+  ]
+}
