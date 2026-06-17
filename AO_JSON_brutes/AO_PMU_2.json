@@ -1,0 +1,62 @@
+[
+
+    {
+
+
+        "data": {
+
+            "id": "PMU (2)",
+
+            "Poste": "Machine Learning Engineer ",
+
+            "Contexte": [
+
+                "Le Data Office a pour mission de consolider, manager et valoriser le patrimoine de données, qui est un capital stratégique pour le PMU, via le développement de produits et services data transverses à l’entreprise et au service du business.", 
+
+                "Au sein du Data Office, l’équipe Data Science a la charge du développement de solutions data (segmentations, scorings, modèles de machine learning…) pour toutes les entités de l’entreprise. "
+
+            ],
+
+            "Description": [
+                "Dans le cadre de son activité, le PMU recherche un(e) Machine Learning Engineer qui sera amené(e) à déployer des modèles de machine learning robustes et évolutifs en production (prédiction, recommandation, NLP,…). ",
+
+                "Optimiser la collecte des données en amont (data processing, feature engineering,…) et l’exposition des modèles en aval (API, endpoints…) afin d’améliorer les performances. ",
+
+                "Collaborer étroitement avec les data engineers afin d’intégrer au mieux les modèles de machine learning dans notre Data Platform (et la faire évoluer si besoin). ",
+
+                "Collaborer étroitement avec les data scientists afin de déployer les meilleures versions des modèles et constamment délivrer les meilleures prédictions disponibles. ",
+
+                "Implémenter des pratiques de ML Ops sur toute la chaîne data science (qualité des données, data drift,…) ",
+
+                "Monitorer les modèles en production et gérer leur cycle de vie (réentrainement, mise à jour…). ",
+
+                "Documenter les processus et les systèmes de machine learning. "
+            ],
+
+            "Profil": [
+
+                "Ce poste nécessite des compétences en data science et data engineering avec un minimum de 6 années d’expérience dans un contexte de production. ",
+
+
+                "Excellente connaissance des techniques et modèles de machine learning et IA ",
+
+                "Indispensable : excellente connaissance de l’écosystème Dataiku, notamment en Automation, et AWS ",
+
+                "Expérience avancée en programmation avec Python, SQL, Spark et Scala  ",
+
+                "Maîtrise des frameworks classiques de machine learning et IA ",
+
+                "Excellent esprit d’équipe ",
+
+                "Approche pragmatique et orienté résultats ",
+
+                "Forte sensibilité aux objectifs business et opérationnels ",
+
+                "Aisance à vulgariser et expliquer votre travail à vos pairs "
+
+            ]
+            
+        }
+    }
+]
+
