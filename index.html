@@ -229,8 +229,7 @@ function technosHTML(details){
   for(const[t,d]of Object.entries(details)){
     const s=scoreOf(d), src=(d&&d.source)||'exact';
     const ma=(d&&d.matche_avec&&d.matche_avec!==t)?'→'+d.matche_avec:'';
-    const cos=(src==='semantique'&&d.cosine!=null)?` ${d.cosine.toFixed(2)}`:'';
-    const chip=`<span class="tk ${src}">${t}${ma}${cos} (${(+s).toFixed(2)})</span>`;
+    const chip=`<span class="tk ${src}">${t}${ma} (${(+s).toFixed(2)})</span>`;
     (s>=0.5?ok:ko).push(chip);
   }
   let h='';
