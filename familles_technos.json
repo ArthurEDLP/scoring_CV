@@ -4,82 +4,132 @@
     "cycle en v": "methodology",
     "hybride": "methodology",
     "lean six sigma (green belt)": "methodology",
+
     "jira": "project_mgmt",
     "confluence": "project_mgmt",
     "ms project": "project_mgmt",
     "monday.com": "project_mgmt",
     "trello": "project_mgmt",
     "smartsheet": "project_mgmt",
+
+    "slack": "collaboration",
+    "microsoft 365": "productivity",
+    "google workspace": "productivity",
+
     "tableau de bord (power bi, tableau)": "bi",
-    "Qlik Sense": "bi",
-    "Qlik View": "bi",
+    "power bi": "bi",
+    "tableau": "bi",
+    "qlik sense": "bi",
+    "qlik view": "bi",
     "reporting comex": "bi",
+
+    "r shiny": "bi_app_framework",
+
     "suivi budgétaire (excel avancé, sap)": "finance",
+
     "sql": "query_lang",
     "sql avancé": "query_lang",
     "sql (lecture / requêtes simples)": "query_lang",
     "databricks sql": "query_lang",
-    "aws": "cloud",
-    "aws (ecs, eks, lambda, s3, cloudfront)": "cloud",
-    "microsoft 365": "productivity",
-    "google workspace": "productivity",
-    "slack": "chat",
+
     "python": "language",
-    "python (fastapi, django)": "language",
-    "r (tidyverse, caret)": "language",
-    "scala": "language",
     "java": "language",
+    "scala": "language",
     "go": "language",
     "javascript": "language",
     "typescript": "language",
     "groovy": "language",
     "shell": "language",
     "bash": "language",
-    "machine learning : xgboost": "ml",
-    "lightgbm": "ml",
-    "random forest": "ml",
-    "deep learning : tensorflow": "ml",
-    "keras": "ml",
-    "react.js": "frontend",
-    "next.js": "frontend",
-    "vue.js": "frontend",
-    "redux": "frontend",
-    "tailwind css": "frontend",
-    "material ui": "frontend",
-    "storybook": "frontend",
-    "node.js (express, nestjs)": "backend",
-    "rest api": "api",
-    "graphql (apollo)": "api",
-    "grpc": "api",
-    "websockets": "api",
+    "r": "language",
+
+    "flask": "backend_framework",
+    "fastapi": "backend_framework",
+    "django": "backend_framework",
+    "express": "backend_framework",
+    "nestjs": "backend_framework",
+
+    "react.js": "frontend_framework",
+    "next.js": "frontend_framework",
+    "vue.js": "frontend_framework",
+    "redux": "frontend_framework",
+
+    "tailwind css": "ui_framework",
+    "material ui": "ui_framework",
+    "storybook": "ui_framework",
+
+    "rest api": "api_style",
+    "graphql (apollo)": "api_style",
+    "grpc": "api_style",
+    "websockets": "api_style",
+
     "postgresql": "database_rdbms",
     "mysql": "database_rdbms",
+
     "mongodb": "database_nosql",
-    "redis": "database_nosql",
     "dynamodb": "database_nosql",
+
+    "redis": "cache",
+
+    "aws": "cloud",
+    "aws (ecs, eks, lambda, s3, cloudfront)": "cloud",
+
     "docker": "container",
     "kubernetes": "container",
+
     "terraform": "iac",
+
+    "git": "vcs",
+    "github": "source_platform",
     "github actions": "cicd",
-    "gitlab ci/cd": "cicd",
     "gitlab ci": "cicd",
+    "gitlab ci/cd": "cicd",
     "jenkins": "cicd",
     "azure devops": "cicd",
-    "git": "vcs",
-    "apache spark": "big_data",
-    "apache spark (pyspark et spark sql)": "big_data",
-    "apache kafka": "big_data",
+
+    "apache spark": "big_data_processing",
+    "apache spark (pyspark et spark sql)": "big_data_processing",
+
+    "apache kafka": "streaming",
+
     "apache airflow": "orchestration",
     "airflow": "orchestration",
     "workflows": "orchestration",
+
     "informatica powercenter": "etl",
     "dbt": "transformation",
     "great expectations": "data_quality",
+
     "databricks": "data_platform",
     "delta lake": "data_platform",
     "unity catalog": "data_platform",
     "photon": "data_platform",
     "dataiku": "data_platform",
+
+    "xgboost": "ml_algorithm",
+    "lightgbm": "ml_algorithm",
+    "random forest": "ml_algorithm",
+
+    "tensorflow": "ml_framework",
+    "keras": "ml_framework",
+    "pytorch": "ml_framework",
+
+    "mlflow": "mlops",
+    "sagemaker": "mlops",
+    
+
+    "pandas": "python_ai_library",
+    "numpy": "python_ai_library",
+    "scikit-learn": "python_ai_library",
+    "statsmodels": "python_ai_library",
+    "matplotlib": "python_ai_library",
+    "seaborn": "python_ai_library",
+    "transformers": "python_ai_library",
+    "sentence-transformers": "python_ai_library",
+    "langchain": "python_ai_library",
+    "llamaindex": "python_ai_library",
+    "faiss": "python_ai_library",
+
     "selenium webdriver": "test_automation",
     "cypress": "test_automation",
     "playwright": "test_automation",
@@ -88,34 +138,102 @@
     "robot framework": "test_automation",
     "xcuitest": "test_automation",
     "espresso": "test_automation",
+
     "junit": "test_framework",
     "testng": "test_framework",
     "pytest": "test_framework",
     "cucumber (bdd)": "test_framework",
+
+    "snowflake": "data_warehouse",
+    "redshift": "data_warehouse",
+    "bigquery": "data_warehouse",
+    "synapse": "data_warehouse",
+
     "postman": "api_testing",
     "rest assured": "api_testing",
     "karate": "api_testing",
     "soapui": "api_testing",
+
+    "streamlit": "data_app_framework",
+    "r shiny": "data_app_framework",
+    "gradio": "data_app_framework",
+
     "jmeter": "load_testing",
     "gatling": "load_testing",
     "k6": "load_testing",
     "loadrunner": "load_testing",
+
     "browserstack": "device_cloud",
     "sauce labs": "device_cloud",
+
     "xray": "test_mgmt",
     "zephyr": "test_mgmt",
     "testrail": "test_mgmt",
     "qtest": "test_mgmt",
-    "hp alm": "test_mgmt"
+    "hp alm": "test_mgmt",
+
+    "azure openai": "llm_platform",
+    "hugging face": "llm_platform",
+    "ollama": "llm_platform",
+    "openai": "llm_platform",
+
+    "langgraph": "llm_framework",
+    "llamaindex": "llm_framework",
+    "crewai": "llm_framework",
+    "autogen": "llm_framework",
+    "langchain": "llm_framework",
+
+    "sentence-transformers": "python_ai_library",
+    "transformers": "python_ai_library",
+
+    "pinecone": "vector_database",
+    "chromadb": "vector_database",
+    "faiss": "vector_database",
+    "weaviate": "vector_database",
+
+    "datadog": "observability",
+    "prometheus": "observability",
+    "grafana": "observability",
+
+    "apache kafka": "streaming",
+    "rabbitmq": "message_broker"
   },
+
   "compatibles": [
-    [
-      "query_lang",
-      "database_rdbms"
-    ],
-    [
-      "big_data",
-      "data_platform"
-    ]
+    ["language", "backend_framework"],
+    ["language", "frontend_framework"],
+
+    ["backend_framework", "api_style"],
+
+    ["query_lang", "database_rdbms"],
+    ["query_lang", "database_nosql"],
+
+    ["container", "cloud"],
+    ["container", "orchestration"],
+
+    ["big_data_processing", "data_platform"],
+    ["big_data_processing", "streaming"],
+
+    ["ml_algorithm", "ml_framework"],
+    ["ml_framework", "mlops"],
+    ["python_ai_library", "ml_framework"],
+
+    ["test_framework", "test_automation"],
+
+    ["bi", "data_platform"],
+
+    ["vcs", "source_platform"],
+    ["source_platform", "cicd"],
+
+      
+    ["llm_framework", "llm_platform"],
+    ["data_app_framework", "python_ai_library"],
+    ["mlops", "cloud"],
+    ["streaming", "message_broker"],
+    ["data_platform", "data_warehouse"],
+    ["python_ai_library", "ml_algorithm"],
+    ["observability", "cicd"],
+    ["vector_database", "llm_framework"]
+
   ]
 }
