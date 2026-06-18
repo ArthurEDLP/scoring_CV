@@ -264,7 +264,12 @@ function rendre(res){
     let s=`<div class="grp"><div class="gtitle">${titre}</div>`;
     if(!arr.length) s+='<div class="hint">aucun CV</div>';
     for(const[nom,cl]of arr){ s+=`<div class="hint">▸ ${nom} (${cl.length})</div>`;
-      cl.forEach((r,k)=>s+=cvHTML(r,k+1)); }
+      const liste=[...cl].sort((a,b)=>{
+        const ra=a.indicateur_global?a.indicateur_global.rang:Infinity;
+        const rb=b.indicateur_global?b.indicateur_global.rang:Infinity;
+        return ra-rb;                       // rang global croissant : 1/16, 2/16, ...
+      });
+      liste.forEach((r,k)=>s+=cvHTML(r,k+1)); }
     return s+'</div>';
   };
   h+=bloc('🏆 Groupe principal',principal);
