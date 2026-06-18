@@ -116,7 +116,7 @@ def _tokens(label: str) -> set:
 def score_technos(
     technos_ao,                       # List[{"label": str, "embedding": np.ndarray}]
     technos_cv,                       # idem
-    seuil_semantique: float = 0.70,   # a calibrer 
+    seuil_semantique: float = 0.80,   # a calibrer 
     discount: float = 1.0,            # 1.0 = comportement actuel ; <1 pour devaluer le semantique
 ):
     if not technos_ao:
