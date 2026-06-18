@@ -92,11 +92,36 @@ def _hash_contenu(data: dict) -> str:
 # Parsing des dates d'expérience
 # ─────────────────────────────────────────────────────────────────────
 
-_RE_DATE = re.compile(r"(\d{1,2})/(\d{4})")
+# Mois en toutes lettres (FR + abréviations courantes) → numéro
+_MOIS = {
+    "janvier": 1, "janv": 1, "jan": 1,
+    "fevrier": 2, "février": 2, "fevr": 2, "févr": 2, "fev": 2, "fév": 2,
+    "mars": 3, "mar": 3,
+    "avril": 4, "avr": 4,
+    "mai": 5,
+    "juin": 6,
+    "juillet": 7, "juil": 7, "jui": 7,
+    "aout": 8, "août": 8,
+    "septembre": 9, "sept": 9, "sep": 9,
+    "octobre": 10, "oct": 10,
+    "novembre": 11, "nov": 11,
+    "decembre": 12, "décembre": 12, "dec": 12, "déc": 12,
+}
 
-# Mots indiquant "expérience en cours" (à la place d'une 2ème date)
+# "Mars 2022", "Septembre 2019", "Févr. 2022"
+_RE_MOIS_TXT = re.compile(
+    r"\b(" + "|".join(sorted(_MOIS, key=len, reverse=True)) + r")\b\.?\s+(\d{4})",
+    re.IGNORECASE,
+)
+# "MM/YYYY", "MM.YYYY", "MM-YYYY"
+_RE_MOIS_NUM = re.compile(r"\b(\d{1,2})[./\-](\d{4})\b")
+# Année seule (dernier recours : "2018")
+_RE_ANNEE = re.compile(r"\b(\d{4})\b")
+
+# Mots/préfixes indiquant une expérience EN COURS (à la place d'une 2ème date)
 _RE_EN_COURS = re.compile(
-    r"(aujourd['’]?hui|present|présent|current|ongoing|en cours|nowadays|now)",
+    r"(aujourd['’]?hui|presents?|présents?|current|ongoing|en cours|"
+    r"nowadays|now|depuis)",
     re.IGNORECASE,
 )
 
@@ -112,45 +137,62 @@ def _est_stage(intitule_poste: str) -> bool:
     return bool(_RE_STAGE.search(intitule_poste or ""))
 
 
+def _extraire_dates(date_str: str):
+    """
+    Retourne la liste des (mois, annee) trouvés, dans l'ordre d'apparition.
+    Reconnaît : mois en lettres ('Mars 2022'), MM/YYYY, MM.YYYY, MM-YYYY,
+    et en dernier recours l'année seule ('2018' -> janvier).
+    """
+    trouve = []  # (position, mois, annee)
+    for m in _RE_MOIS_TXT.finditer(date_str):
+        cle = m.group(1).lower().rstrip(".")
+        trouve.append((m.start(), _MOIS[cle], int(m.group(2))))
+    for m in _RE_MOIS_NUM.finditer(date_str):
+        mois, an = int(m.group(1)), int(m.group(2))
+        if 1 <= mois <= 12:
+            trouve.append((m.start(), mois, an))
+    if not trouve:  # rien de précis -> on tente l'année seule
+        for m in _RE_ANNEE.finditer(date_str):
+            trouve.append((m.start(), 1, int(m.group(1))))
+    trouve.sort()
+    return [(mo, an) for _, mo, an in trouve]
+
+
 def _duree_experience_annees(date_str: str, poste: str = "") -> float:
     """
-    Calcule la durée en années depuis une chaîne 'MM/YYYY - MM/YYYY'
-    ou 'MM/YYYY - aujourd'hui'.
-
-    Règles :
-      - 2 dates explicites → durée réelle
-      - 1 date + mot "en cours" (aujourd'hui, present...) → durée jusqu'à
-        maintenant
-      - 1 date sans mention → DUREE_DEFAUT_DATE_UNIQUE (3 mois, anti-bug)
-      - Stages plafonnés à 6 mois
-      - Format invalide → 0.0
+    Durée en années à partir d'une chaîne de période. Gère :
+      - 2 dates explicites           → durée réelle
+      - 1 date + mention "en cours"  → durée jusqu'à maintenant
+                                       (aujourd'hui, présent, depuis…)
+      - 1 date sans mention          → DUREE_DEFAUT_DATE_UNIQUE (3 mois)
+      - stages                       → plafonnés à DUREE_MAX_STAGE
+      - format invalide              → 0.0
+    Formats reconnus : 'Mars 2022', '07.2022', '03/2020', '2018', etc.
     """
     if not date_str:
         return 0.0
 
-    matches = _RE_DATE.findall(date_str)
-    if not matches:
+    dates = _extraire_dates(date_str)
+    if not dates:
         return 0.0
 
     try:
-        m1, y1 = matches[0]
-        debut = datetime(int(y1), int(m1), 1)
+        m1, y1 = dates[0]
+        debut = datetime(y1, m1, 1)
     except (ValueError, IndexError):
         return 0.0
 
-    if len(matches) >= 2:
+    if len(dates) >= 2:
         # Deux dates explicites → durée réelle
         try:
-            m2, y2 = matches[1]
-            fin = datetime(int(y2), int(m2), 1)
+            m2, y2 = dates[1]
+            fin = datetime(y2, m2, 1)
         except ValueError:
             fin = datetime.now()
-        delta_jours = (fin - debut).days
-        duree = max(0.0, delta_jours / 365.25)
+        duree = max(0.0, (fin - debut).days / 365.25)
     elif _RE_EN_COURS.search(date_str):
         # Une date + mot "en cours" → durée jusqu'à maintenant
-        delta_jours = (datetime.now() - debut).days
-        duree = max(0.0, delta_jours / 365.25)
+        duree = max(0.0, (datetime.now() - debut).days / 365.25)
     else:
         # Une seule date sans mention → courte durée par défaut
         duree = DUREE_DEFAUT_DATE_UNIQUE
