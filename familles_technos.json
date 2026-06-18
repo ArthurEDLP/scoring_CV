@@ -11,6 +11,8 @@
     "trello": "project_mgmt",
     "smartsheet": "project_mgmt",
     "tableau de bord (power bi, tableau)": "bi",
+    "Qlik Sense": "bi",
+    "Qlik View": "bi",
     "reporting comex": "bi",
     "suivi budgétaire (excel avancé, sap)": "finance",
     "sql": "query_lang",
