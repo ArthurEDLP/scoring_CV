@@ -239,7 +239,10 @@
     ["data_platform", "data_warehouse"],
     ["python_ai_library", "ml_algorithm"],
     ["observability", "cicd"],
-    ["vector_database", "llm_framework"]
+    ["vector_database", "llm_framework"],
+
+    ["office_automation", "finance"],
+    ["office_automation", "bi"]
 
   ]
 }
