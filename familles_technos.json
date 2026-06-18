@@ -16,12 +16,18 @@
     "microsoft 365": "productivity",
     "google workspace": "productivity",
 
+    "vba": "office_automation",
+    "excel avancé": "office_automation",
+    
+
     "tableau de bord (power bi, tableau)": "bi",
     "power bi": "bi",
     "tableau": "bi",
     "qlik sense": "bi",
     "qlik view": "bi",
     "reporting comex": "bi",
+    "power pivot": "bi",
+    "power query": "bi",
 
     "r shiny": "bi_app_framework",
 
