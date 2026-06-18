@@ -34,7 +34,7 @@ POIDS_AXES = {
 }
 
 # Seuil pour qu'une expérience soit considérée "du poste AO".
-SEUIL_CATEGORIE = 0.75
+SEUIL_CATEGORIE = 0.70
 
 VALEUR_BONUS_ENTREPRISE = 1.0
 
