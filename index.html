@@ -73,6 +73,7 @@
     display:inline-block;padding:3px 10px;border-radius:6px;margin-bottom:8px}
   .cv{border:1px solid var(--line);border-radius:10px;padding:12px 14px;
     margin-bottom:8px;background:var(--panel)}
+  .cv .poste{font-size:12px;font-weight:600;color:var(--blue);margin-bottom:6px}
   .cv .top{display:flex;flex-wrap:wrap;gap:12px;align-items:baseline}
   .cv .rank{color:var(--muted);width:22px}
   .cv .name{font-weight:700}
@@ -241,7 +242,8 @@ function cvHTML(r,i){
   const flag=r.entreprise_matchee?' 🏢 svp reprenez moi':'';
   const ig=r.indicateur_global;
   const glob=ig?`<div class="glob">🌐 affinité offre : cos ${ig.cosine.toFixed(4)} · rang ${ig.rang}/${ig.sur}</div>`:'';
-  return `<div class="cv">
+  const poste=r._poste?`<div class="poste">▸ ${r._poste}</div>`:'';
+  return `<div class="cv">${poste}
     <div class="top">
       <span class="rank">${i}.</span>
       <span class="name">${r.cv_id}${flag}</span>
@@ -254,26 +256,24 @@ function cvHTML(r,i){
 function rendre(res){
   if(!res){$('#res').innerHTML='';return;}
   const cats=res.resultats_acceptes_par_categorie||{};
-  const principal=[],alt=[];
+
+  // Aplatir toutes les catégories en une seule liste, en gardant le poste sur chaque CV
+  const tous=[];
   for(const[nom,cl]of Object.entries(cats)){
-    if(cl&&cl.length&&cl[0].est_poste_ao) principal.push([nom,cl]); else if(cl&&cl.length) alt.push([nom,cl]);
+    if(!cl) continue;
+    for(const r of cl) tous.push({...r, _poste:nom});
   }
-  alt.sort((a,b)=>b[1].length-a[1].length);
+  // Tri par rang global croissant (sans indicateur -> en fin)
+  tous.sort((a,b)=>{
+    const ra=a.indicateur_global?a.indicateur_global.rang:Infinity;
+    const rb=b.indicateur_global?b.indicateur_global.rang:Infinity;
+    return ra-rb;
+  });
+
   let h=`<h3>AO : ${res.offre_id} — poste : ${res.poste_ao}</h3>`;
-  const bloc=(titre,arr)=>{
-    let s=`<div class="grp"><div class="gtitle">${titre}</div>`;
-    if(!arr.length) s+='<div class="hint">aucun CV</div>';
-    for(const[nom,cl]of arr){ s+=`<div class="hint">▸ ${nom} (${cl.length})</div>`;
-      const liste=[...cl].sort((a,b)=>{
-        const ra=a.indicateur_global?a.indicateur_global.rang:Infinity;
-        const rb=b.indicateur_global?b.indicateur_global.rang:Infinity;
-        return ra-rb;                       // rang global croissant : 1/16, 2/16, ...
-      });
-      liste.forEach((r,k)=>s+=cvHTML(r,k+1)); }
-    return s+'</div>';
-  };
-  h+=bloc('🏆 Groupe principal',principal);
-  if(alt.length) h+=bloc('📂 Profils alternatifs',alt);
+  if(!tous.length) h+='<div class="hint">aucun CV</div>';
+  tous.forEach((r,k)=>h+=cvHTML(r,k+1));
+
   const rej=res.cv_rejetes||[];
   if(rej.length){
     h+=`<h3>🚫 Écartés par les garde-fous (${rej.length})</h3>`;
