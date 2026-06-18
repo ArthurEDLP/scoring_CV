@@ -257,22 +257,29 @@ function rendre(res){
   if(!res){$('#res').innerHTML='';return;}
   const cats=res.resultats_acceptes_par_categorie||{};
 
-  // Aplatir toutes les catégories en une seule liste, en gardant le poste sur chaque CV
-  const tous=[];
+  // Aplatir en deux listes (principal / alternatifs), en gardant le poste sur chaque CV
+  const principal=[], alt=[];
   for(const[nom,cl]of Object.entries(cats)){
-    if(!cl) continue;
-    for(const r of cl) tous.push({...r, _poste:nom});
+    if(!cl||!cl.length) continue;
+    const cible = cl[0].est_poste_ao ? principal : alt;
+    for(const r of cl) cible.push({...r, _poste:nom});
   }
-  // Tri par rang global croissant (sans indicateur -> en fin)
-  tous.sort((a,b)=>{
+  const parRang=(a,b)=>{
     const ra=a.indicateur_global?a.indicateur_global.rang:Infinity;
     const rb=b.indicateur_global?b.indicateur_global.rang:Infinity;
-    return ra-rb;
-  });
+    return ra-rb;                       // rang global croissant
+  };
+  principal.sort(parRang); alt.sort(parRang);
 
   let h=`<h3>AO : ${res.offre_id} — poste : ${res.poste_ao}</h3>`;
-  if(!tous.length) h+='<div class="hint">aucun CV</div>';
-  tous.forEach((r,k)=>h+=cvHTML(r,k+1));
+  const bloc=(titre,liste)=>{
+    let s=`<div class="grp"><div class="gtitle">${titre}</div>`;
+    if(!liste.length) s+='<div class="hint">aucun CV</div>';
+    liste.forEach((r,k)=>s+=cvHTML(r,k+1));
+    return s+'</div>';
+  };
+  h+=bloc('🏆 Groupe principal',principal);
+  if(alt.length) h+=bloc('📂 Profils alternatifs',alt);
 
   const rej=res.cv_rejetes||[];
   if(rej.length){
