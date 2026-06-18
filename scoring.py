@@ -20,6 +20,7 @@ Logique :
 from taxonomie import compatibles_technos
 from typing import Dict, List, Optional, Tuple
 import numpy as np
+import unicodedata
 import math
 import re
 
@@ -83,17 +84,34 @@ def categoriser_cv(
 
 # ────────────────────── Score Technos ─────────────────────────────
 
+# Mots de NIVEAU / connecteurs : ils ne définissent pas la techno, on les ignore
+# pour le matching exact (sinon "SQL avancé" ≠ "SQL").
+_QUALIF = {
+    "avance", "avancee", "avancees", "avances", "basique", "basiques",
+    "notion", "notions", "intermediaire", "intermediaires",
+    "expert", "experte", "experts", "courant", "courante", "maitrise",
+    "debutant", "debutante", "confirme", "confirmee", "experimente",
+    "fondamentaux", "simple", "simples", "niveau", "bon", "bonne", "tres",
+    "de", "des", "du", "la", "le", "les", "et", "ou", "au", "aux",
+}
+
+def _sans_accents(s: str) -> str:
+    """'avancé' -> 'avance', 'données' -> 'donnees' (sinon la regex les fragmente)."""
+    return "".join(c for c in unicodedata.normalize("NFD", s)
+                   if unicodedata.category(c) != "Mn")
 
 def _normaliser(label: str) -> str:
     return re.sub(r"\s+", " ", label.strip().lower())
 
-def _tokens(label: str) -> set:
-    # decoupe sur la ponctuation, ignore les tokens d'une lettre (R, C...)
-    return {t for t in re.split(r"[^a-z0-9]+", label.lower()) if len(t) >= 2}
-
 def _coeur(label: str) -> str:
-    """Retire le contenu entre parenthèses : 'Python (pandas, numpy)' -> 'Python'."""
+    """Retire le contenu entre parenthèses : 'Python (pandas)' -> 'Python'."""
     return re.sub(r"\([^)]*\)", " ", label)
+
+def _tokens(label: str) -> set:
+    """Tokens sans accents, sans mots de niveau, longueur >= 2."""
+    s = _sans_accents(label.lower())
+    toks = {t for t in re.split(r"[^a-z0-9]+", s) if len(t) >= 2}
+    return toks - _QUALIF
 
 def score_technos(
     technos_ao,                       # List[{"label": str, "embedding": np.ndarray}]
