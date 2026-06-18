@@ -238,7 +238,7 @@ function technosHTML(details){
   return h;
 }
 function cvHTML(r,i){
-  const flag=r.entreprise_matchee?' 🏢':'';
+  const flag=r.entreprise_matchee?' 🏢 svp reprenez moi':'';
   const ig=r.indicateur_global;
   const glob=ig?`<div class="glob">🌐 affinité offre : cos ${ig.cosine.toFixed(4)} · rang ${ig.rang}/${ig.sur}</div>`:'';
   return `<div class="cv">
