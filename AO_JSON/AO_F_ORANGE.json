@@ -45,24 +45,18 @@
   "entreprise": "Orange",
   "poste": "Data Engineer",
   "technos": [
-    "Databricks Delta Lake",
-    "Databricks Unity Catalog",
-    "Databricks Workflows",
-    "Databricks SQL",
-    "Photon",
-    "Apache Spark (PySpark et Spark SQL)",
-    "Kubernetes",
-    "Git",
-    "Azure DevOps",
-    "Terraform",
-    "Docker",
-    "dbt",
-    "Great Expectations",
-    "Airflow",
     "Python",
+    "Apache Spark (PySpark et Spark SQL)",
+    "Databricks: Delta Lake, Unity Catalog, Workflows, Databricks SQL, Photon",
+    "Gestion des clusters et des coûts (DBU)",
     "SQL avancé",
     "PHP (versions 7.4 et 8.x)",
-    "Apache Spark (optimisation des jobs, tuning de performance)"
+    "Azure (ADLS Gen2, Azure Data Factory, Event Hubs, Key Vault)",
+    "Docker",
+    "Git, Azure DevOps ou GitLab CI, Terraform",
+    "dbt",
+    "Great Expectations",
+    "Airflow"
   ],
   "seniorite_min_annees": 5
 }
