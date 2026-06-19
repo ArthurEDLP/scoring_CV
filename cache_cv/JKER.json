@@ -6,7 +6,7 @@
       {
         "ordre": 0,
         "poste": "Data Analyst",
-        "annees": 2.71,
+        "annees": 2.716,
         "entreprise": "Consortia – La Banque Postale",
         "embedding": {
           "shape": [
@@ -73956,6 +73956,6 @@
         }
       }
     ],
-    "seniorite_totale": 10.79
+    "seniorite_totale": 10.8
   }
 }

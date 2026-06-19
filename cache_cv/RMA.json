@@ -6,7 +6,7 @@
       {
         "ordre": 0,
         "poste": "Commercial",
-        "annees": 7.296,
+        "annees": 7.302,
         "entreprise": "DIOR, Paris",
         "embedding": {
           "shape": [
@@ -20550,6 +20550,6 @@
         }
       }
     ],
-    "seniorite_totale": 11.46
+    "seniorite_totale": 11.47
   }
 }

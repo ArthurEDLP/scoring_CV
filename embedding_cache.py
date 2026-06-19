@@ -132,6 +132,11 @@ DUREE_DEFAUT_DATE_UNIQUE = 0.25   # 3 mois (typiquement un stage court)
 DUREE_MAX_STAGE = 0.5             # 6 mois max
 _RE_STAGE = re.compile(r"\b(stage|stagiaire|intern|internship)\b", re.IGNORECASE)
 
+# Tous les tirets "longs"/exotiques -> trait d'union normal "-"
+_TIRETS = dict.fromkeys(map(ord, "–—‒―−﹘﹣－"), "-")  # en-dash, em-dash, figure dash, minus, fullwidth…
+
+def _normaliser_tirets(s: str) -> str:
+    return s.translate(_TIRETS)
 
 def _est_stage(intitule_poste: str) -> bool:
     return bool(_RE_STAGE.search(intitule_poste or ""))
@@ -143,6 +148,7 @@ def _extraire_dates(date_str: str):
     Reconnaît : mois en lettres ('Mars 2022'), MM/YYYY, MM.YYYY, MM-YYYY,
     et en dernier recours l'année seule ('2018' -> janvier).
     """
+    date_str = _normaliser_tirets(date_str)
     trouve = []  # (position, mois, annee)
     for m in _RE_MOIS_TXT.finditer(date_str):
         cle = m.group(1).lower().rstrip(".")
