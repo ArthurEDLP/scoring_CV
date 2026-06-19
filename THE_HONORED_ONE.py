@@ -2,18 +2,30 @@
 Pipeline complet de matching CV ↔ Offre via LangGraph.
 
 Architecture :
+
+  - noeud_categoriser : pour chaque CV, détermine ses catégories (principale = poste AO, ou alternatives par poste)
+
+  - noeud_technos     : score techno (indépendant de la catégorie)
+
+  - noeud_bonus       : bonus entreprise (indépendant de la catégorie)
+
+  - noeud_agreger     : combine tout, un classement par catégorie
+
+  - noeud_guards      : filtre de récence sur le parcours, sépare les CV acceptés (entrent dans le classement) et rejetés (écartés avec motif)
+
+La séniorité n'a plus de noeud dédié : elle est calculée à l'agrégation, car elle dépend des années déjà filtrées par categoriser_cv.
+
     START
       ├──> categoriser ─┐
       ├──> technos     ─┤──> agreger ──> guards ──> END
       └──> bonus       ─┘
 
 Chaque CV apparaît dans EXACTEMENT UNE catégorie :
-  - groupe principal (poste de l'AO) si match ≥ 0.90 sur au moins 1 exp
+  - groupe principal (poste de l'AO) si match ≥ 0.70 sur au moins 1 exp (cf scoring.py)
   - sinon : groupe alternatif nommé comme son poste le plus récent
 
 Le nœud `guards` applique ensuite un filtre de récence sur le parcours :
-les CV dont l'expérience pertinente est trop ancienne sont écartés
-du classement et basculent dans une liste de rejetés (avec motif).
+les CV dont l'expérience pertinente est trop ancienne sont écartés du classement et basculent dans une liste de rejetés (avec motif).
 """
 
 from datetime import date
@@ -49,7 +61,7 @@ print("Setup terminé.\n")
 # Paramètres des garde-fous.
 # DELTA : à recalibrer sur la distribution observée
 # (le 0.04 vient d'une calibration sur Qwen3-8B).
-GUARDS_DELTA = 0.10
+GUARDS_DELTA = 0.5
 GUARDS_FENETRE_MOIS = None  # None = dérivé de seniorite_min_annees (24 mois min)
 
 
@@ -65,17 +77,17 @@ def noeud_categoriser(state: CVScoringState) -> Dict:
     entries: List[Dict] = []
 
     try:
-        offre_emb = CACHE_OFFRE.obtenir(offre)
+        offre_emb = CACHE_OFFRE.obtenir(offre) # on récupère les AO après embedding
     except Exception as e:
         return {"erreurs": [f"[categoriser] offre {offre['id']}: {e}"]}
 
     poste_obj      = offre_emb["poste"]
-    emb_poste_ao   = poste_obj["embedding"] if poste_obj else None
-    poste_ao_label = poste_obj["label"] if poste_obj else "?"
+    emb_poste_ao   = poste_obj["embedding"] if poste_obj else None # nom du poste embeddé
+    poste_ao_label = poste_obj["label"] if poste_obj else "?" # nom du poste 
 
     for cv in cvs:
         try:
-            cv_emb = CACHE_CV.obtenir(cv)
+            cv_emb = CACHE_CV.obtenir(cv) # on récupère les CV après embedding
             categorie = scoring.categoriser_cv(
                 emb_poste_ao, poste_ao_label, cv_emb["experiences"]
             )

@@ -1,18 +1,6 @@
 """
 État partagé du graphe LangGraph pour le matching CV/AO avec groupes.
 
-Architecture :
-  - noeud_categoriser : pour chaque CV, détermine ses catégories
-                        (principale = poste AO, ou alternatives par poste)
-  - noeud_technos     : score techno (indépendant de la catégorie)
-  - noeud_bonus       : bonus entreprise (indépendant de la catégorie)
-  - noeud_agreger     : combine tout, un classement par catégorie
-  - noeud_guards      : filtre de récence sur le parcours, sépare les CV
-                        acceptés (entrent dans le classement) et rejetés
-                        (écartés avec motif)
-
-La séniorité n'a plus de noeud dédié : elle est calculée à l'agrégation,
-car elle dépend des années déjà filtrées par categoriser_cv.
 """
 
 from typing import TypedDict, List, Annotated, Optional, Dict
@@ -26,8 +14,8 @@ class ScoreGlobalEntry(TypedDict):
 class CategorisationEntry(TypedDict):
     """
     Le résultat de la catégorisation pour un CV.
-    'categorie' = {"nom": ..., "est_poste_ao": True/False} ou None
-    si le CV n'a aucune expérience exploitable.
+    'categorie' = {"nom": ..., "est_poste_ao": True/False} ou None si le CV n'a aucune expérience exploitable.
+    
     """
     cv_id: str
     categorie: Optional[Dict]
@@ -48,8 +36,8 @@ class BonusEntrepriseEntry(TypedDict):
 class CVRejeteEntry(TypedDict):
     """
     Un CV écarté par le nœud guards.
-    Conserve toutes les infos de l'entry agrégée + statut + motif + détails
-    + la catégorie d'où il a été retiré.
+    Conserve toutes les infos de l'entry agrégée + statut + motif + détails + la catégorie d'où il a été retiré.
+    
     """
     cv_id: str
     offre_id: str
