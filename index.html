@@ -291,8 +291,13 @@ function expHTML(r){
   let bulles;
   if(tops.length){
     bulles = '<div class="bulles">' + tops.map(e=>
-      `<span class="bulle"><span class="bp">${e.poste||'—'}</span>`
-      + (e.duree_txt?` · ${e.duree_txt}`:'') + `</span></span>`
+      `<span class="bulle">
+         <span class="bp">${e.poste || '—'}</span>
+         ${e.entreprise ? `<span class="bm"> · ${e.entreprise}</span>` : ''}
+         <span class="bm">
+            ${e.duree_txt ? ` · ${e.duree_txt}` : ''}
+         </span>
+       </span>`
     ).join('') + '</div>';
   } else {
     bulles = '<div class="bulle-vide">Aucune expérience au-dessus du seuil.</div>';

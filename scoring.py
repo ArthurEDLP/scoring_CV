@@ -115,6 +115,7 @@ def top_experiences(emb_ao_complete, experiences_cv, seuil: float = SEUIL_EXP, k
         annees = float(exp.get("annees", 0) or 0)
         scored.append({
             "poste":     exp.get("poste", ""),
+            "entreprise": exp.get("entreprise", ""),
             "cosine":    round(cos, 4),
             "annees":    round(annees, 2),
             "duree_txt": _formater_duree(annees),
