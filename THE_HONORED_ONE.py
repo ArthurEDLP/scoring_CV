@@ -32,6 +32,7 @@ from datetime import date
 from typing import Dict, List
 from collections import defaultdict
 import json
+import numpy as np
 
 from langgraph.graph import StateGraph, START, END
 import ollama
@@ -42,7 +43,7 @@ from State import CVScoringState, state_initial
 import scoring
 import guards
 from guards import detecter_disponibilite
-from score_global import indicateur_global, chemin_cache_global
+from score_global import indicateur_global, chemin_cache_global, texte_ao_complete
 
 
 # ════════════════════════ SETUP ═════════════════════════════════════
@@ -189,6 +190,12 @@ def noeud_bonus(state: CVScoringState) -> Dict:
 
 # ═════════════════════════ AGRÉGATION ════════════════════════════════
 
+def _embed_ollama(texte: str) -> np.ndarray:
+    """Embedding Qwen3-8B via ollama, normalisé (donc dot == cosinus)."""
+    rep = ollama.embeddings(model=MODEL, prompt=texte)
+    v = np.asarray(rep["embedding"], dtype="float32")
+    n = np.linalg.norm(v)
+    return v / n if n > 0 else v
 
 def noeud_agreger(state: CVScoringState) -> Dict:
     """
@@ -224,6 +231,14 @@ def noeud_agreger(state: CVScoringState) -> Dict:
     cos_par_cv = {e["cv_id"]: e["cosine_brut"] for e in state["scores_globaux"]}
     indic = indicateur_global(cos_par_cv)
 
+    # Embedding de l'AO complète (une fois) pour les top-expériences
+    try:
+        emb_ao_complete = _embed_ollama(texte_ao_complete(offre["data"]))
+        print("[top_experiences] embedding AO OK")
+    except Exception as e:
+        print("[top_experiences] embedding AO KO :", repr(e))
+        emb_ao_complete = None
+
     par_categorie: Dict[str, List[Dict]] = defaultdict(list)
 
     for cv_id, categorie in cat_par_cv.items():
@@ -251,6 +266,9 @@ def noeud_agreger(state: CVScoringState) -> Dict:
         exps_brutes = (cv_brut.get("data") or cv_brut).get("experiences", []) if cv_brut else []
         dispo = detecter_disponibilite(exps_brutes, date.today())
 
+        cv_emb_obj = CACHE_CV.obtenir(cv_brut) if cv_brut else {"experiences": []}
+        tops = scoring.top_experiences(emb_ao_complete, cv_emb_obj.get("experiences", []), k=3)
+
         par_categorie[categorie["nom"]].append({
             "cv_id":              cv_id,
             "offre_id":           offre["id"],
@@ -265,6 +283,7 @@ def noeud_agreger(state: CVScoringState) -> Dict:
             "est_poste_ao":       categorie["est_poste_ao"],
             "disponibilite": dispo.value,
             "indicateur_global":  indic.get(cv_id),
+            "top_experiences":    tops,
         })
 
     for cat in par_categorie:

@@ -38,6 +38,7 @@ SEUIL_CATEGORIE = 0.70
 
 VALEUR_BONUS_ENTREPRISE = 1.0
 
+SEUIL_EXP = 0.20
 
 # ──────────────────── Catégorisation ─────────────────────────────────
 
@@ -81,6 +82,45 @@ def categoriser_cv(
     exp_recente = min(experiences_cv, key=lambda e: e["ordre"])
     return {"nom": exp_recente["poste"], "est_poste_ao": False}
 
+import numpy as np   # déjà importé normalement
+
+def _formater_duree(annees: float) -> str:
+    """2.42 -> '2 ans et 5 mois' ; 0.42 -> '5 mois' ; 1.0 -> '1 an'."""
+    if annees is None or annees <= 0:
+        return ""
+    total_mois = round(annees * 12)
+    ans, mois = divmod(total_mois, 12)
+    bouts = []
+    if ans:
+        bouts.append(f"{ans} an" + ("s" if ans > 1 else ""))
+    if mois:
+        bouts.append(f"{mois} mois")
+    return " et ".join(bouts) if bouts else "moins d'un mois"
+
+
+def top_experiences(emb_ao_complete, experiences_cv, seuil: float = SEUIL_EXP, k=3):
+    """<=k expériences les plus proches de l'AO complète (cosinus >= seuil),
+    triées par cosinus décroissant. Vecteurs supposés normalisés."""
+    if emb_ao_complete is None or not experiences_cv:
+        return []
+    emb_ao = np.asarray(emb_ao_complete, dtype="float32")
+    scored = []
+    for exp in experiences_cv:
+        emb = exp.get("embedding")
+        if emb is None:
+            continue
+        cos = float(np.dot(emb_ao, np.asarray(emb, dtype="float32")))
+        if cos < seuil:
+            continue
+        annees = float(exp.get("annees", 0) or 0)
+        scored.append({
+            "poste":     exp.get("poste", ""),
+            "cosine":    round(cos, 4),
+            "annees":    round(annees, 2),
+            "duree_txt": _formater_duree(annees),
+        })
+    scored.sort(key=lambda e: e["cosine"], reverse=True)
+    return scored[:k]
 
 # ────────────────────── Score Technos ─────────────────────────────
 

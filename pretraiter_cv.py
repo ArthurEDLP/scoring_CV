@@ -37,13 +37,13 @@ def _split_hors_parentheses(texte: str) -> List[str]:
     morceaux = []
     courant = []
     niveau = 0   # profondeur de parenthèses
-
+ 
     for c in texte:
         if c == "(":
             niveau += 1
             courant.append(c)
         elif c == ")":
-            niveau = max(0, niveau - 1)
+            niveau = max(0, niveau - 1) # le niveau prend -1 et le max(0, ...) évite de passer en négatif
             courant.append(c)
         elif niveau == 0 and c in "|;/,":
             if courant:
