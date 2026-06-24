@@ -71,6 +71,11 @@
   .grp{margin:14px 0}
   .grp .gtitle{font-weight:700;color:var(--grp);background:var(--blue);
     display:inline-block;padding:3px 10px;border-radius:6px;margin-bottom:8px}
+  .grp .gtitle.btn-alt{border:2px solid var(--blue);cursor:pointer;font:inherit;
+    font-weight:700;color:#fff;background:var(--blue);transition:.15s}
+  .grp .gtitle.btn-alt:hover{background:var(--accent2);border-color:var(--accent2);color:var(--blue)}
+  .grp .gtitle.btn-alt::after{content:' ▾';font-size:11px}
+  .grp .gtitle.btn-alt[aria-expanded="true"]::after{content:' ▴'}
   .cv{border:1px solid var(--line);border-radius:10px;padding:12px 14px;
     margin-bottom:8px;background:var(--panel)}
   .cv .poste{font-size:12px;font-weight:600;color:var(--blue);margin-bottom:6px}
@@ -98,10 +103,10 @@
   .hint{color:var(--muted);font-size:12px}
 
   .header-tools{margin-left:auto;display:flex;align-items:center;gap:10px}
-  .switch-label{display:flex;align-items:center;gap:8px;color:var(--warn);font-size:13px;font-weight:600;user-select:none}
+  .switch-label{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:13px;font-weight:600;user-select:none}
   .switch-label input{position:absolute;opacity:0;pointer-events:none}
   .switch-ui{width:44px;height:24px;border-radius:999px;background:var(--panel2);border:1px solid var(--line);position:relative;transition:.15s}
-  .switch-ui::after{content:"";position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:var(--blue);transition:.15s}
+  .switch-ui::after{content:"";position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:var(--muted);transition:.15s}
   .switch-label input:checked + .switch-ui{background:var(--blue);border-color:var(--blue)}
   .switch-label input:checked + .switch-ui::after{left:22px;background:#fff}
   .tech-score{display:none}
@@ -314,14 +319,22 @@ function rendre(res){
   principal.sort(parRang); alt.sort(parRang);
 
   let h=`<h3>AO : ${res.offre_id} — poste : ${res.poste_ao}</h3>`;
-  const bloc=(titre,liste)=>{
-    let s=`<div class="grp"><div class="gtitle">${titre}</div>`;
+  const bloc=(titre,liste,options={})=>{
+    const collapsible = options.collapsible || false;
+    let s=`<div class="grp">`;
+    if(collapsible){
+      s+=`<button type="button" class="gtitle btn-alt" data-alt="1" aria-expanded="false">${titre} (${liste.length})</button>`;
+      s+=`<div class="alt-body" hidden>`;
+    } else {
+      s+=`<div class="gtitle">${titre}</div>`;
+    }
     if(!liste.length) s+='<div class="hint">aucun CV</div>';
     liste.forEach((r,k)=>s+=cvHTML(r,k+1));
+    if(collapsible) s+='</div>';
     return s+'</div>';
   };
   h+=bloc('🏆 Groupe principal',principal);
-  if(alt.length) h+=bloc('📂 Profils alternatifs',alt);
+  if(alt.length) h+=bloc('📂 Profils alternatifs',alt,{collapsible:true});
 
   const rej=res.cv_rejetes||[];
   if(rej.length){
@@ -335,15 +348,26 @@ function rendre(res){
 }
 
 
-// ---------- toggle "Expérience" par CV (délégation) ----------
+// ---------- toggles résultats (délégation) ----------
 $('#res').addEventListener('click',e=>{
-  const b=e.target.closest('[data-exp]');
-  if(!b)return;
-  const body=b.nextElementSibling;          // le <div class="exp-body">
-  if(!body)return;
-  const ouvert=body.hidden===false;
-  body.hidden=ouvert;
-  b.setAttribute('aria-expanded', String(!ouvert));
+  const bExp=e.target.closest('[data-exp]');
+  if(bExp){
+    const body=bExp.nextElementSibling;          // le <div class="exp-body">
+    if(!body)return;
+    const ouvert=body.hidden===false;
+    body.hidden=ouvert;
+    bExp.setAttribute('aria-expanded', String(!ouvert));
+    return;
+  }
+
+  const bAlt=e.target.closest('[data-alt]');
+  if(bAlt){
+    const body=bAlt.nextElementSibling;          // le <div class="alt-body">
+    if(!body)return;
+    const ouvert=body.hidden===false;
+    body.hidden=ouvert;
+    bAlt.setAttribute('aria-expanded', String(!ouvert));
+  }
 });
 
 // ---------- switch daltonien / scores technos ----------
