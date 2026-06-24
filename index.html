@@ -287,7 +287,6 @@ function expHTML(r){
   if(tops.length){
     bulles = '<div class="bulles">' + tops.map(e=>
       `<span class="bulle"><span class="bp">${e.poste||'—'}</span>`
-      + ` <span class="bm">· cos ${(+e.cosine).toFixed(2)}`
       + (e.duree_txt?` · ${e.duree_txt}`:'') + `</span></span>`
     ).join('') + '</div>';
   } else {
