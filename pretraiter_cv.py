@@ -91,6 +91,28 @@ def _eclater_technos(technos_brutes: List[str]) -> List[str]:
 
     return resultat
 
+# ─────────────────────────────────────────────────────────────────────
+# Nettoyage des entreprise 
+# ─────────────────────────────────────────────────────────────────────
+
+def nettoyer_entreprise(entreprise: str) -> str:
+    if not isinstance(entreprise, str):
+        return ""
+
+    courant, morceaux = [], []
+
+    for c in entreprise:
+
+        if c in "|;/,—-_":
+            morceaux.append("".join(courant))
+            courant = []
+        
+        else:
+            courant.append(c)
+    
+    morceaux.append("".join(courant))
+
+    return morceaux[0].strip()
 
 # ─────────────────────────────────────────────────────────────────────
 # Structuration : on ne touche QUE les technos, le reste est recopié
@@ -109,6 +131,7 @@ def structurer_cv(cv_brut: Dict) -> Dict:
             d = e.get("details")
             if isinstance(d, list):
                 e["details"] = " ".join(str(x).strip() for x in d if x)
+            e["entreprise"] = nettoyer_entreprise(e.get("entreprise", ""))
             exps.append(e)
     if exps:
         cv_propre["experiences"] = exps
