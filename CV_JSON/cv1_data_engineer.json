@@ -85,25 +85,25 @@
     {
       "poste": "Lead Data Engineer",
       "date": "09/2022 - Aujourd'hui",
-      "entreprise": "TotalEnergies, Paris La Défense",
+      "entreprise": "TotalEnergies",
       "details": "Contexte : Refonte complète de la plateforme data du département Trading & Shipping pour traiter plus de 15 To de données quotidiennes issues de capteurs IoT, plateformes de trading et systèmes ERP. Conception et mise en œuvre d'une architecture Data Lakehouse sur AWS (S3 + Databricks Unity Catalog) avec approche Medallion (Bronze/Silver/Gold). Développement de pipelines de streaming temps réel sur Apache Kafka et Spark Structured Streaming pour le suivi des positions de trading (latence < 2 secondes). Industrialisation de plus de 80 pipelines batch via Apache Airflow (orchestration de plus de 2000 tâches quotidiennes). Mise en place du framework dbt Core avec plus de 350 modèles et tests automatisés couvrant 95% des transformations. Animation d'une équipe de 6 data engineers (2 seniors, 3 confirmés, 1 junior) avec rituels Scrum et code reviews systématiques. Définition des standards d'architecture data du groupe et accompagnement des autres BU dans leur adoption. Réduction des coûts cloud de 38% via optimisation des requêtes Spark et politique de cycle de vie S3."
     },
     {
       "poste": "Senior Data Engineer",
       "date": "04/2019 - 08/2022",
-      "entreprise": "Bouygues Telecom, Issy-les-Moulineaux",
+      "entreprise": "Bouygues Telecom",
       "details": "Contexte : Construction d'une plateforme analytique unifiée pour la connaissance client au sein de la direction Marketing Digital. Migration des traitements Hadoop on-premise vers Google Cloud Platform (BigQuery, Dataflow, Composer). Conception d'un pipeline d'ingestion CDC (Change Data Capture) avec Debezium et Kafka pour synchroniser plus de 200 tables Oracle vers BigQuery en quasi temps réel. Implémentation d'un modèle Data Vault 2.0 sur le périmètre client (45 millions de lignes mises à jour quotidiennement). Mise en place de la chaîne CI/CD complète (GitLab, Terraform, Cloud Build) avec déploiement automatisé sur 3 environnements. Développement de connecteurs custom Kafka Connect pour intégrer les sources non-standards (mainframes IMS, fichiers EBCDIC). Encadrement technique de 3 data engineers et formation interne sur Spark/Scala (sessions mensuelles). Contribution à la mise en place du Data Catalog d'entreprise (DataHub) couvrant plus de 1500 datasets."
     },
     {
       "poste": "Data Engineer",
       "date": "10/2016 - 03/2019",
-      "entreprise": "Air France-KLM, Roissy",
+      "entreprise": "Air France",
       "details": "Contexte : Mise en place de la plateforme Big Data du programme Flying Blue pour la personnalisation de l'expérience voyageur. Développement de jobs Spark (Scala) pour le calcul des segmentations clients sur un cluster Hortonworks (50 nœuds). Implémentation d'algorithmes de matching de profils passagers (entre PNR, fidélité et données digitales) avec Spark MLlib. Mise en place de l'orchestration via Oozie puis migration vers Airflow. Création d'API REST en Python (Flask) pour exposer les segments clients aux applications consommatrices. Participation à la définition du modèle de données du Data Lake (HDFS + Hive)."
     },
     {
       "poste": "Consultant Data / BI",
       "date": "09/2014 - 09/2016",
-      "entreprise": "Capgemini Invent, Paris",
+      "entreprise": "Capgemini Invent",
       "details": "Contexte : Missions de conseil en BI et Big Data pour des clients du secteur bancaire et de l'énergie. Mission Société Générale (12 mois) : développement de tableaux de bord SAS et Tableau pour le contrôle de gestion. Mission EDF (10 mois) : mise en place d'un POC Hadoop (Cloudera) pour l'analyse des courbes de charge des compteurs Linky. Animation d'ateliers de cadrage et rédaction de spécifications fonctionnelles et techniques. Développement ETL Talend et procédures stockées Oracle PL/SQL."
     }
   ]

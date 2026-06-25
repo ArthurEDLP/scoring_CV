@@ -45,19 +45,19 @@
     {
       "poste": "Data Scientist / Chef de projet Data",
       "date": "02/2022 - 09/2023",
-      "entreprise": "Consortia - PMU",
+      "entreprise": "Consortia",
       "details": "Réalisations Apport de l'expertise en Machine Learning • Apport de mon expérience auprès des équipes avec un accompagnement sur les bonnes pratiques en Machine Learning, avec audit des modèles existants, correction des problèmes identifiés et optimisation des workflows • Conseil dans l'utilisation de Dataiku, en mettant en avant des fonctionnalités sous-exploitées ou mal utilisées afin d'améliorer la performance et la robustesse des modèles (churn, segmentations, clustérisassions) et ainsi ne pas tirer de conclusions erronées Sujets traités • Analyses du portefeuille de clients ONLINE du PMU, études AD HOC et développement de nouveau KPI o Analyses descriptives diverses o Extractions de sous périmètres de clients o Création de KPI tel que la balance des gains, un flag 'mauvais filleul'... afin d'améliorer la connaissance des clients et améliorer les modèles • Refonte et développement de modélisations des enjeux quotidiens ONLINE o Corrections des données o Benchmark de plusieurs modélisations o Optimisation des paramètres des modélisations • Participation active dans les réflexions et développements pour la lutte contre la fraude o Recommandation d'une règle permettant de réduire la fraude au parrainage de plus de 80% • Simulation des budgets pour les opérations marketing • Webscraping des TRP (Taux Retour Parieurs) des concurrents et formation des équipes sur le sujet o Projet initialement prévu pour répondre à une question simple vis à vis d'un seul concurrent qui s'est étendu à une veille concurrentielle sur plusieurs d'entre eux • Pour l'ensembles des sujets précédents, le choix a été fait d'utiliser les recettes natives de Dataiku (aussi bien pour le prétraitement des données, la visualisation ainsi que la modélisation) pour assurer l’accessibilité et la réplicabilité des projets par l’ensemble des équipes. L'intégration de scripts Python a été faite uniquement pour les besoins non couverts nativement (ex : Webscraping) Environnement Projet Dataiku, Python, SQL Enjeux Analyse de données, Lutte contre la fraude, Formation, Conseil"
     },
     {
       "poste": "Data Analyst / Chef de projet Data",
       "date": "06/2021 - 11/2021",
-      "entreprise": "Consortia - AXA",
+      "entreprise": "Consortia",
       "details": "Réalisations Développement d'une application RShiny pour la gestion de suivi des contrats d'assurance chantiers - Cadrage de l'expression de besoin avec les équipes opérationnelles. - Mise en place de maquettes visuelles pour valider l'expression de besoins. - Développement de l'application en RShiny avec Shinydashboard. - Création de la base de données pour y sauvegarder les données saisies au sein de l'application. - Mise en place d'un système d'alertes sur les actions à effectuer sur les contrats pour faciliter le suivi et la gestion par les équipes - Formation d'un junior en R, RShiny et Git Environnement Projet R, RShiny, Git, SQL Enjeux Gestion de projet, Rigueur, Autonomie, Vulgarisation auprès des commanditaires"
     },
     {
       "poste": "Data Analyst",
       "date": "06/2017 - 05/2021",
-      "entreprise": "Consortia - EDF",
+      "entreprise": "Consortia",
       "details": "Réalisations Direction Numérique - Mise en place de Dashboard Shiny - Utilisation d'expressions régulières pour repérer les entreprises ayant une raison sociale associé à une personne physique. - Refonte d'un projet de cartographie (Mapinfo) en Shiny avec le package Leafleft. - Projet de génération automatique de PDF dans le cadre du POC Premium EDF - Mise en place d'un score d'appétence à des services - Mise en place de la chaine de traitement pour la livraison des données aux concurrents d'EDF dans le cadre d'un projet règlementaire - Enrichissement de bases de données à l'aide du web scraping - Automatisation de la construction de la base de modélisation pour les score afin d'homogénéiser les indicateurs - Développement d'un Shiny permettant de faciliter la compréhension et l'utilisation des bases de données du marché d'affaire au quotidien et faciliter leur compréhension aux nouveaux arrivants - Automatisation de ciblages pour des campagnes marketing - Alimentation automatique de maquettes Excel avec R pour le le marketing Environnement Projet R, Python Enjeux Expertise en modélisation, Rigueur, Travail d'équipe, Vulgarisation auprès des commanditaires"
     },
     {

@@ -43,7 +43,7 @@ from State import CVScoringState, state_initial
 import scoring
 import guards
 from guards import detecter_disponibilite
-from score_global import indicateur_global, chemin_cache_global, texte_ao_complete
+from score_global import indicateur_global, chemin_cache_global
 
 
 # ════════════════════════ SETUP ═════════════════════════════════════
@@ -190,12 +190,6 @@ def noeud_bonus(state: CVScoringState) -> Dict:
 
 # ═════════════════════════ AGRÉGATION ════════════════════════════════
 
-def _embed_ollama(texte: str) -> np.ndarray:
-    """Embedding Qwen3-8B via ollama, normalisé (donc dot == cosinus)."""
-    rep = ollama.embeddings(model=MODEL, prompt=texte)
-    v = np.asarray(rep["embedding"], dtype="float32")
-    n = np.linalg.norm(v)
-    return v / n if n > 0 else v
 
 def noeud_agreger(state: CVScoringState) -> Dict:
     """
@@ -231,13 +225,16 @@ def noeud_agreger(state: CVScoringState) -> Dict:
     cos_par_cv = {e["cv_id"]: e["cosine_brut"] for e in state["scores_globaux"]}
     indic = indicateur_global(cos_par_cv)
 
-    # Embedding de l'AO complète (une fois) pour les top-expériences
-    try:
-        emb_ao_complete = _embed_ollama(texte_ao_complete(offre["data"]))
-        print("[top_experiences] embedding AO OK")
-    except Exception as e:
-        print("[top_experiences] embedding AO KO :", repr(e))
+    # Embedding de l'AO complète : récupéré depuis le cache
+    # (au lieu d'appeler Ollama à chaque matching)
+    offre_emb = CACHE_OFFRE.obtenir(offre)
+    ao_complete = offre_emb.get("ao_complete")
+    if ao_complete is not None:
+        emb_ao_complete = ao_complete["embedding"]
+        print("[top_experiences] embedding AO chargé depuis cache")
+    else:
         emb_ao_complete = None
+        print("[top_experiences] AO complète absente du cache")
 
     par_categorie: Dict[str, List[Dict]] = defaultdict(list)
 

@@ -76,3 +76,24 @@ def slugifier(titre: str) -> str:
 
 #---------------#         #------------#         #---------#         #------#
 
+def nettoyer_enteprise(entreprise: str) -> str:
+
+    courant, morceaux = [], []
+
+    for c in entreprise:
+
+        if c in "|;/,—-_":
+            morceaux.append("".join(courant))
+            courant = []
+        
+        else:
+            courant.append(c)
+    
+    morceaux.append("".join(courant))
+
+    return morceaux[0]
+
+# print(nettoyer_enteprise("Veltyx Consulting — Lyon (69002) — Mission chez BNP Paribas Personal Finance"))
+
+#---------------#         #------------#         #---------#         #------#
+

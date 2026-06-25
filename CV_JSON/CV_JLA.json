@@ -64,19 +64,19 @@
     {
       "poste": "Data Scientist",
       "date": "07.2022 – 12.2022",
-      "entreprise": "Safran Spacecraft Propulsion - Direction : Propulsion Électrique Spatiale",
+      "entreprise": "Safran Spacecraft Propulsion",
       "details": "Réalisations Résumé de la mission 1 : • Data Governance : définition et déploiement de normes de qualité, formats et métadonnées sous Collibra • Extraction de données non-structurées : pipeline OCR + NLP pour structurer les rapports PDF, validation semi-automatique via Dataiku Résumé de la mission 2 : • Détection d’anomalies : création d’un pipeline Dataiku (pré-processing, feature engineering) et data augmentation par GAN • Entraînement/validation du modèle pour anticiper les défauts de composants spatiaux Environnement Projet Équipe R&D propulsion électrique (5 ingénieurs, 1 data scientist), stack : Dataiku, Python (pandas, TensorFlow), OCR/NLP, Collibra. Enjeux Assurer traçabilité et qualité des données d’essais pour certification Réduire les coûts de non-qualité par détection précoce des anomalies Instaurer une culture de surveillance proactive des anomalies techniques Résultats Workflows automatisés d’OCR/NLP qui ont transformé la gestion des rapports techniques Confiance accrue des équipes R&D dans les analyses de qualité et de performance Mise en place d’un socle méthodologique pour la détection anticipée des défaillances"
     },
     {
       "poste": "Data Scientist / Data Analyst",
       "date": "09.2020 – 09.2021",
-      "entreprise": "Allianz - Direction : Lutte contre la Fraude et le Blanchiment d’Argent",
+      "entreprise": "Allianz",
       "details": "Réalisations Résumé de la mission 1 : • Détection proactive : modèles ML (Random Forest, XGBoost) pour identifier comportements suspects avant enquête manuelle • Automatisation des alertes critiques sous SAS Résumé de la mission 2 : • Datamart & KPI : architecture d’un Datamart centralisé sous SAS, définition de KPI (taux de détection, faux positifs, temps de réponse) • Reporting opérationnel : tableaux de bord Excel/VBA et formation des enquêteurs à l’interprétation des indicateurs Environnement Projet Équipe anti-fraude (3 data analysts, 4 enquêteurs), stack : SAS, Excel/VBA, SQL Server. Enjeux Passer d’une réaction post-incident à une détection précoce des fraudes Offrir aux enquêteurs des indicateurs clairs pour prioriser leurs interventions Instaurer une gouvernance robuste autour des données sensibles Résultats Intégration fluide des alertes ML dans le quotidien des analystes fraude Meilleure synergie entre data analysts et équipes opérationnelles Mise en place d’un suivi continu des performances, favorisant l’amélioration itérative des modèles"
     },
     {
       "poste": "Data Analyst",
       "date": "03.2020 – 08.2020",
-      "entreprise": "Euler Hermes (Allianz Trade) - Direction : Risques, Conformité et Statistiques",
+      "entreprise": "Euler Hermes (Allianz Trade)",
       "details": "Réalisations Résumé de la mission 1 : • Migration ETL & Datamart : refonte des flux (Excel/VBA → SAS) et création d’un Datamart unifié pour centraliser les données risque Résumé de la mission 2 : • KPI & dashboards juridiques : définition d’indicateurs de suivi des procédures collectives, développement de reportings Excel/VBA pour les juristes Environnement Projet Équipe conformité/statistiques (1 data analysts, 3 juristes), stack : SAS, Excel/VBA, SQL. Enjeux Centraliser l’ensemble des informations de risque pour les juristes Simplifier l’accès aux indicateurs clés pour accélérer la prise de décision Garantir la cohérence des données tout au long du processus d’analyse juridique Résultats Datamart unifié qui est devenu la source de référence pour les équipes conformité Dashboards sur-mesure qui ont transformé la manière dont les juristes consultent les données Processus d’analyse juridique raccourci grâce à une meilleure lisibilité et accessibilité des indicateurs"
     }
   ]

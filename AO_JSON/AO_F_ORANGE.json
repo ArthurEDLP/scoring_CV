@@ -45,9 +45,10 @@
   "entreprise": "Orange",
   "poste": "Data Engineer",
   "technos": [
-    "Databricks Delta Lake",
-    "Databricks Unity Catalog",
-    "Databricks Workflows",
+    "Databricks",
+    "Delta Lake",
+    "Unity Catalog",
+    "Workflows",
     "Databricks SQL",
     "Photon",
     "Apache Spark (PySpark et Spark SQL)",
@@ -58,11 +59,7 @@
     "Docker",
     "dbt",
     "Great Expectations",
-    "Airflow",
-    "Python",
-    "SQL avancé",
-    "PHP (versions 7.4 et 8.x)",
-    "Apache Spark (optimisation des jobs, tuning de performance)"
+    "Airflow"
   ],
   "seniorite_min_annees": 5
 }
