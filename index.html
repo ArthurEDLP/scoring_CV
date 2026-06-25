@@ -94,9 +94,35 @@
   .cv .sc{font-variant-numeric:tabular-nums}
   .cv .sc b{color:#ffffff;background:var(--blue);padding:0 5px;border-radius:4px}
   .cv .glob{color:var(--glob);font-size:12px;margin-top:6px}
-  .tk{display:inline-block;font-size:12px;padding:2px 8px;border-radius:20px;
-    margin:3px 4px 0 0;border:1px solid var(--line)}
-  .tk.exact{color:var(--ok)} .tk.semantique{color:var(--mid)} .tk.absent{color:var(--bad)}
+  .tk{
+    display:inline-flex;
+    align-items:center;
+
+    padding:6px 12px;
+    margin:4px 6px 4px 0;
+
+    border-radius:999px;   /* vraie bulle */
+    border:1px solid transparent;
+    font-size:12px;
+    font-weight:600;
+    line-height:1.2;
+    color:#111;
+  }
+
+  .tk.exact{
+    background:#86efac;
+    border-color:var(--ok);
+  }
+
+  .tk.semantique{
+    background:#fde68a;
+    border-color:var(--mid);
+  }
+
+  .tk.absent{
+    background:#fca5a5;
+    border-color:var(--bad);
+  }
   .rej{border-left:3px solid var(--bad);padding:8px 12px;margin-bottom:6px;
     background:var(--panel);border-radius:0 8px 8px 0}
   .rej .motif{color:var(--muted);font-size:12px}
@@ -175,11 +201,15 @@ let selectedAO = null;
 async function refresh(){
   const s = await api('/api/state');
   // CV
-  $('#pendCV').textContent = s.cv_brutes.length ? `${s.cv_brutes.length} fichier(s) à préparer : ${s.cv_brutes.join(', ')}` : '';
+  const cvPrets = new Set(s.cvs_prets);
+  const cvAPreparer = s.cv_brutes.filter(id => !cvPrets.has(id));
+  $('#pendCV').textContent = cvAPreparer.length ? `${cvAPreparer.length} fichier(s) à préparer : ${cvAPreparer.join(', ')}` : '';
   $('#lstCV').innerHTML = s.cvs_prets.map(id=>`<li><span class="id">${id}</span><span class="meta">prêt</span></li>`).join('')
             || '<li class="meta">aucun CV prêt</li>';
   // AO
-  $('#pendAO').textContent = s.ao_brutes.length ? `${s.ao_brutes.length} fichier(s) à préparer : ${s.ao_brutes.join(', ')}` : '';
+  const aoPrets = new Set((s.aos_prets || []).map(a => a.fichier));
+  const aoAPreparer = s.ao_brutes.filter(id => !aoPrets.has(id));
+  $('#pendAO').textContent = aoAPreparer.length ? `${aoAPreparer.length} fichier(s) à préparer : ${aoAPreparer.join(', ')}` : '';
   $('#lstAO').innerHTML = s.aos_prets.map(a=>`
     <li>
       <input type="radio" name="ao" value="${a.id}" ${selectedAO===a.id?'checked':''}>
@@ -271,6 +301,7 @@ function technosHTML(details){
   return h;
 }
 function cvHTML(r,i){
+  console.log("CV", r.cv_id, "top_experiences =", r.top_experiences);
   const flag=r.entreprise_matchee?' 🏢 svp reprenez moi':'';
   const ig=r.indicateur_global;
   const glob=ig?`<div class="glob">🌐 affinité offre : cos ${ig.cosine.toFixed(4)} · rang ${ig.rang}/${ig.sur}</div>`:'';

@@ -38,7 +38,7 @@ SEUIL_CATEGORIE = 0.70
 
 VALEUR_BONUS_ENTREPRISE = 1.0
 
-SEUIL_EXP = 0.70
+SEUIL_EXP = 0.50
 
 # ──────────────────── Catégorisation ─────────────────────────────────
 
