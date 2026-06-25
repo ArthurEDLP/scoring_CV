@@ -188,6 +188,22 @@
   .rej .motif{color:var(--muted);font-size:12px}
   .hint{color:var(--muted);font-size:12px}
 
+  .alt-body .cv{
+  opacity:0;
+  transform:translateY(16px);
+  }
+
+  .alt-body .cv.domino-visible{
+  animation:dominoIn .35s ease forwards;
+  }
+
+  @keyframes dominoIn{
+  to{
+    opacity:1;
+    transform:translateY(0);
+    }
+  }
+
   .header-tools{margin-left:auto;display:flex;align-items:center;gap:10px}
   .switch-label{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:13px;font-weight:600;user-select:none}
   .switch-label input{position:absolute;opacity:0;pointer-events:none}
@@ -352,7 +368,7 @@ function technosHTML(details){
   for(const[t,d]of Object.entries(details)){
     const s=scoreOf(d), src=(d&&d.source)||'exact';
     const ma=(d&&d.matche_avec&&d.matche_avec!==t)?'→'+d.matche_avec:'';
-    const chip=`<span class="tk ${src}">${t}${ma}<span class="tech-score"> (${(+s).toFixed(2)})</span></span>`;
+    const chip=`<span class="tk ${src} ">${t}${ma}<span class="tech-score"> (${(+s).toFixed(2)})</span></span>`;
     (s>=0.5?ok:ko).push(chip);
   }
   let h='';
@@ -461,7 +477,36 @@ $('#res').addEventListener('click',e=>{
     const body=bAlt.nextElementSibling;          // le <div class="alt-body">
     if(!body)return;
     const ouvert=body.hidden===false;
-    body.hidden=ouvert;
+    if(ouvert){
+      body.querySelectorAll('.cv').forEach(cv => {
+        cv.classList.remove('domino-visible');
+        cv.style.animationDelay = '';
+      });
+      body.hidden = true;
+    } else {
+      body.hidden = false;
+      
+      const cvs = body.querySelectorAll('.cv');
+
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if(!entry.isIntersecting) return;
+
+          const cv = entry.target;
+          const index = [...cvs].indexOf(cv);
+
+          cv.style.animationDelay = `${index * 90}ms`;
+          cv.classList.add('domino-visible');
+
+          obs.unobserve(cv);
+        });
+      }, {
+        threshold:0.2
+      });
+
+      cvs.forEach(cv => observer.observe(cv));
+    }
+
     bAlt.setAttribute('aria-expanded', String(!ouvert));
   }
 });
