@@ -368,7 +368,7 @@ function technosHTML(details){
   for(const[t,d]of Object.entries(details)){
     const s=scoreOf(d), src=(d&&d.source)||'exact';
     const ma=(d&&d.matche_avec&&d.matche_avec!==t)?'→'+d.matche_avec:'';
-    const chip=`<span class="tk ${src} ">${t}${ma}<span class="tech-score"> (${(+s).toFixed(2)})</span></span>`;
+    const chip=`<span class="tk ${src} ">${t}${ma}<span class="tech-score"> : ${(+s).toFixed(2)}</span></span>`;
     (s>=0.5?ok:ko).push(chip);
   }
   let h='';
