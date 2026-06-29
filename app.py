@@ -28,6 +28,8 @@ import traceback
 from pathlib import Path
 from typing import Dict, List
 
+from score_global import chemin_cache_global
+
 from fastapi import FastAPI, UploadFile, File, HTTPException, BackgroundTasks
 from fastapi.responses import HTMLResponse, FileResponse
 
@@ -84,7 +86,7 @@ def etat():
     aos_prets = []
     for p in sorted(AO_TRAITES.glob("*.json")):
         ao_id = _lire_id_interne(p)
-        cache = (CACHE_GLOBAL / f"global_{ao_id}.json").exists()
+        cache = chemin_cache_global(ao_id, str(CACHE_GLOBAL)).exists()
         aos_prets.append({"id": ao_id, "fichier": p.stem, "score_global": cache})
     return {
         "ao_brutes":  _ids_dans(AO_BRUTES),
@@ -118,7 +120,7 @@ def supprimer_ao(ao_id: str):
     cibles = [
         AO_BRUTES  / f"{ao_id}.json",
         AO_TRAITES / f"{ao_id}.json",
-        CACHE_GLOBAL / f"global_{ao_id}.json",
+        chemin_cache_global(ao_id, str(CACHE_GLOBAL)),
     ]
     supprimes = [c.name for c in cibles if c.exists()]
     for c in cibles:

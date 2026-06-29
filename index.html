@@ -97,9 +97,22 @@
   button:hover{background:var(--accent2);border-color:var(--accent2);color:var(--blue)}
   button:disabled{opacity:.45;cursor:not-allowed;background:var(--blue);
     border-color:var(--blue);color:#ffffff}
-  button.ghost{background:transparent;border:1px solid var(--line);color:var(--txt);
-    padding:5px 10px;font-weight:600;font-size:12px}
-  button.ghost:hover{background:var(--accent2);border-color:var(--accent2);color:var(--blue)}
+  button.ghost{
+    background:var(--bad);
+    border:1px solid var(--bad);
+    color:#fff;
+
+    padding:5px 10px;
+    font-weight:600;
+    font-size:12px;
+
+    transition:.18s;
+  }
+  button.ghost:hover{
+    background:#ffd7d9;
+    border-color:#ffd7d9;
+    color:var(--bad);
+  }
   .actions{display:flex;gap:12px;align-items:center;margin:20px 0}
   .bar{height:8px;background:var(--panel2);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:6px}
   .bar>i{display:block;height:100%;width:0;background:var(--blue);transition:width .3s}
@@ -280,8 +293,11 @@ async function refresh(){
   const cvPrets = new Set(s.cvs_prets);
   const cvAPreparer = s.cv_brutes.filter(id => !cvPrets.has(id));
   $('#pendCV').textContent = cvAPreparer.length ? `${cvAPreparer.length} fichier(s) à préparer : ${cvAPreparer.join(', ')}` : '';
-  $('#lstCV').innerHTML = s.cvs_prets.map(id=>`<li><span class="id">${id}</span><span class="meta">prêt</span></li>`).join('')
-            || '<li class="meta">aucun CV prêt</li>';
+  $('#lstCV').innerHTML = s.cvs_prets.map(id=>`
+    <li>
+      <span class="id">${id}</span>
+      <span class="meta">prêt</span>
+    </li>`).join('') || '<li class="meta">aucun CV prêt</li>';
   // AO
   const aoPrets = new Set((s.aos_prets || []).map(a => a.fichier));
   const aoAPreparer = s.ao_brutes.filter(id => !aoPrets.has(id));
@@ -290,7 +306,7 @@ async function refresh(){
     <li>
       <input type="radio" name="ao" value="${a.id}" ${selectedAO===a.id?'checked':''}>
       <span class="id">${a.id}</span>
-      <span class="badge ${a.score_global?'on':'off'}">${a.score_global?'score global ✓':'score global ✗'}</span>
+      <span class="badge ${a.score_global?'on':'off'}">${a.score_global?'Prêt ✓':'A préparer ✗'}</span>
       <span class="meta"><button class="ghost" data-del="${a.id}">supprimer</button></span>
     </li>`).join('') || '<li class="meta">aucune AO prête</li>';
   // (ré)attache les events
@@ -409,7 +425,7 @@ function expHTML(r){
   } else {
     bulles = '<div class="bulle-vide">Aucune expérience au-dessus du seuil.</div>';
   }
-  return `<button type="button" class="btn-exp" data-exp="1" aria-expanded="false">Expérience</button>`
+  return `<button type="button" class="btn-exp" data-exp="1" aria-expanded="false">Expérience(s)</button>`
        + `<div class="exp-body" hidden>${bulles}</div>`;
 }
 function rendre(res){
