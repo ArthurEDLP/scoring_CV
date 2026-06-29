@@ -296,7 +296,7 @@ async function refresh(){
   $('#lstCV').innerHTML = s.cvs_prets.map(c=>`
     <li>
       <span class="id">${c.id}</span>
-      <span class="badge ${c.embedding_pret?'on':'off'}">${c.embedding_pret?'Prêt ✓':'A préparer ✗'}</span>
+      <span class="badge ${c.embedding_pret?'on':'off'}">${c.embedding_pret?'Embeddé ✓':'Non embeddé ✗'}</span>
     </li>`).join('') || '<li class="meta">aucun CV prêt</li>';
   // AO
   const aoPrets = new Set((s.aos_prets || []).map(a => a.fichier));
@@ -306,7 +306,7 @@ async function refresh(){
     <li>
       <input type="radio" name="ao" value="${a.id}" ${selectedAO===a.id?'checked':''}>
       <span class="id">${a.id}</span>
-      <span class="badge ${a.score_global?'on':'off'}">${a.score_global?'Prêt ✓':'A préparer ✗'}</span>
+      <span class="badge ${a.score_global?'on':'off'}">${a.score_global?'Cache global ✓':'À précalculer ✗'}</span>
       <span class="meta"><button class="ghost" data-del="${a.id}">supprimer</button></span>
     </li>`).join('') || '<li class="meta">aucune AO prête</li>';
   // (ré)attache les events
@@ -337,7 +337,7 @@ async function upload(kind, files){
   const fd=new FormData();
   [...files].forEach(f=>fd.append('fichiers',f));
   setStatus(`Envoi de ${files.length} fichier(s)…`);
-  try{ await api('/api/upload/'+kind,{method:'POST',body:fd}); setStatus('Déposé. Clique sur « Préparer ».'); }
+  try{ await api('/api/upload/'+kind,{method:'POST',body:fd}); setStatus('Dépose puis clique sur « Préparer ».'); }
   catch(e){ showErr(e.message); }
   refresh();
 }
