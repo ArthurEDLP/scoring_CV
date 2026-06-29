@@ -255,7 +255,7 @@ def noeud_agreger(state: CVScoringState) -> Dict:
 
         score_final = scoring.agreger_scores(
             s_technos   = s_technos,
-            s_seniorite = s_seniorite,
+            s_seniorite = 0.0,
             s_bonus     = s_bonus,
         )
         # Récupère le CV brut pour parser ses dates (le CV brut est dans state["cvs"])

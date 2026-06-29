@@ -28,8 +28,8 @@ import re
 
 
 POIDS_AXES = {
-    "technos":   0.70,
-    "seniorite": 0.30,
+    "technos":   0.90,
+    "seniorite": 0.0,
     "bonus":     0.10,    # additif, peut faire dépasser 1.0 (ne le fera pas)
 }
 

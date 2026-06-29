@@ -167,6 +167,8 @@
   .cv .sc{font-variant-numeric:tabular-nums}
   .cv .sc b{color:#ffffff;background:var(--blue);padding:0 5px;border-radius:4px}
   .cv .glob{color:var(--glob);font-size:12px;margin-top:6px}
+  .cv .seniorite-ok{color:var(--ok);font-weight:700}
+  .cv .seniorite-ko{color:var(--bad);font-weight:700}
   .tk{
     display:inline-flex;
     align-items:center;
@@ -227,6 +229,53 @@
   .tech-score{display:none}
   body.show-tech-scores .tech-score{display:inline}
 
+  /* ─── Panneau de configuration des paliers de séniorité ─── */
+  .paliers-panel{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    margin:18px 0 0;
+    padding:0;
+    box-shadow:0 4px 10px rgba(0,0,0,.06);
+  }
+  .paliers-panel > summary{
+    cursor:pointer;
+    padding:14px 18px;
+    font-weight:600;
+    color:var(--muted);
+    text-transform:uppercase;
+    letter-spacing:.04em;
+    font-size:13px;
+    user-select:none;
+    list-style:none;
+  }
+  .paliers-panel > summary::-webkit-details-marker{display:none}
+  .paliers-panel > summary::before{content:'▸ ';font-size:11px;color:var(--blue)}
+  .paliers-panel[open] > summary::before{content:'▾ '}
+  .paliers-body{padding:0 18px 18px}
+  .paliers-table{width:100%;border-collapse:collapse;margin-bottom:10px}
+  .paliers-table th{
+    text-align:left;padding:6px 8px;font-size:12px;color:var(--muted);
+    text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--line);
+  }
+  .paliers-table td{padding:6px 8px;border-bottom:1px solid var(--line)}
+  .paliers-table input{
+    font:inherit;padding:5px 8px;border:1px solid var(--line);border-radius:6px;
+    background:var(--panel2);width:100%;
+  }
+  .paliers-table input[type=number]{max-width:90px}
+  .paliers-table .col-del{width:36px;text-align:center}
+  .paliers-actions{display:flex;gap:10px;align-items:center;margin-top:10px}
+  .paliers-actions button{padding:7px 14px;font-size:13px}
+  .paliers-actions .btn-add{
+    background:var(--panel2);color:var(--blue);border-color:var(--blue);font-weight:600;
+  }
+  .paliers-actions .btn-add:hover{background:var(--blue);color:#fff}
+  .paliers-status{color:var(--muted);font-size:12px}
+  .paliers-status.ok{color:var(--ok)}
+  .paliers-status.err{color:var(--bad)}
+  .paliers-hint{color:var(--muted);font-size:12px;margin-bottom:10px}
+
 </style>
 </head>
 <body>
@@ -269,6 +318,33 @@
     </section>
   </div>
 
+  <!-- Paliers de séniorité (configurable) -->
+  <details class="paliers-panel" id="paliersPanel">
+    <summary>Paliers de séniorité (niveaux d'expérience)</summary>
+    <div class="paliers-body">
+      <p class="paliers-hint">
+        Définis tes paliers (label + années min/max). Laisse <b>max</b> vide pour
+        le dernier palier (∞). L'affichage des CV se met à jour automatiquement après sauvegarde.
+      </p>
+      <table class="paliers-table">
+        <thead>
+          <tr>
+            <th>Label</th>
+            <th>Min</th>
+            <th>Max</th>
+            <th class="col-del"></th>
+          </tr>
+        </thead>
+        <tbody id="paliersBody"></tbody>
+      </table>
+      <div class="paliers-actions">
+        <button type="button" class="btn-add" id="paliersAdd">+ Ajouter un palier 🍄</button>
+        <button type="button" id="paliersSave">Sauvegarder</button>
+        <span class="paliers-status" id="paliersStatus"></span>
+      </div>
+    </div>
+  </details>
+
   <div class="actions">
     <button id="btnPrep">① Préparer (embedding + score global)</button>
     <button id="btnMatch" disabled>② Lancer le matching</button>
@@ -285,6 +361,106 @@
 const $ = s => document.querySelector(s);
 const api = (u,o)=>fetch(u,o).then(r=>r.ok?r.json():r.json().then(e=>{throw new Error(e.detail||r.statusText)}));
 let selectedAO = null;
+let LAST_RESULT = null;       // mémorise le dernier résultat pour pouvoir re-rendre
+
+// ─────────── Paliers de séniorité ──────────────────────────────────────
+let PALIERS = [];   // chargé depuis /api/paliers
+
+async function chargerPaliers(){
+  try {
+    PALIERS = await api('/api/paliers');
+  } catch(e) {
+    console.warn('Paliers non chargés :', e.message);
+    PALIERS = [];
+  }
+  afficherPaliers();
+}
+
+function afficherPaliers(){
+  const body = $('#paliersBody');
+  if(!body) return;
+  body.innerHTML = PALIERS.map((p, i) => `
+    <tr>
+      <td><input value="${p.label || ''}" data-k="label"></td>
+      <td><input type="number" value="${p.min ?? 0}" data-k="min" min="0" step="0.5"></td>
+      <td><input type="number" value="${p.max ?? ''}" data-k="max" min="0" step="0.5" placeholder="∞"></td>
+      <td class="col-del"><button type="button" class="ghost" data-del-pal="${i}">×</button></td>
+    </tr>
+  `).join('');
+}
+
+function lirePaliersDepuisUI(){
+  const rows = document.querySelectorAll('#paliersBody tr');
+  return Array.from(rows).map(tr => {
+    const inputs = tr.querySelectorAll('input');
+    return {
+      label: inputs[0].value.trim(),
+      min:   parseFloat(inputs[1].value) || 0,
+      max:   inputs[2].value === '' ? null : parseFloat(inputs[2].value),
+    };
+  }).filter(p => p.label);
+}
+
+// Trouve le palier correspondant à un nombre d'années
+function trouverPalier(annees){
+  if(!PALIERS.length) return {label: '?'};
+  for (const p of PALIERS) {
+    const max = (p.max === null || p.max === undefined) ? Infinity : p.max;
+    if (annees >= p.min && annees < max) return p;
+  }
+  return PALIERS[PALIERS.length - 1];
+}
+
+// True si le candidat a au moins le niveau requis par l'AO
+function palierOK(annees_candidat, annees_requises){
+  if(!PALIERS.length) return true;
+  const idx_cand = PALIERS.indexOf(trouverPalier(annees_candidat));
+  const idx_req  = PALIERS.indexOf(trouverPalier(annees_requises));
+  return idx_cand >= idx_req;
+}
+
+// Boutons du panneau paliers
+function brancherPaliers(){
+  $('#paliersAdd').addEventListener('click', () => {
+    PALIERS = lirePaliersDepuisUI();
+    PALIERS.push({label: 'Nouveau', min: 0, max: null});
+    afficherPaliers();
+  });
+
+  $('#paliersBody').addEventListener('click', (e) => {
+    const idx = e.target.dataset.delPal;
+    if (idx === undefined) return;
+    PALIERS = lirePaliersDepuisUI();
+    PALIERS.splice(parseInt(idx), 1);
+    afficherPaliers();
+  });
+
+  $('#paliersSave').addEventListener('click', async () => {
+    PALIERS = lirePaliersDepuisUI();
+    const status = $('#paliersStatus');
+    status.className = 'paliers-status';
+    status.textContent = 'sauvegarde…';
+    try {
+      const r = await fetch('/api/paliers', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(PALIERS),
+      });
+      if(!r.ok) {
+        const j = await r.json().catch(()=>({detail:r.statusText}));
+        throw new Error(j.detail || r.statusText);
+      }
+      status.className = 'paliers-status ok';
+      status.textContent = '✓ sauvegardé';
+      setTimeout(() => status.textContent = '', 2000);
+      // Re-rendu des résultats si on en a
+      if(LAST_RESULT) rendre(LAST_RESULT);
+    } catch(e) {
+      status.className = 'paliers-status err';
+      status.textContent = '✗ ' + e.message;
+    }
+  });
+}
 
 // ---------- état / listes ----------
 async function refresh(){
@@ -296,7 +472,7 @@ async function refresh(){
   $('#lstCV').innerHTML = s.cvs_prets.map(c=>`
     <li>
       <span class="id">${c.id}</span>
-      <span class="badge ${c.embedding_pret?'on':'off'}">${c.embedding_pret?'Embeddé ✓':'Non embeddé ✗'}</span>
+      <span class="badge ${c.embedding_pret?'on':'off'}">${c.embedding_pret?'Embeddé ✓':'A Embeddé ✗'}</span>
     </li>`).join('') || '<li class="meta">aucun CV prêt</li>';
   // AO
   const aoPrets = new Set((s.aos_prets || []).map(a => a.fichier));
@@ -398,13 +574,29 @@ function cvHTML(r,i){
   const ig=r.indicateur_global;
   const glob=ig?`<div class="glob">🌐 affinité offre : cos ${ig.cosine.toFixed(4)} · rang ${ig.rang}/${ig.sur}</div>`:'';
   const poste=r._poste?`<div class="poste">▸ ${r._poste}</div>`:'';
+
+  // Séniorité : indice (palier) au lieu d'un score gaussien
+  const annees    = r.seniorite_totale || 0;
+  const requises  = r.annees_requises  || 0;
+  const palierCV  = trouverPalier(annees);
+  const palierAO  = trouverPalier(requises);
+  const ok        = palierOK(annees, requises);
+  const sigClass  = ok ? 'seniorite-ok' : 'seniorite-ko';
+  const sigChar   = ok ? '✓' : '⚠️';
+  const detailReq = (!ok && palierAO.label !== '?')
+                    ? ` <span class="bm">(requis : ${palierAO.label})</span>` : '';
+  const seniorHTML = `<span class="sc">
+      ${palierCV.label} (${annees.toFixed(1)} ans)
+      <span class="${sigClass}">${sigChar}</span>${detailReq}
+    </span>`;
+
   return `<div class="cv">${poste}
     <div class="top">
       <span class="rank">${i}.</span>
       <span class="name">${r.cv_id}${flag}</span>
       <span class="sc">score=<b>${r.score_final.toFixed(3)}</b></span>
       <span class="sc">technos=${r.score_technos.toFixed(2)}</span>
-      <span class="sc">séniorité=${r.score_seniorite.toFixed(2)} (${r.seniorite_totale.toFixed(1)}/${r.annees_requises.toFixed(0)} ans)</span>
+      ${seniorHTML}
       <span class="sc">dispo=${r.disponibilite}</span>
     </div>${glob}${technosHTML(r.technos_details)}${expHTML(r)}</div>`;
 }
@@ -429,6 +621,7 @@ function expHTML(r){
        + `<div class="exp-body" hidden>${bulles}</div>`;
 }
 function rendre(res){
+  LAST_RESULT = res;   // mémorise pour pouvoir re-rendre après modif des paliers
   if(!res){$('#res').innerHTML='';return;}
   const cats=res.resultats_acceptes_par_categorie||{};
 
@@ -538,6 +731,8 @@ if(toggleDaltonien){
 // ---------- init ----------
 brancherDrop('#dropCV','#fileCV','cv');
 brancherDrop('#dropAO','#fileAO','ao');
+brancherPaliers();
+chargerPaliers();
 refresh();
 </script>
 </body>

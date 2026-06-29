@@ -45,6 +45,16 @@ for d in (AO_BRUTES, CV_BRUTES, AO_TRAITES, CV_TRAITES, CACHE_GLOBAL):
 
 app = FastAPI(title="Matching CV/AO")
 
+# ─────────────────────────── Paliers ─────────────────────────────────────
+PALIERS_FILE = RACINE / "paliers.json"
+
+# Paliers par défaut, créés au 1er démarrage si le fichier n'existe pas
+PALIERS_DEFAUT = [
+    {"label": "Junior",   "min": 0, "max": 3},
+    {"label": "Confirmé", "min": 3, "max": 5},
+    {"label": "Expert",   "min": 5, "max": None},  # None = pas de borne sup
+]
+
 # ─────────────────────── Registre de jobs (mémoire) ───────────────────────
 JOBS: Dict[str, Dict] = {}
 _LOCK = threading.Lock()
@@ -165,6 +175,34 @@ def etat_job(job_id: str):
     if job is None:
         raise HTTPException(404, "job inconnu")
     return job
+
+@app.get("/api/paliers")
+def lire_paliers():
+    """Lit les paliers de séniorité. Crée le fichier avec les défauts si absent."""
+    if not PALIERS_FILE.exists():
+        PALIERS_FILE.write_text(
+            json.dumps(PALIERS_DEFAUT, ensure_ascii=False, indent=2),
+            encoding="utf-8",
+        )
+    try:
+        return json.loads(PALIERS_FILE.read_text(encoding="utf-8"))
+    except Exception as e:
+        raise HTTPException(500, f"paliers.json invalide : {e}")
+
+
+@app.post("/api/paliers")
+def sauvegarder_paliers(paliers: List[Dict]):
+    """Sauvegarde les paliers. Pas de validation lourde : c'est local mono-user."""
+    if not isinstance(paliers, list) or not paliers:
+        raise HTTPException(400, "paliers doit être une liste non vide")
+    for p in paliers:
+        if "label" not in p or "min" not in p:
+            raise HTTPException(400, "chaque palier doit avoir 'label' et 'min'")
+    PALIERS_FILE.write_text(
+        json.dumps(paliers, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+    return {"ok": True, "nb": len(paliers)}
 
 
 # ════════════════════════════ JOBS (tâche de fond) ════════════════════════
