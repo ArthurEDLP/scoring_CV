@@ -290,13 +290,13 @@ let selectedAO = null;
 async function refresh(){
   const s = await api('/api/state');
   // CV
-  const cvPrets = new Set(s.cvs_prets);
+  const cvPrets = new Set(s.cvs_prets.map(c => c.fichier));
   const cvAPreparer = s.cv_brutes.filter(id => !cvPrets.has(id));
   $('#pendCV').textContent = cvAPreparer.length ? `${cvAPreparer.length} fichier(s) à préparer : ${cvAPreparer.join(', ')}` : '';
-  $('#lstCV').innerHTML = s.cvs_prets.map(id=>`
+  $('#lstCV').innerHTML = s.cvs_prets.map(c=>`
     <li>
-      <span class="id">${id}</span>
-      <span class="meta">prêt</span>
+      <span class="id">${c.id}</span>
+      <span class="badge ${c.embedding_pret?'on':'off'}">${c.embedding_pret?'Prêt ✓':'A préparer ✗'}</span>
     </li>`).join('') || '<li class="meta">aucun CV prêt</li>';
   // AO
   const aoPrets = new Set((s.aos_prets || []).map(a => a.fichier));

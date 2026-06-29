@@ -88,11 +88,22 @@ def etat():
         ao_id = _lire_id_interne(p)
         cache = chemin_cache_global(ao_id, str(CACHE_GLOBAL)).exists()
         aos_prets.append({"id": ao_id, "fichier": p.stem, "score_global": cache})
+
+    cache_cv_dir = RACINE / "cache_cv"
+    cvs_prets = []
+    for p in sorted(CV_TRAITES.glob("*.json")):
+        cv_id = _lire_id_interne(p)
+        # Même normalisation que CacheEmbeddingsCV._chemin
+        safe_id = cv_id.replace("/", "_").replace("\\", "_")
+        embedding_pret = (cache_cv_dir / f"{safe_id}.json").exists()
+        cvs_prets.append({"id": cv_id, "fichier": p.stem,
+                          "embedding_pret": embedding_pret})
+
     return {
         "ao_brutes":  _ids_dans(AO_BRUTES),
         "cv_brutes":  _ids_dans(CV_BRUTES),
         "aos_prets":  aos_prets,
-        "cvs_prets":  _ids_dans(CV_TRAITES),
+        "cvs_prets":  cvs_prets,
     }
 
 
