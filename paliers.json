@@ -10,13 +10,8 @@
     "max": 5
   },
   {
-    "label": "Senior",
-    "min": 5,
-    "max": 7
-  },
-  {
     "label": "Expert",
-    "min": 7,
+    "min": 5,
     "max": null
   }
 ]

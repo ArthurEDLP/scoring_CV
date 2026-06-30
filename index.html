@@ -555,18 +555,38 @@ $('#btnMatch').onclick=async()=>{
 // ---------- rendu des résultats ----------
 function scoreOf(d){return (d&&typeof d==='object')?d.score:d;}
 function technosHTML(details){
-  if(!details)return '';
-  const ok=[],ko=[];
-  for(const[t,d]of Object.entries(details)){
-    const s=scoreOf(d), src=(d&&d.source)||'exact';
-    const ma=(d&&d.matche_avec&&d.matche_avec!==t)?'→'+d.matche_avec:'';
-    const chip=`<span class="tk ${src} ">${t}${ma}<span class="tech-score"> : ${(+s).toFixed(2)}</span></span>`;
-    (s>=0.5?ok:ko).push(chip);
-  }
-  let h='';
-  if(ok.length) h+=`<div>${ok.join('')}</div>`;
-  if(ko.length) h+=`<div>${ko.join('')}</div>`;
-  return h;
+  if(!details) return '';
+
+  const ordre = {
+    exact: 0,
+    semantique: 1,
+    absent: 2
+  };
+
+  const chips = Object.entries(details)
+    .sort(([,a],[,b]) => {
+      const oa = ordre[(a && a.source) || "absent"];
+      const ob = ordre[(b && b.source) || "absent"];
+
+      if (oa !== ob) return oa - ob;
+
+      // à score égal : les meilleurs d'abord
+      return scoreOf(b) - scoreOf(a);
+    })
+    .map(([t,d]) => {
+      const s   = scoreOf(d);
+      const src = (d && d.source) || 'absent';
+      const ma  = (d && d.matche_avec && d.matche_avec !== t)
+        ? '→' + d.matche_avec
+        : '';
+
+      return `<span class="tk ${src}">
+                ${t}${ma}
+                <span class="tech-score"> (${(+s).toFixed(2)})</span>
+              </span>`;
+    });
+
+  return `<div>${chips.join('')}</div>`;
 }
 function cvHTML(r,i){
   console.log("CV", r.cv_id, "top_experiences =", r.top_experiences);
