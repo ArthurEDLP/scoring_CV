@@ -324,7 +324,7 @@
     <div class="paliers-body">
       <p class="paliers-hint">
         Définis tes paliers (label + années min/max). Laisse <b>max</b> vide pour
-        le dernier palier (∞). L'affichage des CV se met à jour automatiquement après sauvegarde.
+        le dernier palier (∞). Tes modifications sont enregistrées automatiquement.
       </p>
       <table class="paliers-table">
         <thead>
@@ -339,7 +339,6 @@
       </table>
       <div class="paliers-actions">
         <button type="button" class="btn-add" id="paliersAdd">+ Ajouter un palier 🍄</button>
-        <button type="button" id="paliersSave">Sauvegarder</button>
         <span class="paliers-status" id="paliersStatus"></span>
       </div>
     </div>
@@ -388,12 +387,17 @@ function afficherPaliers(){
     </tr>
   `).join('');
 
-  // Propagation automatique : quand on change min ou max d'un palier,
-  // on aligne les paliers voisins pour éviter chevauchement / trou
-  body.querySelectorAll('input[type=number]').forEach(input => {
-    input.addEventListener('change', () => {
-      propagerCoherence();
-    });
+  // Tous les inputs déclenchent l'autosave debounced
+  // 'input' = à chaque frappe (réactif), 'change' = quand on sort du champ
+  body.querySelectorAll('input').forEach(input => {
+    input.addEventListener('input', planifierSauvegarde);
+    // Sur 'change' (sortie du champ) on propage la cohérence + relance le timer
+    if (input.type === 'number') {
+      input.addEventListener('change', () => {
+        propagerCoherence();
+        planifierSauvegarde();
+      });
+    }
   });
 }
 
@@ -490,8 +494,14 @@ function palierOK(annees_candidat, annees_requises){
 function brancherPaliers(){
   $('#paliersAdd').addEventListener('click', () => {
     PALIERS = lirePaliersDepuisUI();
-    PALIERS.push({label: 'Nouveau', min: 0, max: null});
+    // Le nouveau palier reprend là où le dernier finissait
+    const last = PALIERS[PALIERS.length - 1];
+    const debut = (last && last.max !== null) ? last.max : (last ? last.min : 0);
+    // Le palier précédent devient borné si nécessaire
+    if (last && last.max === null) last.max = debut;
+    PALIERS.push({label: 'Nouveau', min: debut, max: null});
     afficherPaliers();
+    planifierSauvegarde();
   });
 
   $('#paliersBody').addEventListener('click', (e) => {
@@ -500,40 +510,7 @@ function brancherPaliers(){
     PALIERS = lirePaliersDepuisUI();
     PALIERS.splice(parseInt(idx), 1);
     afficherPaliers();
-  });
-
-  $('#paliersSave').addEventListener('click', async () => {
-    PALIERS = lirePaliersDepuisUI();
-    const status = $('#paliersStatus');
-
-    // Validation locale avant envoi
-    const erreur = validerPaliers(PALIERS);
-    if (erreur) {
-      status.className = 'paliers-status err';
-      status.textContent = '✗ ' + erreur;
-      return;
-    }
-
-    status.className = 'paliers-status';
-    status.textContent = 'sauvegarde…';
-    try {
-      const r = await fetch('/api/paliers', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(PALIERS),
-      });
-      if(!r.ok) {
-        const j = await r.json().catch(()=>({detail:r.statusText}));
-        throw new Error(j.detail || r.statusText);
-      }
-      status.className = 'paliers-status ok';
-      status.textContent = '✓ sauvegardé';
-      setTimeout(() => status.textContent = '', 2000);
-      if(LAST_RESULT) rendre(LAST_RESULT);
-    } catch(e) {
-      status.className = 'paliers-status err';
-      status.textContent = '✗ ' + e.message;
-    }
+    planifierSauvegarde();
   });
 }
 
@@ -814,6 +791,56 @@ $('#res').addEventListener('click',e=>{
     bAlt.setAttribute('aria-expanded', String(!ouvert));
   }
 });
+
+// ---------- Sauvegarde debounced : 400 ms après la dernière modif ----------
+let _paliersTimer = null;
+
+async function sauvegarderPaliersNow(){
+  const status = $('#paliersStatus');
+  PALIERS = lirePaliersDepuisUI();
+
+  // Validation locale avant envoi
+  const erreur = validerPaliers(PALIERS);
+  if (erreur) {
+    status.className = 'paliers-status err';
+    status.textContent = '✗ ' + erreur;
+    return;
+  }
+
+  status.className = 'paliers-status';
+  status.textContent = 'enregistrement…';
+
+  try {
+    const r = await fetch('/api/paliers', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(PALIERS),
+    });
+    if(!r.ok) {
+      const j = await r.json().catch(()=>({detail:r.statusText}));
+      throw new Error(j.detail || r.statusText);
+    }
+    status.className = 'paliers-status ok';
+    status.textContent = '✓ Enregistré';
+    setTimeout(() => {
+      if (status.textContent === '✓ Enregistré') status.textContent = '';
+    }, 2000);
+    // Re-rendu des résultats si on en a
+    if(LAST_RESULT) rendre(LAST_RESULT);
+  } catch(e) {
+    status.className = 'paliers-status err';
+    status.textContent = '✗ ' + e.message;
+  }
+}
+
+function planifierSauvegarde(){
+  if (_paliersTimer) clearTimeout(_paliersTimer);
+  // Indicateur "modif détectée" pendant qu'on attend
+  const status = $('#paliersStatus');
+  status.className = 'paliers-status';
+  status.textContent = '…';
+  _paliersTimer = setTimeout(sauvegarderPaliersNow, 400);
+}
 
 // ---------- switch daltonien / scores technos ----------
 const toggleDaltonien = $('#toggleDaltonien');
