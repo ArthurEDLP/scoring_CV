@@ -380,13 +380,80 @@ function afficherPaliers(){
   const body = $('#paliersBody');
   if(!body) return;
   body.innerHTML = PALIERS.map((p, i) => `
-    <tr>
+    <tr data-row="${i}">
       <td><input value="${p.label || ''}" data-k="label"></td>
       <td><input type="number" value="${p.min ?? 0}" data-k="min" min="0" step="0.5"></td>
       <td><input type="number" value="${p.max ?? ''}" data-k="max" min="0" step="0.5" placeholder="∞"></td>
       <td class="col-del"><button type="button" class="ghost" data-del-pal="${i}">×</button></td>
     </tr>
   `).join('');
+
+  // Propagation automatique : quand on change min ou max d'un palier,
+  // on aligne les paliers voisins pour éviter chevauchement / trou
+  body.querySelectorAll('input[type=number]').forEach(input => {
+    input.addEventListener('change', () => {
+      propagerCoherence();
+    });
+  });
+}
+
+// Propage la cohérence entre paliers : max[i] = min[i+1]
+// Lit l'état actuel des inputs, ajuste, puis ré-affiche.
+function propagerCoherence(){
+  const rows = document.querySelectorAll('#paliersBody tr');
+  const paliers = Array.from(rows).map(tr => {
+    const ins = tr.querySelectorAll('input');
+    return {
+      label: ins[0].value.trim(),
+      min:   parseFloat(ins[1].value) || 0,
+      max:   ins[2].value === '' ? null : parseFloat(ins[2].value),
+    };
+  });
+
+  // Propage de haut en bas :
+  // - le min du palier i+1 = max du palier i
+  for (let i = 0; i < paliers.length - 1; i++) {
+    const courant = paliers[i];
+    const suivant = paliers[i + 1];
+
+    // Sécurité : le max d'un palier intermédiaire ne peut pas être null
+    if (courant.max === null) courant.max = courant.min;
+
+    // Le min du palier suivant s'aligne sur le max du courant
+    if (suivant.min !== courant.max) suivant.min = courant.max;
+
+    // Si le max du suivant est plus petit que son nouveau min, on le pousse
+    if (suivant.max !== null && suivant.max < suivant.min) {
+      suivant.max = suivant.min;
+    }
+  }
+
+  PALIERS = paliers;
+  afficherPaliers();
+}
+
+// Valide les paliers avant sauvegarde : retourne un message d'erreur, ou null si OK
+function validerPaliers(paliers){
+  if (!paliers.length) return "Il faut au moins un palier";
+  for (let i = 0; i < paliers.length; i++) {
+    const p = paliers[i];
+    if (!p.label) return `Palier #${i + 1} : label manquant`;
+    if (p.min < 0) return `${p.label} : min négatif`;
+    if (p.max !== null && p.max < p.min) {
+      return `${p.label} : max (${p.max}) < min (${p.min})`;
+    }
+    if (i > 0) {
+      const precedent = paliers[i - 1];
+      if (precedent.max !== p.min) {
+        return `Chevauchement / trou entre "${precedent.label}" et "${p.label}" (${precedent.max} ≠ ${p.min})`;
+      }
+    }
+  }
+  // Le dernier palier doit avoir max = null (∞)
+  if (paliers[paliers.length - 1].max !== null) {
+    // Pas une erreur bloquante, juste un avertissement : on accepte
+  }
+  return null;
 }
 
 function lirePaliersDepuisUI(){
@@ -438,6 +505,15 @@ function brancherPaliers(){
   $('#paliersSave').addEventListener('click', async () => {
     PALIERS = lirePaliersDepuisUI();
     const status = $('#paliersStatus');
+
+    // Validation locale avant envoi
+    const erreur = validerPaliers(PALIERS);
+    if (erreur) {
+      status.className = 'paliers-status err';
+      status.textContent = '✗ ' + erreur;
+      return;
+    }
+
     status.className = 'paliers-status';
     status.textContent = 'sauvegarde…';
     try {
@@ -453,7 +529,6 @@ function brancherPaliers(){
       status.className = 'paliers-status ok';
       status.textContent = '✓ sauvegardé';
       setTimeout(() => status.textContent = '', 2000);
-      // Re-rendu des résultats si on en a
       if(LAST_RESULT) rendre(LAST_RESULT);
     } catch(e) {
       status.className = 'paliers-status err';

@@ -7,11 +7,11 @@
   {
     "label": "Confirmé",
     "min": 3,
-    "max": 5
+    "max": 6
   },
   {
     "label": "Expert",
-    "min": 5,
+    "min": 6.5,
     "max": null
   }
 ]
