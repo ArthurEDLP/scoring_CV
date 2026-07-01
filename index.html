@@ -13,6 +13,7 @@
     --muted:#6b6b6b; --accent:#1a1a1a; --accent2:#000000;
     --glob: #00d9ff;
     --blue:#49656d; /*couleur des btns*/
+    --yellow:#ffd400;
     --ok:#1c9c54;
     --mid:#ffae00;
     --bad:#cf2f2f;
@@ -229,19 +230,22 @@
   .tech-score{display:none}
   body.show-tech-scores .tech-score{display:inline}
 
-  /* ─── Panneau de configuration des paliers de séniorité ─── */
+  /* ─── Panneau de configuration des paliers : timeline ─── */
   .paliers-panel{
     background:var(--panel);
     border:1px solid var(--line);
     border-radius:var(--radius);
     margin:18px 0 0;
     padding:0;
-    box-shadow:0 4px 10px rgba(0,0,0,.06);
+    box-shadow:
+      0 4px 10px rgba(0,0,0,.08),
+      0 18px 35px rgba(0,0,0,.06);
+    overflow:hidden;
   }
   .paliers-panel > summary{
     cursor:pointer;
     padding:14px 18px;
-    font-weight:600;
+    font-weight:700;
     color:var(--muted);
     text-transform:uppercase;
     letter-spacing:.04em;
@@ -253,28 +257,167 @@
   .paliers-panel > summary::before{content:'▸ ';font-size:11px;color:var(--blue)}
   .paliers-panel[open] > summary::before{content:'▾ '}
   .paliers-body{padding:0 18px 18px}
-  .paliers-table{width:100%;border-collapse:collapse;margin-bottom:10px}
-  .paliers-table th{
-    text-align:left;padding:6px 8px;font-size:12px;color:var(--muted);
-    text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--line);
+  .paliers-hint{color:var(--muted);font-size:13px;margin:4px 0 18px}
+  .paliers-canvas{
+    position:relative;
+    min-height:245px;
+    padding:48px 40px 86px;
+    border:1px solid var(--line);
+    border-radius:14px;
+    background:rgba(255,255,255,.78);
+    overflow:hidden;
   }
-  .paliers-table td{padding:6px 8px;border-bottom:1px solid var(--line)}
-  .paliers-table input{
-    font:inherit;padding:5px 8px;border:1px solid var(--line);border-radius:6px;
-    background:var(--panel2);width:100%;
+  .paliers-track{
+    position:relative;
+    height:108px;
   }
-  .paliers-table input[type=number]{max-width:90px}
-  .paliers-table .col-del{width:36px;text-align:center}
-  .paliers-actions{display:flex;gap:10px;align-items:center;margin-top:10px}
-  .paliers-actions button{padding:7px 14px;font-size:13px}
+  .palier-segment{
+    position:absolute;
+    top:44px;
+    height:6px;
+    border-radius:999px;
+    transform:translateY(-50%);
+  }
+  .palier-segment.is-last{
+    border-top-style:dashed;
+    height:0;
+    border-top-width:4px;
+    border-radius:0;
+  }
+  .palier-boundary{
+    position:absolute;
+    top:44px;
+    transform:translate(-50%,-50%);
+    width:26px;
+    height:26px;
+    border-radius:50%;
+    background:#fff;
+    border:5px solid var(--blue);
+    z-index:3;
+    box-shadow:0 2px 10px rgba(0,0,0,.12);
+    transition:transform .12s, box-shadow .12s;
+  }
+  .palier-boundary.draggable{
+    cursor:grab;
+    touch-action:none;
+  }
+  .palier-boundary.draggable:hover,
+  .palier-boundary.dragging{
+    transform:translate(-50%,-50%) scale(1.12);
+    box-shadow:0 6px 18px rgba(0,0,0,.18);
+  }
+  .palier-boundary.dragging{
+    cursor:grabbing;
+  }
+  .palier-year{
+    position:absolute;
+    top:2px;
+    transform:translateX(-50%);
+    color:#111827;
+    font-weight:800;
+    font-size:15px;
+    white-space:nowrap;
+  }
+  .palier-year.draggable{
+    cursor:grab;
+    user-select:none;
+  }
+  .palier-label{
+    position:absolute;
+    top:76px;
+    transform:translateX(-50%);
+    min-width:128px;
+    max-width:210px;
+    padding:9px 36px 9px 16px;
+    border-radius:12px;
+    text-align:center;
+    font-size:13px;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:.02em;
+    cursor:text;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    box-shadow:0 6px 18px rgba(0,0,0,.06);
+  }
+  .palier-delete{
+    position:absolute;
+    top:50%;
+    right:8px;
+    transform:translateY(-50%);
+
+    width:20px;
+    height:20px;
+    border:0;
+    border-radius:999px;
+    padding:0;
+
+    display:grid;
+    place-items:center;
+
+    background:var(--bad);
+    color:#fff;
+    cursor:pointer;
+
+    font-size:0; /* cache le × du HTML */
+}
+
+.palier-delete::before{
+    content:"×";
+    font-size:16px;
+    font-weight:900;
+    line-height:1;
+    transform:translateY(-0.5px);
+}
+  .palier-delete:hover{
+    background:#ffd7d9;
+    color:var(--bad);
+  }
+  .palier-label.blue{color:var(--blue);background:#eaf2ff}
+  .palier-label.yellow{color:var(--yellow);background:#fffbe7}
+  .paliers-arrow{
+    position:absolute;
+    top:44px;
+    right:12px;
+    transform:translateY(-50%);
+    color:var(--blue);
+    font-size:34px;
+    font-weight:400;
+    line-height:1;
+  }
+  .paliers-actions{
+    display:flex;
+    gap:14px;
+    align-items:center;
+    margin-top:20px;
+  }
   .paliers-actions .btn-add{
-    background:var(--panel2);color:var(--blue);border-color:var(--blue);font-weight:600;
+    background:transparent;
+    color:var(--blue);
+    border:1.5px dashed var(--blue);
+    font-weight:800;
+    padding:10px 16px;
+    margin-top:30px;
+    margin-bottom:-75px;
   }
-  .paliers-actions .btn-add:hover{background:var(--blue);color:#fff}
+  .paliers-actions .btn-add:hover{
+    background:var(--blue);
+    color:#fff;
+    border-style:solid;
+  }
   .paliers-status{color:var(--muted);font-size:12px}
   .paliers-status.ok{color:var(--ok)}
   .paliers-status.err{color:var(--bad)}
-  .paliers-hint{color:var(--muted);font-size:12px;margin-bottom:10px}
+  .paliers-rule{
+    margin-top:14px;
+    color:var(--muted);
+    font-size:12px;
+  }
+  body.dragging-palier{
+    cursor:grabbing;
+    user-select:none;
+  }
 
 </style>
 </head>
@@ -318,28 +461,21 @@
     </section>
   </div>
 
-  <!-- Paliers de séniorité (configurable) -->
-  <details class="paliers-panel" id="paliersPanel">
+  <!-- Paliers de séniorité (timeline configurable) -->
+  <details class="paliers-panel" id="paliersPanel" open>
     <summary>Paliers de séniorité (niveaux d'expérience)</summary>
     <div class="paliers-body">
       <p class="paliers-hint">
-        Définis tes paliers (label + années min/max). Laisse <b>max</b> vide pour
-        le dernier palier (∞). Tes modifications sont enregistrées automatiquement.
+        Les bornes sont lues comme : <b>min inclus ≤ expérience &lt; max exclu</b>.
+        Double-clique sur un nom pour le modifier. Glisse une borne interne pour ajuster l'année (0 à 16 ans max).
       </p>
-      <table class="paliers-table">
-        <thead>
-          <tr>
-            <th>Label</th>
-            <th>Min</th>
-            <th>Max</th>
-            <th class="col-del"></th>
-          </tr>
-        </thead>
-        <tbody id="paliersBody"></tbody>
-      </table>
-      <div class="paliers-actions">
-        <button type="button" class="btn-add" id="paliersAdd">+ Ajouter un palier 🍄</button>
-        <span class="paliers-status" id="paliersStatus"></span>
+      <div class="paliers-canvas">
+        <div class="paliers-track" id="paliersTimeline"></div>
+        <div class="paliers-arrow">›</div>
+        <div class="paliers-actions">
+          <button type="button" class="btn-add" id="paliersAdd">+ Ajouter un palier</button>
+          <span class="paliers-status" id="paliersStatus"></span>
+        </div>
       </div>
     </div>
   </details>
@@ -362,8 +498,19 @@ const api = (u,o)=>fetch(u,o).then(r=>r.ok?r.json():r.json().then(e=>{throw new 
 let selectedAO = null;
 let LAST_RESULT = null;       // mémorise le dernier résultat pour pouvoir re-rendre
 
-// ─────────── Paliers de séniorité ──────────────────────────────────────
+// ─────────── Paliers de séniorité : timeline ─────────────────────────
 let PALIERS = [];   // chargé depuis /api/paliers
+const PALIER_STEP = 0.5;      // granularité du drag : demi-années
+const PALIER_MIN_GAP = 0.5;   // largeur minimale d'un palier
+const PALIER_MAX_ANNEES = 16; // borne max sélectionnable sur la timeline
+
+const couleurPalier = i => i % 2 === 0 ? 'var(--blue)' : 'var(--yellow)';
+const classeCouleurPalier = i => i % 2 === 0 ? 'blue' : 'yellow';
+const fmtAn = v => (v === null || v === undefined || v === Infinity) ? '∞' : `${Number(v)}`;
+
+function anneeTxt(v){
+  return (v === null || v === undefined || v === Infinity) ? '∞' : String(Number(v));
+}
 
 async function chargerPaliers(){
   try {
@@ -372,107 +519,124 @@ async function chargerPaliers(){
     console.warn('Paliers non chargés :', e.message);
     PALIERS = [];
   }
+  normaliserPaliers();
   afficherPaliers();
+}
+
+function normaliserPaliers(){
+  PALIERS = (PALIERS || [])
+    .filter(p => p && p.label)
+    .map((p,i) => ({
+      label: String(p.label || `Palier ${i+1}`).trim(),
+      min: Number(p.min ?? 0),
+      max: p.max === null || p.max === '' || p.max === undefined ? null : Number(p.max),
+    }))
+    .sort((a,b) => a.min - b.min);
+
+  if(!PALIERS.length){
+    PALIERS = [
+      {label:'Junior', min:0, max:3},
+      {label:'Intermédiaire', min:3, max:5},
+      {label:'Expert', min:5, max:null},
+    ];
+  }
+
+  PALIERS[0].min = 0;
+  for(let i=0;i<PALIERS.length-1;i++){
+    if(PALIERS[i].max === null || PALIERS[i].max <= PALIERS[i].min){
+      PALIERS[i].max = PALIERS[i].min + 1;
+    }
+    PALIERS[i].max = Math.min(PALIER_MAX_ANNEES, Math.max(PALIERS[i].min + PALIER_MIN_GAP, PALIERS[i].max));
+    PALIERS[i+1].min = PALIERS[i].max;
+  }
+  PALIERS[PALIERS.length-1].max = null;
+}
+
+// Position VISUELLE : proportionnelle aux années, bornée entre 0 et 16.
+// 0 ans = gauche de la timeline ; 16 ans / ∞ = droite de la timeline.
+function positionPourValeur(v){
+  const start = 8;
+  const end = 92;
+  if(v === Infinity || v === null || v === undefined) return end;
+  const clamped = Math.max(0, Math.min(PALIER_MAX_ANNEES, Number(v)));
+  return start + (clamped / PALIER_MAX_ANNEES) * (end - start);
+}
+
+function valeurPourPosition(clientX, rect){
+  const startPct = 8;
+  const endPct = 92;
+  const pct = ((clientX - rect.left) / rect.width) * 100;
+  const ratio = (Math.min(Math.max(pct, startPct), endPct) - startPct) / (endPct - startPct);
+  return Math.max(0, Math.min(PALIER_MAX_ANNEES, ratio * PALIER_MAX_ANNEES));
+}
+
+function arrondirPalier(v){
+  return Math.round(v / PALIER_STEP) * PALIER_STEP;
 }
 
 function afficherPaliers(){
-  const body = $('#paliersBody');
-  if(!body) return;
-  body.innerHTML = PALIERS.map((p, i) => `
-    <tr data-row="${i}">
-      <td><input value="${p.label || ''}" data-k="label"></td>
-      <td><input type="number" value="${p.min ?? 0}" data-k="min" min="0" step="0.5"></td>
-      <td><input type="number" value="${p.max ?? ''}" data-k="max" min="0" step="0.5" placeholder="∞"></td>
-      <td class="col-del"><button type="button" class="ghost" data-del-pal="${i}">×</button></td>
-    </tr>
-  `).join('');
+  const tl = $('#paliersTimeline');
+  if(!tl) return;
+  normaliserPaliers();
 
-  // Tous les inputs déclenchent l'autosave debounced
-  // 'input' = à chaque frappe (réactif), 'change' = quand on sort du champ
-  body.querySelectorAll('input').forEach(input => {
-    input.addEventListener('input', planifierSauvegarde);
-    // Sur 'change' (sortie du champ) on propage la cohérence + relance le timer
-    if (input.type === 'number') {
-      input.addEventListener('change', () => {
-        propagerCoherence();
-        planifierSauvegarde();
-      });
-    }
-  });
-}
+  const points = [0, ...PALIERS.slice(0, -1).map(p => p.max), Infinity];
 
-// Propage la cohérence entre paliers : max[i] = min[i+1]
-// Lit l'état actuel des inputs, ajuste, puis ré-affiche.
-function propagerCoherence(){
-  const rows = document.querySelectorAll('#paliersBody tr');
-  const paliers = Array.from(rows).map(tr => {
-    const ins = tr.querySelectorAll('input');
-    return {
-      label: ins[0].value.trim(),
-      min:   parseFloat(ins[1].value) || 0,
-      max:   ins[2].value === '' ? null : parseFloat(ins[2].value),
-    };
-  });
+  let h = '';
 
-  // Propage de haut en bas :
-  // - le min du palier i+1 = max du palier i
-  for (let i = 0; i < paliers.length - 1; i++) {
-    const courant = paliers[i];
-    const suivant = paliers[i + 1];
+  // Segments et labels : largeur proportionnelle aux années, pas à parts égales.
+  for(let i=0;i<PALIERS.length;i++){
+    const p = PALIERS[i];
+    const left = positionPourValeur(p.min);
+    const right = positionPourValeur(p.max ?? Infinity);
+    const mid = (left + right) / 2;
+    const color = couleurPalier(i);
+    const isLast = i === PALIERS.length - 1;
 
-    // Sécurité : le max d'un palier intermédiaire ne peut pas être null
-    if (courant.max === null) courant.max = courant.min;
-
-    // Le min du palier suivant s'aligne sur le max du courant
-    if (suivant.min !== courant.max) suivant.min = courant.max;
-
-    // Si le max du suivant est plus petit que son nouveau min, on le pousse
-    if (suivant.max !== null && suivant.max < suivant.min) {
-      suivant.max = suivant.min;
-    }
+    h += `<div class="palier-segment ${isLast ? 'is-last' : ''}"
+              style="left:${left}%;width:${Math.max(right-left, 6)}%;${isLast ? `border-top-color:${color}` : `background:${color}`}"></div>`;
+    h += `<div class="palier-label ${classeCouleurPalier(i)}" data-edit-label="${i}" title="Double-clique pour renommer"
+              style="left:${mid}%">
+              <span class="palier-label-text">${p.label}</span>
+              <button type="button" class="palier-delete" data-del-palier="${i}" title="Supprimer ce palier" aria-label="Supprimer ${p.label}">×</button>
+          </div>`;
   }
 
-  PALIERS = paliers;
-  afficherPaliers();
+  // Bornes : position proportionnelle à la valeur réelle.
+  // Une borne interne i correspond à PALIERS[i-1].max et PALIERS[i].min.
+  points.forEach((v, i) => {
+    const left = positionPourValeur(v);
+    const boundaryColor = i === 0 ? couleurPalier(0) : couleurPalier(Math.min(i, PALIERS.length - 1));
+    const draggable = i > 0 && i < points.length - 1;
+    const dragAttr = draggable ? ` data-boundary="${i}"` : '';
+    const dragClass = draggable ? ' draggable' : '';
+
+    h += `<div class="palier-year${dragClass}"${dragAttr} style="left:${left}%">${anneeTxt(v)}</div>`;
+    h += `<div class="palier-boundary${dragClass}"${dragAttr} style="left:${left}%;border-color:${boundaryColor}" title="${draggable ? 'Glisse pour ajuster la borne entre 0 et 16 ans' : ''}"></div>`;
+  });
+
+  tl.innerHTML = h;
 }
 
-// Valide les paliers avant sauvegarde : retourne un message d'erreur, ou null si OK
+function lirePaliersDepuisUI(){
+  normaliserPaliers();
+  return PALIERS;
+}
+
 function validerPaliers(paliers){
   if (!paliers.length) return "Il faut au moins un palier";
   for (let i = 0; i < paliers.length; i++) {
     const p = paliers[i];
     if (!p.label) return `Palier #${i + 1} : label manquant`;
     if (p.min < 0) return `${p.label} : min négatif`;
-    if (p.max !== null && p.max < p.min) {
-      return `${p.label} : max (${p.max}) < min (${p.min})`;
-    }
-    if (i > 0) {
-      const precedent = paliers[i - 1];
-      if (precedent.max !== p.min) {
-        return `Chevauchement / trou entre "${precedent.label}" et "${p.label}" (${precedent.max} ≠ ${p.min})`;
-      }
+    if (p.max !== null && p.max <= p.min) return `${p.label} : max doit être supérieur à min`;
+    if (i > 0 && paliers[i - 1].max !== p.min) {
+      return `Trou ou chevauchement entre "${paliers[i - 1].label}" et "${p.label}"`;
     }
   }
-  // Le dernier palier doit avoir max = null (∞)
-  if (paliers[paliers.length - 1].max !== null) {
-    // Pas une erreur bloquante, juste un avertissement : on accepte
-  }
+  if (paliers[paliers.length - 1].max !== null) return "Le dernier palier doit être illimité";
   return null;
 }
 
-function lirePaliersDepuisUI(){
-  const rows = document.querySelectorAll('#paliersBody tr');
-  return Array.from(rows).map(tr => {
-    const inputs = tr.querySelectorAll('input');
-    return {
-      label: inputs[0].value.trim(),
-      min:   parseFloat(inputs[1].value) || 0,
-      max:   inputs[2].value === '' ? null : parseFloat(inputs[2].value),
-    };
-  }).filter(p => p.label);
-}
-
-// Trouve le palier correspondant à un nombre d'années
 function trouverPalier(annees){
   if(!PALIERS.length) return {label: '?'};
   for (const p of PALIERS) {
@@ -482,7 +646,6 @@ function trouverPalier(annees){
   return PALIERS[PALIERS.length - 1];
 }
 
-// True si le candidat a au moins le niveau requis par l'AO
 function palierOK(annees_candidat, annees_requises){
   if(!PALIERS.length) return true;
   const idx_cand = PALIERS.indexOf(trouverPalier(annees_candidat));
@@ -490,28 +653,133 @@ function palierOK(annees_candidat, annees_requises){
   return idx_cand >= idx_req;
 }
 
-// Boutons du panneau paliers
+function appliquerDragBorne(boundaryIndex, clientX){
+  normaliserPaliers();
+
+  const tl = $('#paliersTimeline');
+  const rect = tl.getBoundingClientRect();
+  const gauche = PALIERS[boundaryIndex - 1];
+  const droite = PALIERS[boundaryIndex];
+
+  const min = gauche.min + PALIER_MIN_GAP;
+  const max = droite.max === null
+    ? PALIER_MAX_ANNEES
+    : Math.min(PALIER_MAX_ANNEES, droite.max - PALIER_MIN_GAP);
+
+  let valeur = arrondirPalier(valeurPourPosition(clientX, rect));
+  valeur = Math.max(min, Math.min(max, valeur));
+  valeur = Number(valeur.toFixed(1));
+
+  gauche.max = valeur;
+  droite.min = valeur;
+
+  afficherPaliers();
+  if(LAST_RESULT) rendre(LAST_RESULT);
+}
+
+function activerDragPaliers(){
+  const tl = $('#paliersTimeline');
+  let drag = null;
+
+  tl.addEventListener('pointerdown', e => {
+    const cible = e.target.closest('[data-boundary]');
+    if(!cible) return;
+
+    e.preventDefault();
+    drag = {
+      boundaryIndex: Number(cible.dataset.boundary),
+      pointerId: e.pointerId,
+    };
+
+    document.body.classList.add('dragging-palier');
+    cible.classList.add('dragging');
+    tl.setPointerCapture(e.pointerId);
+  });
+
+  tl.addEventListener('pointermove', e => {
+    if(!drag) return;
+    appliquerDragBorne(drag.boundaryIndex, e.clientX);
+  });
+
+  function finirDrag(e){
+    if(!drag) return;
+    document.body.classList.remove('dragging-palier');
+    tl.querySelectorAll('.dragging').forEach(el => el.classList.remove('dragging'));
+    try{ tl.releasePointerCapture(drag.pointerId); }catch(_){}
+    drag = null;
+    planifierSauvegarde();
+  }
+
+  tl.addEventListener('pointerup', finirDrag);
+  tl.addEventListener('pointercancel', finirDrag);
+}
+
 function brancherPaliers(){
   $('#paliersAdd').addEventListener('click', () => {
-    PALIERS = lirePaliersDepuisUI();
-    // Le nouveau palier reprend là où le dernier finissait
-    const last = PALIERS[PALIERS.length - 1];
-    const debut = (last && last.max !== null) ? last.max : (last ? last.min : 0);
-    // Le palier précédent devient borné si nécessaire
-    if (last && last.max === null) last.max = debut;
-    PALIERS.push({label: 'Nouveau', min: debut, max: null});
+    normaliserPaliers();
+    const nom = prompt('Nom du nouveau palier ?');
+    if(!nom || !nom.trim()) return;
+
+    // Ajout automatique à droite :
+    // l'ancien dernier palier devient borné, et le nouveau devient le palier illimité.
+    const dernier = PALIERS[PALIERS.length - 1];
+    const seuil = Number(Math.min(PALIER_MAX_ANNEES, dernier.min + 1).toFixed(1));
+    if(seuil <= dernier.min){
+      const status = $('#paliersStatus');
+      status.className = 'paliers-status err';
+      status.textContent = `✗ Impossible d'ajouter un palier : limite ${PALIER_MAX_ANNEES} ans atteinte`;
+      return;
+    }
+
+    dernier.max = seuil;
+    PALIERS.push({label:nom.trim(), min:seuil, max:null});
+
     afficherPaliers();
     planifierSauvegarde();
   });
 
-  $('#paliersBody').addEventListener('click', (e) => {
-    const idx = e.target.dataset.delPal;
-    if (idx === undefined) return;
-    PALIERS = lirePaliersDepuisUI();
-    PALIERS.splice(parseInt(idx), 1);
+  $('#paliersTimeline').addEventListener('click', e => {
+    const btn = e.target.closest('[data-del-palier]');
+    if(!btn) return;
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    normaliserPaliers();
+    const i = Number(btn.dataset.delPalier);
+    if(PALIERS.length <= 1){
+      const status = $('#paliersStatus');
+      status.className = 'paliers-status err';
+      status.textContent = '✗ Il faut conserver au moins un palier';
+      return;
+    }
+
+    if(!confirm(`Supprimer le palier "${PALIERS[i].label}" ?`)) return;
+
+    PALIERS.splice(i, 1);
+    normaliserPaliers();
     afficherPaliers();
     planifierSauvegarde();
   });
+
+  $('#paliersTimeline').addEventListener('dblclick', e => {
+    if(e.target.closest('[data-del-palier]')) return;
+
+    const labelEl = e.target.closest('[data-edit-label]');
+    const labelIdx = labelEl ? labelEl.dataset.editLabel : undefined;
+    if(labelIdx !== undefined){
+      const i = Number(labelIdx);
+      const nouveau = prompt('Nouveau nom du palier :', PALIERS[i].label);
+      if(nouveau && nouveau.trim()){
+        PALIERS[i].label = nouveau.trim();
+        afficherPaliers();
+        planifierSauvegarde();
+      }
+      return;
+    }
+  });
+
+  activerDragPaliers();
 }
 
 // ---------- état / listes ----------

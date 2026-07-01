@@ -2,16 +2,26 @@
   {
     "label": "Junior",
     "min": 0,
-    "max": 4
+    "max": 3
   },
   {
     "label": "Confirmé",
-    "min": 4,
+    "min": 3,
     "max": 6
   },
   {
     "label": "Expert",
     "min": 6,
-    "max": 7
+    "max": 10
+  },
+  {
+    "label": "Senior",
+    "min": 10,
+    "max": 13
+  },
+  {
+    "label": "maximus",
+    "min": 13,
+    "max": null
   }
 ]
