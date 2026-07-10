@@ -13,7 +13,7 @@ Routes :
     POST   /api/prepare          -> job: prétraitement + caches + score global
     POST   /api/match            -> job: lance THE_HONORED_ONE pour une AO
     GET    /api/jobs/{job_id}     -> état/progression/résultat d'un job
-    GET    /logo.png             -> logo (si présent à la racine)
+    GET    /logo.png             -> logo 
 """
 
 from __future__ import annotations
