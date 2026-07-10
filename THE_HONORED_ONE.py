@@ -17,12 +17,13 @@ La séniorité n'a plus de noeud dédié : elle est calculée à l'agrégation, 
 
     START
       ├──> categoriser ─┐
+      ├──> score global─┤
       ├──> technos     ─┤──> agreger ──> guards ──> END
       └──> bonus       ─┘
 
 Chaque CV apparaît dans EXACTEMENT UNE catégorie :
-  - groupe principal (poste de l'AO) si match ≥ 0.70 sur au moins 1 exp (cf scoring.py)
-  - sinon : groupe alternatif nommé comme son poste le plus récent
+  - groupe principal si match ≥ SEUIL_PRINCIPAL sur au moins 1 exp qui a eu lieu il y a moins de 2ans (cf scoring.py)
+  - sinon : groupe alternatif
 
 Le nœud `guards` applique ensuite un filtre de récence sur le parcours :
 les CV dont l'expérience pertinente est trop ancienne sont écartés du classement et basculent dans une liste de rejetés (avec motif).
@@ -55,13 +56,14 @@ MODEL = "qwen3-embedding:8b"
 print("Initialisation des caches...")
 CACHE_CV    = CacheEmbeddingsCV(MODEL,    "./cache_cv")
 CACHE_OFFRE = CacheEmbeddingsOffre(MODEL, "./cache_offre")
+DOSSIER_CACHE_GLOBAL = "./cache_global"   # cosinus précalculés par precalcul_global.py
+
 
 print("Setup terminé.\n")
 
 
 # Paramètres des garde-fous.
 # DELTA : à recalibrer sur la distribution observée
-# (le 0.04 vient d'une calibration sur Qwen3-8B).
 GUARDS_DELTA = 0.5
 GUARDS_FENETRE_MOIS = None  # None = dérivé de seniorite_min_annees (24 mois min)
 
@@ -83,14 +85,14 @@ def noeud_categoriser(state: CVScoringState) -> Dict:
         return {"erreurs": [f"[categoriser] offre {offre['id']}: {e}"]}
 
     poste_obj      = offre_emb["poste"]
-    emb_poste_ao   = poste_obj["embedding"] if poste_obj else None # nom du poste embeddé
-    poste_ao_label = poste_obj["label"] if poste_obj else "?" # nom du poste 
+    poste_ao_label = poste_obj["label"] if poste_obj else "?"  # nom du poste
+    sections_ao    = offre_emb.get("sections") or {}           # profil/description/contexte
 
     for cv in cvs:
         try:
             cv_emb = CACHE_CV.obtenir(cv) # on récupère les CV après embedding
             categorie = scoring.categoriser_cv(
-                emb_poste_ao, poste_ao_label, cv_emb["experiences"]
+                sections_ao, poste_ao_label, cv_emb["experiences"]
             )
             entries.append({"cv_id": cv["id"], "categorie": categorie})
         except Exception as e:
@@ -127,13 +129,11 @@ def noeud_technos(state: CVScoringState) -> Dict:
 
     return {"scores_technos": entries, "erreurs": erreurs}
 
-DOSSIER_CACHE_GLOBAL = "./cache_global"   # cosinus précalculés par precalcul_global.py
-
 
 def noeud_score_global(state: CVScoringState) -> Dict:
     """
-    Indicateur (HORS score_final) : cosinus CV complet ↔ AO complète (Qwen3-8B).
-    NE FAIT PAS tourner le 8B : il LIT le JSON précalculé par precalcul_global.py.
+    Indicateur : cosinus CV complet ↔ AO complète (Qwen3-8B).
+    NE FAIT PAS tourner le 8B : il lit le JSON précalculé par precalcul_global.py.
     Si le cache est absent, l'indicateur est simplement ignoré (erreur loguée).
     """
     ao_id  = state["offre"]["id"]
@@ -195,7 +195,7 @@ def noeud_agreger(state: CVScoringState) -> Dict:
     """
     Pour chaque CV (UNE catégorie maximum) :
       - calcule la séniorité à partir de la séniorité totale du CV
-      - assemble technos + séniorité + bonus
+      - assemble technos + séniorité + bonus + score global
       - dépose dans le groupe correspondant
     Trie chaque groupe par score décroissant.
     """
@@ -251,13 +251,7 @@ def noeud_agreger(state: CVScoringState) -> Dict:
         match_ent = bonus_obj.get("entreprise_matchee", False)
 
         seniorite_totale = seniorite_par_cv.get(cv_id, 0.0)
-        s_seniorite = scoring.score_seniorite(seniorite_totale, annees_requises)
 
-        score_final = scoring.agreger_scores(
-            s_technos   = s_technos,
-            s_seniorite = 0.0,
-            s_bonus     = s_bonus,
-        )
         # Récupère le CV brut pour parser ses dates (le CV brut est dans state["cvs"])
         cv_brut = next((c for c in state["cvs"] if c["id"] == cv_id), None)
         exps_brutes = (cv_brut.get("data") or cv_brut).get("experiences", []) if cv_brut else []
@@ -269,22 +263,28 @@ def noeud_agreger(state: CVScoringState) -> Dict:
         par_categorie[categorie["nom"]].append({
             "cv_id":              cv_id,
             "offre_id":           offre["id"],
-            "score_final":        round(score_final, 4),
             "score_technos":      round(s_technos,   3),
-            "score_seniorite":    round(s_seniorite, 3),
             "score_bonus":        round(s_bonus,     3),
             "seniorite_totale":   round(seniorite_totale, 1),
             "annees_requises":    annees_requises,
             "entreprise_matchee": match_ent,
             "technos_details":    details_tech,
-            "est_poste_ao":       categorie["est_poste_ao"],
-            "disponibilite": dispo.value,
+            "est_principal":      categorie["est_principal"],
+            "score_pertinence_cv": categorie.get("score_pertinence_cv"),
+            "cos_profil":         categorie.get("cos_profil"),
+            "cos_description":    categorie.get("cos_description"),
+            "cos_contexte":       categorie.get("cos_contexte"),
+            "disponibilite":      dispo.value,
             "indicateur_global":  indic.get(cv_id),
             "top_experiences":    tops,
         })
 
+    # Tri de chaque groupe par l'indicateur global (cosinus CV complet ↔ AO complète)
+    def _cos(r):
+        ig = r.get("indicateur_global")
+        return ig["cosine"] if ig else -1.0
     for cat in par_categorie:
-        par_categorie[cat].sort(key=lambda r: r["score_final"], reverse=True)
+        par_categorie[cat].sort(key=_cos, reverse=True)
 
     return {"resultats_par_categorie": dict(par_categorie)}
 
@@ -302,7 +302,7 @@ def noeud_guards(state: CVScoringState) -> Dict:
         resultats_par_categorie, mais ne contient que les CV acceptés
       - cv_rejetes : liste des CV écartés avec leur motif
 
-    Note : les rejetés conservent leur score_final calculé par agreger (à titre informatif), mais ils ne sont plus dans le classement principal.
+    Note : les rejetés ne sont plus dans le classement principal ; ils sont triés à titre informatif par l'affinité globale (indicateur_global.cosine).
     """
     offre = state["offre"]
     cvs_par_id = {cv["id"]: cv for cv in state["cvs"]}
@@ -368,8 +368,11 @@ def noeud_guards(state: CVScoringState) -> Dict:
                     "guards_details": result.details,
                 })
 
-    # Tri stable des rejetés par score décroissant (au cas où on veut les voir)
-    cv_rejetes.sort(key=lambda r: r["score_final"], reverse=True)
+    # Tri des rejetés par affinité globale décroissante (score_final supprimé)
+    def _cos_rej(r):
+        ig = r.get("indicateur_global")
+        return ig["cosine"] if ig else -1.0
+    cv_rejetes.sort(key=_cos_rej, reverse=True)
 
     return {
         "resultats_acceptes_par_categorie": dict(resultats_acceptes),
@@ -411,10 +414,10 @@ def _afficher_groupe(nom: str, classement: List[Dict], top_k: int = 10) -> None:
         marqueur_indet = " ❓" if r.get("guards_statut") == "INDETERMINE" else ""
         print(
             f"  {i:>2}. {r['cv_id']:<14} "
-            f"score={r['score_final']:.3f}  "
             f"technos={r['score_technos']:.2f}  "
-            f"séniorité={r['score_seniorite']:.2f} "
-            f"({r['seniorite_totale']:.1f}/{r['annees_requises']:.0f} ans)  "
+            f"({r['seniorite_totale']:.1f} ans"
+            + (f"/{r['annees_requises']:.0f} requis" if r.get('annees_requises') else "")
+            + ")  "
             f"{flag}{marqueur_indet}"
             f"  dispo={r['disponibilite']}"
             )
@@ -471,8 +474,10 @@ def _afficher_rejetes(cv_rejetes: List[Dict]) -> None:
     print(f"🚫 CV ÉCARTÉS PAR LES GARDE-FOUS  ({len(cv_rejetes)})\n")
     print("  " + "─" * 76)
     for r in cv_rejetes:
+        ig = r.get("indicateur_global") or {}
+        cos_txt = f"cos={ig['cosine']:.3f}" if ig else "cos=?"
         print(f"  ✗ {r['cv_id']:<14} "
-              f"score_brut={r['score_final']:.3f}  "
+              f"{cos_txt}  "
               f"[{r['categorie']}]")
         print(f"      statut : {r['guards_statut']}")
         print(f"      motif  : {r['guards_motif']}")
@@ -497,11 +502,11 @@ def afficher_resultats(
 
     principal = {
         nom: cl for nom, cl in resultats_acceptes_par_categorie.items()
-        if cl and cl[0]["est_poste_ao"]
+        if cl and cl[0]["est_principal"]
     }
     alternatifs = {
         nom: cl for nom, cl in resultats_acceptes_par_categorie.items()
-        if cl and not cl[0]["est_poste_ao"]
+        if cl and not cl[0]["est_principal"]
     }
 
     if principal:

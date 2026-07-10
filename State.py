@@ -1,6 +1,5 @@
 """
 État partagé du graphe LangGraph pour le matching CV/AO avec groupes.
-
 """
 
 from typing import TypedDict, List, Annotated, Optional, Dict
@@ -15,7 +14,6 @@ class CategorisationEntry(TypedDict):
     """
     Le résultat de la catégorisation pour un CV.
     'categorie' = {"nom": ..., "est_poste_ao": True/False} ou None si le CV n'a aucune expérience exploitable.
-    
     """
     cv_id: str
     categorie: Optional[Dict]
@@ -37,20 +35,21 @@ class CVRejeteEntry(TypedDict):
     """
     Un CV écarté par le nœud guards.
     Conserve toutes les infos de l'entry agrégée + statut + motif + détails + la catégorie d'où il a été retiré.
-    
     """
     cv_id: str
     offre_id: str
     categorie: str
-    score_final: float
     score_technos: float
-    score_seniorite: float
     score_bonus: float
     seniorite_totale: float
     annees_requises: float
     entreprise_matchee: bool
     technos_details: Dict[str, float]
-    est_poste_ao: bool
+    est_principal: bool
+    score_pertinence_cv: Optional[float]
+    cos_profil: Optional[float]
+    cos_description: Optional[float]
+    cos_contexte: Optional[float]
     guards_statut: str
     guards_motif: str
     guards_details: Dict

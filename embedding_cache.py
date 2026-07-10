@@ -14,8 +14,7 @@ Stocke par AO :
 
 Mécanique de cache : hash MD5 du contenu, recalcul auto si modifié.
 
-Les embeddings "complets" (ao_complete / cv_complet) sont là pour les
-fonctionnalités d'affichage et de matching global (ex: top_experiences),
+Les embeddings "complets" (ao_complete / cv_complet) sont là pour les fonctionnalités d'affichage et de matching global (ex: top_experiences),
 sans devoir rappeler Ollama à chaque matching.
 """
 
@@ -28,40 +27,14 @@ from typing import List, Dict, Optional
 
 import numpy as np
 
-import ollama
+from score_global import texte_experience, texte_ao_complet, _texte_section_ao, texte_cv_complet, _normaliser, embed, MODEL
 
-from score_global import texte_experience
-
-
-MODEL = "qwen3-embedding:8b"
-
-# ─────────────────────────────────────────────────────────────────────
-# Normalisation des vecteurs d'embedding
-# ─────────────────────────────────────────────────────────────────────
-
-def _normaliser(vecteurs: np.ndarray) -> np.ndarray:
-    """Normalise L2 ligne par ligne. Accepte (n, d) ou (d,).
-    Remplace les normes nulles par 1.0 pour éviter NaN."""
-    arr = np.asarray(vecteurs, dtype="float32")
-    if arr.ndim == 1:
-        n = np.linalg.norm(arr)
-        return arr if n == 0 else arr / n
-    norms = np.linalg.norm(arr, axis=1, keepdims=True)
-    norms = np.where(norms == 0, 1.0, norms)
-    return arr / norms
-
-# ─────────────────────────────────────────────────────────────────────
-# Fonction d'embeding générique
-# ─────────────────────────────────────────────────────────────────────
-
-def embed(textes):
-    textes = [t[:8000] for t in textes]      # garde-fou longueur de contexte
-    rep = ollama.embed(model=MODEL, input=textes, keep_alive=-1)
-    return np.array(rep["embeddings"], dtype=np.float32)
 
 # ─────────────────────────────────────────────────────────────────────
 # Templates d'enrichissement
 # ─────────────────────────────────────────────────────────────────────
+
+# l'utilité est de donnée un contexte sémantique au modèle. Ce n'est plus un simple mot ou groupement de mots, c'est une compétence technique ou un poste
 
 def _template_techno(techno: str) -> str:
     return f"compétence technique en {techno.strip()}"
@@ -71,58 +44,14 @@ def _template_poste(poste: str) -> str:
 
 
 # ─────────────────────────────────────────────────────────────────────
-# Construction des textes "complets"
-# ─────────────────────────────────────────────────────────────────────
-
-def _texte_ao_complete(offre_data: dict) -> str:
-    """Concatène toutes les sections AO en un seul texte."""
-    morceaux = []
-    for section in ("Profil", "Description", "Contexte"):
-        contenu = offre_data.get(section, []) or []
-        if isinstance(contenu, list):
-            for phrase in contenu:
-                if isinstance(phrase, str) and phrase.strip():
-                    morceaux.append(phrase.strip())
-        elif isinstance(contenu, str) and contenu.strip():
-            morceaux.append(contenu.strip())
-    return " ".join(morceaux)
-
-
-def _texte_cv_complet(cv_data: dict) -> str:
-    """
-    Concatène tout le texte exploitable du CV pour un embedding global :
-      - expériences (texte_experience : poste + entreprise + détails)
-      - competences_techniques
-      - savoir_faire et/ou savoir_etre (gère aussi l'ancien format fusionné)
-    """
-    morceaux = []
-
-    for exp in cv_data.get("experiences", []) or []:
-        if not isinstance(exp, dict):
-            continue
-        t = texte_experience(exp)
-        if t.strip():
-            morceaux.append(t)
-
-    for techno in cv_data.get("competences_techniques", []) or []:
-        if isinstance(techno, str) and techno.strip():
-            morceaux.append(techno.strip())
-
-    for cle in ("savoir_faire", "savoir_etre", "savoir_faire/savoir_etre"):
-        for item in cv_data.get(cle, []) or []:
-            if isinstance(item, str) and item.strip():
-                morceaux.append(item.strip())
-
-    return " ".join(morceaux)
-
-
-# ─────────────────────────────────────────────────────────────────────
 # Sérialisation numpy <-> JSON
 # ─────────────────────────────────────────────────────────────────────
 
+# un fichier JSON ne stocke pas du NumPy, l'embeddding est ici du NumPy. Il faut la transformation
+
 def _ndarray_to_json(arr: np.ndarray) -> dict:
     return {
-        "shape": list(arr.shape),
+        "shape": list(arr.shape), # liste au lieu de tuple
         "dtype": str(arr.dtype),
         "data":  arr.tolist(),
     }
@@ -144,7 +73,7 @@ def _hash_contenu(data: dict) -> str:
 # Parsing des dates d'expérience
 # ─────────────────────────────────────────────────────────────────────
 
-# Mois en toutes lettres (FR + abréviations courantes) → numéro
+# Mois en toutes lettres (FR + abréviations courantes) -> numéro
 _MOIS = {
     "janvier": 1, "janv": 1, "jan": 1,
     "fevrier": 2, "février": 2, "fevr": 2, "févr": 2, "fev": 2, "fév": 2,
@@ -178,19 +107,19 @@ _RE_EN_COURS = re.compile(
 )
 
 # Plafond pour les expériences avec une seule date ET pas de mention "en cours".
-DUREE_DEFAUT_DATE_UNIQUE = 0.25   # 3 mois (typiquement un stage court)
+DUREE_DEFAUT_DATE_UNIQUE = 0.25   # 3 mois (un stage court)
 
 # Plafond pour les expériences "stage/stagiaire/intern".
-DUREE_MAX_STAGE = 0.5             # 6 mois max
-_RE_STAGE = re.compile(r"\b(stage|stagiaire|intern|internship)\b", re.IGNORECASE)
-
+_RE_STAGE_ALTERNANCE = re.compile(
+    r"\b(stage|stagiaire|alternance|alternant|apprentissage|intern|internship)\b",
+    re.IGNORECASE)
 # Tous les tirets "longs"/exotiques -> trait d'union normal "-"
 _TIRETS = dict.fromkeys(map(ord, "–—‒―−﹘﹣－"), "-")
 
 def _normaliser_tirets(s: str) -> str:
     return s.translate(_TIRETS)
 
-def _est_stage(intitule_poste: str) -> bool:
+def _est_stage_alternance(intitule_poste: str) -> bool:
     return bool(_RE_STAGE.search(intitule_poste or ""))
 
 
@@ -219,11 +148,11 @@ def _extraire_dates(date_str: str):
 def _duree_experience_annees(date_str: str, poste: str = "") -> float:
     """
     Durée en années à partir d'une chaîne de période. Gère :
-      - 2 dates explicites           → durée réelle
-      - 1 date + mention "en cours"  → durée jusqu'à maintenant
-      - 1 date sans mention          → DUREE_DEFAUT_DATE_UNIQUE (3 mois)
-      - stages                       → plafonnés à DUREE_MAX_STAGE
-      - format invalide              → 0.0
+      - 2 dates explicites           -> durée réelle
+      - 1 date + mention "en cours"  -> durée jusqu'à maintenant
+      - 1 date sans mention          -> DUREE_DEFAUT_DATE_UNIQUE (3 mois)
+      - stages et alternance         -> Ce n'est pas comptabilisé 
+      - format invalide              -> 0.0
     Formats reconnus : 'Mars 2022', '07.2022', '03/2020', '2018', etc.
     """
     if not date_str:
@@ -251,10 +180,32 @@ def _duree_experience_annees(date_str: str, poste: str = "") -> float:
     else:
         duree = DUREE_DEFAUT_DATE_UNIQUE
 
-    if _est_stage(poste):
-        duree = min(duree, DUREE_MAX_STAGE)
+    if _est_stage_alternance(poste):
+        return 0.0
 
     return duree
+
+
+def _anciennete_experience_annees(date_str: str): # problème ici
+    """
+    Années écoulées depuis la FIN de l'expérience.
+      - 0.0 si l'expérience est en cours ('présent', 'aujourd'hui', 'depuis'…)
+      - années entre la date de fin et aujourd'hui sinon
+      - None si aucune date exploitable (le CV sera exclu du principal)
+    """
+    if not date_str:
+        return None
+    if _RE_EN_COURS.search(_normaliser_tirets(date_str)):
+        return 0.0
+    dates = _extraire_dates(date_str)
+    if not dates:
+        return None
+    m, y = dates[-1]                      # date de fin = la dernière trouvée
+    try:
+        fin = datetime(y, m, 1)
+    except ValueError:
+        return None
+    return max(0.0, (datetime.now() - fin).days / 365.25)
 
 
 # ─────────────────────────────────────────────────────────────────────
@@ -270,7 +221,7 @@ class CacheEmbeddingsCV:
       - l'embedding du CV complet (expériences + technos + savoir-faire/être)
     """
 
-    def __init__(self, model: MODEL, cache_dir: str):
+    def __init__(self, model: str, cache_dir: str):
         self.model = model
         self.cache_dir = Path(cache_dir)
         self.cache_dir.mkdir(parents=True, exist_ok=True)
@@ -300,32 +251,33 @@ class CacheEmbeddingsCV:
     def _calculer(self, cv_data: dict) -> dict:
         """Embedde les postes d'expérience, chaque techno, et le CV complet."""
 
-        # 1. Expériences : on conserve l'ordre d'origine (le 1er = le plus récent
-        #    par convention dans les CVs)
+        # Expériences : on conserve l'ordre d'origine (le 1er = le plus récent par convention dans les CVs)
         experiences = []
-        for idx, exp in enumerate(cv_data.get("experiences", [])):
+        for idx, exp in enumerate(cv_data.get("experiences", [])): # boucle des expériences d'un CV
             poste = exp.get("poste", "").strip()
             if not poste:
                 continue
             entreprise = exp.get("entreprise", "").strip()
-            duree = _duree_experience_annees(exp.get("date", ""), poste)
+            duree = _duree_experience_annees(exp.get("date", ""), poste) # le poste est important car il permet de différencier d'un stage6
+            anciennete = _anciennete_experience_annees(exp.get("date", ""))
 
-            texte = texte_experience(exp)               # poste + entreprise + détails
+            texte = texte_experience(exp)   # poste + entreprise + détails
             emb_raw = embed([texte])[0]
             emb = _normaliser(emb_raw)
 
             experiences.append({
-                "ordre":      idx,                   # 0 = la plus récente
+                "ordre":      idx,  # 0 = la plus récente
                 "poste":      poste,
                 "annees":     round(duree, 3),
+                "anciennete": (round(anciennete, 3) if anciennete is not None else None),
                 "entreprise": entreprise,
                 "embedding":  _ndarray_to_json(emb),
             })
 
-        # 2. Séniorité totale = somme de TOUTES les expériences
+        # Séniorité totale = somme de TOUTES les expériences
         seniorite_totale = round(sum(e["annees"] for e in experiences), 2)
 
-        # 3. Technos : chaque techno embeddée séparément
+        # Technos : chaque techno embeddée séparément
         technos_brutes = cv_data.get("competences_techniques", [])
         technos_brutes = [t.strip() for t in technos_brutes if t and t.strip()]
 
@@ -340,8 +292,8 @@ class CacheEmbeddingsCV:
                     "embedding": _ndarray_to_json(emb),
                 })
 
-        # 4. CV complet (toutes les sections textuelles concaténées)
-        texte_complet = _texte_cv_complet(cv_data)
+        # CV complet (toutes les sections textuelles concaténées)
+        texte_complet = texte_cv_complet(cv_data)
         if texte_complet:
             emb_raw = embed([texte_complet])[0]
             emb_complet = _normaliser(emb_raw)
@@ -383,13 +335,16 @@ class CacheEmbeddingsCV:
 
         if cache and cache.get("hash") == hash_ok:
             vecteurs_json = cache["vecteurs"]
-        else:
+        else:                                       # si hash différent on calcule les embeddings
             vecteurs_json = self._calculer(data)
             self._ecrire(cv_id, hash_ok, vecteurs_json)
 
         return self._desserialiser(vecteurs_json)
 
     def _desserialiser(self, vecteurs_json: dict) -> Dict:
+        """
+        Retransforme les données stockées, en JSON, en objets NumPy
+        """
         cv_complet_obj = vecteurs_json.get("cv_complet")
         return {
             "experiences": [
@@ -397,6 +352,7 @@ class CacheEmbeddingsCV:
                     "ordre":      e.get("ordre", i),
                     "poste":      e["poste"],
                     "annees":     e["annees"],
+                    "anciennete": e.get("anciennete"),
                     "entreprise": e["entreprise"],
                     "embedding":  _json_to_ndarray(e["embedding"]),
                 }
@@ -419,10 +375,6 @@ class CacheEmbeddingsCV:
             ),
         }
 
-    def invalider(self, cv_id: str):
-        chemin = self._chemin(cv_id)
-        if chemin.exists():
-            chemin.unlink()
 
 
 # ─────────────────────────────────────────────────────────────────────
@@ -437,7 +389,7 @@ class CacheEmbeddingsOffre:
       - AO complète (Profil + Description + Contexte)
     """
 
-    def __init__(self, model: MODEL, cache_dir: str):
+    def __init__(self, model: str, cache_dir: str):
         self.model = model
         self.cache_dir = Path(cache_dir)
         self.cache_dir.mkdir(parents=True, exist_ok=True)
@@ -463,7 +415,7 @@ class CacheEmbeddingsOffre:
             json.dump(payload, f, ensure_ascii=False, indent=2)
 
     def _calculer(self, offre_data: dict) -> dict:
-        # 1. Poste
+        # Poste
         poste = (offre_data.get("poste") or "").strip()
         if poste:
             emb_raw = embed([_template_poste(poste)])[0]
@@ -476,7 +428,7 @@ class CacheEmbeddingsOffre:
         else:
             poste_obj = None
 
-        # 2. Technos
+        # Technos
         technos_brutes = offre_data.get("technos", [])
         technos_brutes = [t.strip() for t in technos_brutes if t and t.strip()]
 
@@ -491,8 +443,8 @@ class CacheEmbeddingsOffre:
                     "embedding": _ndarray_to_json(emb),
                 })
 
-        # 3. AO complète (Profil + Description + Contexte concaténés)
-        texte_complet = _texte_ao_complete(offre_data)
+        # AO entier (Profil + Description + Contexte concaténés)
+        texte_complet = texte_ao_complet(offre_data)
         if texte_complet:
             emb_raw = embed([texte_complet])[0]
             emb_complet = _normaliser(emb_raw)
@@ -503,10 +455,23 @@ class CacheEmbeddingsOffre:
         else:
             ao_complete_obj = None
 
+        # Sections isolées (Profil / Description / Contexte) pour score_pertinence_cv
+        sections = {}
+        for cle, nom in (("profil", "Profil"),
+                         ("description", "Description"),
+                         ("contexte", "Contexte")):
+            txt = _texte_section_ao(offre_data, nom)
+            if txt:
+                emb_section = _normaliser(embed([txt])[0])
+                sections[cle] = {"embedding": _ndarray_to_json(emb_section)}
+            else:
+                sections[cle] = None
+
         return {
             "poste":       poste_obj,
             "technos":     technos,
             "ao_complete": ao_complete_obj,
+            "sections":    sections,
         }
 
     def obtenir(self, offre: dict) -> Dict:
@@ -556,9 +521,8 @@ class CacheEmbeddingsOffre:
                 }
                 if ao_complete_obj else None
             ),
+            "sections": {
+                cle: (_json_to_ndarray(obj["embedding"]) if obj else None)
+                for cle, obj in (vecteurs_json.get("sections") or {}).items()
+            },
         }
-
-    def invalider(self, offre_id: str):
-        chemin = self._chemin(offre_id)
-        if chemin.exists():
-            chemin.unlink()

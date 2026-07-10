@@ -18,11 +18,9 @@ import sys
 
 from CV_AO_Loader import charger_cvs, charger_offres
 from score_global import (
-    texte_cv_complet, texte_ao_complete,
-    embed_ollama, cosinus_brut, chemin_cache_global,
+    texte_cv_complet, texte_ao_complet,
+    embed_ollama, cosinus_brut, chemin_cache_global, MODEL,
 )
-
-MODEL = "qwen3-embedding:8b"
 
 
 def precalculer_ao(offre, cvs, instruction=None, dossier="./cache_global"):
@@ -35,12 +33,12 @@ def precalculer_ao(offre, cvs, instruction=None, dossier="./cache_global"):
         )
     if instruction:                      # asymétrie Qwen3 : instruction côté AO seulement
         txt_ao = f"Instruct: {instruction}\nQuery: {txt_ao}"
-    emb_ao = embed_ollama(MODEL, txt_ao)
+    emb_ao_complet = embed_ollama(MODEL, txt_ao)
 
     cosines = {}
     for cv in cvs:
-        emb_cv = embed_ollama(MODEL, texte_cv_complet(cv["data"]))  # CV brut
-        cosines[cv["id"]] = round(cosinus_brut(emb_cv, emb_ao), 6)
+        emb_cv_complet = embed_ollama(MODEL, texte_cv_complet(cv["data"]))  # CV brut
+        cosines[cv["id"]] = round(cosinus_brut(emb_cv_complet, emb_ao_complet), 6)
 
     chemin = chemin_cache_global(offre["id"], dossier)
     chemin.parent.mkdir(parents=True, exist_ok=True)
@@ -57,7 +55,7 @@ def precalculer_ao(offre, cvs, instruction=None, dossier="./cache_global"):
 
 
 def main():
-    p = argparse.ArgumentParser(description="Précalcul de l'indicateur global Qwen3-8B.")
+    p = argparse.ArgumentParser(description="Précalcul de l'indicateur global Qwen3-Embedding-8B.")
     p.add_argument("--cv",  default="./CV_JSON", help="Dossier des CV (défaut: ./CV_JSON)")
     p.add_argument("--ao",  default="./AO_JSON", help="Dossier des AO (défaut: ./AO_JSON)")
     p.add_argument("--out", default="./cache_global", help="Dossier de sortie (défaut: ./cache_global)")

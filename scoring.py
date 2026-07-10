@@ -3,18 +3,15 @@ Module de scoring CV/AO.
 
 Logique :
   1. CATÉGORISATION : un CV va EXACTEMENT dans une catégorie.
-       - Si au moins 1 expérience matche le poste AO (sim >= SEUIL_CATEGORIE)
-         → groupe principal (nommé comme le poste AO)
-       - Sinon → 1 seul groupe alternatif, nommé comme le poste de
-         l'expérience la plus récente du CV (ordre = 0).
+       - Si au moins 1 expérience matche le poste AO et est récente de moins de 2ans (sim >= SEUIL_SEMANTIQUE)
+         -> groupe principal 
+       - Sinon -> 1 seul groupe alternatif, l'expérience la plus récente du CV (ordre = 0).
 
   2. SÉNIORITÉ : somme TOTALE des expériences du CV (peu importe le poste).
      Calculée une fois pour toutes dans embedding_cache.
 
   3. SCORING :
-     score = w_technos × score_technos
-           + w_seniorite × score_seniorite
-           + w_bonus × bonus_entreprise
+     score = cos(cv_complet, ao_complet)
 """
 
 from taxonomie import compatibles_technos
@@ -26,63 +23,111 @@ import re
 
 # ────────────────────── Constantes ───────────────────────────
 
-
-POIDS_AXES = {
-    "technos":   0.90,
-    "seniorite": 0.0,
-    "bonus":     0.10,    # additif, peut faire dépasser 1.0 (ne le fera pas)
-}
-
-# Seuil pour qu'une expérience soit considérée "du poste AO".
-SEUIL_CATEGORIE = 0.70
+SEUIL_TECHNO = 0.80 # score min pour valider une techno en orange
 
 VALEUR_BONUS_ENTREPRISE = 1.0
 
 SEUIL_EXP = 0.50
 
+# ── Catégorisation principal/alternatif (nouvelle logique) ──
+SEUIL_PRINCIPAL = 0.60          # score_pertinence_cv mini pour entrer dans le principal
+ANCIENNETE_MAX   = 2.0           # une exp ne compte que si finie il y a <= 2 ans
+POIDS_SECTIONS   = {"profil": 0.20, "description": 0.40, "contexte": 0.40}
+
 # ──────────────────── Catégorisation ─────────────────────────────────
 
 
-def categoriser_cv(
-    emb_poste_ao: np.ndarray,
-    poste_ao_label: str,
+def score_pertinence_cv(
+    sections_ao: Dict,                 # {"profil": np.ndarray|None, "description":..., "contexte":...}
     experiences_cv: List[Dict],
-    seuil: float = SEUIL_CATEGORIE,
+    anciennete_max: float = ANCIENNETE_MAX,
 ) -> Optional[Dict]:
     """
-    Détermine la catégorie unique d'un CV.
+    Pour chaque expérience RÉCENTE (anciennete non nulle et <= anciennete_max), calcule un cosinus pondéré contre les sections AO :
+        somme( POIDS_SECTIONS[s] * cos(exp, section_s) )  
+        sur les sections présentes, poids renormalisés sur les sections réellement disponibles.
 
-    Returns:
-      {
-        "nom":          "<nom de la catégorie>",
-        "est_poste_ao": True/False,
-      }
-      ou None si le CV n'a aucune expérience exploitable.
+    Retourne le dict de la MEILLEURE expérience récente :
+        {"score", "cos_profil", "cos_description", "cos_contexte", "poste", "anciennete"}
+    ou None si aucune expérience récente exploitable (-> le CV ne peut pas être principal).
+    """
+    if not sections_ao or not experiences_cv: # on vérif que le sections de l'AO et les exps du CV ne soient pas vides
+        return None
 
-    Cas concrets :
-      - CV avec exp Data Scientist + Data Analyst, AO Data Scientist
-        → {"nom": "Data Scientist", "est_poste_ao": True}
+    # ------ AO
+    # sections présentes + poids renormalisés (si une section AO manque)
+    presentes = {section: emb # clé : valeur, on oublie pas
+                for section, emb in sections_ao.items()
+                if emb is not None and section in POIDS_SECTIONS}
+    if not presentes: # on vérifie qu'au moins une des sections présente soit valide et son embedding aussi
+        return None
+    total_poids = sum(POIDS_SECTIONS[section] for section in presentes)
 
-      - CV avec exp Commercial + Stagiaire, AO Data Scientist
-        → {"nom": "Commercial", "est_poste_ao": False}
-          (poste de l'exp d'ordre 0 = la plus récente)
+    # ------ CV
+    meilleur = None
+    for exp in experiences_cv:
+        anc = exp.get("anciennete") # durée depuis la fin de cette exp, si en cours alors = 0
+        if anc is None or anc > anciennete_max:      # indatable OU trop ancienne -> ignorée
+            continue
+        emb_exp = np.asarray(exp["embedding"], dtype="float32")
+
+        cos = {section: None for section in POIDS_SECTIONS} # on met chaque section à None
+        score = 0.0
+        for section, emb_section in presentes.items():
+            c = float(np.dot(emb_exp, np.asarray(emb_section, dtype="float32"))) # on peut calculer directe car les embeddings seront normailsé
+            cos[section] = round(c, 4)
+            score += (POIDS_SECTIONS[section] / total_poids) * c # donne le score de l'exp qui est au dessus du seuil d'ancienneté demandé
+
+        if meilleur is None or score > meilleur["score"]: # permet d'avoir le meilleur score parmi les expériences récentes
+            meilleur = {
+                "score":          round(score, 4),
+                **{f"cos_{s}": cos.get(s) for s in POIDS_SECTIONS}, # permet d'intégrer les cos de chaque section d'un coup, pas mal si on change POIDS_SECTION
+                "poste":          exp.get("poste", ""),
+                "anciennete":     round(anc, 2),
+            }
+    return meilleur
+
+
+def categoriser_cv(
+    sections_ao: Dict,
+    poste_ao_label: str,
+    experiences_cv: List[Dict],
+    seuil: float = SEUIL_PRINCIPAL,
+    anciennete_max: float = ANCIENNETE_MAX,
+) -> Optional[Dict]:
+    """
+    Détermine la catégorie unique d'un CV via score_pertinence_cv.
+
+    - score_pertinence_cv >= seuil (sur une exp récente) -> groupe PRINCIPAL
+    - sinon -> groupe alternatif
+
+    Returns un dict :
+      {"nom", "est_principal": bool, "score_pertinence_cv": float,
+       "cos_profil", "cos_description", "cos_contexte"}
+    ou None si le CV n'a aucune expérience exploitable.
     """
     if not experiences_cv:
         return None
 
-    if emb_poste_ao is not None:
-        # Y a-t-il au moins une expérience qui matche le poste AO ?
-        for exp in experiences_cv:
-            sim = float(np.dot(emb_poste_ao, exp["embedding"]))
-            if sim >= seuil:
-                return {"nom": poste_ao_label, "est_poste_ao": True}
-
-    # Aucun match → groupe alternatif = poste de l'exp la plus récente
-    # (par convention : la première dans l'ordre du CV, ordre = 0)
+    pert = score_pertinence_cv(sections_ao, experiences_cv, anciennete_max)
     exp_recente = min(experiences_cv, key=lambda e: e["ordre"])
-    return {"nom": exp_recente["poste"], "est_poste_ao": False}
 
-import numpy as np   # déjà importé normalement
+    if pert and pert["score"] >= seuil: # le premier pert sert à éviter de planter si "pert is None", le deuxième à savoir si le meilleur des score est >= au seuil
+        return {
+            "nom":                 exp_recente["poste"],
+            "est_principal":       True,
+            "score_pertinence_cv": pert["score"],
+            **{f"cos_{s}": pert.get(f"cos_{s}") for s in POIDS_SECTIONS},
+        }
+
+    # Alternatif : nom = poste de l'expérience la plus récente (ordre = 0)
+    
+    return {
+        "nom":                 exp_recente["poste"],
+        "est_principal":       False,
+        "score_pertinence_cv": pert["score"] if pert else 0.0,
+        **{f"cos_{s}": (pert.get(f"cos_{s}") if pert else None) for s in POIDS_SECTIONS},
+    }
 
 def _formater_duree(annees: float) -> str:
     """2.42 -> '2 ans et 5 mois' ; 0.42 -> '5 mois' ; 1.0 -> '1 an'."""
@@ -99,8 +144,7 @@ def _formater_duree(annees: float) -> str:
 
 
 def top_experiences(emb_ao_complete, experiences_cv, seuil: float = SEUIL_EXP, k=3):
-    """<=k expériences les plus proches de l'AO complète (cosinus >= seuil),
-    triées par cosinus décroissant. Vecteurs supposés normalisés."""
+    """<=k expériences les plus proches de l'AO complète (cosinus >= seuil), triées par cosinus décroissant. Vecteurs supposés normalisés."""
     if emb_ao_complete is None or not experiences_cv:
         return []
     emb_ao = np.asarray(emb_ao_complete, dtype="float32")
@@ -141,7 +185,7 @@ def _sans_accents(s: str) -> str:
     return "".join(c for c in unicodedata.normalize("NFD", s)
                    if unicodedata.category(c) != "Mn")
 
-def _normaliser(label: str) -> str:
+def _normaliser_texte(label: str) -> str:
     return re.sub(r"\s+", " ", label.strip().lower())
 
 def _coeur(label: str) -> str:
@@ -155,29 +199,29 @@ def _tokens(label: str) -> set:
     return toks - _QUALIF
 
 def score_technos(
-    technos_ao,                       # List[{"label": str, "embedding": np.ndarray}]
-    technos_cv,                       # idem
-    seuil_semantique: float = 0.80,   # a calibrer 
-    discount: float = 1.0,            # 1.0 = comportement actuel ; <1 pour devaluer le semantique
+    technos_ao,                               # List[{"label": str, "embedding": np.ndarray}]
+    technos_cv,                               # idem
+    seuil_semantique: float = SEUIL_TECHNO,    
+    discount: float = 1.0,                    # 1.0 = comportement actuel ; <1 pour devaluer le semantique
 ):
     if not technos_ao:
         return 1.0, {}
 
-    n_ao = len(technos_ao)
-    details = [None] * n_ao
-    scores  = [0.0]  * n_ao
+    nbr_tech_ao = len(technos_ao)
+    details = [None] * nbr_tech_ao
+    scores  = [0.0]  * nbr_tech_ao
 
     # Index CV : norme + tokens + label original
-    cv_norme  = [_normaliser(t["label"]) for t in technos_cv]
+    cv_norme  = [_normaliser_texte(t["label"]) for t in technos_cv]
     cv_tokens = [_tokens(t["label"])      for t in technos_cv]
     cv_label  = [t["label"]               for t in technos_cv]
-    cv_dispo  = set(range(len(technos_cv)))   # technos CV pas encore consommees
+    cv_dispo  = set(range(len(technos_cv)))   # technos CV pas encore matché avec celle de l'AO
 
     # ── 1. EXACT (egalite stricte OU inclusion de tokens) ──────────────────
     # Un match exact CONSOMME la techno CV (1-a-1 des le depart).
-    for a, t in enumerate(technos_ao):
-        norme_ao  = _normaliser(_coeur(t["label"]))   # cœur : ignore la parenthèse
-        tokens_ao = _tokens(_coeur(t["label"]))
+    for ind, tech in enumerate(technos_ao):
+        norme_ao  = _normaliser_texte(_coeur(tech["label"]))   # cœur : ignore la parenthèse
+        tokens_ao = _tokens(_coeur(tech["label"]))
 
         # candidats parmi les CV encore disponibles
         cand = None
@@ -192,12 +236,12 @@ def score_technos(
 
         if cand is not None:
             cv_dispo.discard(cand)
-            details[a] = {"score": 1.0, "source": "exact",
+            details[ind] = {"score": 1.0, "source": "exact",
                           "matche_avec": cv_label[cand]}
-            scores[a]  = 1.0
+            scores[ind]  = 1.0
 
     # ── 2. SEMANTIQUE, affectation gloutonne 1-a-1 sur le reste ────────────
-    ao_restantes = [a for a in range(n_ao) if details[a] is None]
+    ao_restantes = [ind for ind in range(nbr_tech_ao) if details[ind] is None]
 
     if ao_restantes and cv_dispo and technos_cv:
         mat_cv = np.stack([technos_cv[c]["embedding"] for c in sorted(cv_dispo)])
@@ -210,10 +254,10 @@ def score_technos(
             if emb_ao is None:
                 continue
             sims = mat_cv @ emb_ao
-            for j, c in enumerate(cv_idx):
+            for ind, c in enumerate(cv_idx):
                 if not compatibles_technos(technos_ao[a]["label"], cv_label[c]):
                     continue                     # familles incompatibles -> jamais candidat
-                couples.append((float(sims[j]), a, c))
+                couples.append((float(sims[ind]), a, c))
 
         # du meilleur cosinus au pire ; chaque AO et chaque CV servis une fois
         couples.sort(reverse=True)
@@ -230,40 +274,13 @@ def score_technos(
             ao_pris.add(a); cv_pris.add(c)
 
     # ── 3. ABSENT ──────────────────────────────────────────────────────────
-    for a, t in enumerate(technos_ao):
-        if details[a] is None:
-            details[a] = {"score": 0.0, "source": "absent", "matche_avec": None}
-            scores[a]  = 0.0
+    for ind, t in enumerate(technos_ao):
+        if details[ind] is None:
+            details[ind] = {"score": 0.0, "source": "absent", "matche_avec": None}
+            scores[ind]  = 0.0
 
-    details_dict = {technos_ao[a]["label"]: details[a] for a in range(n_ao)}
+    details_dict = {technos_ao[ind]["label"]: details[ind] for ind in range(nbr_tech_ao)}
     return float(np.mean(scores)), details_dict
-
-
-# ─────────────────── Score Séniorité ─────────────────────────
-
-
-def score_seniorite(
-    seniorite_totale: float,
-    seniorite_min_annees: float,
-    tolerance_junior: float = 0.4,   # strict côté sous-qualifié
-    tolerance_senior: float = 0.8,   # tolérant côté sur-qualifié
-) -> float:
-    """
-    Gaussienne asymétrique. Pénalise plus durement le manque d'expérience que le surplus.
-    """
-    if seniorite_min_annees is None or seniorite_min_annees <= 0:
-        return 1.0
-    if seniorite_totale < 0:
-        return 0.0
-
-    mu = seniorite_min_annees
-    ecart = seniorite_totale - mu
-
-    # Sigma différent selon qu'on est junior ou sénior
-    sigma = mu * (tolerance_junior if ecart < 0 else tolerance_senior)
-
-    score = math.exp(-(ecart ** 2) / (2 * sigma ** 2))
-    return float(score)
 
 
 # ────────────────── Bonus Entreprise ───────────────────────────
@@ -300,24 +317,3 @@ def score_bonus_entreprise(
         if ao == cv or (ta and (ta <= tc or tc <= ta)):
             return VALEUR_BONUS_ENTREPRISE, True
     return 0.0, False
-
-
-# ─────────────────── Agrégation ──────────────────────────────
-
-
-def agreger_scores(
-    s_technos:   float,
-    s_seniorite: float,
-    s_bonus:     float,
-    poids:       Optional[Dict[str, float]] = None,
-) -> float:
-    """
-    Combinaison linéaire des 3 axes.
-    Score non borné : bonus peuvent dépasser 1.0.
-    """
-    p = poids or POIDS_AXES
-    return (
-        p["technos"]   * s_technos
-        + p["seniorite"] * s_seniorite
-        + p["bonus"]     * s_bonus
-    )
