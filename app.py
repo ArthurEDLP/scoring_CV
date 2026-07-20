@@ -208,7 +208,7 @@ def sauvegarder_paliers(paliers: List[Dict]):
 # ════════════════════════════ JOBS (tâche de fond) ════════════════════════
 
 def _run_tolerant(cmd: List[str]) -> str:
-    """Comme _run mais ne lève PAS sur code != 0 : retourne la sortie pour log."""
+    """Comme _run mais ne lève pas sur code != 0 : retourne la sortie pour log."""
     env = {**os.environ, "PYTHONIOENCODING": "utf-8", "PYTHONUTF8": "1"}
     res = subprocess.run(cmd, cwd=str(RACINE), capture_output=True, text=True,
                          encoding="utf-8", errors="replace", env=env)

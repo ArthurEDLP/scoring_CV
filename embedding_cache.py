@@ -186,7 +186,7 @@ def _duree_experience_annees(date_str: str, poste: str = "") -> float:
     return duree
 
 
-def _anciennete_experience_annees(date_str: str): # problème ici
+def _anciennete_experience_annees(date_str: str): # problème ici, car une fois fais, la date "aujourd'hui" est fixe, sauf si on embed tout les jours
     """
     Années écoulées depuis la FIN de l'expérience.
       - 0.0 si l'expérience est en cours ('présent', 'aujourd'hui', 'depuis'…)

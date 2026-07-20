@@ -66,14 +66,12 @@ class CVScoringState(TypedDict):
     bonus_entreprise: Annotated[List[BonusEntrepriseEntry],  add]
 
     # Sortie de noeud_agreger : classement brut, avant guards.
-    # La catégorie "principale" porte le nom du poste AO.
-    # Les alternatives portent l'intitulé exact des postes des CVs.
+    # La catégorie "principale" porte l'intitulé exact du dernier poste du CV.
+    # Les alternatives portent l'intitulé exact du dernier poste du CV.
     resultats_par_categorie: Optional[Dict[str, List[Dict]]]
 
     # Sorties de noeud_guards :
-    #   - resultats_acceptes_par_categorie : même structure que
-    #     resultats_par_categorie, mais purgé des CV rejetés. C'est ce qui
-    #     est utilisé pour l'affichage final.
+    #   - resultats_acceptes_par_categorie : même structure que resultats_par_categorie, mais purgé des CV rejetés. C'est ce qui est utilisé pour l'affichage final.
     #   - cv_rejetes : liste plate des CV écartés, avec leur motif.
     # Si noeud_guards n'a pas tourné (graphe sans cette étape), ces deux
     # champs restent à None et le code aval doit retomber sur

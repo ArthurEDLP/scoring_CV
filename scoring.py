@@ -16,6 +16,7 @@ Logique :
 
 from taxonomie import compatibles_technos
 from typing import Dict, List, Optional, Tuple
+from collections import Counter
 import numpy as np
 import unicodedata
 import math
@@ -101,6 +102,8 @@ def categoriser_cv(
     - score_pertinence_cv >= seuil (sur une exp récente) -> groupe PRINCIPAL
     - sinon -> groupe alternatif
 
+    - nom = poste de l'expérience la plus récente (ordre = 0) qui est, ou non, dans le groupe principal
+
     Returns un dict :
       {"nom", "est_principal": bool, "score_pertinence_cv": float,
        "cos_profil", "cos_description", "cos_contexte"}
@@ -120,7 +123,6 @@ def categoriser_cv(
             **{f"cos_{s}": pert.get(f"cos_{s}") for s in POIDS_SECTIONS},
         }
 
-    # Alternatif : nom = poste de l'expérience la plus récente (ordre = 0)
     
     return {
         "nom":                 exp_recente["poste"],
@@ -204,6 +206,9 @@ def score_technos(
     seuil_semantique: float = SEUIL_TECHNO,    
     discount: float = 1.0,                    # 1.0 = comportement actuel ; <1 pour devaluer le semantique
 ):
+"""
+Il y a 3 paliers de technologies: Exact (CV=AO) - Sémantique (La techno, CV, est proche de celle demandé par l'AO) - Absente 
+"""
     if not technos_ao:
         return 1.0, {}
 
@@ -240,7 +245,7 @@ def score_technos(
                           "matche_avec": cv_label[cand]}
             scores[ind]  = 1.0
 
-    # ── 2. SEMANTIQUE, affectation gloutonne 1-a-1 sur le reste ────────────
+    # ── 2. SEMANTIQUE, si une techno est validé elle ne sera pas ré-utilisé ────────────
     ao_restantes = [ind for ind in range(nbr_tech_ao) if details[ind] is None]
 
     if ao_restantes and cv_dispo and technos_cv:
@@ -317,3 +322,35 @@ def score_bonus_entreprise(
         if ao == cv or (ta and (ta <= tc or tc <= ta)):
             return VALEUR_BONUS_ENTREPRISE, True
     return 0.0, False
+
+
+# ────────────────── Classification en Catégorie de la Durée d'une Éxpérience ───────────────────────────
+
+def _classifier_duree_experience(annees: float, seuil_court_mois: float, seuil_valide_mois: float) -> str:
+    """
+    Classifie une expérience en l'une des 3 catégories : courte - intermediaire - valide.
+    """
+    mois = annees * 12
+
+    if seuil_court_mois > seuil_valide_mois:
+        raise ValueError("seuil_court_mois doit être <= seuil_valide_mois")
+
+    if mois <= seuil_court_mois:
+        return "courte"
+    
+    if mois <= seuil_valide_mois :
+        return "intermediaire"
+    
+    return "valide"
+
+
+def classifier_experiences(experiences: list, seuil_court_mois: float, seuil_valide_mois: float) -> list:
+    """
+    Chaque expérience + une clé 'duree_cat'.
+    L'ordre est préservé."""
+    return [
+        {
+            **exp, "duree_cat": _classifier_duree_experience(exp.get("annees", 0), seuil_court_mois, seuil_valide_mois,)
+        }
+        for exp in experiences
+    ]

@@ -68,6 +68,10 @@ GUARDS_DELTA = 0.5
 GUARDS_FENETRE_MOIS = None  # None = dérivé de seniorite_min_annees (24 mois min)
 
 
+with open("config.json", "r", encoding="utf-8") as f:
+    config = json.load(f)
+
+
 # ═══════════════════════ NOEUDS ════════════════════════════════════
 
 
@@ -132,7 +136,7 @@ def noeud_technos(state: CVScoringState) -> Dict:
 
 def noeud_score_global(state: CVScoringState) -> Dict:
     """
-    Indicateur : cosinus CV complet ↔ AO complète (Qwen3-8B).
+    Indicateur : cosinus CV complet <-> AO complète (Qwen3-8B).
     NE FAIT PAS tourner le 8B : il lit le JSON précalculé par precalcul_global.py.
     Si le cache est absent, l'indicateur est simplement ignoré (erreur loguée).
     """
@@ -206,6 +210,37 @@ def noeud_agreger(state: CVScoringState) -> Dict:
     technos_par_cv: Dict[str, Dict] = {}
     bonus_par_cv:   Dict[str, Dict] = {}
 
+    # ───────────  Transformation des listes en dictionnaire d'index  ────
+    """
+    L'ordre d'appartition des CVs n'est pas garanti le même DONC on doit effectuer une transformation pour faciliter l'appel des CVs
+
+    On passe de se format :
+
+    state["categorisations"] = [
+    {"cv_id": "cv_B", "categorie": {...}},
+    {"cv_id": "cv_A", "categorie": {...}},
+    {"cv_id": "cv_C", "categorie": None},
+    ]
+    state["scores_technos"] = [
+    {"cv_id": "cv_C", "score": 0.8, "details": {...}},
+    {"cv_id": "cv_B", "score": 0.6, "details": {...}},
+    {"cv_id": "cv_A", "score": 0.9, "details": {...}},
+    ]
+
+    à celui-ci:
+
+    cat_par_cv = {
+    "cv_A": {...},          # la valeur = e["categorie"] , "categorie" étant la sortie de categoriser_cv
+    "cv_B": {...},
+    "cv_C": None,
+    }
+    technos_par_cv = {
+    "cv_A": {"cv_id": "cv_A", "score": 0.6, "details": {...}},   # la valeur = e (l'entry entière) , pas comme avant, ici on recopie le dictionnaire
+    "cv_B": {"cv_id": "cv_B", "score": 0.8, "details": {...}},
+    "cv_C": {"cv_id": "cv_C", "score": 0.9, "details": {...}},
+    }
+    """
+
     for e in state["categorisations"]:
         cat_par_cv[e["cv_id"]] = e["categorie"]
     for e in state["scores_technos"]:
@@ -219,7 +254,7 @@ def noeud_agreger(state: CVScoringState) -> Dict:
             cv_emb = CACHE_CV.obtenir(cv)
             seniorite_par_cv[cv["id"]] = cv_emb["seniorite_totale"]
         except Exception:
-            seniorite_par_cv[cv["id"]] = 0.0
+            seniorite_par_cv[cv["id"]] = 0.0 # au lieu d'afficher un message d'erreur on met la seniorité à 0
 
     # Indicateur global (lecture seule, n'entre PAS dans score_final)
     cos_par_cv = {e["cv_id"]: e["cosine_brut"] for e in state["scores_globaux"]}
@@ -279,7 +314,7 @@ def noeud_agreger(state: CVScoringState) -> Dict:
             "top_experiences":    tops,
         })
 
-    # Tri de chaque groupe par l'indicateur global (cosinus CV complet ↔ AO complète)
+    # Tri de chaque groupe par l'indicateur global (cosinus CV complet <-> AO complète)
     def _cos(r):
         ig = r.get("indicateur_global")
         return ig["cosine"] if ig else -1.0
