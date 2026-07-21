@@ -31,7 +31,7 @@ VALEUR_BONUS_ENTREPRISE = 1.0
 SEUIL_EXP = 0.50
 
 # ── Catégorisation principal/alternatif (nouvelle logique) ──
-SEUIL_PRINCIPAL = 0.60          # score_pertinence_cv mini pour entrer dans le principal
+SEUIL_PRINCIPAL = 0.725          # score_pertinence_cv mini pour entrer dans le principal
 ANCIENNETE_MAX   = 2.0           # une exp ne compte que si finie il y a <= 2 ans
 POIDS_SECTIONS   = {"profil": 0.20, "description": 0.40, "contexte": 0.40}
 

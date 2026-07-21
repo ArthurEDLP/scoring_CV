@@ -849,7 +849,8 @@ function suivre(jobId, onDone){
   const t=setInterval(async()=>{
     let j; try{ j=await api('/api/jobs/'+jobId);}catch(e){clearInterval(t);showErr(e.message);return;}
     setProg(j.progression); setStatus(j.etape||'');
-    if(j.statut==='termine'){clearInterval(t);setStatus(j.message||'Terminé');onDone(j);}
+    if(j.statut==='termine'){clearInterval(t);setStatus(j.message||'Terminé');
+      try{onDone(j);}catch(err){showErr('Erreur d\'affichage : '+err.message);console.error(err);}}
     if(j.statut==='erreur'){clearInterval(t);showErr((j.erreur||'')+'\n\n'+(j.message||''));unlock();}
   },1200);
 }
@@ -934,7 +935,6 @@ function cvHTML(r,i){
     <div class="top">
       <span class="rank">${i}.</span>
       <span class="name">${r.cv_id}${flag}</span>
-      <span class="sc">score=<b>${r.score_final.toFixed(3)}</b></span>
       <span class="sc">technos=${r.score_technos.toFixed(2)}</span>
       ${seniorHTML}
       <span class="sc">dispo=${r.disponibilite}</span>
@@ -969,7 +969,7 @@ function rendre(res){
   const principal=[], alt=[];
   for(const[nom,cl]of Object.entries(cats)){
     if(!cl||!cl.length) continue;
-    const cible = cl[0].est_poste_ao ? principal : alt;
+    const cible = cl[0].est_principal ? principal : alt;
     for(const r of cl) cible.push({...r, _poste:nom});
   }
   const parRang=(a,b)=>{
@@ -1000,7 +1000,7 @@ function rendre(res){
   const rej=res.cv_rejetes||[];
   if(rej.length){
     h+=`<h3>🚫 Écartés par les garde-fous (${rej.length})</h3>`;
-    rej.forEach(r=>{ h+=`<div class="rej"><b>${r.cv_id}</b> · score ${r.score_final.toFixed(3)} · [${r.categorie}]
+    rej.forEach(r=>{ h+=`<div class="rej"><b>${r.cv_id}</b> · [${r.categorie}]
       <div class="motif">${r.guards_statut} — ${r.guards_motif}</div></div>`; });
   }
   if(res.erreurs&&res.erreurs.length)
