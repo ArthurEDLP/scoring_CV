@@ -120,7 +120,7 @@ def _normaliser_tirets(s: str) -> str:
     return s.translate(_TIRETS)
 
 def _est_stage_alternance(intitule_poste: str) -> bool:
-    return bool(_RE_STAGE.search(intitule_poste or ""))
+    return bool(_RE_STAGE_ALTERNANCE.search(intitule_poste or ""))
 
 
 def _extraire_dates(date_str: str):

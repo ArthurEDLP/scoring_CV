@@ -1,0 +1,46 @@
+{
+  "id": "JC",
+  "formations": [
+    "Master Econométrie & Statistiques – IAE Nantes - Nantes"
+  ],
+  "certifications": [
+    "Dataiku Core Designer Certificate"
+  ],
+  "langues": [
+    {
+      "nom_langue": "Anglais",
+      "maitrise": "Professionnel"
+    },
+    {
+      "nom_langue": "Allemand",
+      "maitrise": "Notions"
+    }
+  ],
+  "competences_techniques": [
+    "SQL",
+    "Python",
+    "Microsoft VBA",
+    "Snowflake",
+    "Tableau"
+  ],
+  "savoir_faire/savoir_etre": [
+    "reporting",
+    "compétences analytiques",
+    "prise de décision",
+    "machine learning"
+  ],
+  "experiences": [
+    {
+      "poste": "Loyalty Analyst",
+      "date": "Depuis 08/2023",
+      "entreprise": "Accor Hotel",
+      "details": "Analyse des performances et du comportement client au sein du programme de fidélité Accor. Conception et automatisation de reportings stratégiques à l’aide de SQL, Snowflake et Excel. Réalisation d'analyses ad hoc et d’outils de suivi des performances pour les équipes métiers. Conception du rapport “From Where to Where” permettant d’analyser les flux clients entre régions et marques ainsi qu'une vue feeder market, clé pour le métier. Réalisation du report “Hotel Burn Analysis – Where Points Come From” afin de comprendre les comportements de burn et les sources de points des membres. Élaboration du report “Partnerships Performance Review”, rapport clé le pilotage des partenariats suivi des performances des partenariats (revenu, points, acquisition, activité hôtelière). Création d'un calcul du Revenu Incrémental Partnerships permettant de prouver la valeur ajoutée des partenariats chez Accor. Développement de l’outil “Simulation enroll 2030” pour estimer les inscriptions futures au programme Loyalty. Etudes approfondies sur certains types de membres présentés aux collaborateurs Accor & aux régions. Proposition et mise en place de macros VBA pour automatiser des tâches répétitives de l’équipe. Création d’un espace Notion pour faciliter la synchronisation entre équipes métiers, dashboarding et la mienne Conception de POC sur Excel pour les dashboards Partnerships et Corporate, ensuite migrés sur Tableau. Recette et conseil sur la data visualisation et les indicateurs auprès des équipes Tableau. Accès à Python récents, réalisation d'une segmentation client, automatisation complète de la mise à jour de certains Référente sur les sujets partnerships & analyses approfondies de sujets globaux Loyalty. Autonomie, Rigueur et Curiosité. Environnement Technique : Dataiku, Microsoft Excel, Microsoft VBA, Python, Snowflake, SQL"
+    },
+    {
+      "poste": "Data Analyst stagiaire",
+      "date": "03/2023 - 08/2023",
+      "entreprise": "Consort",
+      "details": "Projet Data Science : apprentissage par renforcement sur AWS DeepRacer et développement d’une IA jouant au Puissance 4 (approfondissement des notions d’OOP et PyTorch). Projet Métier : optimisation des processus internes de recrutement et commerciaux via un outil VBA automatisant la normalisation des données et l’envoi d’e-mails de relance. Organisation d'un Atelier VBA à destination de consultants débutants en VBATransition vers le groupe hôtelier Accor en mission long terme (poste actuel). Environnement Technique : data science, méthodologies agiles, Microsoft VBA, Microsoft Visual Studio Code, OOP, Python"
+    }
+  ]
+}

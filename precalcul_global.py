@@ -25,7 +25,7 @@ from score_global import (
 
 def precalculer_ao(offre, cvs, instruction=None, dossier="./cache_global"):
     """Embedde l'AO + chaque CV, écrit le JSON, retourne (chemin, cosines)."""
-    txt_ao = texte_ao_complete(offre["data"])
+    txt_ao = texte_ao_complet(offre["data"])
     if not txt_ao.strip():
         raise RuntimeError(
             f"AO {offre['id']} : texte vide. Vérifie les clés "
