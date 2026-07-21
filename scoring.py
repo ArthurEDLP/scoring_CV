@@ -355,3 +355,11 @@ def classifier_experiences(experiences: list, seuil_court_mois: float, seuil_val
         }
         for exp in experiences
     ]
+
+
+def compter_par_categorie(experiences_classees: list) -> dict:
+    """
+    Compte à partir d'expériences DÉJÀ classées (clé 'duree_cat')
+    """
+    counts = Counter(e["duree_cat"] for e in experiences_classees)
+    return {c: counts.get(c, 0) for c in ("courte", "intermediaire", "valide")}
