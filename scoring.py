@@ -206,9 +206,10 @@ def score_technos(
     seuil_semantique: float = SEUIL_TECHNO,    
     discount: float = 1.0,                    # 1.0 = comportement actuel ; <1 pour devaluer le semantique
 ):
-"""
-Il y a 3 paliers de technologies: Exact (CV=AO) - Sémantique (La techno, CV, est proche de celle demandé par l'AO) - Absente 
-"""
+    """
+    Score global des technos AO vs CV, avec détails par techno AO.
+    Il y a 3 paliers de technologies: Exact (CV=AO) - Sémantique (La techno, CV, est proche de celle demandé par l'AO) - Absente 
+    """
     if not technos_ao:
         return 1.0, {}
 
