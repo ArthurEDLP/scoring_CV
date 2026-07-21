@@ -59,6 +59,7 @@ class CVScoringState(TypedDict):
     # Entrées
     offre: Dict
     cvs: List[Dict]
+    config_seuils: Dict      # {"seuil_court_mois": ..., "seuil_valide_mois": ...}
 
     # Sorties par axe
     categorisations:  Annotated[List[CategorisationEntry],   add]
@@ -86,7 +87,7 @@ class CVScoringState(TypedDict):
 
 
 
-def state_initial(offre: Dict, cvs: List[Dict]) -> CVScoringState:
+def state_initial(offre: Dict, cvs: List[Dict], config_seuils: Dict) -> CVScoringState:
     return CVScoringState(
         offre                            = offre,
         cvs                              = cvs,
@@ -98,4 +99,5 @@ def state_initial(offre: Dict, cvs: List[Dict]) -> CVScoringState:
         cv_rejetes                       = None,
         erreurs                          = [],
         scores_globaux                   = [],
+        config_seuils                    = config_seuils,
     )

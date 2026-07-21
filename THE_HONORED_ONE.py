@@ -68,10 +68,6 @@ GUARDS_DELTA = 0.5
 GUARDS_FENETRE_MOIS = None  # None = dérivé de seniorite_min_annees (24 mois min)
 
 
-with open("config.json", "r", encoding="utf-8") as f:
-    config = json.load(f)
-
-
 # ═══════════════════════ NOEUDS ════════════════════════════════════
 
 
@@ -79,6 +75,9 @@ def noeud_categoriser(state: CVScoringState) -> Dict:
     """Pour chaque CV, détermine sa catégorie unique."""
     offre = state["offre"]
     cvs   = state["cvs"]
+    seuils = state["config_seuils"]
+    seuil_court  = seuils["seuil_court_mois"]
+    seuil_valide = seuils["seuil_valide_mois"]
 
     erreurs: List[str] = []
     entries: List[Dict] = []
@@ -94,11 +93,25 @@ def noeud_categoriser(state: CVScoringState) -> Dict:
 
     for cv in cvs:
         try:
-            cv_emb = CACHE_CV.obtenir(cv) # on récupère les CV après embedding
+            cv_emb = CACHE_CV.obtenir(cv)
+
+            # ── Catégorisation Principal / Alternatif (utilise cv_emb, intact) ──
             categorie = scoring.categoriser_cv(
                 sections_ao, poste_ao_label, cv_emb["experiences"]
             )
-            entries.append({"cv_id": cv["id"], "categorie": categorie})
+
+            # ── Classification des durées (nouvelle variable, pas d'écrasement) ──
+            exps_durees = scoring.classifier_experiences(
+                cv_emb["experiences"], seuil_court, seuil_valide
+            )
+            compteurs = scoring.compter_par_categorie(exps_durees)
+
+            entries.append({
+                "cv_id":               cv["id"],
+                "categorie":           categorie,
+                "experiences_durees":  exps_durees,   
+                "compteurs_durees":    compteurs,      # {"courte": n, ...}
+            })
         except Exception as e:
             erreurs.append(f"[categoriser] CV {cv.get('id','?')}: {e}")
 
@@ -209,6 +222,8 @@ def noeud_agreger(state: CVScoringState) -> Dict:
     cat_par_cv:     Dict[str, Dict] = {}
     technos_par_cv: Dict[str, Dict] = {}
     bonus_par_cv:   Dict[str, Dict] = {}
+    durees_par_cv:    Dict[str, List] = {}
+    compteurs_par_cv: Dict[str, Dict] = {}
 
     # ───────────  Transformation des listes en dictionnaire d'index  ────
     """
@@ -242,7 +257,9 @@ def noeud_agreger(state: CVScoringState) -> Dict:
     """
 
     for e in state["categorisations"]:
-        cat_par_cv[e["cv_id"]] = e["categorie"]
+        cat_par_cv[e["cv_id"]]       = e["categorie"]
+        durees_par_cv[e["cv_id"]]    = e.get("experiences_durees", [])   
+        compteurs_par_cv[e["cv_id"]] = e.get("compteurs_durees", {})
     for e in state["scores_technos"]:
         technos_par_cv[e["cv_id"]] = e
     for e in state["bonus_entreprise"]:
@@ -312,6 +329,8 @@ def noeud_agreger(state: CVScoringState) -> Dict:
             "disponibilite":      dispo.value,
             "indicateur_global":  indic.get(cv_id),
             "top_experiences":    tops,
+            "experiences_durees": durees_par_cv.get(cv_id, []),     
+            "compteurs_durees":   compteurs_par_cv.get(cv_id, {}),
         })
 
     # Tri de chaque groupe par l'indicateur global (cosinus CV complet <-> AO complète)
@@ -624,6 +643,15 @@ if __name__ == "__main__":
     if not cvs or not offres:
         print("❌Aucune donnée à traiter.")
         exit(1)
+
+    def charger_seuils(chemin: str = "config.json") -> dict: # mis ici pour permettre de prendre en compte le changement utilisateur
+        with open(chemin, "r", encoding="utf-8") as f:
+            config = json.load(f)
+        seuils = {
+            "seuil_court_mois":  config["seuil_court_mois"],
+            "seuil_valide_mois": config["seuil_valide_mois"],
+        }
+        return seuils
 
     print("Construction du graphe LangGraph...")
     graphe = construire_graphe()
