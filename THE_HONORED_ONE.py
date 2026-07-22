@@ -67,6 +67,16 @@ print("Setup terminé.\n")
 GUARDS_DELTA = 0.5
 GUARDS_FENETRE_MOIS = None  # None = dérivé de seniorite_min_annees (24 mois min)
 
+def charger_seuils(chemin: str = "config.json") -> dict: # mis ici pour permettre de prendre en compte le changement utilisateur
+    with open(chemin, "r", encoding="utf-8") as f:
+        config = json.load(f)
+    seuils = {
+        "seuil_court_mois":  config["seuil_court_mois"],
+        "seuil_valide_mois": config["seuil_valide_mois"],
+    }
+    return seuils
+
+config_seuils = charger_seuils()
 
 # ═══════════════════════ NOEUDS ════════════════════════════════════
 
@@ -643,15 +653,6 @@ if __name__ == "__main__":
     if not cvs or not offres:
         print("❌Aucune donnée à traiter.")
         exit(1)
-
-    def charger_seuils(chemin: str = "config.json") -> dict: # mis ici pour permettre de prendre en compte le changement utilisateur
-        with open(chemin, "r", encoding="utf-8") as f:
-            config = json.load(f)
-        seuils = {
-            "seuil_court_mois":  config["seuil_court_mois"],
-            "seuil_valide_mois": config["seuil_valide_mois"],
-        }
-        return seuils
 
     print("Construction du graphe LangGraph...")
     graphe = construire_graphe()
