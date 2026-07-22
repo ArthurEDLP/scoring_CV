@@ -661,7 +661,7 @@ if __name__ == "__main__":
     poste_ao    = offre_cible["data"].get("poste", "?")
     print(f"Matching pour l'offre {offre_cible['id']} ({poste_ao})...")
 
-    state_init  = state_initial(offre_cible, cvs)
+    state_init  = state_initial(offre_cible, cvs, config_seuils)
     state_final = graphe.invoke(state_init)
 
     if state_final["erreurs"]:
