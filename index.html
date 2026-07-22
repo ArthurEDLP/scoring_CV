@@ -452,7 +452,7 @@
   .config-section h3{font-size:15px;margin:0 0 6px}
   .config-sep{border:none;border-top:1px solid var(--line,#e5e7eb);margin:24px 0}
 
-  /* ─── Ligne de seuils ─── */
+  /* ─── Ligne de seuils ─── */ /*Configuration*/
   .seuils-rule{
     display:flex;align-items:center;gap:10px;flex-wrap:wrap;
     margin:14px 0 8px;font-size:14px;
@@ -468,14 +468,47 @@
   }
   .seuils-unit{color:var(--muted);font-size:13px}
 
-  /* ─── Compteur de durées à côté du bouton Expérience(s) ─── */
+  /* ─── Bulles de durées cliquables (à côté du bouton Expérience(s)) ─── */
   .exp-durees{
-    font-size:12px;color:var(--muted);margin-left:10px;
+    display:inline-flex;gap:6px;margin-left:10px;vertical-align:middle;
     font-variant-numeric:tabular-nums;
   }
-  .exp-durees .d-courte{color:var(--bad,#dc2626);font-weight:700}
-  .exp-durees .d-interm{color:var(--yellow,#b45309);font-weight:700}
-  .exp-durees .d-valide{color:var(--ok,#15803d);font-weight:700}
+  .duree-bulle{
+    font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;
+    border:1px solid transparent;cursor:pointer;background:#f1f5f9;color:var(--muted);
+    transition:filter .12s, box-shadow .12s;
+  }
+  .duree-bulle .dn{font-weight:800}
+  .duree-bulle:hover{filter:brightness(.97)}
+  .duree-bulle[aria-expanded="true"]{box-shadow:0 0 0 2px rgba(37,99,235,.35)}
+  .duree-bulle.d-courte{background:#fca5a5;color:var(--txt)}
+  .duree-bulle.d-interm{background:#fde68a;color:var(--txt)}
+  .duree-bulle.d-valide{background:#86efac;color:var(--txt)}
+
+  .duree-panneau{
+    margin:8px 0 2px;padding:8px;border-radius:8px;
+    background:#f8fafc;border:1px solid var(--line,#e5e7eb);
+  }
+  .duree-panneau:not([hidden]){
+    display:flex;flex-wrap:wrap;gap:6px;      /* horizontal, passe à la ligne */
+  }
+  .duree-chip{
+    display:inline-flex;align-items:center;gap:5px;flex:0 0 auto;
+    background:#fff;border:1px solid var(--line,#e5e7eb);border-radius:999px;
+    padding:3px 6px 3px 10px;font-size:12px;max-width:100%;
+  }
+  .duree-chip .bp{font-weight:600;white-space:nowrap}
+  .duree-chip .bm{color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:180px}
+  .duree-chip .cd-dur{
+    flex-shrink:0;font-size:11px;font-weight:600;padding:1px 8px;border-radius:999px;
+    white-space:nowrap;font-variant-numeric:tabular-nums;
+  }
+  .duree-chip.d-courte{border-color:var(--bad)}
+  .duree-chip.d-courte .cd-dur{background:#fca5a5;color:var(--txt)}
+  .duree-chip.d-interm{border-color:var(--mid)}
+  .duree-chip.d-interm .cd-dur{background:#fde68a;color:var(--txt)}
+  .duree-chip.d-valide{border-color:var(--ok)}
+  .duree-chip.d-valide .cd-dur{background:#86efac;color:var(--txt)}
 
 </style>
 </head>
@@ -548,15 +581,15 @@
           <b>courte</b> si sa durée ≤ seuil court, <b>valide</b> si &gt; seuil valide,
           <b>intermédiaire</b> entre les deux.</p>
         <div class="seuils-rule">
-          <span class="seuil-cat courte">courte</span>
+          <span class="seuil-cat courte">Courte</span>
           <span class="seuil-op">≤</span>
           <input type="number" id="seuilCourt" class="seuil-input" min="0" step="1" inputmode="numeric">
           <span class="seuil-op">&lt;</span>
-          <span class="seuil-cat interm">intermédiaire</span>
+          <span class="seuil-cat interm">Intermédiaire</span>
           <span class="seuil-op">≤</span>
           <input type="number" id="seuilValide" class="seuil-input" min="0" step="1" inputmode="numeric">
           <span class="seuil-op">&lt;</span>
-          <span class="seuil-cat valide">valide</span>
+          <span class="seuil-cat valide">Valide</span>
           <span class="seuils-unit">mois</span>
         </div>
         <span class="paliers-status" id="seuilsStatus"></span>
@@ -1004,7 +1037,7 @@ function technosHTML(details){
 }
 function cvHTML(r,i){
   console.log("CV", r.cv_id, "top_experiences =", r.top_experiences);
-  const flag=r.entreprise_matchee?' 🏢 I ve been there before!':'';
+  const flag=r.entreprise_matchee?' 🏢 I ve been there before':'';
   const ig=r.indicateur_global;
   const glob=ig?`<div class="glob">🌐 affinité offre : cos ${ig.cosine.toFixed(4)} · rang ${ig.rang}/${ig.sur}</div>`:'';
   const poste=r._poste?`<div class="poste">▸ ${r._poste}</div>`:'';
@@ -1051,17 +1084,49 @@ function expHTML(r){
     bulles = '<div class="bulle-vide">Aucune expérience au-dessus du seuil.</div>';
   }
   return `<button type="button" class="btn-exp" data-exp="1" aria-expanded="false">Expérience(s)</button>`
-       + compteurDureesHTML(r.compteurs_durees)
+       + dureesHTML(r)
        + `<div class="exp-body" hidden>${bulles}</div>`;
 }
-function compteurDureesHTML(c){
+// Normalise "Intermédiaire" -> "intermediaire" (robuste casse/accents)
+function _normCat(s){
+  return (s || '').toString().toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+}
+function dureesHTML(r){
+  const c = r.compteurs_durees;
   if(!c) return '';
-  const courte = c.courte || 0, interm = c.intermediaire || 0, valide = c.valide || 0;
-  return `<span class="exp-durees">`
-       + `<span class="d-courte">${courte}</span> Courte · `
-       + `<span class="d-interm">${interm}</span> Intermédiaire · `
-       + `<span class="d-valide">${valide}</span> Valide`
-       + `</span>`;
+  const exps = r.experiences_durees || [];
+  const cats = [
+    {key:'courte',        label:'Courte',        cls:'d-courte'},
+    {key:'intermediaire', label:'Intermédiaire', cls:'d-interm'},
+    {key:'valide',        label:'Valide',        cls:'d-valide'},
+  ];
+  const bulles = cats.map(cat=>{
+    const n = c[cat.key] || 0;
+    return `<button type="button" class="duree-bulle ${cat.cls}" data-duree-cat="${cat.key}" aria-expanded="false">
+              <span class="dn">${n}</span>&nbsp;${cat.label}
+            </button>`;
+  }).join('');
+  const panneaux = cats.map(cat=>{
+    const liste = exps.filter(e => _normCat(e.duree_cat) === cat.key);
+    const contenu = liste.length
+      ? liste.map(e =>
+          `<span class="duree-chip ${cat.cls}">
+             <span class="bp">${e.poste || '—'}</span>${e.entreprise ? `<span class="bm"> · ${e.entreprise}</span>` : ''}
+             <span class="cd-dur">${fmtDuree(e.annees)}</span>
+           </span>`).join('')
+      : `<div class="bulle-vide">Aucune expérience « ${cat.label} ».</div>`;
+    return `<div class="duree-panneau" data-duree-panneau="${cat.key}" hidden>${contenu}</div>`;
+  }).join('');
+  return `<span class="exp-durees">${bulles}</span>${panneaux}`;
+}
+// annees (float) -> texte lisible : "4 mois", "1 an 6 mois", "2 ans"
+function fmtDuree(annees){
+  const m = Math.round((annees || 0) * 12);
+  if(m < 12) return m + ' mois';
+  const a = Math.floor(m / 12), r = m % 12;
+  const ans = a + (a > 1 ? ' ans' : ' an');
+  return r ? `${ans} ${r} mois` : ans;
 }
 function rendre(res){
   LAST_RESULT = res;   // mémorise pour pouvoir re-rendre après modif des paliers
@@ -1121,6 +1186,23 @@ $('#res').addEventListener('click',e=>{
     const ouvert=body.hidden===false;
     body.hidden=ouvert;
     bExp.setAttribute('aria-expanded', String(!ouvert));
+    return;
+  }
+
+  const bDur=e.target.closest('[data-duree-cat]');
+  if(bDur){
+    const cat=bDur.getAttribute('data-duree-cat');
+    const cv=bDur.closest('.cv');
+    const panneau=cv.querySelector(`[data-duree-panneau="${cat}"]`);
+    if(!panneau)return;
+    const ouvert=panneau.hidden===false;
+    // accordéon : on ferme tous les panneaux de durée de CETTE carte
+    cv.querySelectorAll('[data-duree-panneau]').forEach(p => p.hidden = true);
+    cv.querySelectorAll('[data-duree-cat]').forEach(b => b.setAttribute('aria-expanded','false'));
+    if(!ouvert){
+      panneau.hidden=false;
+      bDur.setAttribute('aria-expanded','true');
+    }
     return;
   }
 
