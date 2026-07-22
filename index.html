@@ -1004,7 +1004,7 @@ function technosHTML(details){
 }
 function cvHTML(r,i){
   console.log("CV", r.cv_id, "top_experiences =", r.top_experiences);
-  const flag=r.entreprise_matchee?' 🏢 svp reprenez moi':'';
+  const flag=r.entreprise_matchee?' 🏢 I ve been there before!':'';
   const ig=r.indicateur_global;
   const glob=ig?`<div class="glob">🌐 affinité offre : cos ${ig.cosine.toFixed(4)} · rang ${ig.rang}/${ig.sur}</div>`:'';
   const poste=r._poste?`<div class="poste">▸ ${r._poste}</div>`:'';
