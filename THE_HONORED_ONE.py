@@ -619,7 +619,7 @@ def lancer_matching(offre_id: str) -> Dict:
     if not cvs:
         raise ValueError("Aucun CV dans ./CV_JSON")
 
-    state_final = _graphe_compile().invoke(state_initial(offre, cvs))
+    state_final = _graphe_compile().invoke(state_initial(offre, cvs, config_seuils))
     return {
         "offre_id":  offre["id"],
         "poste_ao":  offre["data"].get("poste", "?"),
