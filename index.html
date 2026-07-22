@@ -419,6 +419,64 @@
     user-select:none;
   }
 
+  /* ─── Bouton Configuration ─── */
+  .btn-config{
+    background:#fff;border:1px solid var(--blue);color:var(--blue);
+    font-weight:600;font-size:13px;padding:7px 14px;border-radius:8px;cursor:pointer;
+    transition:background .15s,color .15s;
+  }
+  .btn-config:hover{background:var(--blue);color:#fff}
+
+  /* ─── Modale ─── */
+  .modal-overlay{
+    position:fixed;inset:0;background:rgba(15,23,42,.55);
+    display:flex;align-items:flex-start;justify-content:center;
+    padding:40px 16px;overflow-y:auto;z-index:1000;
+  }
+  .modal-overlay[hidden]{display:none}
+  .modal{
+    background:#fff;border-radius:14px;width:100%;max-width:760px;
+    box-shadow:0 20px 60px rgba(0,0,0,.3);overflow:hidden;
+  }
+  .modal-head{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 22px;border-bottom:1px solid var(--line,#e5e7eb);
+  }
+  .modal-head h2{margin:0;font-size:18px}
+  .modal-close{
+    background:none;border:none;font-size:20px;color:var(--muted);
+    cursor:pointer;line-height:1;padding:4px 8px;border-radius:6px;
+  }
+  .modal-close:hover{background:#f1f5f9;color:#000}
+  .modal-body{padding:22px}
+  .config-section h3{font-size:15px;margin:0 0 6px}
+  .config-sep{border:none;border-top:1px solid var(--line,#e5e7eb);margin:24px 0}
+
+  /* ─── Ligne de seuils ─── */
+  .seuils-rule{
+    display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    margin:14px 0 8px;font-size:14px;
+  }
+  .seuil-cat{font-weight:700;padding:2px 8px;border-radius:6px}
+  .seuil-cat.courte{color:var(--bad,#dc2626);background:#fee2e2}
+  .seuil-cat.interm{color:var(--yellow,#b45309);background:#fef3c7}
+  .seuil-cat.valide{color:var(--ok,#15803d);background:#dcfce7}
+  .seuil-op{color:var(--muted);font-weight:600}
+  .seuil-input{
+    width:64px;padding:6px 8px;border:1px solid var(--blue);border-radius:8px;
+    font-size:14px;text-align:center;font-variant-numeric:tabular-nums;
+  }
+  .seuils-unit{color:var(--muted);font-size:13px}
+
+  /* ─── Compteur de durées à côté du bouton Expérience(s) ─── */
+  .exp-durees{
+    font-size:12px;color:var(--muted);margin-left:10px;
+    font-variant-numeric:tabular-nums;
+  }
+  .exp-durees .d-courte{color:var(--bad,#dc2626);font-weight:700}
+  .exp-durees .d-interm{color:var(--yellow,#b45309);font-weight:700}
+  .exp-durees .d-valide{color:var(--ok,#15803d);font-weight:700}
+
 </style>
 </head>
 <body>
@@ -436,6 +494,7 @@
       <input type="checkbox" id="toggleDaltonien" aria-label="Afficher les scores des technos">
       <span class="switch-ui" aria-hidden="true"></span>
     </label>
+    <button type="button" class="btn-config" id="btnConfig" title="Configuration">⚙ Configuration</button>
   </div>
 </header>
 
@@ -461,25 +520,6 @@
     </section>
   </div>
 
-  <!-- Paliers de séniorité (timeline configurable) -->
-  <details class="paliers-panel" id="paliersPanel" open>
-    <summary>Paliers de séniorité (niveaux d'expérience)</summary>
-    <div class="paliers-body">
-      <p class="paliers-hint">
-        Les bornes sont lues comme : <b>min inclus ≤ expérience &lt; max exclu</b>.
-        Double-clique sur un nom pour le modifier. Glisse une borne interne pour ajuster l'année (0 à 16 ans max).
-      </p>
-      <div class="paliers-canvas">
-        <div class="paliers-track" id="paliersTimeline"></div>
-        <div class="paliers-arrow">›</div>
-        <div class="paliers-actions">
-          <button type="button" class="btn-add" id="paliersAdd">+ Ajouter un palier</button>
-          <span class="paliers-status" id="paliersStatus"></span>
-        </div>
-      </div>
-    </div>
-  </details>
-
   <div class="actions">
     <button id="btnPrep">① Préparer (embedding + score global)</button>
     <button id="btnMatch" disabled>② Lancer le matching</button>
@@ -491,6 +531,59 @@
 
   <div class="res" id="res"></div>
 </main>
+
+<!-- ─────────── Modale de configuration ─────────── -->
+<div class="modal-overlay" id="configOverlay" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="configTitle">
+    <div class="modal-head">
+      <h2 id="configTitle">Configuration</h2>
+      <button type="button" class="modal-close" id="configClose" aria-label="Fermer">✕</button>
+    </div>
+    <div class="modal-body">
+
+      <!-- Seuils de catégorisation des durées -->
+      <section class="config-section">
+        <h3>Seuils de catégorisation des expériences</h3>
+        <p class="paliers-hint">Durées exprimées en <b>mois</b>. Une expérience est
+          <b>courte</b> si sa durée ≤ seuil court, <b>valide</b> si &gt; seuil valide,
+          <b>intermédiaire</b> entre les deux.</p>
+        <div class="seuils-rule">
+          <span class="seuil-cat courte">courte</span>
+          <span class="seuil-op">≤</span>
+          <input type="number" id="seuilCourt" class="seuil-input" min="0" step="1" inputmode="numeric">
+          <span class="seuil-op">&lt;</span>
+          <span class="seuil-cat interm">intermédiaire</span>
+          <span class="seuil-op">≤</span>
+          <input type="number" id="seuilValide" class="seuil-input" min="0" step="1" inputmode="numeric">
+          <span class="seuil-op">&lt;</span>
+          <span class="seuil-cat valide">valide</span>
+          <span class="seuils-unit">mois</span>
+        </div>
+        <span class="paliers-status" id="seuilsStatus"></span>
+      </section>
+
+      <hr class="config-sep">
+
+      <!-- Paliers de séniorité (déplacés ici) -->
+      <section class="config-section">
+        <h3>Paliers de séniorité (niveaux d'expérience)</h3>
+        <p class="paliers-hint">
+          Les bornes sont lues comme : <b>min inclus ≤ expérience &lt; max exclu</b>.
+          Double-clique sur un nom pour le modifier. Glisse une borne interne pour ajuster l'année (0 à 16 ans max).
+        </p>
+        <div class="paliers-canvas">
+          <div class="paliers-track" id="paliersTimeline"></div>
+          <div class="paliers-arrow">›</div>
+          <div class="paliers-actions">
+            <button type="button" class="btn-add" id="paliersAdd">+ Ajouter un palier</button>
+            <span class="paliers-status" id="paliersStatus"></span>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
 
 <script>
 const $ = s => document.querySelector(s);
@@ -958,7 +1051,17 @@ function expHTML(r){
     bulles = '<div class="bulle-vide">Aucune expérience au-dessus du seuil.</div>';
   }
   return `<button type="button" class="btn-exp" data-exp="1" aria-expanded="false">Expérience(s)</button>`
+       + compteurDureesHTML(r.compteurs_durees)
        + `<div class="exp-body" hidden>${bulles}</div>`;
+}
+function compteurDureesHTML(c){
+  if(!c) return '';
+  const courte = c.courte || 0, interm = c.intermediaire || 0, valide = c.valide || 0;
+  return `<span class="exp-durees">`
+       + `<span class="d-courte">${courte}</span> Courte · `
+       + `<span class="d-interm">${interm}</span> Intermédiaire · `
+       + `<span class="d-valide">${valide}</span> Valide`
+       + `</span>`;
 }
 function rendre(res){
   LAST_RESULT = res;   // mémorise pour pouvoir re-rendre après modif des paliers
@@ -1013,7 +1116,7 @@ function rendre(res){
 $('#res').addEventListener('click',e=>{
   const bExp=e.target.closest('[data-exp]');
   if(bExp){
-    const body=bExp.nextElementSibling;          // le <div class="exp-body">
+    const body=bExp.closest('.cv').querySelector('.exp-body');   // pas nextElementSibling : le compteur s'intercale
     if(!body)return;
     const ouvert=body.hidden===false;
     body.hidden=ouvert;
@@ -1118,11 +1221,95 @@ if(toggleDaltonien){
   };
 }
 
+// ---------- Modale de configuration ----------
+function ouvrirConfig(){ $('#configOverlay').hidden = false; }
+function fermerConfig(){ $('#configOverlay').hidden = true; }
+
+function brancherConfig(){
+  $('#btnConfig').addEventListener('click', ouvrirConfig);
+  $('#configClose').addEventListener('click', fermerConfig);
+  // clic sur le fond (hors .modal) => ferme
+  $('#configOverlay').addEventListener('click', e => {
+    if(e.target.id === 'configOverlay') fermerConfig();
+  });
+  // Échap => ferme
+  document.addEventListener('keydown', e => {
+    if(e.key === 'Escape' && !$('#configOverlay').hidden) fermerConfig();
+  });
+}
+
+// ---------- Seuils de catégorisation ----------
+let SEUILS = {seuil_court_mois:8, seuil_valide_mois:18};
+let _seuilsTimer = null;
+
+async function chargerSeuils(){
+  try{
+    SEUILS = await api('/api/seuils');
+    $('#seuilCourt').value  = SEUILS.seuil_court_mois;
+    $('#seuilValide').value = SEUILS.seuil_valide_mois;
+  }catch(e){
+    const s = $('#seuilsStatus');
+    s.className = 'paliers-status err';
+    s.textContent = '✗ ' + e.message;
+  }
+}
+
+async function sauvegarderSeuilsNow(){
+  const status = $('#seuilsStatus');
+  const court  = parseFloat($('#seuilCourt').value);
+  const valide = parseFloat($('#seuilValide').value);
+
+  // Validation locale avant envoi
+  if(Number.isNaN(court) || Number.isNaN(valide)){
+    status.className='paliers-status err'; status.textContent='✗ Valeurs numériques requises'; return;
+  }
+  if(court < 0 || valide < 0){
+    status.className='paliers-status err'; status.textContent='✗ Les seuils doivent être positifs'; return;
+  }
+  if(court > valide){
+    status.className='paliers-status err'; status.textContent='✗ Le seuil court doit être ≤ au seuil valide'; return;
+  }
+
+  status.className='paliers-status'; status.textContent='enregistrement…';
+  try{
+    const r = await fetch('/api/seuils', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({seuil_court_mois:court, seuil_valide_mois:valide}),
+    });
+    if(!r.ok){
+      const j = await r.json().catch(()=>({detail:r.statusText}));
+      throw new Error(j.detail || r.statusText);
+    }
+    SEUILS = {seuil_court_mois:court, seuil_valide_mois:valide};
+    status.className='paliers-status ok'; status.textContent='✓ Enregistré';
+    setTimeout(()=>{ if(status.textContent==='✓ Enregistré') status.textContent=''; }, 2000);
+  }catch(e){
+    status.className='paliers-status err'; status.textContent='✗ ' + e.message;
+  }
+}
+
+function planifierSauvegardeSeuils(){
+  if(_seuilsTimer) clearTimeout(_seuilsTimer);
+  const status = $('#seuilsStatus');
+  status.className='paliers-status'; status.textContent='…';
+  _seuilsTimer = setTimeout(sauvegarderSeuilsNow, 500);
+}
+
+function brancherSeuils(){
+  ['#seuilCourt','#seuilValide'].forEach(sel=>{
+    $(sel).addEventListener('input', planifierSauvegardeSeuils);
+  });
+}
+
 // ---------- init ----------
 brancherDrop('#dropCV','#fileCV','cv');
 brancherDrop('#dropAO','#fileAO','ao');
 brancherPaliers();
 chargerPaliers();
+brancherConfig();
+brancherSeuils();
+chargerSeuils();
 refresh();
 </script>
 </body>

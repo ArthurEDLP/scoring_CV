@@ -347,14 +347,19 @@ def _classifier_duree_experience(annees: float, seuil_court_mois: float, seuil_v
 
 def classifier_experiences(experiences: list, seuil_court_mois: float, seuil_valide_mois: float) -> list:
     """
-    Chaque expérience + une clé 'duree_cat'.
-    L'ordre est préservé."""
-    return [
-        {
-            **exp, "duree_cat": _classifier_duree_experience(exp.get("annees", 0), seuil_court_mois, seuil_valide_mois,)
-        }
-        for exp in experiences
-    ]
+    Chaque expérience réduite aux champs d'affichage + 'duree_cat' (on ne peut pas garder l'embedding sinon ça fait planter FastAPI)
+    """
+    resultat = []
+    for exp in experiences:
+        annees = float(exp.get("annees", 0) or 0)
+        resultat.append({
+            "ordre":      exp.get("ordre"),
+            "poste":      exp.get("poste", ""),
+            "entreprise": exp.get("entreprise", ""),
+            "annees":     round(annees, 2),
+            "duree_cat":  _classifier_duree_experience(annees, seuil_court_mois, seuil_valide_mois),
+        })
+    return resultat
 
 
 def compter_par_categorie(experiences_classees: list) -> dict:

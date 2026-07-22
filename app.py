@@ -48,6 +48,13 @@ app = FastAPI(title="Matching CV/AO")
 # ─────────────────────────── Paliers ─────────────────────────────────────
 PALIERS_FILE = RACINE / "paliers.json"
 
+# ─────────────────────── Seuils de catégorisation ────────────────────────
+# Utilisés par THE_HONORED_ONE.charger_seuils() pour classer les expériences
+# en courte / intermédiaire / valide (bornes exprimées EN MOIS).
+SEUILS_FILE = RACINE / "config.json"
+
+SEUILS_DEFAUT = {"seuil_court_mois": 8, "seuil_valide_mois": 18}
+
 # Paliers par défaut, créés au 1er démarrage si le fichier n'existe pas
 PALIERS_DEFAUT = [
     {"label": "Junior",   "min": 0, "max": 3},
@@ -203,6 +210,43 @@ def sauvegarder_paliers(paliers: List[Dict]):
         encoding="utf-8",
     )
     return {"ok": True, "nb": len(paliers)}
+
+
+@app.get("/api/seuils")
+def lire_seuils():
+    """Lit les seuils de catégorisation des durées (en mois).
+    Crée config.json avec les défauts si absent."""
+    if not SEUILS_FILE.exists():
+        SEUILS_FILE.write_text(
+            json.dumps(SEUILS_DEFAUT, ensure_ascii=False, indent=2),
+            encoding="utf-8",
+        )
+    try:
+        data = json.loads(SEUILS_FILE.read_text(encoding="utf-8"))
+    except Exception as e:
+        raise HTTPException(500, f"config.json invalide : {e}")
+    # complète les clés manquantes avec les défauts (robustesse)
+    return {**SEUILS_DEFAUT, **data}
+
+
+@app.post("/api/seuils")
+def sauvegarder_seuils(seuils: Dict):
+    """Sauvegarde les seuils (en mois). Valide : court <= valide."""
+    try:
+        court  = float(seuils["seuil_court_mois"])
+        valide = float(seuils["seuil_valide_mois"])
+    except (KeyError, TypeError, ValueError):
+        raise HTTPException(400, "seuil_court_mois et seuil_valide_mois requis (nombres)")
+    if court < 0 or valide < 0:
+        raise HTTPException(400, "les seuils doivent être positifs")
+    if court > valide:
+        raise HTTPException(400, "seuil_court_mois doit être <= seuil_valide_mois")
+    SEUILS_FILE.write_text(
+        json.dumps({"seuil_court_mois": court, "seuil_valide_mois": valide},
+                   ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+    return {"ok": True, "seuil_court_mois": court, "seuil_valide_mois": valide}
 
 
 # ════════════════════════════ JOBS (tâche de fond) ════════════════════════
