@@ -510,6 +510,27 @@
   .duree-chip.d-valide{border-color:var(--ok)}
   .duree-chip.d-valide .cd-dur{background:#86efac;color:var(--txt)}
 
+  /* ─── Technos : bouton + bulles compteurs + panneaux (parallèle des durées) ─── */
+  .axe-row{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin-top:10px}
+  .axe-row .btn-exp{margin-top:0}
+  .tk-bulles{display:inline-flex;gap:6px;vertical-align:middle;flex-wrap:wrap}
+  .tk-bulle{
+    font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;
+    border:1px solid transparent;cursor:pointer;color:#111;
+    transition:filter .12s, box-shadow .12s;
+  }
+  .tk-bulle .tn{font-weight:800}
+  .tk-bulle:hover{filter:brightness(.97)}
+  .tk-bulle[aria-expanded="true"]{box-shadow:0 0 0 2px rgba(37,99,235,.35)}
+  .tk-bulle.absent{background:#fca5a5;border-color:var(--bad)}
+  .tk-bulle.semantique{background:#fde68a;border-color:var(--mid)}
+  .tk-bulle.exact{background:#86efac;border-color:var(--ok)}
+  .tk-panneau{
+    margin:8px 0 2px;padding:8px;border-radius:8px;
+    background:#f8fafc;border:1px solid var(--line,#e5e7eb);
+  }
+  .tk-panneau:not([hidden]){display:flex;flex-wrap:wrap;gap:6px}
+
 </style>
 </head>
 <body>
@@ -1004,36 +1025,47 @@ function scoreOf(d){return (d&&typeof d==='object')?d.score:d;}
 function technosHTML(details){
   if(!details) return '';
 
-  const ordre = {
-    exact: 0,
-    semantique: 1,
-    absent: 2
-  };
+  // Mapping couleur/source -> catégorie affichée
+  //   absent (rouge) = Manquantes · semantique (jaune) = Proches · exact (vert) = Acquises
+  const cats = [
+    {key:'absent',     label:'Manquantes', cls:'absent'},
+    {key:'semantique', label:'Proches',    cls:'semantique'},
+    {key:'exact',      label:'Acquises',   cls:'exact'},
+  ];
 
-  const chips = Object.entries(details)
-    .sort(([,a],[,b]) => {
-      const oa = ordre[(a && a.source) || "absent"];
-      const ob = ordre[(b && b.source) || "absent"];
+  // Regroupe les technos par source
+  const parCat = {absent:[], semantique:[], exact:[]};
+  Object.entries(details).forEach(([t,d]) => {
+    const src = (d && d.source) || 'absent';
+    (parCat[src] || parCat.absent).push([t,d]);
+  });
+  // Tri interne : meilleur score d'abord
+  Object.values(parCat).forEach(arr => arr.sort(([,a],[,b]) => scoreOf(b) - scoreOf(a)));
 
-      if (oa !== ob) return oa - ob;
+  const bulles = cats.map(cat=>{
+    const n = (parCat[cat.key] || []).length;
+    return `<button type="button" class="tk-bulle ${cat.cls}" data-tk-cat="${cat.key}" aria-expanded="false">
+              <span class="tn">${n}</span>&nbsp;${cat.label}
+            </button>`;
+  }).join('');
 
-      // à score égal : les meilleurs d'abord
-      return scoreOf(b) - scoreOf(a);
-    })
-    .map(([t,d]) => {
-      const s   = scoreOf(d);
-      const src = (d && d.source) || 'absent';
-      const ma  = (d && d.matche_avec && d.matche_avec !== t)
-        ? '→' + d.matche_avec
-        : '';
+  const panneaux = cats.map(cat=>{
+    const liste = parCat[cat.key] || [];
+    const contenu = liste.length
+      ? liste.map(([t,d]) => {
+          const s   = scoreOf(d);
+          const ma  = (d && d.matche_avec && d.matche_avec !== t) ? '→' + d.matche_avec : '';
+          return `<span class="tk ${cat.cls}">${t}${ma}<span class="tech-score"> : ${(+s).toFixed(2)}</span></span>`;
+        }).join('')
+      : `<div class="bulle-vide">Aucune techno « ${cat.label} ».</div>`;
+    return `<div class="tk-panneau" data-tk-panneau="${cat.key}" hidden>${contenu}</div>`;
+  }).join('');
 
-      return `<span class="tk ${src}">
-                ${t}${ma}
-                <span class="tech-score"> : ${(+s).toFixed(2)}</span>
-              </span>`;
-    });
-
-  return `<div>${chips.join('')}</div>`;
+  return `<div class="axe-row">`
+       + `<button type="button" class="btn-exp" data-tk="1" aria-expanded="false">Technos</button>`
+       + `<span class="tk-bulles" hidden>${bulles}</span>`
+       + `</div>`
+       + panneaux;
 }
 function cvHTML(r,i){
   console.log("CV", r.cv_id, "top_experiences =", r.top_experiences);
@@ -1068,6 +1100,7 @@ function cvHTML(r,i){
 }
 function expHTML(r){
   const tops = r.top_experiences || [];
+  const dur  = dureesHTML(r);   // { bulles, panneaux }
   // bouton toujours présent ; le contenu est pré-rendu mais caché
   let bulles;
   if(tops.length){
@@ -1083,8 +1116,11 @@ function expHTML(r){
   } else {
     bulles = '<div class="bulle-vide">Aucune expérience au-dessus du seuil.</div>';
   }
-  return `<button type="button" class="btn-exp" data-exp="1" aria-expanded="false">Expérience(s)</button>`
-       + dureesHTML(r)
+  return `<div class="axe-row">`
+       + `<button type="button" class="btn-exp" data-exp="1" aria-expanded="false">Expérience(s)</button>`
+       + dur.bulles
+       + `</div>`
+       + dur.panneaux
        + `<div class="exp-body" hidden>${bulles}</div>`;
 }
 // Normalise "Intermédiaire" -> "intermediaire" (robuste casse/accents)
@@ -1094,7 +1130,7 @@ function _normCat(s){
 }
 function dureesHTML(r){
   const c = r.compteurs_durees;
-  if(!c) return '';
+  if(!c) return {bulles:'', panneaux:''};
   const exps = r.experiences_durees || [];
   const cats = [
     {key:'courte',        label:'Courte',        cls:'d-courte'},
@@ -1118,7 +1154,7 @@ function dureesHTML(r){
       : `<div class="bulle-vide">Aucune expérience « ${cat.label} ».</div>`;
     return `<div class="duree-panneau" data-duree-panneau="${cat.key}" hidden>${contenu}</div>`;
   }).join('');
-  return `<span class="exp-durees">${bulles}</span>${panneaux}`;
+  return {bulles:`<span class="exp-durees">${bulles}</span>`, panneaux};
 }
 // annees (float) -> texte lisible : "4 mois", "1 an 6 mois", "2 ans"
 function fmtDuree(annees){
@@ -1179,6 +1215,38 @@ function rendre(res){
 
 // ---------- toggles résultats (délégation) ----------
 $('#res').addEventListener('click',e=>{
+  const bTk=e.target.closest('[data-tk]');
+  if(bTk){
+    const cv=bTk.closest('.cv');
+    const bulles=cv.querySelector('.tk-bulles');
+    if(!bulles)return;
+    const ouvert=bulles.hidden===false;
+    bulles.hidden=ouvert;
+    bTk.setAttribute('aria-expanded', String(!ouvert));
+    if(ouvert){   // en refermant Technos, on referme aussi le panneau ouvert
+      cv.querySelectorAll('[data-tk-panneau]').forEach(p => p.hidden = true);
+      cv.querySelectorAll('[data-tk-cat]').forEach(b => b.setAttribute('aria-expanded','false'));
+    }
+    return;
+  }
+
+  const bTkCat=e.target.closest('[data-tk-cat]');
+  if(bTkCat){
+    const cat=bTkCat.getAttribute('data-tk-cat');
+    const cv=bTkCat.closest('.cv');
+    const panneau=cv.querySelector(`[data-tk-panneau="${cat}"]`);
+    if(!panneau)return;
+    const ouvert=panneau.hidden===false;
+    // accordéon : une seule catégorie techno ouverte à la fois
+    cv.querySelectorAll('[data-tk-panneau]').forEach(p => p.hidden = true);
+    cv.querySelectorAll('[data-tk-cat]').forEach(b => b.setAttribute('aria-expanded','false'));
+    if(!ouvert){
+      panneau.hidden=false;
+      bTkCat.setAttribute('aria-expanded','true');
+    }
+    return;
+  }
+
   const bExp=e.target.closest('[data-exp]');
   if(bExp){
     const body=bExp.closest('.cv').querySelector('.exp-body');   // pas nextElementSibling : le compteur s'intercale
