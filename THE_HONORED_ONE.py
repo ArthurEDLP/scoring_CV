@@ -604,19 +604,14 @@ def lister_cvs(dossier: str = "./CV_JSON") -> List[Dict]:
     """CV prêts (présents dans CV_JSON)."""
     return [{"id": c["id"]} for c in charger_cvs(dossier)]
 
-def charger_seuils(chemin=None) -> Dict:
-    """
-    Lit les seuils de catégorisation (en mois) depuis config.json.
-    Lu à CHAQUE matching pour refléter les changements faits dans l'interface.
-    """
-    if chemin is None:
-        chemin = Path(__file__).parent / "config.json"
+def charger_seuils(chemin: str = "config.json") -> dict: # mis ici pour permettre de prendre en compte le changement utilisateur
     with open(chemin, "r", encoding="utf-8") as f:
         config = json.load(f)
-    return {
+    seuils = {
         "seuil_court_mois":  config["seuil_court_mois"],
         "seuil_valide_mois": config["seuil_valide_mois"],
     }
+    return seuils
 
 def lancer_matching(offre_id: str) -> Dict:
     """
