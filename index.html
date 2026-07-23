@@ -531,6 +531,88 @@
   }
   .tk-panneau:not([hidden]){display:flex;flex-wrap:wrap;gap:6px}
 
+  /* ─── Mode aide : bouton, surbrillance, bulles ─── */
+  .btn-help{
+    background:#fff;border:1px solid var(--blue);color:var(--blue);
+    font-weight:600;font-size:13px;padding:7px 14px;border-radius:8px;cursor:pointer;
+    transition:background .15s,color .15s;
+  }
+  .btn-help:hover{background:var(--blue);color:#fff}
+  body.help-mode .btn-help{background:var(--blue);color:#fff}
+
+  /* Bandeau d'invite en haut, quand le mode aide est actif */
+  .help-banner{
+    position:sticky;top:82px;z-index:900;
+    display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+    margin:0 auto 6px;max-width:1080px;
+    background:var(--blue);color:#fff;
+    padding:9px 16px;border-radius:10px;font-size:13px;
+    box-shadow:0 6px 18px rgba(0,0,0,.15);
+  }
+  .help-banner[hidden]{display:none}
+  .help-banner b{font-weight:700}
+  .help-banner .spacer{margin-left:auto}
+  .help-banner button{
+    background:#fff;color:var(--blue);border:1px solid #fff;
+    padding:5px 12px;font-size:12px;font-weight:700;border-radius:7px;
+  }
+  .help-banner button:hover{background:#eaf2ff;color:var(--blue);border-color:#eaf2ff}
+
+  /* Surbrillance des éléments explicables */
+  body.help-mode [data-help]{
+    outline:1.5px dashed rgba(73,101,109,.55);
+    outline-offset:2px;border-radius:6px;cursor:help;
+    transition:outline-color .12s,box-shadow .12s;
+  }
+  body.help-mode [data-help]:hover{
+    outline:2px solid var(--blue);
+    box-shadow:0 0 0 3px rgba(73,101,109,.18);
+  }
+  /* En mode aide, les boutons dépliants ne réagissent pas au clic (on explique au lieu d'agir) */
+  body.help-mode [data-help]{}
+
+  /* La bulle flottante */
+  #helpPop{
+    position:fixed;z-index:3000;max-width:320px;
+    background:#0f172a;color:#f8fafc;
+    border-radius:10px;padding:11px 14px;
+    font-size:13px;line-height:1.45;
+    box-shadow:0 12px 30px rgba(0,0,0,.35);
+    pointer-events:none;opacity:0;transform:translateY(4px);
+    transition:opacity .12s,transform .12s;
+  }
+  #helpPop.show{opacity:1;transform:translateY(0)}
+  #helpPop .hp-title{font-weight:700;color:#7dd3fc;margin-bottom:3px;font-size:13px}
+  #helpPop::after{
+    content:"";position:absolute;width:10px;height:10px;
+    background:#0f172a;transform:rotate(45deg);
+  }
+  #helpPop.pos-bottom::after{top:-5px;left:var(--arrow,20px)}
+  #helpPop.pos-top::after{bottom:-5px;left:var(--arrow,20px)}
+
+  /* Guide complet : réutilise le style .modal existant, contenu en sections */
+  .help-guide-body{padding:0}
+  .help-guide-group{margin:0 0 18px}
+  .help-guide-group > h3{
+    font-size:13px;text-transform:uppercase;letter-spacing:.04em;
+    color:var(--muted);margin:0 0 8px;
+  }
+  .help-guide-item{
+    display:flex;gap:10px;padding:9px 0;border-top:1px solid var(--line);
+  }
+  .help-guide-item:first-of-type{border-top:none}
+  .help-guide-item .hg-key{
+    flex:0 0 140px;font-weight:700;color:var(--blue);font-size:13px;
+  }
+  .help-guide-item .hg-txt{flex:1;font-size:13px;color:var(--txt)}
+  @media(max-width:560px){
+    .help-guide-item{flex-direction:column;gap:2px}
+    .help-guide-item .hg-key{flex:none}
+  }
+  @media(prefers-reduced-motion:reduce){
+    #helpPop{transition:none}
+  }
+
 </style>
 </head>
 <body>
@@ -543,21 +625,31 @@
     <p>Outil local · dépose tes CV et AO, prépare (embedding + score global), puis lance le matching.</p>
   </div>
   <div class="header-tools">
-    <label class="switch-label" title="Afficher les scores des technos">
+    <label class="switch-label" title="Afficher les scores des technos" data-help="toggle-daltonien">
       <span>Daltonien</span>
       <input type="checkbox" id="toggleDaltonien" aria-label="Afficher les scores des technos">
       <span class="switch-ui" aria-hidden="true"></span>
     </label>
-    <button type="button" class="btn-config" id="btnConfig" title="Configuration">⚙ Configuration</button>
+    <button type="button" class="btn-help" id="btnHelp" title="Aide : expliquer l'interface" aria-pressed="false">? Aide</button>
+    <button type="button" class="btn-config" id="btnConfig" title="Configuration" data-help="btn-config">⚙ Configuration</button>
   </div>
 </header>
+
+<!-- Bandeau du mode aide -->
+<div class="help-banner" id="helpBanner" hidden>
+  <b>Mode aide</b>
+  <span>Survole (ou tape) un élément surligné pour son explication.</span>
+  <span class="spacer"></span>
+  <button type="button" id="helpGuideBtn">Voir tout le guide</button>
+  <button type="button" id="helpExitBtn">Quitter</button>
+</div>
 
 <main>
   <div class="grid">
     <!-- CV -->
     <section class="card">
       <h2>CV</h2>
-      <div class="drop" id="dropCV">Glisse des <b>.json</b> de CV ici<small>ou clique pour choisir</small>
+      <div class="drop" id="dropCV" data-help="drop-cv">Glisse des <b>.json</b> de CV ici<small>ou clique pour choisir</small>
         <input type="file" id="fileCV" accept=".json" multiple hidden></div>
       <div class="pending" id="pendCV"></div>
       <ul class="lst" id="lstCV"></ul>
@@ -566,7 +658,7 @@
     <!-- AO -->
     <section class="card">
       <h2>Appels d'offres</h2>
-      <div class="drop" id="dropAO">Glisse des <b>.json</b> d'AO ici<small>ou clique pour choisir</small>
+      <div class="drop" id="dropAO" data-help="drop-ao">Glisse des <b>.json</b> d'AO ici<small>ou clique pour choisir</small>
         <input type="file" id="fileAO" accept=".json" multiple hidden></div>
       <div class="pending" id="pendAO"></div>
       <ul class="lst" id="lstAO"></ul>
@@ -575,8 +667,8 @@
   </div>
 
   <div class="actions">
-    <button id="btnPrep">① Préparer (embedding + score global)</button>
-    <button id="btnMatch" disabled>② Lancer le matching</button>
+    <button id="btnPrep" data-help="btn-prep">① Préparer (embedding + score global)</button>
+    <button id="btnMatch" data-help="btn-match" disabled>② Lancer le matching</button>
   </div>
 
   <div class="bar"><i id="prog"></i></div>
@@ -597,7 +689,7 @@
 
       <!-- Seuils de catégorisation des durées -->
       <section class="config-section">
-        <h3>Seuils de catégorisation des expériences</h3>
+        <h3 data-help="seuils-durees">Seuils de catégorisation des expériences</h3>
         <p class="paliers-hint">Durées exprimées en <b>mois</b>. Une expérience est
           <b>courte</b> si sa durée ≤ seuil court, <b>valide</b> si &gt; seuil valide,
           <b>intermédiaire</b> entre les deux.</p>
@@ -620,7 +712,7 @@
 
       <!-- Paliers de séniorité (déplacés ici) -->
       <section class="config-section">
-        <h3>Paliers de séniorité (niveaux d'expérience)</h3>
+        <h3 data-help="paliers-seniorite">Paliers de séniorité (niveaux d'expérience)</h3>
         <p class="paliers-hint">
           Les bornes sont lues comme : <b>min inclus ≤ expérience &lt; max exclu</b>.
           Double-clique sur un nom pour le modifier. Glisse une borne interne pour ajuster l'année (0 à 16 ans max).
@@ -939,7 +1031,7 @@ async function refresh(){
   $('#lstCV').innerHTML = s.cvs_prets.map(c=>`
     <li>
       <span class="id">${c.id}</span>
-      <span class="badge ${c.embedding_pret?'on':'off'}">${c.embedding_pret?'Embeddé ✓':'A Embeddé ✗'}</span>
+      <span class="badge ${c.embedding_pret?'on':'off'}" data-help="badge-embed">${c.embedding_pret?'Embeddé ✓':'A Embeddé ✗'}</span>
     </li>`).join('') || '<li class="meta">aucun CV prêt</li>';
   // AO
   const aoPrets = new Set((s.aos_prets || []).map(a => a.fichier));
@@ -949,7 +1041,7 @@ async function refresh(){
     <li>
       <input type="radio" name="ao" value="${a.id}" ${selectedAO===a.id?'checked':''}>
       <span class="id">${a.id}</span>
-      <span class="badge ${a.score_global?'on':'off'}">${a.score_global?'Cache global ✓':'À précalculer ✗'}</span>
+      <span class="badge ${a.score_global?'on':'off'}" data-help="ao-badge">${a.score_global?'Cache global ✓':'À précalculer ✗'}</span>
       <span class="meta"><button class="ghost" data-del="${a.id}">supprimer</button></span>
     </li>`).join('') || '<li class="meta">aucune AO prête</li>';
   // (ré)attache les events
@@ -1044,7 +1136,7 @@ function technosHTML(details){
 
   const bulles = cats.map(cat=>{
     const n = (parCat[cat.key] || []).length;
-    return `<button type="button" class="tk-bulle ${cat.cls}" data-tk-cat="${cat.key}" aria-expanded="false">
+    return `<button type="button" class="tk-bulle ${cat.cls}" data-tk-cat="${cat.key}" data-help="tk-${cat.key}" aria-expanded="false">
               <span class="tn">${n}</span>&nbsp;${cat.label}
             </button>`;
   }).join('');
@@ -1055,23 +1147,23 @@ function technosHTML(details){
       ? liste.map(([t,d]) => {
           const s   = scoreOf(d);
           const ma  = (d && d.matche_avec && d.matche_avec !== t) ? '→' + d.matche_avec : '';
-          return `<span class="tk ${cat.cls}">${t}${ma}<span class="tech-score"> : ${(+s).toFixed(2)}</span></span>`;
+          return `<span class="tk ${cat.cls}" data-help="tk-${cat.key}">${t}${ma}<span class="tech-score"> : ${(+s).toFixed(2)}</span></span>`;
         }).join('')
       : `<div class="bulle-vide">Aucune techno « ${cat.label} ».</div>`;
     return `<div class="tk-panneau" data-tk-panneau="${cat.key}" hidden>${contenu}</div>`;
   }).join('');
 
   return `<div class="axe-row">`
-       + `<button type="button" class="btn-exp" data-tk="1" aria-expanded="false">Technos</button>`
+       + `<button type="button" class="btn-exp" data-tk="1" data-help="technos-btn" aria-expanded="false">Technos</button>`
        + `<span class="tk-bulles" hidden>${bulles}</span>`
        + `</div>`
        + panneaux;
 }
 function cvHTML(r,i){
   console.log("CV", r.cv_id, "top_experiences =", r.top_experiences);
-  const flag=r.entreprise_matchee?' 🏢 I ve been there before':'';
+  const flag=r.entreprise_matchee?' <span data-help="entreprise-bonus">🏢 I ve been there before</span>':'';
   const ig=r.indicateur_global;
-  const glob=ig?`<div class="glob">🌐 affinité offre : cos ${ig.cosine.toFixed(4)} · rang ${ig.rang}/${ig.sur}</div>`:'';
+  const glob=ig?`<div class="glob" data-help="affinite-globale">🌐 affinité offre : cos ${ig.cosine.toFixed(4)} · rang ${ig.rang}/${ig.sur}</div>`:'';
   const poste=r._poste?`<div class="poste">▸ ${r._poste}</div>`:'';
 
   // Séniorité : indice (palier) au lieu d'un score gaussien
@@ -1084,18 +1176,18 @@ function cvHTML(r,i){
   const sigChar   = ok ? '✓' : '⚠️';
   const detailReq = (!ok && palierAO.label !== '?')
                     ? ` <span class="bm">(requis : ${palierAO.label})</span>` : '';
-  const seniorHTML = `<span class="sc">
+  const seniorHTML = `<span class="sc" data-help="seniorite">
       ${palierCV.label} (${annees.toFixed(1)} ans)
       <span class="${sigClass}">${sigChar}</span>${detailReq}
     </span>`;
 
   return `<div class="cv">${poste}
     <div class="top">
-      <span class="rank">${i}.</span>
-      <span class="name">${r.cv_id}${flag}</span>
-      <span class="sc">technos=${r.score_technos.toFixed(2)}</span>
+      <span class="rank" data-help="cv-rank">${i}.</span>
+      <span class="name" data-help="cv-name">${r.cv_id}${flag}</span>
+      <span class="sc" data-help="score-technos">technos=${r.score_technos.toFixed(2)}</span>
       ${seniorHTML}
-      <span class="sc">dispo=${r.disponibilite}</span>
+      <span class="sc" data-help="dispo">dispo=${r.disponibilite}</span>
     </div>${glob}${technosHTML(r.technos_details)}${expHTML(r)}</div>`;
 }
 function expHTML(r){
@@ -1105,7 +1197,7 @@ function expHTML(r){
   let bulles;
   if(tops.length){
     bulles = '<div class="bulles">' + tops.map(e=>
-      `<span class="bulle">
+      `<span class="bulle" data-help="exp-top">
          <span class="bp">${e.poste || '—'}</span>
          ${e.entreprise ? `<span class="bm"> · ${e.entreprise}</span>` : ''}
          <span class="bm">
@@ -1117,7 +1209,7 @@ function expHTML(r){
     bulles = '<div class="bulle-vide">Aucune expérience au-dessus du seuil.</div>';
   }
   return `<div class="axe-row">`
-       + `<button type="button" class="btn-exp" data-exp="1" aria-expanded="false">Expérience(s)</button>`
+       + `<button type="button" class="btn-exp" data-exp="1" data-help="exp-btn" aria-expanded="false">Expérience(s)</button>`
        + dur.bulles
        + `</div>`
        + dur.panneaux
@@ -1139,7 +1231,7 @@ function dureesHTML(r){
   ];
   const bulles = cats.map(cat=>{
     const n = c[cat.key] || 0;
-    return `<button type="button" class="duree-bulle ${cat.cls}" data-duree-cat="${cat.key}" aria-expanded="false">
+    return `<button type="button" class="duree-bulle ${cat.cls}" data-duree-cat="${cat.key}" data-help="duree-${cat.key}" aria-expanded="false">
               <span class="tn">${n}</span>&nbsp;${cat.label}
             </button>`;
   }).join('');
@@ -1188,10 +1280,10 @@ function rendre(res){
     const collapsible = options.collapsible || false;
     let s=`<div class="grp">`;
     if(collapsible){
-      s+=`<button type="button" class="gtitle btn-alt" data-alt="1" aria-expanded="false">${titre} (${liste.length})</button>`;
+      s+=`<button type="button" class="gtitle btn-alt" data-alt="1" data-help="groupe-alt" aria-expanded="false">${titre} (${liste.length})</button>`;
       s+=`<div class="alt-body" hidden>`;
     } else {
-      s+=`<div class="gtitle">${titre}</div>`;
+      s+=`<div class="gtitle" data-help="groupe-principal">${titre}</div>`;
     }
     if(!liste.length) s+='<div class="hint">aucun CV</div>';
     liste.forEach((r,k)=>s+=cvHTML(r,k+1));
@@ -1204,7 +1296,7 @@ function rendre(res){
   const rej=res.cv_rejetes||[];
   if(rej.length){
     h+=`<h3>🚫 Écartés par les garde-fous (${rej.length})</h3>`;
-    rej.forEach(r=>{ h+=`<div class="rej"><b>${r.cv_id}</b> · [${r.categorie}]
+    rej.forEach(r=>{ h+=`<div class="rej" data-help="rejetes"><b>${r.cv_id}</b> · [${r.categorie}]
       <div class="motif">${r.guards_statut} — ${r.guards_motif}</div></div>`; });
   }
   if(res.erreurs&&res.erreurs.length)
@@ -1452,6 +1544,204 @@ function brancherSeuils(){
   });
 }
 
+// ═══════════════════ Mode aide ═══════════════════════════════════════
+// Une seule explication par type de composant, réutilisée partout où
+// l'attribut data-help="<clé>" apparaît (aucun texte en double).
+const AIDE = {
+  // ── Import & préparation ──
+  'drop-cv': {groupe:'Import & préparation', titre:'Dépôt des CV',
+    texte:"Glisse ici les CV au format .json (ou clique). Chaque CV doit être structuré : expériences, compétences techniques, savoir-faire et savoir-être."},
+  'drop-ao': {groupe:'Import & préparation', titre:"Dépôt des appels d'offres",
+    texte:"Glisse ici les appels d'offres au format .json. Une AO décrit le profil recherché, la mission et son contexte."},
+  'badge-embed': {groupe:'Import & préparation', titre:'État de préparation du CV',
+    texte:"« Embeddé \u2713 » : le CV est analysé et prêt pour le matching. « \u2717 » : il reste à préparer via ① Préparer."},
+  'ao-badge': {groupe:'Import & préparation', titre:"État de préparation de l'AO",
+    texte:"« Cache global \u2713 » : l'affinité entre l'offre et les CV a déjà été calculée. Sinon, lance ① Préparer, sans quoi l'affinité globale 🌐 ne s'affichera pas."},
+  'btn-prep': {groupe:'Import & préparation', titre:'① Préparer',
+    texte:"Analyse les CV encore non traités et calcule l'affinité de l'offre sélectionnée. À faire une fois par lot : le résultat est mémorisé pour la suite."},
+  'btn-match': {groupe:'Import & préparation', titre:'② Lancer le matching',
+    texte:"Compare tous les CV prêts à l'offre cochée et affiche le classement. Le bouton s'active une fois une offre sélectionnée."},
+
+  // ── Réglages ──
+  'btn-config': {groupe:'Réglages', titre:'Configuration',
+    texte:"Ouvre les réglages : durées d'expérience et niveaux de séniorité. Les résultats affichés se recalculent automatiquement quand tu modifies ces réglages."},
+  'seuils-durees': {groupe:'Réglages', titre:'Durées des expériences',
+    texte:"Définit à partir de quand une expérience est considérée comme courte, intermédiaire ou valide. Sert à colorer les bulles de durée des candidats."},
+  'paliers-seniorite': {groupe:'Réglages', titre:'Niveaux de séniorité',
+    texte:"Définit les niveaux d'expérience (Junior, Intermédiaire, Expert…) selon le nombre d'années. Glisse une borne pour l'ajuster, double-clique un nom pour le renommer."},
+  'toggle-daltonien': {groupe:'Réglages', titre:'Mode daltonien',
+    texte:"Ajoute le score chiffré à côté de chaque techno, pour ne pas se fier uniquement aux couleurs vert / orange / rouge."},
+
+  // ── Groupes de résultats ──
+  'groupe-principal': {groupe:'Résultats', titre:'Groupe principal 🏆',
+    texte:"Candidats dont une expérience récente correspond vraiment au poste demandé : les profils les plus alignés avec l'offre."},
+  'groupe-alt': {groupe:'Résultats', titre:'Profils alternatifs 📂',
+    texte:"Candidats retenus mais moins directement alignés avec le poste (correspondance plus faible ou expérience moins récente). Repliés par défaut ; clique pour les dérouler."},
+  'rejetes': {groupe:'Résultats', titre:'Écartés par les garde-fous 🚫',
+    texte:"Candidats sortis du classement parce que leur parcours ne remplit pas une condition de base (par exemple une expérience pertinente trop ancienne). Le motif précise pourquoi."},
+
+  // ── Carte candidat ──
+  'cv-rank': {groupe:'Carte candidat', titre:'Rang',
+    texte:"Position du candidat dans son groupe, du plus proche de l'offre au moins proche."},
+  'cv-name': {groupe:'Carte candidat', titre:'Identifiant du candidat',
+    texte:"Nom ou identifiant du candidat, tel qu'il figure dans son fichier."},
+  'entreprise-bonus': {groupe:'Carte candidat', titre:'I ve been there before 🏢',
+    texte:"Le candidat a déjà travaillé dans l'entreprise de l'offre. Simple repère, sans effet sur le classement."},
+  'affinite-globale': {groupe:'Carte candidat', titre:'Affinité offre 🌐',
+    texte:"À quel point le CV, dans son ensemble, ressemble à l'offre dans son ensemble, avec le rang du candidat parmi tous les autres. C'est ce qui sert à ordonner la liste."},
+  'score-technos': {groupe:'Carte candidat', titre:'Couverture des technos',
+    texte:"Vue d'ensemble des technologies demandées que le candidat maîtrise : plus c'est élevé, plus il couvre ce que réclame l'offre."},
+  'seniorite': {groupe:'Carte candidat', titre:'Séniorité',
+    texte:"Niveau d'expérience atteint par le candidat et total d'années. \u2713 = le niveau attendu par l'offre est atteint ; \u26a0\ufe0f = en dessous (le niveau attendu est alors rappelé)."},
+  'dispo': {groupe:'Carte candidat', titre:'Disponibilité',
+    texte:"Disponibilité estimée à partir des dates du parcours (par exemple encore en poste ou disponible). Purement indicatif."},
+
+  // ── Détails technos ──
+  'technos-btn': {groupe:'Détails technos', titre:'Bouton Technos',
+    texte:"Déplie le détail des technologies demandées par l'offre, classées en trois familles."},
+  'tk-exact': {groupe:'Détails technos', titre:'Technos acquises (vert)',
+    texte:"Technologie demandée que le candidat maîtrise déjà, retrouvée telle quelle dans son CV. La flèche « → » indique la compétence correspondante du candidat."},
+  'tk-semantique': {groupe:'Détails technos', titre:'Technos proches (orange)',
+    texte:"Pas le mot exact, mais une compétence proche présente chez le candidat. La flèche « → » montre la compétence rapprochée."},
+  'tk-absent': {groupe:'Détails technos', titre:'Technos manquantes (rouge)',
+    texte:"Technologie demandée qu'on ne retrouve pas, même de façon approchée, dans le CV. "},
+
+  // ── Détails expériences ──
+  'exp-btn': {groupe:'Détails expériences', titre:'Bouton Expérience(s)',
+    texte:"Déplie les expériences du candidat qui collent le mieux à l'offre."},
+  'exp-top': {groupe:'Détails expériences', titre:'Expériences les plus pertinentes',
+    texte:"Les quelques expériences les plus proches de l'offre, de la plus pertinente à la moins pertinente : poste · entreprise · durée."},
+  'duree-courte': {groupe:'Détails expériences', titre:'Expériences courtes',
+    texte:"Nombre d'expériences considérées comme courtes (selon le réglage de durée). Clique pour voir lesquelles."},
+  'duree-intermediaire': {groupe:'Détails expériences', titre:'Expériences intermédiaires',
+    texte:"Expériences de durée intermédiaire. Clique pour les lister."},
+  'duree-valide': {groupe:'Détails expériences', titre:'Expériences valides',
+    texte:"Expériences suffisamment longues pour être considérées comme solides. Clique pour les lister."},
+};
+const ORDRE_GROUPES = ['Import & préparation','Réglages','Résultats','Carte candidat','Détails technos','Détails expériences'];
+
+let AIDE_ACTIVE = false;
+let _popEpingle = false;
+
+function _popEl(){
+  let p = document.getElementById('helpPop');
+  if(!p){ p = document.createElement('div'); p.id = 'helpPop'; document.body.appendChild(p); }
+  return p;
+}
+
+function positionnerPop(cible){
+  const pop = _popEl();
+  const r = cible.getBoundingClientRect();
+  pop.style.left = '0px'; pop.style.top = '0px';   // reset pour mesurer
+  const pr = pop.getBoundingClientRect();
+  const marge = 10, vw = window.innerWidth, vh = window.innerHeight;
+
+  // sous l'élément si ça tient, sinon au-dessus
+  let top = r.bottom + marge, sousDessous = true;
+  if(top + pr.height > vh - 8 && r.top - marge - pr.height > 8){
+    top = r.top - marge - pr.height; sousDessous = false;
+  }
+  let left = r.left;
+  left = Math.max(8, Math.min(left, vw - pr.width - 8));
+
+  pop.classList.toggle('pos-bottom', sousDessous);
+  pop.classList.toggle('pos-top', !sousDessous);
+  // flèche alignée sur le centre de la cible
+  const centre = r.left + r.width/2 - left;
+  pop.style.setProperty('--arrow', Math.max(12, Math.min(centre - 5, pr.width - 22)) + 'px');
+  pop.style.left = left + 'px';
+  pop.style.top  = top + 'px';
+}
+
+function montrerPop(cible){
+  const cle = cible.getAttribute('data-help');
+  const info = AIDE[cle];
+  if(!info){ return; }
+  const pop = _popEl();
+  pop.innerHTML = `<div class="hp-title">${info.titre}</div><div>${info.texte}</div>`;
+  pop.classList.add('show');
+  positionnerPop(cible);
+}
+function cacherPop(){
+  if(_popEpingle) return;
+  const p = document.getElementById('helpPop');
+  if(p) p.classList.remove('show');
+}
+
+function activerAide(on){
+  AIDE_ACTIVE = on;
+  document.body.classList.toggle('help-mode', on);
+  $('#helpBanner').hidden = !on;
+  $('#btnHelp').setAttribute('aria-pressed', String(on));
+  if(!on){ _popEpingle = false; cacherPop(); }
+}
+
+function brancherAide(){
+  $('#btnHelp').addEventListener('click', () => activerAide(!AIDE_ACTIVE));
+  $('#helpExitBtn').addEventListener('click', () => activerAide(false));
+  $('#helpGuideBtn').addEventListener('click', ouvrirGuide);
+
+  // survol (desktop)
+  document.addEventListener('mouseover', e => {
+    if(!AIDE_ACTIVE || _popEpingle) return;
+    const c = e.target.closest('[data-help]');
+    if(c) montrerPop(c); else cacherPop();
+  });
+  document.addEventListener('mouseout', e => {
+    if(!AIDE_ACTIVE || _popEpingle) return;
+    if(!e.relatedTarget || !e.relatedTarget.closest || !e.relatedTarget.closest('[data-help]')) cacherPop();
+  });
+
+  // clic / tap : en mode aide, on explique au lieu d'agir (épingle la bulle)
+  document.addEventListener('click', e => {
+    if(!AIDE_ACTIVE) return;
+    if(e.target.closest('#helpBanner') || e.target.closest('#btnHelp')) return;
+    const c = e.target.closest('[data-help]');
+    if(c){
+      e.preventDefault(); e.stopPropagation();
+      _popEpingle = false; montrerPop(c); _popEpingle = true;
+    } else {
+      _popEpingle = false; cacherPop();
+    }
+  }, true);
+
+  // le défilement / redimensionnement ferme la bulle épinglée
+  window.addEventListener('scroll', () => { _popEpingle = false; cacherPop(); }, true);
+  window.addEventListener('resize', () => { _popEpingle = false; cacherPop(); });
+  document.addEventListener('keydown', e => { if(e.key === 'Escape' && AIDE_ACTIVE) activerAide(false); });
+}
+
+function ouvrirGuide(){
+  let ov = document.getElementById('helpGuideOverlay');
+  if(!ov){
+    ov = document.createElement('div');
+    ov.id = 'helpGuideOverlay';
+    ov.className = 'modal-overlay';
+    ov.innerHTML = `<div class="modal" role="dialog" aria-modal="true" aria-label="Guide de l'interface">
+        <div class="modal-head"><h2>Guide de l'interface</h2>
+          <button type="button" class="modal-close" id="helpGuideClose" aria-label="Fermer">✕</button></div>
+        <div class="modal-body"><div class="help-guide-body" id="helpGuideContent"></div></div>
+      </div>`;
+    document.body.appendChild(ov);
+    ov.addEventListener('click', e => { if(e.target === ov) ov.hidden = true; });
+    ov.querySelector('#helpGuideClose').addEventListener('click', () => ov.hidden = true);
+    // remplir depuis AIDE, groupé
+    const parGroupe = {};
+    Object.values(AIDE).forEach(v => (parGroupe[v.groupe] = parGroupe[v.groupe] || []).push(v));
+    let html = '';
+    ORDRE_GROUPES.forEach(g => {
+      if(!parGroupe[g]) return;
+      html += `<div class="help-guide-group"><h3>${g}</h3>`;
+      parGroupe[g].forEach(v => {
+        html += `<div class="help-guide-item"><div class="hg-key">${v.titre}</div><div class="hg-txt">${v.texte}</div></div>`;
+      });
+      html += `</div>`;
+    });
+    ov.querySelector('#helpGuideContent').innerHTML = html;
+  }
+  ov.hidden = false;
+}
+
 // ---------- init ----------
 brancherDrop('#dropCV','#fileCV','cv');
 brancherDrop('#dropAO','#fileAO','ao');
@@ -1460,6 +1750,7 @@ chargerPaliers();
 brancherConfig();
 brancherSeuils();
 chargerSeuils();
+brancherAide();
 refresh();
 </script>
 </body>
