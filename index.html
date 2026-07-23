@@ -167,7 +167,7 @@
   .cv .name{font-weight:700}
   .cv .sc{font-variant-numeric:tabular-nums}
   .cv .sc b{color:#ffffff;background:var(--blue);padding:0 5px;border-radius:4px}
-  .cv .glob{color:var(--glob);font-size:12px;margin-top:6px}
+  .cv .glob{color:var(--glob);font-size:15px;margin-top:6px}
   .cv .seniorite-ok{color:var(--ok);font-weight:700}
   .cv .seniorite-ko{color:var(--bad);font-weight:700}
   .tk{
@@ -475,15 +475,15 @@
   }
   .duree-bulle{
     font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;
-    border:1px solid transparent;cursor:pointer;background:#f1f5f9;color:var(--muted);
+    border:1px solid transparent;cursor:pointer;color:#111;
     transition:filter .12s, box-shadow .12s;
   }
-  .duree-bulle .dn{font-weight:800}
+  .duree-bulle .tn{font-weight:800}
   .duree-bulle:hover{filter:brightness(.97)}
   .duree-bulle[aria-expanded="true"]{box-shadow:0 0 0 2px rgba(37,99,235,.35)}
-  .duree-bulle.d-courte{background:#fca5a5;color:var(--txt)}
-  .duree-bulle.d-interm{background:#fde68a;color:var(--txt)}
-  .duree-bulle.d-valide{background:#86efac;color:var(--txt)}
+  .duree-bulle.d-courte{background:#fca5a5;border-color:var(--bad)}
+  .duree-bulle.d-interm{background:#fde68a;border-color:var(--mid)}
+  .duree-bulle.d-valide{background:#86efac;border-color:var(--ok)}
 
   .duree-panneau{
     margin:8px 0 2px;padding:8px;border-radius:8px;
@@ -1140,7 +1140,7 @@ function dureesHTML(r){
   const bulles = cats.map(cat=>{
     const n = c[cat.key] || 0;
     return `<button type="button" class="duree-bulle ${cat.cls}" data-duree-cat="${cat.key}" aria-expanded="false">
-              <span class="dn">${n}</span>&nbsp;${cat.label}
+              <span class="tn">${n}</span>&nbsp;${cat.label}
             </button>`;
   }).join('');
   const panneaux = cats.map(cat=>{
