@@ -11,7 +11,7 @@ Routes :
     POST   /api/upload/{kind}    -> dépose des .json dans *_brutes (kind=cv|ao)
     DELETE /api/ao/{ao_id}       -> supprime une AO (brute + traité + cache global)
     POST   /api/prepare          -> job: prétraitement + caches + score global
-    POST   /api/match            -> job: lance GRAPH.py pour une AO
+    POST   /api/match            -> job: lance Graph.py pour une AO
     GET    /api/jobs/{job_id}     -> état/progression/résultat d'un job
     GET    /logo.png             -> logo 
 """
@@ -49,7 +49,7 @@ app = FastAPI(title="Matching CV/AO")
 PALIERS_FILE = RACINE / "paliers.json"
 
 # ─────────────────────── Seuils de catégorisation ────────────────────────
-# Utilisés par GRAPH.charger_seuils() pour classer les expériences
+# Utilisés par Graph.charger_seuils() pour classer les expériences
 # en courte / intermédiaire / valide (bornes exprimées EN MOIS).
 SEUILS_FILE = RACINE / "config.json"
 
@@ -276,7 +276,7 @@ def _job_preparer(jid: str) -> None:
 
         # Imports lourds ici seulement
         _maj_job(jid, etape="Construction des caches d'embeddings", progression=0.35)
-        import GRAPH as pipe
+        import Graph as pipe
         cvs    = pipe.charger_cvs("./CV_JSON")
         offres = pipe.charger_offres("./AO_JSON")
         total  = max(1, len(cvs) + len(offres))
@@ -304,7 +304,7 @@ def _job_preparer(jid: str) -> None:
 def _job_matcher(jid: str, offre_id: str) -> None:
     try:
         _maj_job(jid, etape=f"Matching pour {offre_id}", progression=0.2)
-        import THE_HONORED_ONE as pipe
+        import Graph as pipe
         resultat = pipe.lancer_matching(offre_id)
         _maj_job(jid, statut="termine", etape="Terminé", progression=1.0,
                  resultat=resultat)
