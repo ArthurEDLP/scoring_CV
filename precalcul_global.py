@@ -2,7 +2,7 @@
 Précalcul de l'indicateur global (CV complet ↔ AO complète, Qwen3-8B).
 
 Fait tourner le 8B UNE fois par AO et écrit un JSON {cv_id: cosine_brut} dans
-./cache_global. Ensuite THE_HONORED_ONE lit ce JSON au lieu d'embedder en live.
+./cache_global. Ensuite GRAPH.py lit ce JSON au lieu d'embedder en live.
 
 À relancer quand : tu changes d'AO, ou tu ajoutes/modifies des CV.
 
