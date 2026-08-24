@@ -113,7 +113,7 @@ Depuis la **racine du dépôt** (important : les scripts utilisent des chemins
 relatifs comme `./CV_JSON`) :
 
 ```bash
-uvicorn app:app --port 8000
+python -m uvicorn app:app --port 8000
 ```
 
 Puis ouvre **http://localhost:8000** dans ton navigateur.
