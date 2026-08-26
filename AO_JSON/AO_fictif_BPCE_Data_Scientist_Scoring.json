@@ -1,0 +1,19 @@
+{
+  "id": "BPCE - Data Scientist Scoring",
+  "Profil": [
+    "Expérience en scoring bancaire (octroi, risque).",
+    "Régression logistique, gradient boosting, Python."
+  ],
+  "Description": [
+    "Développement et backtesting de modèles de scoring crédit."
+  ],
+  "Contexte": [],
+  "entreprise": "BPCE",
+  "poste": "Data Scientist",
+  "technos": [
+    "Python",
+    "Régression logistique",
+    "Gradient boosting"
+  ],
+  "seniorite_min_annees": 0
+}

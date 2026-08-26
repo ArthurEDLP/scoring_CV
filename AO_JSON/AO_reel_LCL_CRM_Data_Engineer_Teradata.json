@@ -1,0 +1,49 @@
+{
+  "id": "LCL - CRM Data Engineer Teradata",
+  "Poste": "Data Engineer Teradata et Dataviz",
+  "Contexte": [
+    "Entité : LCL – SNI – CPC – CRM – CSF.",
+    "Lieu de la prestation : in situ (Villejuif). Présence sur site requise 2 jours par semaine. Profil IDF uniquement.",
+    "Séniorité attendue : Expérimenté (5 à 7 ans d'expérience).",
+    "La tribu « CRM » est en charge du parc applicatif dédié à la mise en œuvre et au suivi de l'ensemble de la relation client-banque et des outils de conformité (fraude, lutte contre le blanchiment et financement du terrorisme). La mission se déroule au sein de la Squad Conformité et Sécurité Financière."
+  ],
+  "Description": [
+    "Contribuer à la construction des solutions sous technologie Teradata, en étroite collaboration avec les autres membres de la squad et de la Tribu.",
+    "Développer les solutions de collecte des données, de leur stockage, traitement, usages et mise à disposition ; une expérience des environnements Unix, une forte expertise SQL et des SGBD relationnels est indispensable, ainsi que des bonnes pratiques de développement et de modélisation sous technologie Teradata BTEQ.",
+    "Intervenir à la fois sur des activités projet mais aussi sur du RUN (suivi des traitements de production, analyse/résolution d'incidents, optimisations, amélioration continue). Chaque membre de la squad participe au traitement des incidents et à l'amélioration continue du périmètre applicatif de la squad.",
+    "Point d'attention : le CV détaillera les tâches techniques déjà réalisées (jointures de tables, développement de requêtes SQL complexes dans un environnement Teradata, types et contexte des modélisations réalisées, ...) afin de faciliter la compréhension du niveau de compétences."
+  ],
+  "Profil": [
+    "Modélisation de données.",
+    "Mode de chargement dans l'entrepôt (ETL) : BTEQ.",
+    "Teradata, développements sous Teradata.",
+    "Dataviz : Power BI et MSBI.",
+    "CONTROL-M.",
+    "Environnement UNIX (répertoires principaux, Usage & Entrepôt).",
+    "SQL sur SGBD relationnel, Shell.",
+    "TPT – réalisation de scripts.",
+    "Outils collaboratifs et documentaires : GIT, Jira, Confluence, MEGA, Zeenea.",
+    "Création de chaînes de déploiement DevOps.",
+    "Mise en production de composants applicatifs avec livrables documentaires associés (DTA, feuille de route, ...).",
+    "Soft skills : sens du service ; bon relationnel et bonne communication écrite et orale ; écoute ; esprit d'analyse et de synthèse ; capacité d'organisation et d'adaptation ; capacité à travailler en équipe ; autonomie ; curiosité.",
+    "Anglais.",
+    "Grille SPIRIT (semble générique, à vérifier) : pilotage budgétaire, RH, KPI delivery d'une DSI (niveau 3) ; Power BI (niveau 3) ; PostgreSQL (niveau 2) ; SQL, Python (niveau 2) ; MS Office (niveau 2)."
+  ],
+  "entreprise": "LCL",
+  "poste": "Data Engineer",
+  "technos": [
+    "Teradata",
+    "BTEQ",
+    "Unix",
+    "SQL",
+    "TPT",
+    "Git",
+    "Jira",
+    "Confluence",
+    "Zeenea",
+    "Power BI",
+    "MSBI",
+    "CONTROL-M"
+  ],
+  "seniorite_min_annees": 5
+}

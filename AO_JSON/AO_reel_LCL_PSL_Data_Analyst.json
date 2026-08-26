@@ -1,0 +1,51 @@
+{
+  "id": "LCL - PSL Data Analyst",
+  "Poste": "Data Analyst",
+  "Contexte": [
+    "Mission présentée aux ESN : Data Analyst sur l'outil Power BI, sur l'application de Pilotage de PSL.",
+    "Séniorité attendue : Expérimenté (3 à 7 ans d'expérience).",
+    "Entité : LCL – SNI – CPC – PSL."
+  ],
+  "Description": [
+    "Nous recherchons un(e) Data Analyst pour travailler au sein d'une squad agile et dynamique.",
+    "Produire régulièrement des tableaux de bord permettant aujourd'hui le pilotage de la Direction informatique.",
+    "Faire progresser le pilotage en proposant des indicateurs pertinents que vous aurez soin de construire.",
+    "Participer aux différentes tâches de votre squad agile, en étant force de proposition et innovant.",
+    "Analyser les besoins avec les métiers, challenger, identifier les sources de données dans les différents univers technologiques, industrialiser, à terme concevoir et développer des solutions BI qui répondront au mieux aux besoins de pilotage de la Direction.",
+    "Relever les challenges proposés en adaptant vos réponses technologiques, en étant innovant.",
+    "Au-delà des projets et des évolutions gérés, attacher une grande attention à la mise en œuvre de solutions optimisées.",
+    "Répondre aux enjeux de sécurité, de qualité et de transmission de la connaissance, contribuant à l'atteinte des objectifs de l'IT et plus largement de LCL.",
+    "Documenter correctement ses projets."
+  ],
+  "Profil": [
+    "Rigueur, communication, esprit d'équipe, curiosité et créativité.",
+    "Outils BI : Power BI, Qlik Sense.",
+    "Bases de données : PostgreSQL, et de façon moins importante MongoDB, MySQL, Oracle, SQL Server.",
+    "Langages : SQL, Python.",
+    "Outils collaboratifs et documentaires : GitLab, Jira, Confluence, MEGA, Zeenea.",
+    "Expérience dans un environnement agile / DevOps.",
+    "Environnement UNIX.",
+    "Mode de chargement ETL : BTEQ, ...",
+    "Anglais.",
+    "Expertise fonctionnelle : pilotage budgétaire, RH, KPI delivery d'une DSI (niveau 3).",
+    "Expertise technique : Power BI (niveau 3) ; PostgreSQL (niveau 2) ; SQL, Python (niveau 2) ; MS Office (niveau 2)."
+  ],
+  "entreprise": "LCL - PSL",
+  "poste": "Data Analyst",
+  "technos": [
+    "Power BI",
+    "PostgreSQL",
+    "MongoDB",
+    "MySQL",
+    "Oracle",
+    "SQL Server",
+    "SQL",
+    "Python",
+    "GitLab",
+    "Jira",
+    "Confluence",
+    "MEGA",
+    "Zeenea"
+  ],
+  "seniorite_min_annees": 3
+}

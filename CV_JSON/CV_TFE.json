@@ -1,0 +1,56 @@
+{
+  "id": "TFE",
+  "formations": [
+    {
+      "diplome": "Diplôme d'ingénieur informatique — IMT Atlantique",
+      "date": "2018"
+    }
+  ],
+  "certifications": [
+    "Confluent Certified Developer for Apache Kafka (2022)"
+  ],
+  "langues": [
+    {
+      "nom_langue": "Français",
+      "maitrise": "Langue maternelle"
+    },
+    {
+      "nom_langue": "Anglais",
+      "maitrise": "Courant"
+    }
+  ],
+  "competences_techniques": [
+    "Java",
+    "Scala",
+    "Kotlin",
+    "Spring Boot",
+    "architectures microservices",
+    "Kafka",
+    "API REST et gRPC",
+    "PostgreSQL",
+    "Docker",
+    "Kubernetes",
+    "Spark (depuis 2 ans)",
+    "Git",
+    "tests unitaires et intégration"
+  ],
+  "savoir_faire/savoir_etre": [
+    "Conception logicielle (clean code, SOLID)",
+    "Sens de la scalabilité et de la robustesse",
+    "Revue de code et pair programming"
+  ],
+  "experiences": [
+    {
+      "poste": "Backend / Data engineer",
+      "date": "Depuis 2022",
+      "entreprise": "Éditeur de logiciel B2B",
+      "details": "Bascule progressive du développement backend vers l'ingénierie de données. Conception de services d'ingestion événementielle à base de Kafka, puis développement de traitements Spark pour alimenter les briques analytiques. J'aborde la donnée avec une culture d'ingénieur logiciel : tests, CI, découplage."
+    },
+    {
+      "poste": "Développeur backend senior",
+      "date": "2018 - 2022",
+      "entreprise": "Scale",
+      "details": "Développement de microservices Java/Spring pour une plateforme à forte charge. Conception d'API, optimisation de performances, mise en place d'une architecture événementielle. Encadrement d'un alternant."
+    }
+  ]
+}

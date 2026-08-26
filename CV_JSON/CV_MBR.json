@@ -1,0 +1,47 @@
+{
+  "id": "MBR",
+  "formations": [
+    "Master Géomatique et géographie numérique — Université Paris 1",
+    "Licence de Géographie et aménagement"
+  ],
+  "certifications": [],
+  "langues": [
+    {
+      "nom_langue": "Français",
+      "maitrise": "Langue maternelle"
+    },
+    {
+      "nom_langue": "Anglais",
+      "maitrise": "Intermédiaire"
+    }
+  ],
+  "competences_techniques": [
+    "QGIS",
+    "ArcGIS",
+    "PostGIS",
+    "Python (geopandas, rasterio)",
+    "SQL spatial",
+    "télédétection",
+    "cartographie",
+    "un peu de Power BI"
+  ],
+  "savoir_faire/savoir_etre": [
+    "Analyse spatiale et représentation cartographique",
+    "Traitement de données géographiques hétérogènes",
+    "Travail avec des acteurs publics et environnementaux"
+  ],
+  "experiences": [
+    {
+      "poste": "Chargé d'études SIG / data analyst",
+      "date": "Depuis 2020",
+      "entreprise": "Bureau d'études environnement",
+      "details": "Analyse de données géospatiales pour des collectivités et des projets d'aménagement. Traitement d'images de télédétection, croisements de couches SIG, production de cartes et d'indicateurs territoriaux. Transition progressive vers l'analyse de données au sens large (SQL, Python) au-delà du seul SIG."
+    },
+    {
+      "poste": "Géomaticien",
+      "date": "2018 - 2020",
+      "entreprise": "Collectivité territoriale",
+      "details": "Gestion et mise à jour de bases de données géographiques, réalisation de cartes thématiques, appui aux services techniques."
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "id": "Leroy Merlin - BI",
+  "Profil": [
+    "Expérience en BI et dataviz.",
+    "Tableau ou Power BI, SQL avancé."
+  ],
+  "Description": [
+    "Conception de tableaux de bord de suivi commercial pour les magasins."
+  ],
+  "Contexte": [],
+  "entreprise": "Leroy Merlin - BI",
+  "poste": "Analyste BI",
+  "technos": [
+    "Tableau",
+    "Power BI",
+    "SQL avancé"
+  ],
+  "seniorite_min_annees": 0
+}

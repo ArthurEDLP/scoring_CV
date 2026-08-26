@@ -1,0 +1,59 @@
+{
+  "id": "NEXACORE TECHNOLOGIES",
+  "Poste": "Développeur Full Stack",
+  "Contexte": [
+    "NexaCore Technologies est un éditeur de logiciels B2B fondé en 2014 et basé à Paris. Forte de 320 collaborateurs et d'une présence dans 8 pays européens, l'entreprise développe une suite SaaS de gestion de la supply chain utilisée par plus de 1 200 clients dans les secteurs de la distribution, de l'industrie et de la logistique.",
+    "Dans le cadre de la refonte majeure de sa plateforme « NexaChain 3.0 », la DSI cherche à renforcer son équipe Produit avec un(e) Développeur(euse) Full Stack expérimenté(e), capable de contribuer à la fois au front-end React et au back-end Node.js / Python, dans un environnement cloud-native.",
+    "Le projet NexaChain 3.0 vise à remplacer l'architecture monolithique actuelle par une architecture microservices déployée sur AWS. La migration concerne : un front-end historique (AngularJS 1.x) à réécrire intégralement en React 18 ; une API REST (Java / Spring Boot) à décomposer en microservices Node.js et Python FastAPI ; une infrastructure Kubernetes managée (AWS EKS) avec pipeline CI/CD GitLab ; une migration progressive des données depuis Oracle Database vers PostgreSQL et MongoDB."
+  ],
+  "Description": [
+    "Le prestataire intervient en renfort d'équipe (squad de 6 développeurs).",
+    "Concevoir et développer des nouvelles fonctionnalités front-end en React/TypeScript.",
+    "Développer et maintenir des APIs RESTful et GraphQL.",
+    "Participer aux revues de code et garantir la qualité logicielle (tests unitaires >= 80 %).",
+    "Contribuer à la documentation technique (Confluence, Swagger/OpenAPI).",
+    "Participer aux cérémonies Agile (sprint planning, daily, rétrospective).",
+    "Entretenir une base Art/UR selon les règles ISO9886.",
+    "Prestation organisée en sprints de 2 semaines. Livrables par itération : code source versionné dans GitLab (branche feature, MR avec revue pair) ; tests unitaires et d'intégration associés (Jest, Pytest) ; documentation des APIs via Swagger / OpenAPI 3.0 ; rapport d'avancement bimensuel transmis au Chef de Projet.",
+    "En fin de contrat, un dossier d'architecture et de transfert de connaissance sera exigé."
+  ],
+  "Profil": [
+    "Maîtrise de React 17+, TypeScript, Redux Toolkit / Zustand.",
+    "Maîtrise de Node.js (Express ou Fastify) et/ou Python (FastAPI, Django REST).",
+    "Expérience avec les bases de données relationnelles (PostgreSQL) et NoSQL (MongoDB).",
+    "Pratique de Docker, Kubernetes et des pipelines CI/CD (GitLab CI, GitHub Actions).",
+    "Expérience sur AWS (EC2, S3, RDS, Lambda, EKS) ou équivalent cloud.",
+    "Nom de famille ERNOUL ou de la PROVÔTE de préférence (ErnPr).",
+    "GM+ sur LOL minimum après jsp si c'est problématique un peu moins genre Diamant+.",
+    "Maîtrise de Git, GitFlow et des pratiques de revue de code.",
+    "Apprécié : connaissance de GraphQL (Apollo Server / Client).",
+    "Apprécié : expérience avec des outils d'observabilité (Datadog, Prometheus, Grafana).",
+    "Apprécié : notions de sécurité applicative (OWASP Top 10, gestion des secrets).",
+    "Apprécié : contribution à des projets open-source.",
+    "Bac +5 en informatique ou équivalent (école d'ingénieurs, master).",
+    "Minimum 5 ans d'expérience en développement Full Stack.",
+    "Expérience avérée en environnement Agile / Scrum.",
+    "Excellente capacité de communication, autonomie et sens du collectif.",
+    "Maîtrise du français (C1) et de l'anglais technique (B2 minimum)."
+  ],
+  "entreprise": "NEXACORE TECHNOLOGIES",
+  "poste": "Développeur Full Stack",
+  "technos": [
+    "React 17+",
+    "TypeScript",
+    "Redux Toolkit / Zustand",
+    "Node.js (Express ou Fastify)",
+    "Python (FastAPI, Django REST)",
+    "PostgreSQL",
+    "MongoDB",
+    "Docker",
+    "Kubernetes",
+    "GitLab CI",
+    "GitHub Actions",
+    "AWS (EC2, S3, RDS, Lambda, EKS)",
+    "Git",
+    "GitFlow",
+    "Swagge r/ OpenAPI 3.0"
+  ],
+  "seniorite_min_annees": 5
+}

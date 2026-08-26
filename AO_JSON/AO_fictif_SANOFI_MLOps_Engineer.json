@@ -1,0 +1,48 @@
+{
+  "id": "SANOFI - MLOps Engineer",
+  "Profil": [
+    "Bac+5 (école d'ingénieur ou Master) en informatique ou data science.",
+    "3 à 6 ans d'expérience avec une orientation forte vers l'industrialisation de modèles de machine learning (MLOps).",
+    "Maîtrise de Python et bonne connaissance des frameworks ML (scikit-learn, PyTorch ou TensorFlow).",
+    "Expérience concrète des outils MLOps : MLflow, suivi d'expériences, versioning de modèles et de données, registre de modèles.",
+    "Solide culture DevOps : Git, CI/CD (GitLab CI ou GitHub Actions), conteneurisation Docker, orchestration Kubernetes.",
+    "Expérience du déploiement de modèles en production (exposition via API, batch scoring) et du monitoring post-déploiement (data drift, model drift).",
+    "Connaissance d'au moins un cloud (AWS, Azure ou GCP).",
+    "Sensibilité aux exigences de traçabilité et de conformité propres au secteur pharmaceutique.",
+    "Rigueur, esprit d'équipe, capacité à faire le pont entre data scientists et équipes d'exploitation."
+  ],
+  "Description": [
+    "Au sein de la direction Digital & Data, le consultant rejoindra l'équipe plateforme ML chargée d'industrialiser les modèles développés par les équipes de recherche et les métiers.",
+    "Mission : mettre en place et faire vivre la chaîne de mise en production des modèles, du prototype validé jusqu'au service surveillé en production.",
+    "Activités : construction de pipelines d'entraînement et de déploiement reproductibles, mise en place du suivi d'expériences et du registre de modèles, automatisation des tests et des déploiements.",
+    "Implémentation du monitoring des modèles en production et des alertes de dérive.",
+    "Accompagnement des data scientists dans l'adoption des bonnes pratiques d'industrialisation.",
+    "Mission longue (12 mois renouvelables), démarrage souhaité sous 6 semaines.",
+    "Localisation : Gentilly, télétravail partiel.",
+    "TJM cible : entre 550 € et 700 €."
+  ],
+  "Contexte": [
+    "Sanofi accélère l'industrialisation de ses cas d'usage IA, avec un enjeu fort de passage à l'échelle : de nombreux modèles restent au stade de prototype faute d'une chaîne de mise en production robuste.",
+    "L'équipe plateforme ML a pour mission de fournir un socle standardisé permettant aux équipes de déployer leurs modèles de façon fiable, tracée et conforme.",
+    "Le secteur pharmaceutique impose des exigences élevées de traçabilité et de reproductibilité, ce qui place l'ingénierie MLOps au cœur de la stratégie.",
+    "Environnement international, méthodologie agile, forte culture qualité."
+  ],
+  "entreprise": "SANOFI",
+  "poste": "MLOps Engineer",
+  "technos": [
+    "Python",
+    "scikit-learn",
+    "PyTorch",
+    "TensorFlow",
+    "MLflow",
+    "Git",
+    "GitLab CI",
+    "GitHub Actions",
+    "Docker",
+    "Kubernetes",
+    "AWS",
+    "Azure",
+    "GCP"
+  ],
+  "seniorite_min_annees": 3
+}

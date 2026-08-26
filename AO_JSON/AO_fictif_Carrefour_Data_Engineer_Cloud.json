@@ -1,0 +1,33 @@
+{
+  "id": "Carrefour - Data Engineer Cloud",
+  "Profil": [
+    "Bac+5 informatique.",
+    "4 ans et plus en data engineering cloud (GCP de préférence).",
+    "Maîtrise de BigQuery, Dataflow, de Python et SQL avancé.",
+    "Culture CI/CD et orchestration (Airflow / Composer).",
+    "Connaissance du retail appréciée."
+  ],
+  "Description": [
+    "Au sein de la direction data du groupe, conception de pipelines d'ingestion et de transformation des données de vente et de fidélité.",
+    "Modélisation des couches analytiques sur BigQuery, fiabilisation et optimisation des coûts.",
+    "Collaboration avec les data analysts consommateurs.",
+    "Mission longue, démarrage rapide.",
+    "Localisation : Massy, télétravail partiel.",
+    "TJM cible : 500 € à 650 €."
+  ],
+  "Contexte": [
+    "Le distributeur poursuit l'unification de son patrimoine data sur GCP pour accélérer ses cas d'usage marketing et supply.",
+    "Environnement à forte volumétrie, équipe agile."
+  ],
+  "entreprise": "Carrefour",
+  "poste": "Data Engineer Cloud",
+  "technos": [
+    "BigQuery",
+    "Dataflow",
+    "Python",
+    "SQL avancé",
+    "Airflow",
+    "Composer"
+  ],
+  "seniorite_min_annees": 4
+}

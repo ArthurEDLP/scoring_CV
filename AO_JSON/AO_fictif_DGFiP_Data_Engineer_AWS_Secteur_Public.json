@@ -1,0 +1,38 @@
+{
+  "id": "DGFiP - Data Engineer AWS Secteur Public",
+  "Profil": [
+    "Bac+5 informatique.",
+    "4 ans et plus en data engineering cloud, idéalement AWS.",
+    "Maîtrise des services data AWS (S3, Glue, Athena, EMR), Spark.",
+    "Python, SQL avancé, Terraform, CI/CD.",
+    "Sensibilité à la sécurité et à la souveraineté des données.",
+    "Habilitable, rigueur, autonomie."
+  ],
+  "Description": [
+    "Conception de pipelines de traitement de données fiscales sur un cloud souverain basé sur les services AWS.",
+    "Ingestion, transformation, modélisation, contrôles qualité.",
+    "Documentation et respect des standards de sécurité.",
+    "Mission longue.",
+    "Localisation : Noisy-le-Grand, télétravail encadré.",
+    "TJM cible : 450 € à 600 €."
+  ],
+  "Contexte": [
+    "L'administration fiscale modernise ses traitements data dans un cadre de sécurité et de souveraineté strict.",
+    "Volumétrie importante, exigences réglementaires et de traçabilité élevées."
+  ],
+  "entreprise": "DGFiP",
+  "poste": "Data Engineer",
+  "technos": [
+    "AWS",
+    "S3",
+    "Glue",
+    "Athena",
+    "EMR",
+    "Spark",
+    "Python",
+    "SQL avancé",
+    "Terraform",
+    "CI/CD"
+  ],
+  "seniorite_min_annees": 4
+}

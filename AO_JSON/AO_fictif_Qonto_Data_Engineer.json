@@ -1,0 +1,20 @@
+{
+  "id": "Qonto - Data Engineer",
+  "Profil": [
+    "4 ans en data engineering.",
+    "Spark, dbt et un cloud (GCP ou AWS)."
+  ],
+  "Description": [
+    "Développement et maintenance de pipelines de données sur la plateforme analytique."
+  ],
+  "Contexte": [],
+  "entreprise": "Qonto",
+  "poste": "Data Engineer",
+  "technos": [
+    "Spark",
+    "dbt",
+    "GCP",
+    "AWS"
+  ],
+  "seniorite_min_annees": 4
+}

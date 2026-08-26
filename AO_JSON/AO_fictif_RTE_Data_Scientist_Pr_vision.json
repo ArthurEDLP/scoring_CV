@@ -1,0 +1,31 @@
+{
+  "id": "RTE - Data Scientist Prévision",
+  "Profil": [
+    "Bac+5 statistiques, économétrie ou data science.",
+    "4 ans et plus en modélisation, idéalement séries temporelles.",
+    "Maîtrise des méthodes de prévision (ARIMA, modèles à espace d'états, gradient boosting, approches deep learning pour séries).",
+    "Solide bagage statistique et Python (statsmodels, scikit-learn).",
+    "SQL, notions de mise en production.",
+    "Capacité à vulgariser les résultats auprès d'experts métier."
+  ],
+  "Description": [
+    "Au sein de la direction prévision, développement de modèles de prévision de consommation et de production électrique.",
+    "Analyse exploratoire, feature engineering météo, backtesting rigoureux.",
+    "Documentation méthodologique.",
+    "Mission longue.",
+    "Localisation : Saint-Denis (La Plaine), télétravail partiel.",
+    "TJM cible : 550 € à 700 €."
+  ],
+  "Contexte": [
+    "Le gestionnaire du réseau électrique renforce ses capacités de prévision dans un contexte de transition énergétique.",
+    "Enjeux d'équilibrage offre/demande à horizon court et moyen terme.",
+    "Culture d'ingénierie et de rigueur scientifique."
+  ],
+  "entreprise": "RTE",
+  "poste": "Data Scientist Prévision",
+  "technos": [
+    "Python (statsmodels, scikit-learn)",
+    "SQL"
+  ],
+  "seniorite_min_annees": 4
+}

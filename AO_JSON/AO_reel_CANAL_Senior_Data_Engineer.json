@@ -1,0 +1,53 @@
+{
+  "id": "CANAL+ - Senior Data Engineer",
+  "Poste": "Senior Data Engineer",
+  "Contexte": [
+    "Dans le cadre de son plan de transformation Data, le groupe Canal+ poursuit un objectif central : développer des applications Data permettant aux directions métiers (pilotage, marketing, commerce, etc.) de gagner en autonomie dans l'analyse de leurs données et le suivi de leurs KPI mais aussi de mettre en place des applications customer-facing.",
+    "Pour répondre à cet enjeu, Canal+ s'appuie sur un écosystème technologique étendu, comprenant notamment : AWS, GitLab, Terraform, DBT, Snowflake, GenAI, Braze, Scala, Spark, Python, Power BI, ainsi que des briques d'Intelligence Artificielle.",
+    "La plateforme repose sur des architectures robustes et évolutives (Datalake, Lakehouse, architectures multi-tenant, event-driven et streaming) conçues pour ingérer et gérer plus de 100 To de données par jour, dont une part majoritaire en temps réel.",
+    "AI pour recommandation des programmes et des offres, etc.",
+    "Plateforme agentique customer-facing",
+    "Gender Equality Monitoring",
+    "Feature Store",
+    "Modernisation les flux financiers",
+    "Content Platform",
+    "Mise en place Kubernetes",
+    "Plateforme pour le traitement des données CRM et usage",
+    "Partager des informations sur les clients à nos partenaires (Netflix, Apple, M6, TF1, etc.)",
+    "Piloter plus efficacement l'activité des marchés profesionnels",
+    "Mettre à disposition des applications de data-selfservice",
+    "Le consultant aura pour mission de réaliser des développements avancés sur le socle des données BigData pour la mise en place des usecases IA. Cet environnement BigData, fortement orienté Streaming et IA, traite quotidiennement plus de 100 To de données.",
+    "Le consultant doit maîtriser les architectures de Streaming Data, AWS (notamment Lambda, Batch, Step Function, EMR Serverless, Kinesis Stream, S3, Firehose, DynamoDB, etc.), Airflow, Scala, Spark, SQL, Snowflake, GitLab CI/CD, Terraform."
+  ],
+  "Description": [
+    "Réaliser des développements complexes et participer activement à l'évolution continue de la plateforme IA.",
+    "Notre environnement de travail combine rigueur, une ambiance décontractée au sein des équipes, et des méthodes Agiles (Scrum et Kanban).",
+    "Intervenir sur des architectures de Streaming Data et IA full AWS (notamment Lambda, Step Function, Kinesis Stream, S3, Batch, Firehose, EMR Serverless, DynamoDB, etc.), ainsi que sur des technologies comme Scala, Spark, SQL, Snowflake, GitLab CI/CD, DBT, Airflow, Terraform.",
+    "Concevoir et développer des pipelines de données performants",
+    "Développer en utilisant des outils tels que Scala, DBT et Spark",
+    "Implémenter des architectures de Streaming Data robustes",
+    "Contribuer activement aux initiatives FinOps",
+    "Développer et optimiser des traitements d'intégration de données en streaming"
+  ],
+  "Profil": [
+    "Consultant senior expert en Big Data.",
+    "Solide maîtrise de : AWS, Scala, Python, Spark, Snowflake, DBT, Airflow, MLFlow, GitLab CI/CD et Terraform.",
+    "Maîtrise des architectures de Streaming Data et d'AWS (Lambda, Batch, Step Function, EMR Serverless, Kinesis Stream, S3, Firehose, DynamoDB, etc.).",
+    "Maîtrise d'Airflow, Scala, Spark, SQL, Snowflake, GitLab CI/CD, Terraform."
+  ],
+  "entreprise": "CANAL+",
+  "poste": "Senior Data Engineer",
+  "technos": [
+    "AWS",
+    "Scala",
+    "Spark",
+    "SQL",
+    "Snowflake",
+    "GitLab CI/CD",
+    "Terraform",
+    "DBT",
+    "Airflow",
+    "Kubernetes"
+  ],
+  "seniorite_min_annees": 0
+}

@@ -1,0 +1,34 @@
+{
+  "id": "SFR - Data Analyste QOD (GENOME)",
+  "Poste": "Data Analyste",
+  "Contexte": [
+    "Nom du projet : GENOME.",
+    "Le service « Data et QOD » de la DSIST B2B est en charge d'améliorer la qualité des données associées aux clients entreprise. Dans le cadre de son activité, il doit mener des analyses de données, organiser les opérations de rattrapage et mettre en place des indicateurs de suivi de qualité de données. À ce titre, il cherche à renforcer ses compétences par un Data Analyste."
+  ],
+  "Description": [
+    "Périmètre QOD — la prestation comprend : la mise en place et l'analyse des sources de données nécessaires à l'évaluation QOD ; la définition des indicateurs qualité pertinents, en lien avec le contexte fonctionnel de l'analyse en cours ; la production des indicateurs qualité ; la définition et l'organisation des opérations de reprise de données dans le SI SFR.",
+    "Périmètre projet — les activités incluent : la réalisation d'analyses de données dans le cadre des évolutions du SI B2B (petites évolutions et projets tels que STIR SHAKEN, MAP client) ; la définition et l'organisation des opérations de reprise de données dans le SI SFR.",
+    "STIR SHAKEN : analyse et chiffrage de la gestion de QOD (livraison 31/03/2025).",
+    "QOD ROP FTTO/FTTE : automatisation des indicateurs de QOD (livraison 31/03/2025).",
+    "MAP Client : analyse et chiffrage de la gestion de QOD (livraison 31/03/2025)."
+  ],
+  "Profil": [
+    "Indispensable : data analyse ; Spark Dataframe ; PostGres / SQL ; GCP / BigQuery.",
+    "Souhaité : ordonnanceur VTOM ; Airflow ; Python / PySpark ; Télécom."
+  ],
+  "entreprise": "SFR",
+  "poste": "Data Analyste",
+  "technos": [
+    "data analyse",
+    "Spark Dataframe",
+    "PostGres",
+    "SQL",
+    "GCP",
+    "BigQuery",
+    "ordonnanceur VTOM",
+    "Airflow",
+    "Python",
+    "PySpark"
+  ],
+  "seniorite_min_annees": 0
+}

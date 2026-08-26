@@ -1,0 +1,53 @@
+{
+  "id": "CANAL+ - Data Engineer",
+  "Poste": "Data Engineer",
+  "Contexte": [
+    "Nous sommes à la recherche d'un consultant de haut niveau spécialisés en Informatica PowerCenter, AWS, Airflow, DBT disposant d'une expertise Python ainsi qu'une solide maîtrise de SQL, Snowflake.",
+    "L'objectif est d'assurer la maintenance, l'optimisation et l'évolution de nos flux ETL existants, tout en accompagnant les projets modernisation de la plateforme et d'intégration de nouvelles sources de données et la modernisation de la plateforme.",
+    "L'un des objectifs majeurs du plan de transformation DATA du groupe Canal+ est de développer les applications DATA qui permettent à nos métiers businness (pilotage, marketing, commerce, ...) d'être autonomes dans l'analyse des données et des KPI et de déployer des applications destinées à nos abonnés directement (recommandation contenu et offres, etc.)",
+    "Dans ce cadre, Canal+ a déployé les outils : AWS, Gitlab, Terraform, Informatica, DBT, Snowflake, Braze, AI, Scala, Spark, Python, POWERBI, .etc.",
+    "Architectures sophistiquées pour ingérer plus de 100To de données par jours: Datalake, Event-Driven, Streaming, etc.",
+    "Plateforme agentique",
+    "Socle vidéo, navigation et calcul des audiences",
+    "AI pour recommandation des programmes .etc.",
+    "Feature Store",
+    "Moderniser les flux financiers",
+    "Content Platform",
+    "Mise en place Kubernetes",
+    "Plateforme pour le traitement des données CRM et usage",
+    "Partager des informations sur les clients à nos partenaires (Netflix, Apple, M6, TF1, etc.)",
+    "Piloter plus efficacement l'activité des marchés profesionnels",
+    "Mettre à disposition des applications de data-selfservice"
+  ],
+  "Description": [
+    "Administrer, maintenir et optimiser la plateforme Informatica PowerCenter (serveurs, repository, workflows, sessions, etc.)",
+    "Contribuer activement au décommissionnement en cours d'Informatica via la mise en place d'un Lakehouse AWS (Airflow, DBT, Iceberg, etc.).",
+    "Concevoir, développer et documenter des workflows data pour alimenter le data warehouse et les systèmes applicatifs",
+    "Concevoir, développer et documenter des workflows Lakehouse avec AWS, Airflow, DBT et Python.",
+    "Identifier et résoudre les problèmes de performance ou de qualité des données",
+    "Contribuer au run de la plateforme (analyse des incidents, MEP, support production, etc.) ;",
+    "Collaborer avec les équipes Data, BI et Infrastructure pour garantir la cohérence et la disponibilité des données",
+    "Former et assister les utilisateurs internes (équipe data, développeurs, MOA, etc.)",
+    "Proposer des améliorations techniques et de bonnes pratiques sur l'utilisation de la plateforme"
+  ],
+  "Profil": [
+    "Vous justifiez d'une expérience de 5 ans minimum dans un environnement similaire",
+    "Vous maîtrisez Informatica, Snwoflake, Airflow, DBT, AWS et aimez les challenges",
+    "Vous etes experts dans le développement de solution d'intégration de données.",
+    "Vous parlez Anglais couramment ",
+    "Vous connaissez et maîtrisez les outils JIRA et les méthodes « agiles » n'ont pas de secret pour vous !",
+    "Autonome, ouvert d'esprit et bon communiquant, vous disposez d'une grande curiosité scientifique"
+  ],
+  "entreprise": "CANAL+",
+  "poste": "Data Engineer",
+  "technos": [
+    "Informatica PowerCenter",
+    "AWS",
+    "Airflow",
+    "DBT",
+    "Python",
+    "SQL",
+    "Snowflake"
+  ],
+  "seniorite_min_annees": 5
+}

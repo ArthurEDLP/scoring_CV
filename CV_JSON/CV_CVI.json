@@ -1,0 +1,53 @@
+{
+  "id": "CVI",
+  "formations": [
+    "École de commerce (Programme Grande École) — EDHEC, 2019",
+    "Certificat Data Analytics — Le Wagon, 2021"
+  ],
+  "certifications": [],
+  "langues": [
+    {
+      "nom_langue": "Français",
+      "maitrise": "Langue maternelle"
+    },
+    {
+      "nom_langue": "Anglais",
+      "maitrise": "Courant"
+    },
+    {
+      "nom_langue": "Allemand",
+      "maitrise": "Notions"
+    }
+  ],
+  "competences_techniques": [
+    "SQL",
+    "Excel",
+    "Google Sheets",
+    "Looker",
+    "Amplitude",
+    "Mixpanel",
+    "Airtable",
+    "un peu de Python",
+    "Notion"
+  ],
+  "savoir_faire/savoir_etre": [
+    "Sens du produit et de la donnée actionnable",
+    "Cadrage de besoins avec les équipes produit",
+    "A/B testing et lecture de funnels",
+    "Communication et pédagogie"
+  ],
+  "experiences": [
+    {
+      "poste": "Product Analyst",
+      "date": "Depuis 2021",
+      "entreprise": "Startup fintech",
+      "details": "Analyse du comportement utilisateur et du funnel d'activation. Mise en place du suivi d'événements produit, définition des indicateurs clés (rétention, activation, churn), lecture d'A/B tests avec les équipes growth. Requêtes SQL au quotidien mais peu de modélisation avancée. Je fais surtout le lien entre la donnée et les décisions produit."
+    },
+    {
+      "poste": "Chargé d'opérations",
+      "date": "2019 - 2021",
+      "entreprise": "Startup mobilité",
+      "details": "Suivi opérationnel et reporting d'activité. Automatisation de tableaux de bord sous Google Sheets et Airtable, premiers pas en SQL."
+    }
+  ]
+}

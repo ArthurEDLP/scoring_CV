@@ -1,0 +1,39 @@
+{
+  "id": "DECATHLON - Data Analyst Junior",
+  "Profil": [
+    "Bac+5 (Master universitaire ou école) en statistiques, économétrie, data science ou marketing quantitatif.",
+    "Première expérience (1 à 2 ans, stage ou alternance inclus) en analyse de données, idéalement dans un contexte retail ou e-commerce.",
+    "Bonne maîtrise de SQL pour l'extraction et l'agrégation de données.",
+    "Maîtrise d'au moins un outil de dataviz (Power BI, Tableau ou Looker) pour la construction de tableaux de bord.",
+    "Connaissances en Python (pandas) appréciées pour l'automatisation d'analyses récurrentes.",
+    "Notions de statistiques descriptives et de tests simples ; la curiosité pour les méthodes plus avancées est un plus.",
+    "Aisance relationnelle et goût pour le travail au contact des équipes métier (marketing, achats, supply).",
+    "Rigueur, curiosité, autonomie."
+  ],
+  "Description": [
+    "Rattaché à l'équipe Data Retail, le consultant appuiera les directions métier dans le pilotage de leur activité par la donnée.",
+    "Activités : construction et maintenance de tableaux de bord de suivi (ventes, stocks, performance des rayons), analyses ad-hoc à la demande des équipes.",
+    "Extraction de données depuis l'entrepôt, mise en forme, contrôle de cohérence et restitution claire des résultats.",
+    "Automatisation progressive des reportings les plus chronophages.",
+    "Participation aux points hebdomadaires avec les référents métier pour cadrer les besoins.",
+    "Mission de 6 mois renouvelable, démarrage rapide.",
+    "Localisation : métropole lilloise, télétravail partiel possible.",
+    "TJM cible : entre 300 € et 400 €."
+  ],
+  "Contexte": [
+    "Decathlon poursuit le déploiement de sa culture data auprès de l'ensemble de ses équipes, avec un objectif de démocratisation des tableaux de bord en libre-service.",
+    "L'équipe Data Retail accompagne cette montée en maturité et outille les métiers pour qu'ils gagnent en autonomie sur leurs analyses courantes.",
+    "L'environnement est stimulant et bienveillant, adapté à un profil junior souhaitant monter en compétence.",
+    "Les volumes de données sont importants mais les cas d'usage restent accessibles, ce qui en fait un bon poste de première expérience structurante."
+  ],
+  "entreprise": "DECATHLON",
+  "poste": "Data Analyst",
+  "technos": [
+    "SQL",
+    "Power BI",
+    "Tableau",
+    "Looker",
+    "Python (pandas)"
+  ],
+  "seniorite_min_annees": 0
+}

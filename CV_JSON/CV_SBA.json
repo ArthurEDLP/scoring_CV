@@ -1,0 +1,49 @@
+{
+  "id": "SBA",
+  "formations": [
+    "Institut de Science Financière et d'Assurances (ISFA) — Lyon, 2015",
+    "Membre qualifié de l'Institut des Actuaires"
+  ],
+  "certifications": [
+    "Actuaire qualifié IA (2017)"
+  ],
+  "langues": [
+    {
+      "nom_langue": "Français",
+      "maitrise": "Langue maternelle"
+    },
+    {
+      "nom_langue": "Anglais",
+      "maitrise": "Professionnel"
+    }
+  ],
+  "competences_techniques": [
+    "SAS",
+    "VBA",
+    "Excel (modélisation avancée)",
+    "SQL",
+    "Python (en cours d'apprentissage)",
+    "modèles linéaires généralisés (GLM)",
+    "provisionnement non-vie",
+    "tarification"
+  ],
+  "savoir_faire/savoir_etre": [
+    "Modélisation du risque assurantiel",
+    "Communication auprès de directions techniques et du régulateur",
+    "Rigueur et sens de la documentation réglementaire"
+  ],
+  "experiences": [
+    {
+      "poste": "Actuaire non-vie",
+      "date": "09/2017 - aujourd'hui",
+      "entreprise": "Groupe d'assurance mutualiste",
+      "details": "Calcul des provisions techniques (méthodes Chain Ladder, Bornhuetter-Ferguson) et estimation du best estimate dans le cadre de Solvabilité II. Construction de modèles de tarification par GLM pour les branches auto et habitation. Analyse de la sinistralité et des cadences de règlement. Rédaction des rapports actuariels destinés à la fonction actuarielle et à l'ACPR. Automatisation progressive des travaux récurrents sous R."
+    },
+    {
+      "poste": "Actuaire junior",
+      "date": "03/2015 - 08/2017",
+      "entreprise": "Cabinet de conseil en actuariat",
+      "details": "Missions d'inventaire et de provisionnement chez plusieurs assureurs. Développement de macros SAS et VBA pour fiabiliser les calculs. Participation à des études de rentabilité produit."
+    }
+  ]
+}

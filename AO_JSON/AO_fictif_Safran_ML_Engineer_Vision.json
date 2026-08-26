@@ -1,0 +1,35 @@
+{
+  "id": "Safran - ML Engineer Vision",
+  "Profil": [
+    "Bac+5 informatique ou data science.",
+    "4 ans et plus en ML dont expérience en vision par ordinateur.",
+    "Maîtrise du deep learning (PyTorch ou TensorFlow), CNN, détection et segmentation.",
+    "Python, traitement d'images, augmentation de données.",
+    "Notions MLOps et déploiement embarqué appréciées.",
+    "Rigueur, contexte industriel exigeant."
+  ],
+  "Description": [
+    "Développement de modèles de contrôle qualité visuel de pièces aéronautiques.",
+    "Constitution de datasets d'images, entraînement, évaluation, industrialisation.",
+    "Mission longue.",
+    "Localisation : région parisienne, présence sur site majoritaire.",
+    "TJM cible : 500 € à 700 €."
+  ],
+  "Contexte": [
+    "L'industriel aéronautique automatise le contrôle qualité par la vision.",
+    "Environnement industriel, exigences fortes de fiabilité et de traçabilité."
+  ],
+  "entreprise": "Safran",
+  "poste": "ML Engineer Vision",
+  "technos": [
+    "PyTorch",
+    "TensorFlow",
+    "CNN",
+    "détection",
+    "segmentation",
+    "Python",
+    "traitement d'images",
+    "augmentation de données"
+  ],
+  "seniorite_min_annees": 4
+}

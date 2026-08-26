@@ -1,0 +1,19 @@
+{
+  "id": "Michelin - QA Automation",
+  "Profil": [
+    "Expérience en automatisation de tests.",
+    "Selenium ou Cypress, CI/CD."
+  ],
+  "Description": [
+    "Mise en place et maintenance de tests automatisés E2E sur les applications internes."
+  ],
+  "Contexte": [],
+  "entreprise": "Michelin",
+  "poste": "QA Automation",
+  "technos": [
+    "Selenium",
+    "Cypress",
+    "CI/CD"
+  ],
+  "seniorite_min_annees": 0
+}

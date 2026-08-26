@@ -1,0 +1,83 @@
+{
+  "id": "JLA",
+  "formations": [
+    {
+      "diplome": "Mastère Spécialisé® IA Expert Data & MLOps – Télécom Paris, Institut Polytechnique de Paris",
+      "date": "2021-2022"
+    },
+    {
+      "diplome": "Master ISADS – Ingénierie Statistique, Actuariat & Data Science – UVSQ, Paris Saclay",
+      "date": "2019-2021"
+    }
+  ],
+  "certifications": [],
+  "langues": [
+    {
+      "nom_langue": "Français",
+      "maitrise": "Langue maternelle"
+    },
+    {
+      "nom_langue": "Anglais",
+      "maitrise": "Professionnel"
+    }
+  ],
+  "competences_techniques": [
+    "Matériels Hadoop (HDFS, MapReduce, Zookeeper)",
+    "Systèmes GCP (Vertex AI, Workstation)",
+    "S.G.B.D PostgreSQL",
+    "MongoDB",
+    "Elasticsearch",
+    "Cassandra",
+    "Spark",
+    "Langages Python",
+    "SQL",
+    "VBA",
+    "Outils Dataiku",
+    "SAS",
+    "Alteryx",
+    "Collibra",
+    "Vertex AI",
+    "Méthodes Machine Learning",
+    "Deep Learning",
+    "MLOps",
+    "Data Governance"
+  ],
+  "savoir_faire/savoir_etre": [
+    "Force de proposition & esprit d’initiative",
+    "Autonomie & rigueur méthodologique",
+    "Leadership & pédagogie (encadrement de stagiaires)",
+    "Esprit d’équipe & communication transverse"
+  ],
+  "experiences": [
+    {
+      "poste": "Data Scientist",
+      "date": "Depuis le 10.2025",
+      "entreprise": "SFR",
+      "details": "Réalisations Nom du projet : Industrialisation de solutions d’IA sur des appels clients audio : intentions d’appel, clustering, GenAI et MLOps Au sein de la Direction Support Relation Client de SFR, j’ai conduit une mission centrée sur l’exploitation de données vocales et de transcriptions afin de structurer les motifs de contact, regrouper les intentions d’appel via un clustering non supervisé enrichi par une approche RAG, et industrialiser une application GenAI (intégration dans la chaîne CI/CD et documentation sur GitLab). • Réalisation d’une étude sur le churn et la typologie d’appels fonctionnel vs relationnel : consolidation du dataset (Excel), nettoyage et data quality, enrichissement par des données complémentaires (avec GCP BigQuery). • Déploiement d'une approche non supervisée pour regrouper les intentions et révéler des clusters exploitables, puis enrichissement des regroupements avec une approche RAG. • Contribution à l’industrialisation d’une application GenAI d’analyse temporelle des transcriptions, avec contrôles de qualité des données, intégration CI CD sécurisée et documentation GitLab."
+    },
+    {
+      "poste": "Data Scientist – Data Analyst",
+      "date": "Du 01.2023 au 09.2025",
+      "entreprise": "Crédit Agricole Leasing & Factoring – Direction Stratégie Marketing et Communication",
+      "details": "Réalisations Résumé de la mission 1 : • Score d’Attrition : conception du modèle et rédaction du rapport technique intégré dans Collibra • Score Next Best Offer : automatisation du flux Dataiku, entraînement et validation du modèle, dashboard interactif • Score Risque – Surveillance des Impayés : modélisation du risque de procédure collective à 1 an • Monitoring des Scores : mise en place d’un suivi automatique des indicateurs d’appétence marketing • Optimisation technique : migration PySpark → Oracle SQL, refonte VBA → Python, workflow intégré dans Airflow. Résumé de la mission 2 : • Encadrement & Recrutement : gestion du recrutement (CV, entretiens) et suivi de 5 mois de stagiaires • Projet IA GCP : application d’extraction automatique des DUE (OCR, parsing) + RAG via Vertex AI pour synthèses RSE • Hackathon CA Personal Finance 2024 : top 3 sur 20 équipes pour modèle pricing de solde M+1 Environnement Projet Client interne Marketing, 3 data scientists, collaboration IT & CRM, stack : Dataiku, Oracle SQL, Collibra, GCP. Enjeux Réduire le churn de 10% en 12 mois Augmenter de 15% le taux de conversion des offres marketing Résultats Score d’attrition déployé et utilisé sur 100 % des campagnes Automatisation +20 % de gain de temps sur la préparation des données +18 % de performance sur le NBO vs solution précédente"
+    },
+    {
+      "poste": "Data Scientist",
+      "date": "07.2022 – 12.2022",
+      "entreprise": "Safran Spacecraft Propulsion",
+      "details": "Réalisations Résumé de la mission 1 : • Data Governance : définition et déploiement de normes de qualité, formats et métadonnées sous Collibra • Extraction de données non-structurées : pipeline OCR + NLP pour structurer les rapports PDF, validation semi-automatique via Dataiku Résumé de la mission 2 : • Détection d’anomalies : création d’un pipeline Dataiku (pré-processing, feature engineering) et data augmentation par GAN • Entraînement/validation du modèle pour anticiper les défauts de composants spatiaux Environnement Projet Équipe R&D propulsion électrique (5 ingénieurs, 1 data scientist), stack : Dataiku, Python (pandas, TensorFlow), OCR/NLP, Collibra. Enjeux Assurer traçabilité et qualité des données d’essais pour certification Réduire les coûts de non-qualité par détection précoce des anomalies Instaurer une culture de surveillance proactive des anomalies techniques Résultats Workflows automatisés d’OCR/NLP qui ont transformé la gestion des rapports techniques Confiance accrue des équipes R&D dans les analyses de qualité et de performance Mise en place d’un socle méthodologique pour la détection anticipée des défaillances"
+    },
+    {
+      "poste": "Data Scientist / Data Analyst",
+      "date": "09.2020 – 09.2021",
+      "entreprise": "Allianz",
+      "details": "Réalisations Résumé de la mission 1 : • Détection proactive : modèles ML (Random Forest, XGBoost) pour identifier comportements suspects avant enquête manuelle • Automatisation des alertes critiques sous SAS Résumé de la mission 2 : • Datamart & KPI : architecture d’un Datamart centralisé sous SAS, définition de KPI (taux de détection, faux positifs, temps de réponse) • Reporting opérationnel : tableaux de bord Excel/VBA et formation des enquêteurs à l’interprétation des indicateurs Environnement Projet Équipe anti-fraude (3 data analysts, 4 enquêteurs), stack : SAS, Excel/VBA, SQL Server. Enjeux Passer d’une réaction post-incident à une détection précoce des fraudes Offrir aux enquêteurs des indicateurs clairs pour prioriser leurs interventions Instaurer une gouvernance robuste autour des données sensibles Résultats Intégration fluide des alertes ML dans le quotidien des analystes fraude Meilleure synergie entre data analysts et équipes opérationnelles Mise en place d’un suivi continu des performances, favorisant l’amélioration itérative des modèles"
+    },
+    {
+      "poste": "Data Analyst",
+      "date": "03.2020 – 08.2020",
+      "entreprise": "Euler Hermes (Allianz Trade)",
+      "details": "Réalisations Résumé de la mission 1 : • Migration ETL & Datamart : refonte des flux (Excel/VBA → SAS) et création d’un Datamart unifié pour centraliser les données risque Résumé de la mission 2 : • KPI & dashboards juridiques : définition d’indicateurs de suivi des procédures collectives, développement de reportings Excel/VBA pour les juristes Environnement Projet Équipe conformité/statistiques (1 data analysts, 3 juristes), stack : SAS, Excel/VBA, SQL. Enjeux Centraliser l’ensemble des informations de risque pour les juristes Simplifier l’accès aux indicateurs clés pour accélérer la prise de décision Garantir la cohérence des données tout au long du processus d’analyse juridique Résultats Datamart unifié qui est devenu la source de référence pour les équipes conformité Dashboards sur-mesure qui ont transformé la manière dont les juristes consultent les données Processus d’analyse juridique raccourci grâce à une meilleure lisibilité et accessibilité des indicateurs"
+    }
+  ]
+}

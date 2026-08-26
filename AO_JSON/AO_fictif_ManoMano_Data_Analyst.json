@@ -1,0 +1,18 @@
+{
+  "id": "ManoMano - Data Analyst",
+  "Profil": [
+    "3 ans d'expérience en analyse de données e-commerce.",
+    "Maîtrise SQL et Power BI."
+  ],
+  "Description": [
+    "Production de tableaux de bord et analyses ad-hoc pour les équipes marketing et achats."
+  ],
+  "Contexte": [],
+  "entreprise": "ManoMano",
+  "poste": "Data Analyst",
+  "technos": [
+    "SQL",
+    "Power BI"
+  ],
+  "seniorite_min_annees": 3
+}

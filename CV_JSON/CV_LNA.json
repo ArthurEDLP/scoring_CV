@@ -1,0 +1,52 @@
+{
+  "id": "LNA",
+  "formations": [
+    {
+      "diplome": "Master Méthodes statistiques et data science — Université de Lille",
+      "date": "2025"
+    },
+    {
+      "diplome": "Licence MIASHS (Maths et informatique appliquées aux sciences humaines et sociales)",
+      "date": "2023"
+    }
+  ],
+  "certifications": [
+    "Google Data Analytics (Coursera, 2024)"
+  ],
+  "langues": [
+    {
+      "nom_langue": "Français",
+      "maitrise": "Langue maternelle"
+    },
+    {
+      "nom_langue": "Anglais",
+      "maitrise": "Intermédiaire"
+    }
+  ],
+  "competences_techniques": [
+    "Python (bases)",
+    "SQL",
+    "Excel",
+    "Power BI (initiation)",
+    "R (cours)"
+  ],
+  "savoir_faire/savoir_etre": [
+    "Curiosité",
+    "Envie d'apprendre",
+    "Travail en équipe"
+  ],
+  "experiences": [
+    {
+      "poste": "Stagiaire data analyst",
+      "date": "04/2025 - 09/2025",
+      "entreprise": "PME e",
+      "details": "Stage de fin d'études. Extraction de données de ventes sous SQL, création de premiers tableaux de bord sous Power BI, nettoyage de fichiers clients. Rédaction d'un rapport d'analyse pour l'équipe marketing."
+    },
+    {
+      "poste": "Stagiaire assistant études",
+      "date": "06/2024 - 08/2024",
+      "entreprise": "Collectivité territoriale",
+      "details": "Stage court. Mise en forme de données d'enquête sous Excel, aide à la production de statistiques descriptives."
+    }
+  ]
+}

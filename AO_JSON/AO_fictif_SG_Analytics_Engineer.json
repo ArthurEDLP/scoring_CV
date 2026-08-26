@@ -1,0 +1,36 @@
+{
+  "id": "SG - Analytics Engineer",
+  "Profil": [
+    "Bac+5 en data, statistiques ou informatique.",
+    "3 ans et plus en analytics engineering ou BI.",
+    "Expertise dbt et SQL avancé (modélisation de données analytiques).",
+    "Maîtrise d'un outil de dataviz (Power BI, Tableau, Looker).",
+    "Python (pandas) pour l'automatisation.",
+    "Connaissance du secteur bancaire appréciée.",
+    "Pédagogie, rigueur documentaire."
+  ],
+  "Description": [
+    "Au sein de la BU banque de détail, structuration de la couche analytique servant les tableaux de bord métier.",
+    "Modélisation dbt, définition des métriques de référence, documentation du data catalog.",
+    "Accompagnement des analystes métier.",
+    "Mission 12 mois renouvelable.",
+    "Localisation : La Défense, télétravail partiel.",
+    "TJM cible : 450 € à 600 €."
+  ],
+  "Contexte": [
+    "La banque déploie une approche analytics engineering pour fiabiliser et documenter ses indicateurs.",
+    "Contexte réglementaire exigeant, forte culture de la donnée maîtrisée."
+  ],
+  "entreprise": "SG",
+  "poste": "Analytics Engineer",
+  "technos": [
+    "dbt",
+    "SQL",
+    "Python",
+    "pandas",
+    "Power BI",
+    "Tableau",
+    "Looker"
+  ],
+  "seniorite_min_annees": 3
+}

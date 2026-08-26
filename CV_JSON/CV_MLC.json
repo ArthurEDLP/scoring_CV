@@ -1,0 +1,56 @@
+{
+  "id": "MLC",
+  "formations": [
+    {
+      "diplome": "Doctorat de Physique des particules — Sorbonne Université / laboratoire LPNHE",
+      "date": "2020"
+    },
+    {
+      "diplome": "Master Physique fondamentale — ENS Lyon",
+      "date": "2016"
+    }
+  ],
+  "certifications": [],
+  "langues": [
+    {
+      "nom_langue": "Français",
+      "maitrise": "Langue maternelle"
+    },
+    {
+      "nom_langue": "Anglais",
+      "maitrise": "Courant — rédaction et présentation de publications"
+    }
+  ],
+  "competences_techniques": [
+    "Python (numpy, scipy, matplotlib)",
+    "C++",
+    "ROOT (CERN)",
+    "calcul distribué sur grille de calcul",
+    "traitement du signal",
+    "LaTeX",
+    "Bash",
+    "Git",
+    "scikit-learn (autodidacte)",
+    "notions de PyTorch"
+  ],
+  "savoir_faire/savoir_etre": [
+    "Rigueur scientifique et esprit critique",
+    "Capacité à modéliser des phénomènes complexes",
+    "Rédaction scientifique et vulgarisation",
+    "Autonomie sur des projets de recherche longs"
+  ],
+  "experiences": [
+    {
+      "poste": "Chercheur post-doctorant",
+      "date": "2020 – 2023",
+      "entreprise": "CNRS",
+      "details": "Analyse de plusieurs pétaoctets de données de collisions issues d'un détecteur. Développement de chaînes de traitement en C++ et Python pour la reconstruction d'événements et la réduction de bruit de fond. Ajustements statistiques et estimation d'incertitudes systématiques. Co-auteur de 7 publications dans des revues à comité de lecture. Encadrement de deux stagiaires de master."
+    },
+    {
+      "poste": "Data Scientist",
+      "date": "Depuis 2023",
+      "entreprise": "Inférences (PME conseil en modélisation)",
+      "details": "Transition vers le secteur privé. Développement de modèles prédictifs pour des clients industriels à partir de données capteurs. Réutilisation de mon expérience du traitement de gros volumes et de la validation statistique. Montée en compétence sur les outils modernes de machine learning et de mise en production."
+    }
+  ]
+}

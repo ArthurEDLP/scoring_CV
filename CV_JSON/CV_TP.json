@@ -1,0 +1,59 @@
+{
+  "id": "TP",
+  "formations": [],
+  "certifications": [
+    "Master 2 Sciences des données  – Université de Rennes 2 - Rennes "
+  ],
+  "langues": [
+    {
+      "nom_langue": "Anglais",
+      "maitrise": "Langue maternelle"
+    },
+    {
+      "nom_langue": "Allemand",
+      "maitrise": "Intermédiaire"
+    }
+  ],
+  "competences_techniques": [
+    "SQL",
+    "Python",
+    "Tableau",
+    "Google Cloud BigQuery",
+    "Selligent",
+    "Git",
+    "SAS"
+  ],
+  "savoir_faire/savoir_etre": [],
+  "experiences": [
+    {
+      "poste": "Data Analyst",
+      "date": "10/2022 - 04/2026",
+      "entreprise": "Decathlon",
+      "details": "Contexte : Interventions successives au sein des équipes Data Commerce, Marketplace, Ecommerce et Commercial Excellence pour accompagner les métiers marketing, finance et commerce dans leurs analyses et leur pilotage. Création d'un algorithme de prédiction des ventes afin d'identifier les produits les plus rentables à mettre en avant en magasin. Analyse du cross-selling sur les canaux web et magasin et formulation de recommandations d'amélioration. Étude du comportement omnicanal des clients acquis via les parcours digitaux en magasin. Analyse de l'interface de l'application vendeurs afin d'évaluer la pertinence de son affichage et de son UX. Création et alimentation de tables de données et de dashboards Tableau pour le suivi des équipes marketing. Développement de pipelines DBT destinés à alimenter les dashboards marketing (CRM, taxonomie produits). Création et maintenance de dashboards pour les équipes Marketplace. Amélioration de la qualité des données promotionnelles et création d'une table de référence. Analyse de l'impact des promotions sur la profitabilité. Création de dashboards de suivi des marges et promotions à destination des équipes Finance. Analyse de la profitabilité de l'entreprise. Collaboration avec les équipes Finance européennes de 10 pays en fournissant des outils de pilotage et des méthodes de calcul des variations de marge. Création d'un algorithme mesurant l'impact de la météo sur les ventes."
+    },
+    {
+      "poste": "Data Analyst",
+      "date": "08/2019 - 09/2022",
+      "entreprise": "EDF",
+      "details": "Contexte : Référent des données digitales pour le marché des particuliers avec réalisation d'études statistiques orientées marketing sur les comportements clients. Analyse des comportements clients à partir des données de navigation, de consommation énergétique, des appels, des emails et des souscriptions. Étude des performances du chatbot sur les taux de souscription aux contrats d'électricité en comparaison avec les conseillers CRC (téléphone et chat). Analyse des données météorologiques afin d'anticiper les périodes de fortes consommations d'électricité. Création d'indicateurs SQL et R pour le suivi des comportements digitaux des clients. Développement et enrichissement d'applications RShiny avec graphiques et effets visuels. Optimisation des requêtes Hive et Spark dans des environnements Docker. Monitoring de l'ingestion des données digitales dans le cluster de données. Détection des anomalies de données et coordination avec la DSI pour les opérations de rattrapage. Ajout et évolution d'indicateurs techniques en collaboration avec la DSI. Création de dashboards de supervision des tables digitales."
+    },
+    {
+      "poste": "Data Scientist",
+      "date": "12/2018 - 08/2019",
+      "entreprise": "MonAlbumPhoto",
+      "details": "Contexte : Mission au sein de l'équipe marketing avec construction d'algorithmes de scoring, industrialisation de segmentations marketing et migration de la plateforme data avec les équipes hollandaises. Création d'un algorithme de scoring permettant d'estimer la probabilité de conversion des prospects à partir des données CRM, clients et de navigation. Maintien du Data Warehouse et supervision des flux quotidiens de données. Mise en place d'un processus automatisé de diffusion de la segmentation clients vers SQL Server, Selligent, BigQuery et Tableau. Migration de la plateforme data depuis SQL Server et GCP vers AWS. Réalisation d'analyses ad hoc orientées business. Création et maintenance de dashboards Tableau."
+    },
+    {
+      "poste": "Data Scientist",
+      "date": "11/2018 - 12/2018",
+      "entreprise": "EDF Lab",
+      "details": "Contexte : Projet de détection des pertes énergétiques non techniques et mise à disposition d'outils d'aide aux centres d'appel. Création de requêtes SQL pour détecter et mesurer les pertes énergétiques non techniques. Estimation du coût des pertes énergétiques pour les clients concernés. Fourniture des résultats aux centres d'appel afin de cibler les clients concernés. Création d'un tableau de bord Tableau permettant de visualiser géographiquement les pertes sur une carte."
+    },
+    {
+      "poste": "Data Scientist",
+      "date": "02/2018 - 09/2018",
+      "entreprise": "SNCF",
+      "details": "Détection des individus influenceurs et des groupes de voyageurs parmi les clients SNCF (Méthode des réseaux de décisions) Participation à la création du nouveau Datamart référence de l’équipe « Intelligence Data Client ». Participation à la création d’un outil de Profiling automatique. Réalisation d’études ad hoc et gestion de reportings mensuels"
+    }
+  ]
+}

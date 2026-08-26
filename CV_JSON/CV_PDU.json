@@ -1,0 +1,54 @@
+{
+  "id": "PDU",
+  "formations": [
+    {
+      "diplome": "Doctorat en Sciences économiques — Paris School of Economics",
+      "date": "2019"
+    },
+    {
+      "diplome": "Master Analyse et Politiques Économiques — PSE",
+      "date": "2015"
+    }
+  ],
+  "certifications": [],
+  "langues": [
+    {
+      "nom_langue": "Français",
+      "maitrise": "Langue maternelle"
+    },
+    {
+      "nom_langue": "Anglais",
+      "maitrise": "Courant"
+    },
+    {
+      "nom_langue": "Espagnol",
+      "maitrise": "Intermédiaire"
+    }
+  ],
+  "competences_techniques": [
+    "Stata",
+    "Python (pandas, statsmodels)",
+    "économétrie des données de panel",
+    "séries temporelles",
+    "LaTeX"
+  ],
+  "savoir_faire/savoir_etre": [
+    "Conception de protocoles d'évaluation d'impact",
+    "Interprétation et communication de résultats quantitatifs",
+    "Esprit d'analyse et prise de recul méthodologique"
+  ],
+  "experiences": [
+    {
+      "poste": "Économiste — chargé d'études",
+      "date": "2019 - aujourd'hui",
+      "entreprise": "Institut d'études économiques",
+      "details": "Évaluation d'impact de politiques publiques à partir de données administratives et d'enquêtes. Estimation d'élasticités et de modèles structurels. Mise en œuvre de stratégies d'identification causale. Rédaction de rapports pour des commanditaires publics et présentation des résultats en séminaire."
+    },
+    {
+      "poste": "Doctorant / ATER",
+      "date": "2015 - 2019",
+      "entreprise": "Paris School of Economics",
+      "details": "Travaux de recherche sur l'économie du travail. Traitement de grandes bases de données de panel. Enseignement de l'économétrie en licence et master."
+    }
+  ]
+}

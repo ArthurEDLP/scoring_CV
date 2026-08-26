@@ -1,0 +1,71 @@
+{
+  "id": "IAI",
+  "formations": [],
+  "certifications": [],
+  "langues": [
+    {
+      "nom_langue": "Français",
+      "maitrise": "Langue maternelle"
+    },
+    {
+      "nom_langue": "Anglais",
+      "maitrise": "Avancé"
+    }
+  ],
+  "competences_techniques": [
+    "Python",
+    "SQL",
+    "DAX",
+    "VBA",
+    "SPSS",
+    "Power BI",
+    "Tableau",
+    "Qlik Sense",
+    "Régression logistique",
+    "Arbres de décision",
+    "XGBoost",
+    "Deep Learning",
+    "NLP",
+    "Excel",
+    "GitHub",
+    "Docker",
+    "MLflow",
+    "Snowflake",
+    "SAS",
+    "AWS",
+    "GCP",
+    "Agile Scrum"
+  ],
+  "savoir_faire/savoir_etre": [
+    "Analyse de données",
+    "Machine Learning",
+    "Détection de fraude",
+    "Modélisation prédictive",
+    "Data Quality",
+    "Automatisation de reporting",
+    "Structuration de référentiels de données",
+    "Collaboration transverse",
+    "Documentation et support utilisateurs",
+    "Gouvernance des données"
+  ],
+  "experiences": [
+    {
+      "poste": "Data Scientist",
+      "date": "02/2023 - Aujourd'hui",
+      "entreprise": "ORANGE BANK",
+      "details": "Contexte : Développement et optimisation des dispositifs de détection de fraude en temps réel. Analyse des flux transactionnels et suivi des indicateurs clés de fraude en collaboration avec les équipes métiers. Développement de modèles de machine learning de détection de fraude en temps réel à l'aide de Python et SAS. Implémentation de modèles de régression logistique, arbres de décision et XGBoost pour identifier les transactions à risque. Mise en production des modèles via des processus CI/CD sur AWS. Optimisation des modèles permettant d'augmenter le nombre de fraudes détectées et de réduire les pertes de 25 %. Participation aux contrôles et audits internes des dispositifs de détection. Ajustement des règles métier et des seuils décisionnels afin de limiter les faux positifs. Création de tableaux de bord Power BI basés sur les données transactionnelles et les alertes fraude. Automatisation des workflows d'analyse afin de réduire le temps de traitement des alertes. Collaboration avec les équipes Opérations, Compliance et Produit. Documentation des traitements et support aux utilisateurs. Gestion des droits d'accès conformément aux règles de gouvernance des données."
+    },
+    {
+      "poste": "Data Analyst",
+      "date": "06/2021 - 12/2022",
+      "entreprise": "SWATCH GROUP",
+      "details": "Contexte : Pilotage de la performance commerciale pour la Direction Commerciale. Analyse des performances commerciales à partir d'indicateurs de chiffre d'affaires, marge et atteinte des objectifs. Préparation, transformation et fiabilisation des données provenant du CRM et des systèmes de ventes. Mise en place de contrôles qualité afin de garantir la cohérence des analyses. Structuration et modélisation des données CRM pour fournir une vision consolidée de la performance. Automatisation des processus de reporting permettant de réduire significativement les tâches manuelles. Création d'un référentiel commun d'indicateurs pour harmoniser le pilotage à l'échelle nationale."
+    },
+    {
+      "poste": "Data Analyst",
+      "date": "09/2019 - 06/2021",
+      "entreprise": "ORANGE FRANCE",
+      "details": "Contexte : Analyse de la performance des campagnes commerciales en points de vente. Analyse quantitative des campagnes de vente en magasin. Construction et suivi d'indicateurs de performance tels que le taux de conversion, le chiffre d'affaires et le panier moyen. Identification des écarts entre objectifs et réalisations afin de proposer des axes d'amélioration. Exploration et croisement de données multisources pour détecter les tendances et variations de performance. Préparation, transformation et structuration des données destinées aux analyses."
+    }
+  ]
+}
