@@ -1,0 +1,21 @@
+{
+  "id": "CANAL+ - BI Tableau Server",
+  "Poste": "Consultant BI / Administrateur Tableau Server",
+  "Contexte": [
+    "L'activité de l'Équipe KPI et Outils BI a pour mission de publier la donnée aux utilisateurs sous toutes ses formes (outils, dataviz) et notamment d'agréger l'information client pour aboutir à une connaissance client globale répondant aux besoins des différentes Directions Métiers.",
+    "L'objet du présent cahier des charges s'inscrit dans le contexte suivant : administration de la plate-forme Tableau Server ; accompagnement des métiers dans le développement de dashboards vers l'outil Tableau."
+  ],
+  "Description": [
+    "Notre périmètre de responsabilité dans les outils de Viz consiste en l'administration des différentes plates-formes, assurer les montées de version ainsi que le suivi de prod et la gestion des incidents.",
+    "Dans le cadre de la production des différentes applications et principalement Tableau Server : s'assurer de la disponibilité des données et outils au quotidien.",
+    "Garantir une qualité de service des outils de Viz (monitorer/optimiser les performances de nos outils).",
+    "S'assurer de la maintenance des applications existantes (TABLEAU, BUSINESS OBJECTS, SINEQUA).",
+    "Mettre en place une gouvernance des différentes plateformes : identifier ce qui n'est plus utilisé (demander ou mettre en place une purge), identifier les ressources gaspillées (CPU/stockage...), publier et maintenir une liste de best practices, mettre en place des indicateurs de pilotage de ces outils de Viz.",
+    "Accompagner les utilisateurs dans la définition des nouveaux besoins.",
+    "Dans la continuité des travaux d'industrialisation du SID et de gestion de l'obsolescence : organiser les montées de versions applicatives ; valider le besoin en infrastructure cible en collaboration avec la DIB ; s'assurer des compatibilités logicielles et infrastructures ; audit et préconisations d'améliorations par rapport à l'architecture existante des différentes applications ; mise en œuvre des préconisations retenues."
+  ],
+  "Profil": [
+    "Indispensable : Tableau Software.",
+    "Souhaité : profil expérimenté sur les outils de Viz (administration, installation)."
+  ]
+}

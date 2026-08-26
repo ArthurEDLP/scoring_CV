@@ -41,5 +41,28 @@
     "Le projet est sponsorisé au plus haut niveau (Chief Data Officer France) et bénéficie d'une grande visibilité interne. Plusieurs cas d'usage à fort impact business sont prévus pour 2026, notamment un moteur de recommandation temps réel pour les conseillers en boutique et la refonte complète du modèle de churn B2C.",
     "Démarche RSE et souveraineté : Orange porte une attention particulière à la maîtrise des coûts cloud et à la sobriété numérique des traitements data (FinOps + GreenOps), thématiques sur lesquelles le consultant sera amené à contribuer.",
     "Méthodologie de travail : organisation produit (squads pluridisciplinaires), framework SAFe à l'échelle du domaine Data, PI Plannings trimestriels."
-  ]
+  ],
+  "entreprise": "Orange",
+  "poste": "Data Engineer",
+  "technos": [
+    "Databricks Delta Lake",
+    "Databricks Unity Catalog",
+    "Databricks Workflows",
+    "Databricks SQL",
+    "Photon",
+    "Apache Spark (PySpark et Spark SQL)",
+    "Kubernetes",
+    "Git",
+    "Azure DevOps",
+    "Terraform",
+    "Docker",
+    "dbt",
+    "Great Expectations",
+    "Airflow",
+    "Python",
+    "SQL avancé",
+    "PHP (versions 7.4 et 8.x)",
+    "Apache Spark (optimisation des jobs, tuning de performance)"
+  ],
+  "seniorite_min_annees": 5
 }

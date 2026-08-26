@@ -1,0 +1,45 @@
+{
+  "id": "AXA - Data Scientist NLP",
+  "Profil": [
+    "Bac+5 (école d'ingénieur ou Master universitaire) en data science, traitement automatique du langage, statistiques ou informatique.",
+    "Au moins 5 ans d'expérience en data science dont une part significative sur des problématiques de texte (classification de documents, extraction d'information, recherche sémantique, systèmes de question-réponse).",
+    "Bonne compréhension des architectures de modèles de langage : embeddings, transformers, fine-tuning, distinction entre bi-encodeurs et cross-encodeurs, approches de type RAG.",
+    "Maîtrise de Python et de l'écosystème ML (PyTorch ou TensorFlow, Hugging Face Transformers, scikit-learn).",
+    "Expérience de l'évaluation rigoureuse de modèles : métriques de pertinence (précision, rappel, nDCG), protocoles de test, tests statistiques de comparaison de modèles.",
+    "Sensibilité aux enjeux de mise en production : conteneurisation, exposition d'API, latence d'inférence, coût de calcul.",
+    "Connaissance des contraintes de confidentialité et de RGPD dans le traitement de données textuelles à caractère personnel.",
+    "Anglais professionnel courant.",
+    "Qualités : autonomie, rigueur méthodologique, capacité à vulgariser des résultats techniques auprès d'interlocuteurs métier."
+  ],
+  "Description": [
+    "Au sein de la direction Data & IA d'AXA France, le consultant rejoindra une équipe dédiée à la valorisation des données non structurées (courriers clients, comptes rendus d'expertise, contrats).",
+    "Mission principale : concevoir un moteur de recherche sémantique interne permettant aux gestionnaires de retrouver rapidement les documents pertinents dans un volume de plusieurs millions de pièces.",
+    "Activités : constitution et nettoyage de corpus, choix et évaluation de modèles d'embedding, conception d'un pipeline de recherche (indexation vectorielle, reranking), mesure de la qualité de restitution.",
+    "Mise en place d'un protocole d'évaluation avec une base de vérité annotée par les experts métier, et comparaison objective des différentes approches candidates.",
+    "Industrialisation de la solution retenue avec l'équipe MLOps (API, monitoring, suivi des coûts d'inférence).",
+    "Documentation méthodologique et présentation des résultats aux référents métier et à la gouvernance data.",
+    "Mission longue : démarrage souhaité début 2026, durée initiale de 12 mois renouvelables.",
+    "Localisation : Nanterre, avec 2 à 3 jours de télétravail par semaine.",
+    "TJM cible : entre 600 € et 800 € selon profil."
+  ],
+  "Contexte": [
+    "AXA France mène depuis 2023 un programme de valorisation de son patrimoine documentaire, jusque-là peu exploité faute d'outils de recherche adaptés.",
+    "La direction Data & IA a fait de la recherche sémantique et des assistants documentaires un axe prioritaire, avec plusieurs cas d'usage à fort impact sur la relation client et la gestion des sinistres.",
+    "L'équipe est pluridisciplinaire (data scientists, data engineers, product owner) et travaille en méthode agile.",
+    "Une attention particulière est portée à l'évaluation objective des solutions : la direction souhaite dépasser les démonstrations impressionnistes pour disposer de mesures de performance robustes et reproductibles.",
+    "Le groupe applique un cadre strict de gouvernance des modèles et d'IA responsable."
+  ],
+  "entreprise": "AXA France",
+  "poste": "Data Scientist NLP",
+  "technos": [
+    "Python",
+    "PyTorch",
+    "Hugging Face Transformers",
+    "scikit-learn",
+    "FastAPI",
+    "Docker",
+    "bases vectorielles (FAISS / Qdrant)",
+    "SQL"
+  ],
+  "seniorite_min_annees": 5
+}

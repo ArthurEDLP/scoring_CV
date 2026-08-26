@@ -1,0 +1,44 @@
+{
+  "id": "ENGIE - Data Architect Cloud",
+  "Profil": [
+    "Bac+5 (école d'ingénieur ou équivalent) en informatique.",
+    "8 ans ou plus d'expérience en ingénierie et architecture de données, dont plusieurs années en position d'architecte ou de tech lead.",
+    "Expertise reconnue en conception d'architectures data cloud à grande échelle (data lakehouse, data mesh).",
+    "Maîtrise approfondie d'au moins un cloud majeur (Azure de préférence, AWS ou GCP acceptés) et de ses services data.",
+    "Solide expérience de Spark, des formats de stockage colonnaires et de l'optimisation de pipelines à fort volume.",
+    "Culture DevOps / infrastructure as code (Terraform), CI/CD, conteneurisation et orchestration (Kubernetes).",
+    "Capacité à définir des standards, à arbitrer des choix techniques structurants et à les défendre devant des comités d'architecture.",
+    "Leadership technique, pédagogie, sens de la communication avec des interlocuteurs variés (équipes de dev, sécurité, métier, direction).",
+    "Anglais courant (contexte international)."
+  ],
+  "Description": [
+    "Au sein de la DSI Groupe, le consultant interviendra comme architecte de la plateforme data mutualisée servant plusieurs entités du groupe.",
+    "Mission : définir la cible d'architecture, cadrer les patterns d'ingestion et de modélisation, et accompagner les équipes dans leur mise en œuvre.",
+    "Activités : revues d'architecture, définition des standards de nommage, de gouvernance et de sécurité des données, choix technologiques, évaluation de nouvelles briques.",
+    "Accompagnement des squads dans la conception de pipelines robustes et économes, avec une attention forte aux coûts cloud (FinOps).",
+    "Contribution à la stratégie de migration des systèmes historiques vers la plateforme cible.",
+    "Mission longue (18 mois), démarrage sous 4 à 8 semaines.",
+    "Localisation : La Défense, télétravail partiel.",
+    "TJM cible : entre 800 € et 1000 €."
+  ],
+  "Contexte": [
+    "ENGIE mène une transformation data d'ampleur pour unifier des patrimoines historiquement dispersés entre de nombreuses entités et pays.",
+    "La plateforme cible doit concilier mutualisation, autonomie des équipes et maîtrise stricte des coûts et de la sécurité.",
+    "Le poste est très structurant : les choix de l'architecte auront un impact durable sur l'ensemble des équipes data du groupe.",
+    "Environnement international, exigeant, avec une forte culture d'ingénierie."
+  ],
+  "entreprise": "ENGIE",
+  "poste": "Data Architect",
+  "technos": [
+    "Azure",
+    "Apache Spark",
+    "Databricks",
+    "Terraform",
+    "Kubernetes",
+    "Docker",
+    "Python",
+    "SQL avancé",
+    "Airflow"
+  ],
+  "seniorite_min_annees": 8
+}

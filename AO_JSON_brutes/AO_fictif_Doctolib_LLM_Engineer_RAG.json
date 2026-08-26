@@ -1,0 +1,38 @@
+{
+  "id": "Doctolib - LLM Engineer RAG",
+  "Profil": [
+    "Bac+5 informatique ou data science.",
+    "4 ans et plus en ML dont expérience concrète sur des systèmes à base de LLM.",
+    "Maîtrise des embeddings, du RAG, du reranking et de l'évaluation de la pertinence (nDCG, tests utilisateurs).",
+    "Python, Hugging Face, bases vectorielles (FAISS, Qdrant ou pgvector).",
+    "Déploiement d'API, conteneurisation, suivi des coûts d'inférence.",
+    "RGPD et confidentialité des données de santé.",
+    "Esprit expérimental et rigueur d'évaluation."
+  ],
+  "Description": [
+    "Conception d'un assistant de recherche documentaire interne s'appuyant sur un pipeline RAG.",
+    "Choix et évaluation de modèles d'embedding, mise en place d'une base de vérité annotée, comparaison objective des approches.",
+    "Industrialisation et monitoring.",
+    "Mission longue.",
+    "Localisation : Levallois, télétravail partiel.",
+    "TJM cible : 550 € à 750 €."
+  ],
+  "Contexte": [
+    "La scale-up santé investit dans les assistants documentaires internes.",
+    "Forte exigence d'évaluation rigoureuse plutôt que de démonstrations impressionnistes.",
+    "Données de santé sensibles."
+  ],
+  "entreprise": "Doctolib",
+  "poste": "Machine Learning Engineer",
+  "technos": [
+    "Python",
+    "Hugging Face Transformers",
+    "FAISS",
+    "pgvector",
+    "FastAPI",
+    "Docker",
+    "PyTorch",
+    "SQL"
+  ],
+  "seniorite_min_annees": 4
+}

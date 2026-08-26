@@ -1,0 +1,42 @@
+{
+  "id": "MERIDIEN ASSURANCES",
+  "Poste": "Scrum Master",
+  "Contexte": [
+    "MÉRIDIEN ASSURANCES est une société fictive d'assurance de personnes et de biens, employant 4 200 collaborateurs répartis sur cinq sites en France. Sa Direction des Systèmes d'Information regroupe 380 personnes, dont 140 au sein du pôle Delivery, organisé en neuf tribus produits.",
+    "La DSI conduit depuis 2023 un programme de refonte de son socle applicatif historique (COBOL / mainframe) vers une architecture de microservices Java, déployée sur un cluster Kubernetes interne. Le pôle Delivery fonctionne selon un cadre agile à l'échelle inspiré de SAFe, avec des incréments de programme trimestriels.",
+    "La tribu « Souscription & Tarification » regroupe trois équipes de développement (18 personnes au total) travaillant sur le moteur de tarification, l'API de souscription en ligne et le back-office conseiller.",
+    "Difficultés identifiées lors du dernier audit interne de mars 2026 : vélocité instable d'un sprint à l'autre, avec un taux d'engagement tenu inférieur à 65 %.",
+    "Cycle de livraison encore long (6 à 8 semaines entre le merge et la mise en production).",
+    "Dette technique importante sur le module de tarification, insuffisamment arbitrée face aux demandes métier.",
+    "Coordination inter-équipes perfectible lors des phases d'intégration.",
+    "Rôle de Scrum Master historiquement assuré par des développeurs à temps partiel, sans disponibilité suffisante.",
+    "La consultation vise à retenir un prestataire capable de mettre à disposition un Scrum Master expérimenté, disposant d'une compréhension technique réelle de l'écosystème Java, afin d'accompagner ces trois équipes vers un fonctionnement plus prévisible et une réduction du time-to-market."
+  ],
+  "Description": [
+    "Mise à disposition d'un consultant Scrum Master à temps plein (5 jours par semaine) pour une durée initiale de 12 mois, dans le cadre d'une prestation en régie encadrée avec obligation de moyens renforcée.",
+    "Animer les cérémonies Scrum des équipes accompagnées : planification de sprint, mêlées quotidiennes, revues, rétrospectives et affinage du backlog.",
+    "Accompagner le Product Owner dans la structuration, la priorisation et la découpe du backlog produit.",
+    "Identifier, tracer et lever les obstacles, en escaladant auprès du management de tribu lorsque nécessaire.",
+    "Mettre en place et fiabiliser les indicateurs de pilotage : vélocité, burn-down, lead time, taux de retour en recette.",
+    "Contribuer à l'amélioration des pratiques d'ingénierie en lien avec le référent technique : revue de code, couverture de tests, automatisation du pipeline CI/CD.",
+    "Participer aux instances de coordination inter-équipes (Scrum of Scrums hebdomadaire, préparation des PI Planning trimestriels).",
+    "Accompagner la montée en autonomie des équipes, avec un objectif de transfert progressif du rôle à un collaborateur interne à l'horizon du 10ᵉ mois.",
+    "Hors périmètre : développement logiciel opérationnel et production de code applicatif ; management hiérarchique des membres des équipes ; définition de la vision produit et des orientations métier, qui relèvent du Product Owner et du Product Manager de tribu."
+  ],
+  "Profil": [
+    "Au minimum cinq (5) années d'expérience dans le rôle de Scrum Master, dont au moins trois (3) années au sein d'équipes de développement Java.",
+    "Une expérience préalable dans le secteur de l'assurance, de la banque ou d'un environnement fortement réglementé constituera un avantage apprécié.",
+    "Scrum : maîtrise du cadre et de ses rôles (Exigé).",
+    "Kanban, gestion des flux et limitation du WIP (Exigé).",
+    "Agilité à l'échelle (SAFe, LeSS ou équivalent) (Souhaité).",
+    "Écosystème Java 17+ / Spring Boot : compréhension des enjeux (Exigé).",
+    "Chaîne CI/CD (GitLab CI, Maven, SonarQube) (Exigé).",
+    "Architecture microservices, API REST, conteneurisation (Souhaité).",
+    "Pratiques d'ingénierie : TDD, revue de code, pair programming (Souhaité).",
+    "Jira, Confluence, Miro (Exigé).",
+    "Facilitation, gestion de conflit, coaching d'équipe (Exigé).",
+    "Communication écrite et orale en français (Exigé).",
+    "Anglais professionnel (échanges avec l'éditeur du moteur de règles) (Souhaité).",
+    "Au moins une certification parmi : Professional Scrum Master (PSM I ou II), Certified ScrumMaster (CSM), ou SAFe Scrum Master (SSM). La copie du certificat sera jointe au dossier de candidature."
+  ]
+}

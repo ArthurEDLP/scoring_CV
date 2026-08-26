@@ -1,4 +1,3 @@
-
 {
   "id": "Crédit Mutuel Arkéa",
   "Profil": [
@@ -45,6 +44,18 @@
     "Le groupe a fait de l'IA responsable un axe stratégique fort : un cadre interne d'éthique de l'IA a été publié en 2024, avec des exigences renforcées en matière d'explicabilité, de surveillance des biais (notamment sur les variables sensibles ou pouvant être corrélées à des critères discriminatoires) et de gouvernance des modèles.",
     "L'équipe de modélisation a une culture forte du travail bien fait et de la rigueur méthodologique : les revues de code et de modèle sont systématiques, et la documentation est considérée comme un livrable de premier plan, au même titre que le code.",
     "Ambiance de travail : équipe à taille humaine, mix entre profils statisticiens « historiques » (forte expertise métier et réglementaire) et profils data scientists « plus jeunes » (orientés Python et MLOps). Le consultant jouera un rôle de passerelle entre ces deux cultures."
-  ]
+  ],
+  "entreprise": "Crédit Mutuel Arkéa",
+  "poste": "Data Scientist",
+  "technos": [
+    "Python (pandas, numpy, scikit-learn, statsmodels, matplotlib / seaborn)",
+    "SQL avancé",
+    "SAS (notamment SAS Enterprise Guide et / ou SAS EM)",
+    "R",
+    "AWS (Snowflake)",
+    "MLflow",
+    "Flask / FastAPI",
+    "Kubernetes"
+  ],
+  "seniorite_min_annees": 4
 }
-

@@ -1,0 +1,38 @@
+{
+  "id": "M6 - Data Engineer GCP",
+  "Profil": [
+    "Bac+5 informatique ou data.",
+    "4 ans et plus en data engineering dont expérience GCP en production.",
+    "Maîtrise de BigQuery, Dataflow, Pub/Sub et de l'orchestration (Cloud Composer / Airflow).",
+    "Solide pratique de Python et SQL avancé, dbt apprécié.",
+    "Culture CI/CD, Git, Terraform, Docker.",
+    "Autonomie, rigueur, sens du travail en squad agile."
+  ],
+  "Description": [
+    "Au sein de la direction Data du groupe média, conception et industrialisation de pipelines analytiques sur GCP.",
+    "Ingestion de données d'audience et de consommation vidéo, modélisation des couches analytiques.",
+    "Optimisation des coûts BigQuery et fiabilisation des flux.",
+    "Mission longue, démarrage rapide.",
+    "Localisation : Neuilly-sur-Seine, télétravail partiel.",
+    "TJM cible : 500 € à 650 €."
+  ],
+  "Contexte": [
+    "Le groupe média modernise sa plateforme d'analyse d'audience pour unifier les données TV et digitales.",
+    "Environnement 100% GCP, forte volumétrie de données de streaming.",
+    "Équipe agile, culture produit."
+  ],
+  "entreprise": "Groupe M6",
+  "poste": "Data Engineer",
+  "technos": [
+    "GCP",
+    "BigQuery",
+    "Dataflow",
+    "Airflow",
+    "Python",
+    "SQL avancé",
+    "dbt",
+    "Terraform",
+    "Docker"
+  ],
+  "seniorite_min_annees": 4
+}

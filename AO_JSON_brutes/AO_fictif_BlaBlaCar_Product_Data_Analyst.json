@@ -1,0 +1,34 @@
+{
+  "id": "BlaBlaCar - Product Data Analyst",
+  "Profil": [
+    "Bac+5 data, statistiques ou équivalent.",
+    "3 ans et plus en analyse de données produit dans un environnement tech.",
+    "Maîtrise SQL avancé et d'un outil de dataviz.",
+    "Python (pandas) pour l'analyse.",
+    "Culture de l'A/B testing et des métriques produit.",
+    "Anglais courant.",
+    "Sens du produit, communication."
+  ],
+  "Description": [
+    "Appui des équipes produit dans la mesure de la performance des fonctionnalités et l'analyse du comportement utilisateur.",
+    "Conception d'A/B tests, analyse des résultats, restitution actionnable.",
+    "Tableaux de bord produit.",
+    "Mission 12 mois.",
+    "Localisation : Paris, télétravail flexible.",
+    "TJM cible : 450 € à 600 €."
+  ],
+  "Contexte": [
+    "La scale-up mobilité pilote son produit par la donnée et l'expérimentation.",
+    "Environnement international, forte culture data et test-and-learn."
+  ],
+  "entreprise": "BlaBlaCar",
+  "poste": "Data Analyst",
+  "technos": [
+    "SQL avancé",
+    "Python (pandas)",
+    "Looker",
+    "A/B testing",
+    "dbt"
+  ],
+  "seniorite_min_annees": 3
+}

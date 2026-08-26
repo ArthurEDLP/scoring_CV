@@ -1,0 +1,30 @@
+{
+  "id": "CNAM - Data Analyst Santé",
+  "Profil": [
+    "Bac+5 statistiques ou data.",
+    "3 ans et plus en analyse de données, secteur santé ou public apprécié.",
+    "Maîtrise de SAS et/ou Python, SQL avancé.",
+    "Rigueur statistique, sens de la confidentialité des données de santé."
+  ],
+  "Description": [
+    "Analyses statistiques sur les données de remboursement de l'assurance maladie.",
+    "Production d'indicateurs de suivi et d'études ad-hoc pour les directions métier.",
+    "Fiabilisation et contrôle qualité des données.",
+    "Mission longue.",
+    "Localisation : Paris, télétravail encadré.",
+    "TJM cible : 400 € à 550 €."
+  ],
+  "Contexte": [
+    "L'organisme exploite d'importantes bases de données de santé dans un cadre réglementaire et de confidentialité strict.",
+    "Enjeux de pilotage des dépenses et de santé publique."
+  ],
+  "entreprise": "CNAM",
+  "poste": "Data Analyst",
+  "technos": [
+    "SAS",
+    "Python",
+    "SQL avancé",
+    "statistiques"
+  ],
+  "seniorite_min_annees": 3
+}

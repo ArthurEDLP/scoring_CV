@@ -1,0 +1,33 @@
+{
+  "id": "La Redoute - Data Scientist Reco",
+  "Profil": [
+    "Bac+5 data science.",
+    "4 ans et plus en machine learning appliqué, idéalement e-commerce.",
+    "Systèmes de recommandation, segmentation, Python (scikit-learn).",
+    "Notions de mise en production (API, MLflow).",
+    "Sensibilité produit et A/B testing."
+  ],
+  "Description": [
+    "Développement et amélioration du moteur de recommandation produit du site.",
+    "Segmentation client, mesure d'impact par A/B testing, itérations avec les équipes produit.",
+    "Industrialisation avec l'équipe MLOps.",
+    "Mission longue.",
+    "Localisation : Roubaix, télétravail partiel.",
+    "TJM cible : 500 € à 650 €."
+  ],
+  "Contexte": [
+    "Le e-commerçant investit dans la personnalisation pour améliorer conversion et fidélisation.",
+    "Culture data et test-and-learn, forte volumétrie de données comportementales."
+  ],
+  "entreprise": "La Redoute",
+  "poste": "Data Scientist",
+  "technos": [
+    "Python",
+    "scikit-learn",
+    "systèmes de recommandation",
+    "A/B testing",
+    "MLflow",
+    "SQL"
+  ],
+  "seniorite_min_annees": 4
+}

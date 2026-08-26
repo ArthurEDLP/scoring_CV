@@ -1,0 +1,36 @@
+{
+  "id": "Bouygues Telecom - Big Data Spark",
+  "Profil": [
+    "Bac+5 informatique.",
+    "5 ans et plus en data engineering sur environnements Big Data à forte volumétrie.",
+    "Expertise Apache Spark (PySpark, Spark SQL), tuning et optimisation.",
+    "Écosystème Hadoop / Cloudera, Kafka pour le streaming.",
+    "Python, SQL avancé, orchestration Airflow.",
+    "Données réseau (CDR, probes) appréciées.",
+    "Autonomie technique."
+  ],
+  "Description": [
+    "Conception de pipelines batch et streaming sur données réseau et clients à très grande échelle.",
+    "Optimisation de jobs Spark, fiabilisation des traitements, réduction des temps de calcul.",
+    "Mission longue.",
+    "Localisation : Meudon, télétravail partiel.",
+    "TJM cible : 550 € à 700 €."
+  ],
+  "Contexte": [
+    "L'opérateur télécom traite quotidiennement des volumes massifs de données réseau.",
+    "Plateforme Big Data on-premise en cours de modernisation.",
+    "Enjeux de performance et de coûts."
+  ],
+  "entreprise": "Bouygues Telecom",
+  "poste": "Data Engineer",
+  "technos": [
+    "Apache Spark",
+    "PySpark",
+    "Hadoop",
+    "Kafka",
+    "Python",
+    "SQL avancé",
+    "Airflow"
+  ],
+  "seniorite_min_annees": 5
+}

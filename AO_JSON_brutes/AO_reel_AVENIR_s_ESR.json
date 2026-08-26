@@ -1,0 +1,38 @@
+{
+  "id": "AVENIR(s)-ESR",
+  "Poste": "Développeur Full Stack",
+  "Contexte": [
+    "Dans le cadre du volet ESR (enseignement supérieur recherche) du programme AVENIR(s) (https://avenirs-esr.fr/), il s'agit de développer un ensemble de services formant un écosystème d'e-portfolio spécialisé et adapté à la pédagogie en APC (Approche Par Compétences) et qui tient compte des projets de vie de l'étudiant.",
+    "Projet d'envergure, novateur et basé sur les dernières techniques et technologies réputées. L'objectif est de proposer un ensemble de services intégrés avec les SI et applications de l'ensemble des universités et écoles du supérieur.",
+    "La méthode APC est novatrice et nécessite la mise en place de services adaptés. Elle propose, de façon complémentaire aux méthodes actuelles, une démarche réflexive à évaluer sur des compétences à développer.",
+    "La solution devra répondre à toutes les exigences actuelles en termes d'ergonomie, d'accessibilité, de sécurité, d'interopérabilité et d'éco-responsabilité.",
+    "Afin de mettre en œuvre cette plateforme, dont les développements ont débuté en mai 2025, AVENIR(s)-ESR recrute des Développeurs Full Stack débutants comme expérimentés avec possibilité de devenir le Tech Lead du projet. Si vous manquez d'expérience sur des compétences visées, votre motivation à monter en compétence sera votre atout."
+  ],
+  "Description": [
+    "Sous la responsabilité du coordinateur technique du projet, vous rejoindrez une équipe d'environ 6 à 10 personnes réparties sur le territoire national, travaillant à distance et dédiées au développement de cette plateforme d'e-portfolio en mode SaaS.",
+    "Participer principalement au développement de la plateforme avec ses différents modules, dans un environnement de CI/CD, avec une architecture disposant d'un API-Manager.",
+    "Collaborer avec l'équipe de développeurs et être en étroite collaboration avec l'architecte et le Tech Lead.",
+    "Réaliser des services API comme travailler sur le front ; les développements devront s'inscrire dans une architecture micro-service performante, écoresponsable, scalable, optimisée, simple et efficace, avec une évolution et une maintenance rapides, en respectant les standards de sécurité et les règles pour l'accessibilité (WCAG/RGAA).",
+    "Développer en respectant les normes de sécurité et en appliquant le cadre du WCAG/RGAA.",
+    "Participer au développement global de la plateforme et intervenir sur les différents services (Frontend, Backend, API-Manager, notifications, stockage, etc.).",
+    "Définir, avec l'équipe, les moyens et procédures qui garantiront les performances et le maintien en conditions opérationnelles quelle que soit la charge liée aux usages.",
+    "Participer au suivi, à l'évolution et au déploiement de la plateforme.",
+    "Travailler avec l'équipe pour provisionner, voire adapter, les chaînes d'intégration et de déploiement continu.",
+    "Participer à la rédaction de fiches techniques, de procédures d'installation et d'exploitation ainsi qu'à la documentation de la plateforme.",
+    "Participer à la formation et au support des premiers utilisateurs.",
+    "Si nécessaire, participer à des groupes de travail ou événements ponctuels."
+  ],
+  "Profil": [
+    "De préférence issu(e) d'une école d'ingenieur ou d'un cursus universitaire équivalent de niveau Bac +5 / Master, débutant ou confirmé, ou diplômé d'un niveau Bac +3 justifiant au moins d'une expérience sur un poste de développeur Full Stack.",
+    "Maîtrise des technologies/frameworks de backend : Java, Spring, Spring-boot, ...",
+    "Maîtrise des technologies/frameworks de frontend : Vue.js / Node.js / Lit, Pinia, JavaScript / TypeScript, RWD, HTML5, CSS, SCSS, ...",
+    "Maîtrise des outils de test : JUnit, SpringTest, Mock, ...",
+    "Maîtrise des outils de compilation JavaScript : Vite, webpack, esbuild, rollup.",
+    "Maîtrise des outils de gestion de versions : git, gitlab/github.",
+    "Maîtrise des notions d'architecture : Design Patterns.",
+    "Maîtrise des règles pour l'accessibilité : WCAG, RGAA.",
+    "Connaissances parmi : outils de test frontend (Vitest, JEST/Playwright) ; systèmes de stockage (PostgreSQL, MongoDB, S3) ; services d'API-Management (APISIX).",
+    "A déjà participé à l'intégration de développements dans une chaîne de CI/CD, ainsi qu'à la supervision, au support et au maintien en conditions opérationnelles de services.",
+    "Sait travailler dans un contexte d'équipe totalement en distanciel ; être rigoureux(euse), autonome, organisé(e) ; documenter et partager son travail."
+  ]
+}

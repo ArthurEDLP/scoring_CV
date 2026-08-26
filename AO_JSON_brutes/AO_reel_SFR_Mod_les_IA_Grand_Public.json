@@ -1,0 +1,24 @@
+{
+  "id": "SFR - Modèles IA Grand Public",
+  "Poste": "Data Scientist / Modèles IA",
+  "Contexte": [
+    "Nom du projet : Conception, déploiement et maintenance de modèles d'IA sur les clients Grand Public.",
+    "Entrepôt GCP (BigQuery). Infra IA on-premise en cours de migration vers GCP MLOps. Portefeuille de modèles actuels en Run à maintenir, analyser, auditer, sécuriser. Développement de nouveaux modèles en cours et à venir."
+  ],
+  "Description": [
+    "Assurer la production et l'évolution des modèles existants, en garantissant la qualité des données en amont ainsi que la pertinence des modèles délivrés.",
+    "Développer et entraîner de nouveaux modèles (ex. : churn, appétence, segmentation/clusterisation).",
+    "Réaliser des analyses et études liées à l'utilisation des modèles, incluant l'accompagnement des équipes métiers.",
+    "Mettre en place et industrialiser les chaînes de production des nouveaux modèles, en optimisant les temps de traitement et en garantissant la fiabilité des résultats. Les environnements concernés sont à la fois on-premise et GCP (MLOps).",
+    "L'ensemble de ces activités nécessite une forte capacité de requêtage, d'exploration et de fouille de données au sein d'un environnement data complexe.",
+    "Construction d'un nouveau modèle : cadrage du modèle (périmètre/cible/méthodologie), construction de la base d'apprentissage, études descriptives, construction d'indicateurs combinés, machine learning, optimisation et choix du modèle, validation de la robustesse au cours du temps.",
+    "Études accompagnant l'utilisation d'un modèle : effectifs ciblés (simulations), profils et comportements, pistes pour définitions d'actions auprès des ciblés, croisements de modèles et zoom sur des sous-populations.",
+    "Construction d'une chaîne de production (quotidienne, hebdomadaire ou mensuelle) : extractions de données, QoD, predict, vérification de la qualité des prédictions passées, automatisation et ordonnancement des traitements, gestion des versions (Git).",
+    "Production de modèles existants (mensuels, hebdo ou quotidiens) : vérification de la QoD, solutions de contournement en cas de problème, respect des délais, garantie de fiabilité des modèles produits.",
+    "Migration vers GCP MLOps : passer dans certains cas de l'environnement MLOps on-premise à GCP MLOps (Vertex)."
+  ],
+  "Profil": [
+    "Indispensable : BigQuery, SQL, R, Shiny, Python, Git, Pack Office, machine learning (théorie et algorithmes).",
+    "Souhaité : sensibilité marketing et business (leviers de rentabilité des actions marketing), fouille de données, QoD, analyses de drift."
+  ]
+}

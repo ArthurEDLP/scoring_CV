@@ -1,0 +1,32 @@
+{
+  "id": "MAIF - Data Quality & Gouvernance",
+  "Profil": [
+    "Bac+5 data ou informatique.",
+    "5 ans et plus dont expérience en qualité et gouvernance des données.",
+    "Maîtrise des démarches de data quality (profilage, règles, remédiation) et des catalogues de données.",
+    "SQL avancé, Python, outils type Great Expectations / Collibra appréciés.",
+    "Secteur assurance apprécié.",
+    "Pédagogie, sens de la transversalité."
+  ],
+  "Description": [
+    "Structuration de la démarche qualité et gouvernance des données au sein de la direction data.",
+    "Définition des règles de qualité, mise en place du catalogue et du lineage, animation des data stewards.",
+    "Mission longue.",
+    "Localisation : Niort, télétravail partiel.",
+    "TJM cible : 500 € à 650 €."
+  ],
+  "Contexte": [
+    "L'assureur mutualiste renforce la gouvernance de son patrimoine data.",
+    "Enjeux de conformité, de fiabilité et d'appropriation métier."
+  ],
+  "entreprise": "MAIF",
+  "poste": "Data Analyst",
+  "technos": [
+    "SQL avancé",
+    "Python",
+    "Great Expectations",
+    "Collibra",
+    "gouvernance des données"
+  ],
+  "seniorite_min_annees": 5
+}
