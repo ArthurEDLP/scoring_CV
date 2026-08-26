@@ -51,7 +51,7 @@ from score_global import indicateur_global, chemin_cache_global
 
 
 print("Chargement du modèle d'embedding...")
-MODEL = "qwen3-embedding:8b"
+MODEL = "qwen3-embedding:4b"
 
 print("Initialisation des caches...")
 CACHE_CV    = CacheEmbeddingsCV(MODEL,    "./cache_cv")
@@ -148,8 +148,8 @@ def noeud_technos(state: CVScoringState) -> Dict:
 
 def noeud_score_global(state: CVScoringState) -> Dict:
     """
-    Indicateur : cosinus CV complet <-> AO complète (Qwen3-8B).
-    NE FAIT PAS tourner le 8B : il lit le JSON précalculé par precalcul_global.py.
+    Indicateur : cosinus CV complet <-> AO complète (Qwen3-4B).
+    NE FAIT PAS tourner le 4B : il lit le JSON précalculé par precalcul_global.py.
     Si le cache est absent, l'indicateur est simplement ignoré (erreur loguée).
     """
     ao_id  = state["offre"]["id"]

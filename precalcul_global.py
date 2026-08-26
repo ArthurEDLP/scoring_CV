@@ -1,5 +1,5 @@
 """
-Précalcul de l'indicateur global (CV complet ↔ AO complète, Qwen3-8B).
+Précalcul de l'indicateur global (CV complet ↔ AO complète, Qwen3-4B).
 
 Fait tourner le 8B UNE fois par AO et écrit un JSON {cv_id: cosine_brut} dans
 ./cache_global. Ensuite GRAPH.py lit ce JSON au lieu d'embedder en live.
@@ -55,7 +55,7 @@ def precalculer_ao(offre, cvs, instruction=None, dossier="./cache_global"):
 
 
 def main():
-    p = argparse.ArgumentParser(description="Précalcul de l'indicateur global Qwen3-Embedding-8B.")
+    p = argparse.ArgumentParser(description="Précalcul de l'indicateur global Qwen3-Embedding-4B.")
     p.add_argument("--cv",  default="./CV_JSON", help="Dossier des CV (défaut: ./CV_JSON)")
     p.add_argument("--ao",  default="./AO_JSON", help="Dossier des AO (défaut: ./AO_JSON)")
     p.add_argument("--out", default="./cache_global", help="Dossier de sortie (défaut: ./cache_global)")

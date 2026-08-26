@@ -288,7 +288,7 @@ def _job_preparer(jid: str) -> None:
             pipe.CACHE_CV.obtenir(c); fait += 1
             _maj_job(jid, progression=0.35 + 0.35 * fait / total)
 
-        _maj_job(jid, etape="Calcul du score global (Qwen3-8B)", progression=0.72)
+        _maj_job(jid, etape="Calcul du score global (Qwen3-4B)", progression=0.72)
         from precalcul_global import precalculer_ao
         for i, o in enumerate(offres, 1):
             precalculer_ao(o, cvs, dossier="./cache_global")

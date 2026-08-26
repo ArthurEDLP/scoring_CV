@@ -42,7 +42,7 @@ import numpy as np
 
 # Seuil de proximité au "noyau de pertinence" du CV.
 # Une exp i est dans le domaine si cosine_i >= exp_max - DELTA.
-# CALIBRATION : 0.04 a été établi sur Qwen3-8B. À RECALIBRER pour mpnet
+# CALIBRATION : 0.04 a été établi sur Qwen3-4B. À RECALIBRER pour mpnet
 # en regardant la distribution des écarts (exp_max - cosine_i) sur des CV
 # notoirement cohérents.
 DELTA = 0.04

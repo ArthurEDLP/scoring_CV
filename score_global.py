@@ -1,10 +1,10 @@
 """
-Axe "global" : similarité CV complet ↔ AO complète (Qwen3-Embedding-8B).
+Axe "global" : similarité CV complet ↔ AO complète (Qwen3-Embedding-4B).
 
 Indicateur informatif (c'est le score_final) : cosinus brut + rang dans le pool. Place le profil idéal en tête là où le matching techno par techno
 peut le rater faute de labels littéraux.
 
-Le cosinus est PRÉCALCULÉ par AO (script precalcul_global.py) pour éviter de faire tourner le 8B dans le pipeline. Ce module fournit :
+Le cosinus est PRÉCALCULÉ par AO (script precalcul_global.py) pour éviter de faire tourner le 4B dans le pipeline. Ce module fournit :
   - les constructeurs de texte (identiques au benchmark),
   - embed_ollama / cosinus_brut (utilisés par le précalcul),
   - indicateur_global (cosinus + rang, utilisé à l'affichage),
@@ -17,7 +17,7 @@ from pathlib import Path
 from typing import Dict, List
 import numpy as np
 
-MODEL = "qwen3-embedding:8b"
+MODEL = "qwen3-embedding:4b"
 
 
 # ─────────────────────── Construction des textes ──────────────────────────
@@ -86,7 +86,7 @@ def texte_ao_complet(ao_data: Dict) -> str:
 def _normaliser(vecteurs: np.ndarray) -> np.ndarray:
     """
     Normalisation L2, ligne par ligne. L2 c'est la norme euclidienne.
-    Accepte (n, d) matrice de n vecteur d'embedding ou (d,). vecteur simple de dimension d on utilise Qwen3-embedding-8B donc d = 4096
+    Accepte (n, d) matrice de n vecteur d'embedding ou (d,). vecteur simple de dimension d on utilise Qwen3-embedding-4B donc d = 4096
     Remplace les normes nulles par 1.0 pour éviter NaN (division par 0).
     On divise les vecteurs par leurs normes pour les normaliser.
 

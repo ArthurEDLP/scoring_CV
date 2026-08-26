@@ -12,16 +12,16 @@
   {
     "label": "Expert",
     "min": 6,
-    "max": 10
+    "max": 9
   },
   {
     "label": "Senior",
-    "min": 10,
-    "max": 13
+    "min": 9,
+    "max": 12
   },
   {
     "label": "maximus",
-    "min": 13,
+    "min": 12,
     "max": null
   }
 ]

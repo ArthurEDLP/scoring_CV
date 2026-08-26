@@ -78,7 +78,7 @@ Puis, dans un autre terminal, télécharge les **deux** modèles utilisés par l
 projet :
 
 ```bash
-ollama pull qwen3-embedding:8b     # embeddings (cœur du matching)
+ollama pull qwen3-embedding:4b     # embeddings (cœur du matching)
 ollama pull qwen2.5:7b-instruct    # extraction structurée des AO (pretraiter_ao.py)
 ```
 
