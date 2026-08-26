@@ -1,7 +1,9 @@
 {
   "id": "HAH",
-  "formations": [" 2022-2025 ESILV - École d’ingénieurs, Master en Ingénierie Data & IA",
-    "2024–2025 Universiti Kuala Lumpur MIIT – Programme d’échange : Machine Learning, DevOps, AI "],
+  "formations": [
+    " 2022-2025 ESILV - École d’ingénieurs, Master en Ingénierie Data & IA",
+    "2024–2025 Universiti Kuala Lumpur MIIT – Programme d’échange : Machine Learning, DevOps, AI "
+  ],
   "certifications": [
     "Microsoft Azure (2025)",
     "TOEFL (2023)",
@@ -22,15 +24,53 @@
     }
   ],
   "competences_techniques": [
-    "Systèmes : Windows",
-    "SGBD : SQL Server | PostgreSQL | MySQL | MongoDB | ElasticSearch | BigQuery | Azure Synapse | Azure Data Lake",
-    "Langages & Scripting : Python | SQL | JavaScript (bases) | Shell | YAML",
-    "Data Visualisation : Power BI | Tableau | Qlik | Seaborn | Matplotlib",
-    "Machine Learning & Statistiques : Régression | Classification | Clustering | Séries temporelles",
-    "Data Management : Préparation des données | Nettoyage | Fiabilisation | Intégration",
-    "Outils : Pandas | JupyterLab | Dataiku | dbt | Azure Data Factory | Microsoft Fabric | Airflow | Git | CI/CD | Docker | Scikit-learn",
-    "Cloud : BigQuery | Azure Synapse | Azure Data Lake | Microsoft Fabric",
-    "Méthodes : Analyse exploratoire de données | Data Storytelling | Reporting interactif | Agile / Scrum | Analyse statistique descriptive | Segmentation | Restitution métier"
+    "Windows",
+    "SQL Server",
+    "PostgreSQL",
+    "MySQL",
+    "MongoDB",
+    "ElasticSearch",
+    "BigQuery",
+    "Azure Synapse",
+    "Azure Data Lake",
+    "Python",
+    "SQL",
+    "JavaScript (bases)",
+    "Shell",
+    "YAML",
+    "Power BI",
+    "Tableau",
+    "Qlik",
+    "Seaborn",
+    "Matplotlib",
+    "Régression",
+    "Classification",
+    "Clustering",
+    "Séries temporelles",
+    "Préparation des données",
+    "Nettoyage",
+    "Fiabilisation",
+    "Intégration",
+    "Pandas",
+    "JupyterLab",
+    "Dataiku",
+    "dbt",
+    "Azure Data Factory",
+    "Microsoft Fabric",
+    "Airflow",
+    "Git",
+    "CI",
+    "CD",
+    "Docker",
+    "Scikit-learn",
+    "Analyse exploratoire de données",
+    "Data Storytelling",
+    "Reporting interactif",
+    "Agile",
+    "Scrum",
+    "Analyse statistique descriptive",
+    "Segmentation",
+    "Restitution métier"
   ],
   "savoir_faire/savoir_etre": [
     "Esprit analytique",
@@ -50,44 +90,13 @@
       "poste": "Data Analyst",
       "date": "01/2025 - 12/2025",
       "entreprise": "Chanel",
-      "details": [
-        "Contexte : Analyse et fiabilisation des flux métiers ainsi que migration de données dans un environnement hybride Legacy / Cloud.",
-        "Analyse de données multi-sources (Excel, SQL Server, PostgreSQL, Microsoft Fabric) pour le suivi des flux métiers.",
-        "Développement et optimisation de requêtes SQL et PostgreSQL pour l'extraction, le contrôle et la fiabilisation des données.",
-        "Création de tableaux de bord Power BI intégrant des indicateurs de qualité des données.",
-        "Participation à la définition des KPIs métiers avec les équipes opérationnelles.",
-        "Adaptation continue des reportings aux besoins des utilisateurs.",
-        "Migration de données entre deux plateformes aux structures différentes.",
-        "Analyse des écarts et contrôles de qualité des données migrées.",
-        "Résolution des problèmes de cohérence, de doublons et de rapprochement des données.",
-        "Animation d'ateliers avec les métiers pour définir les mappings sémantiques.",
-        "Mise en place d'un matching automatique des adresses via des approches de fuzzy matching et de machine learning.",
-        "Création d'un rapport Power BI dédié à la validation des données migrées.",
-        "Contribution à la transition vers Azure et Microsoft Fabric.",
-        "Participation à la structuration des modèles analytiques avec dbt et à l'automatisation des rafraîchissements."
-      ]
+      "details": "Contexte : Analyse et fiabilisation des flux métiers ainsi que migration de données dans un environnement hybride Legacy / Cloud. Analyse de données multi-sources (Excel, SQL Server, PostgreSQL, Microsoft Fabric) pour le suivi des flux métiers. Développement et optimisation de requêtes SQL et PostgreSQL pour l'extraction, le contrôle et la fiabilisation des données. Création de tableaux de bord Power BI intégrant des indicateurs de qualité des données. Participation à la définition des KPIs métiers avec les équipes opérationnelles. Adaptation continue des reportings aux besoins des utilisateurs. Migration de données entre deux plateformes aux structures différentes. Analyse des écarts et contrôles de qualité des données migrées. Résolution des problèmes de cohérence, de doublons et de rapprochement des données. Animation d'ateliers avec les métiers pour définir les mappings sémantiques. Mise en place d'un matching automatique des adresses via des approches de fuzzy matching et de machine learning. Création d'un rapport Power BI dédié à la validation des données migrées. Contribution à la transition vers Azure et Microsoft Fabric. Participation à la structuration des modèles analytiques avec dbt et à l'automatisation des rafraîchissements."
     },
     {
       "poste": "Data Analyst / Data Scientist",
       "date": "01/2024 - 09/2024",
       "entreprise": "Orange",
-      "details": [
-        "Contexte : Exploitation des enquêtes de satisfaction client B2B afin d'améliorer les modèles prédictifs et le ciblage des campagnes.",
-        "Analyse de données issues des enquêtes de satisfaction stockées sous SQL et BigQuery.",
-        "Développement de requêtes SQL et BigQuery pour l'extraction et le contrôle qualité des données.",
-        "Enrichissement d'un modèle de scoring de satisfaction client avec de nouvelles variables explicatives sous Dataiku.",
-        "Intégration d'une analyse de sentiments sur les commentaires clients.",
-        "Réalisation d'analyses ad hoc sur les comportements clients B2B.",
-        "Suivi et optimisation des métriques de performance des modèles.",
-        "Analyse exploratoire des données relatives aux campagnes de sondage.",
-        "Contrôle de la cohérence et de la complétude des données d'envoi et de réponse.",
-        "Réalisation d'un clustering des profils répondants et développement d'un modèle prédictif du taux de réponse.",
-        "Formulation de recommandations pour optimiser le ciblage des campagnes B2B.",
-        "Création de rapports Power BI intégrant les indicateurs de performance et de qualité des données.",
-        "Collaboration au sein d'une équipe composée de Data Analysts, Data Scientists, Data Engineers et managers.",
-        "Amélioration du modèle de scoring grâce à l'intégration de variables issues du NLP.",
-        "Développement d'un modèle de classification permettant de prédire la probabilité de réponse à un sondage."
-      ]
+      "details": "Contexte : Exploitation des enquêtes de satisfaction client B2B afin d'améliorer les modèles prédictifs et le ciblage des campagnes. Analyse de données issues des enquêtes de satisfaction stockées sous SQL et BigQuery. Développement de requêtes SQL et BigQuery pour l'extraction et le contrôle qualité des données. Enrichissement d'un modèle de scoring de satisfaction client avec de nouvelles variables explicatives sous Dataiku. Intégration d'une analyse de sentiments sur les commentaires clients. Réalisation d'analyses ad hoc sur les comportements clients B2B. Suivi et optimisation des métriques de performance des modèles. Analyse exploratoire des données relatives aux campagnes de sondage. Contrôle de la cohérence et de la complétude des données d'envoi et de réponse. Réalisation d'un clustering des profils répondants et développement d'un modèle prédictif du taux de réponse. Formulation de recommandations pour optimiser le ciblage des campagnes B2B. Création de rapports Power BI intégrant les indicateurs de performance et de qualité des données. Collaboration au sein d'une équipe composée de Data Analysts, Data Scientists, Data Engineers et managers. Amélioration du modèle de scoring grâce à l'intégration de variables issues du NLP. Développement d'un modèle de classification permettant de prédire la probabilité de réponse à un sondage."
     }
   ]
 }

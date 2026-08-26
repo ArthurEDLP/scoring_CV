@@ -1,0 +1,53 @@
+{
+  "id": "AZO",
+  "formations": [
+    {
+      "diplome": "Doctorat en bio-informatique — Université d'Aix-Marseille",
+      "date": "2021"
+    },
+    {
+      "diplome": "Master Bio-informatique et biologie des systèmes",
+      "date": "2017"
+    }
+  ],
+  "certifications": [],
+  "langues": [
+    {
+      "nom_langue": "Français",
+      "maitrise": "Langue maternelle"
+    },
+    {
+      "nom_langue": "Anglais",
+      "maitrise": "Courant"
+    }
+  ],
+  "competences_techniques": [
+    "R (Bioconductor, tidyverse)",
+    "Python (Biopython, pandas)",
+    "pipelines Nextflow et Snakemake",
+    "statistiques biomédicales",
+    "Bash / cluster de calcul (Slurm)",
+    "SQL",
+    "Git",
+    "données de séquençage haut débit"
+  ],
+  "savoir_faire/savoir_etre": [
+    "Analyse de données omiques à grande échelle",
+    "Rigueur statistique et reproductibilité",
+    "Collaboration avec des équipes biologistes"
+  ],
+  "experiences": [
+    {
+      "poste": "Ingénieur bio-informaticien",
+      "date": "Depuis 2021",
+      "entreprise": "Institut de recherche biomédicale",
+      "details": "Analyse de données de séquençage (RNA-seq, single-cell). Développement de pipelines reproductibles sous Nextflow, analyses d'expression différentielle et de clustering de cellules. Statistiques sur données à très haute dimension. Restitution des résultats aux équipes de recherche clinique."
+    },
+    {
+      "poste": "Doctorant",
+      "date": "2017 - 2021",
+      "entreprise": "Laboratoire de génomique",
+      "details": "Développement de méthodes d'analyse de données génomiques. Programmation R et Python, gestion de gros volumes sur cluster de calcul. Publications et communications en conférences."
+    }
+  ]
+}

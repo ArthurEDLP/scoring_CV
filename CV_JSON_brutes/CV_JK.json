@@ -2,15 +2,19 @@
   "id": "JK",
   "formations": [],
   "certifications": [
-    "2015 Ingénieur, Marketing Quantitatif et Revenue Management  – Ecole nationale de la Statistique et de l'Analyse de l'Information - PUTEAUX", 
+    "2015 Ingénieur, Marketing Quantitatif et Revenue Management  – Ecole nationale de la Statistique et de l'Analyse de l'Information - PUTEAUX",
     "2012 DUT, STID  – IUT de Vannes - PUTEAUX "
   ],
   "langues": [],
   "competences_techniques": [
-    "SGBD : MySQL",
-    "Langages & Scripting : SQL | Python | R | PHP",
-    " Dataiku, BWelcome",
-    " PySpark, Qlik Sense",
+    "MySQL",
+    "SQL",
+    "Python",
+    "PHP",
+    "Dataiku",
+    "BWelcome",
+    "PySpark",
+    "Qlik Sense",
     "R shiny"
   ],
   "savoir_faire/savoir_etre": [
@@ -36,70 +40,37 @@
       "poste": "Consultant",
       "date": "08/2025 - 12/2025",
       "entreprise": "BNP",
-      "details": [
-        "Contexte : Mission de conseil autour de l'exploitation et du traitement de données.",
-        "Utilisation de Dataiku pour les traitements analytiques.",
-        "Développement en Python.",
-        "Collaboration dans un environnement intégrant SQL et BWelcome."
-      ]
+      "details": "Contexte : Mission de conseil autour de l'exploitation et du traitement de données. Utilisation de Dataiku pour les traitements analytiques. Développement en Python. Collaboration dans un environnement intégrant SQL et BWelcome."
     },
     {
       "poste": "Consultant",
       "date": "10/2023 - 07/2025",
       "entreprise": "La Banque Postale",
-      "details": [
-        "Contexte : Mise en place d'outils de pilotage et amélioration de la qualité des données.",
-        "Développement d'indicateurs de qualité des données.",
-        "Création de dashboards avec Qlik Sense.",
-        "Utilisation de Dataiku, Python et PySpark pour les traitements de données."
-      ]
+      "details": "Contexte : Mise en place d'outils de pilotage et amélioration de la qualité des données. Développement d'indicateurs de qualité des données. Création de dashboards avec Qlik Sense. Utilisation de Dataiku, Python et PySpark pour les traitements de données."
     },
     {
       "poste": "Consultant",
       "date": "10/2023 - 10/2023",
       "entreprise": "Dekuple",
-      "details": [
-        "Contexte : Accompagnement technique et montée en compétence des équipes.",
-        "Animation d'une formation Python.",
-        "Support et accompagnement sur les développements en R."
-      ]
+      "details": "Contexte : Accompagnement technique et montée en compétence des équipes. Animation d'une formation Python. Support et accompagnement sur les développements en R."
     },
     {
       "poste": "Consultant",
       "date": "02/2022 - 09/2023",
       "entreprise": "PMU",
-      "details": [
-        "Contexte : Réalisation de travaux analytiques et de modélisation.",
-        "Développement de scripts de web scraping.",
-        "Réalisation de modèles statistiques et de machine learning.",
-        "Production d'analyses ad hoc.",
-        "Partage de bonnes pratiques en Machine Learning auprès des équipes."
-      ]
+      "details": "Contexte : Réalisation de travaux analytiques et de modélisation. Développement de scripts de web scraping. Réalisation de modèles statistiques et de machine learning. Production d'analyses ad hoc. Partage de bonnes pratiques en Machine Learning auprès des équipes."
     },
     {
       "poste": "Consultant",
       "date": "06/2021 - 11/2021",
       "entreprise": "AXA IARD",
-      "details": [
-        "Contexte : Développement d'une solution de suivi opérationnel.",
-        "Création d'une application R Shiny pour le suivi et la gestion des chantiers des entreprises.",
-        "Développement sous R et RStudio Shiny."
-      ]
+      "details": "Contexte : Développement d'une solution de suivi opérationnel. Création d'une application R Shiny pour le suivi et la gestion des chantiers des entreprises. Développement sous R et RStudio Shiny."
     },
     {
       "poste": "Consultant",
       "date": "06/2017 - 05/2021",
       "entreprise": "EDF",
-      "details": [
-        "Contexte : Missions d'analyses et de modélisation dans le secteur de l'énergie.",
-        "Enrichissement de bases de données à l'aide de techniques de web scraping.",
-        "Refonte d'un projet de cartographie MapInfo vers Shiny.",
-        "Développement d'un score d'appétence pour des services.",
-        "Réalisation d'études ad hoc.",
-        "Finaliste au MDF 2019.",
-        "Participation à un projet réglementaire de mise à disposition des données dans le cadre de la fin des TRV.",
-        "Développement de scripts standardisant la construction des bases d'apprentissage pour les modèles de Machine Learning."
-      ]
+      "details": "Contexte : Missions d'analyses et de modélisation dans le secteur de l'énergie. Enrichissement de bases de données à l'aide de techniques de web scraping. Refonte d'un projet de cartographie MapInfo vers Shiny. Développement d'un score d'appétence pour des services. Réalisation d'études ad hoc. Finaliste au MDF 2019. Participation à un projet réglementaire de mise à disposition des données dans le cadre de la fin des TRV. Développement de scripts standardisant la construction des bases d'apprentissage pour les modèles de Machine Learning."
     }
   ]
 }

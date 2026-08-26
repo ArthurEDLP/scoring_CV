@@ -1,0 +1,47 @@
+{
+  "id": "GMO",
+  "formations": [
+    "Ingénieur Arts et Métiers (ENSAM), spécialité génie des procédés — 2014",
+    "Formation Concepteur développeur data — organisme de reconversion, 2023"
+  ],
+  "certifications": [],
+  "langues": [
+    {
+      "nom_langue": "Français",
+      "maitrise": "Langue maternelle"
+    },
+    {
+      "nom_langue": "Anglais",
+      "maitrise": "Technique"
+    }
+  ],
+  "competences_techniques": [
+    "Matlab",
+    "Python",
+    "Excel avancé",
+    "VBA",
+    "SQL (bases)",
+    "capteurs et acquisition de données",
+    "notions de machine learning",
+    "Power BI"
+  ],
+  "savoir_faire/savoir_etre": [
+    "Résolution de problèmes industriels",
+    "Approche méthodique (Lean, AMDEC)",
+    "Travail en atelier et sur le terrain"
+  ],
+  "experiences": [
+    {
+      "poste": "Data engineer junior (reconversion)",
+      "date": "Depuis 2023",
+      "entreprise": "Groupe agroalimentaire",
+      "details": "Après une reconversion, intégration de l'équipe data industrielle. Récupération et structuration de données de capteurs de lignes de production, premiers travaux de maintenance prédictive. Je mobilise ma connaissance des procédés pour donner du sens aux données machine."
+    },
+    {
+      "poste": "Ingénieur méthodes et procédés",
+      "date": "2014 - 2022",
+      "entreprise": "Équipementier automobile",
+      "details": "Optimisation de lignes de production, analyse de données de production sous Excel et Matlab, démarches d'amélioration continue (Lean, Six Sigma). Premiers essais d'analyse prédictive des pannes à partir des relevés capteurs."
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "id": "JPD",
+  "formations": [
+    "DESS Informatique décisionnelle — Université Lyon 2, 2005"
+  ],
+  "certifications": [
+    "Microsoft Certified : SQL Server BI (2012)",
+    "IBM Cognos Certified (2010)"
+  ],
+  "langues": [
+    {
+      "nom_langue": "Français",
+      "maitrise": "Langue maternelle"
+    },
+    {
+      "nom_langue": "Anglais",
+      "maitrise": "Professionnel"
+    }
+  ],
+  "competences_techniques": [
+    "SQL Server",
+    "SSIS",
+    "SSAS",
+    "cubes OLAP multidimensionnels",
+    "MDX",
+    "IBM Cognos",
+    "SAP BusinessObjects",
+    "Talend",
+    "Oracle PL/SQL",
+    "modélisation Kimball",
+    "entrepôts de données",
+    "Power BI (depuis peu)"
+  ],
+  "savoir_faire/savoir_etre": [
+    "Conception d'entrepôts de données décisionnels",
+    "Dialogue avec les directions métier et financières",
+    "Fiabilité et robustesse des chaînes de reporting",
+    "Expérience de projets longs et réglementaires"
+  ],
+  "experiences": [
+    {
+      "poste": "Consultant BI senior",
+      "date": "2012 - aujourd'hui",
+      "entreprise": "ESN — missions grands comptes banque/assurance",
+      "details": "Plus de dix ans de conseil en informatique décisionnelle. Conception d'entrepôts de données en modélisation Kimball, développement de chaînes ETL sous SSIS et Talend, construction de cubes OLAP et de rapports Cognos / BusinessObjects pour le pilotage financier et réglementaire. Ces dernières années, montée en compétence sur les outils modernes (Power BI, un peu de cloud) pour accompagner la modernisation des SI décisionnels."
+    },
+    {
+      "poste": "Développeur décisionnel",
+      "date": "2005 - 2012",
+      "entreprise": "SSII",
+      "details": "Développement de datamarts, procédures Oracle PL/SQL, reporting BusinessObjects pour des clients du secteur bancaire."
+    }
+  ]
+}
