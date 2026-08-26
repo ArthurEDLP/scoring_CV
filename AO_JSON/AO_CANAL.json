@@ -39,15 +39,15 @@
     "Autonome, ouvert d’esprit et bon communiquant, vous disposez d’une grande curiosité scientifique"
   ],
   "entreprise": "CANAL+",
-  "poste": "Consultant ETL & Data Platform",
+  "poste": "Consultant ETL et Data Engineering",
   "technos": [
     "Informatica PowerCenter",
     "AWS",
     "Airflow",
     "DBT",
+    "Python",
     "SQL",
-    "Snowflake",
-    "Python"
+    "Snowflake"
   ],
   "seniorite_min_annees": 5
 }

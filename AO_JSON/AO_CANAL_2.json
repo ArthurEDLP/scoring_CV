@@ -36,13 +36,12 @@
     "Autonome, ouvert d'esprit, et doté d'excellentes compétences en communication, vous avez également une grande curiosité scientifique."
   ],
   "entreprise": "CANAL+ (2)",
-  "poste": "Data Analyst / Data Engineer",
+  "poste": "Data Engineer / Analyste",
   "technos": [
-    "SQL",
-    "Python",
     "AWS",
     "Gitlab",
     "Snowflake",
+    "Python",
     "DATAIKU",
     "POWERBI",
     "Kubernetes"

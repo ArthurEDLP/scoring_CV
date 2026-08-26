@@ -39,7 +39,7 @@
   "entreprise": "CANAL+ (3)",
   "poste": "Ingénieur Data Integration",
   "technos": [
-    "Informatica PowerCenter",
+    "Informatica",
     "Snowflake",
     "Airflow",
     "DBT",
