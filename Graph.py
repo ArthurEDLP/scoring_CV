@@ -64,7 +64,7 @@ print("Setup terminé.\n")
 
 # Paramètres des garde-fous.
 # DELTA : à recalibrer sur la distribution observée
-GUARDS_DELTA = 0.5
+GUARDS_DELTA = 0.12
 GUARDS_FENETRE_MOIS = None  # None = dérivé de seniorite_min_annees (24 mois min)
 
 # ═══════════════════════ NOEUDS ════════════════════════════════════

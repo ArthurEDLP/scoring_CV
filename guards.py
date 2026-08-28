@@ -45,7 +45,7 @@ import numpy as np
 # CALIBRATION : 0.04 a été établi sur Qwen3-4B. À RECALIBRER pour mpnet
 # en regardant la distribution des écarts (exp_max - cosine_i) sur des CV
 # notoirement cohérents.
-DELTA = 0.04
+DELTA = 0.08
 
 # Fenêtre temporelle au-delà de laquelle une expérience pertinente est obsolète.
 DEFAULT_WINDOW_MONTHS = 24
